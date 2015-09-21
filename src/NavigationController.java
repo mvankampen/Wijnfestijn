@@ -7,17 +7,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-public class NavigationController extends AnchorPane implements ControlledScreen{
+public class NavigationController extends AnchorPane {
 	private Button homeButton, mailButton, customersButton, debtorsButton;
 	private ComboBox<String> orderMenu;
 	private ObservableList<String> orderOptions;
 	private ScreensController screensController;
 	private String ORDERLISTID = "orderlist";
-	public void setScreenController(ScreensController screensController) {
+	public NavigationController(ScreensController screensController){
 		this.screensController = screensController;
-		
-	}
-	public NavigationController(){
 		generateDropDownOptions();
 		createMenu();
 	}
