@@ -17,7 +17,7 @@ public class OrderListView extends AnchorPane implements ControlledScreen {
     private TextField txtInput;
     private ImageView ivExample;
 
-    public OrderListView() {
+    public OrderListView(NavigationController navigationController) {
         maakView();
     }
 

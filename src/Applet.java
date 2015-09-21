@@ -9,14 +9,14 @@ public class Applet extends Application {
     private static ScreensController screenController;
     private NavigationController navigationController;
     private static final String HOMEID = "home";
-    private static final String ORDERLISTID = "orderlist";
+    static final String ORDERLISTID = "orderlist";
     
     public void start(Stage stage) {
     	//maakt de controller voor de schermen aan, handelt het display van de schermen af.
         screenController = new ScreensController();
         navigationController = new NavigationController();
         screenController.schermLaden(Applet.getHomeid(), new HomeView(navigationController));
-        screenController.schermLaden(Applet.ORDERLISTID, new OrderListView());
+        screenController.schermLaden(Applet.getOrderlistid(), new OrderListView(navigationController));
         //zet wel scherm er actief moet zijn
         screenController.setScherm(Applet.getHomeid());
         //Voor jou sander scherm sander, comment hoofdscherm weg en enable deze

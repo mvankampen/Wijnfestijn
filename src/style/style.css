@@ -1,3 +1,6 @@
+.root {
+	-fx-font-family: "verdana";
+}
 #background {
     -fx-background-image: url("../images/defaultBG.png");
     -fx-background-position: top;
@@ -6,6 +9,13 @@
     -fx-background-image: url("../images/defaultBG.png");
     -fx-background-position: top;
 }
+.nav_item{
+	-fx-background-color: transparent;
+	-fx-border-width: 0px 1px 0px 0px;
+	-fx-border-color: #000000;
+	-fx-font-size: 31;
+}
+
 /* 
 .otherBackground {
     -fx-background-image: url("../images/buildings_plain.jpg");
