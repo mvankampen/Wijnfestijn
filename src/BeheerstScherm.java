@@ -1,4 +1,4 @@
 
 public interface BeheerstScherm {
-	public void setSchermManager(SchermenController schermParent);
+	public void setSchermManager(SchermenController schermController);
 }
