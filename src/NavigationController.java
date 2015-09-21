@@ -29,6 +29,7 @@ public class NavigationController extends AnchorPane {
 		homeButton.getStyleClass().add("nav_item");
 		homeButton.setOnAction(e -> {
 			screensController.screenSet(ORDERLISTID);
+			
 		});
 		//Mail Button
 		mailButton = new Button("Mail Menu");

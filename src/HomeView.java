@@ -13,12 +13,11 @@ public class HomeView extends AnchorPane implements ControlledScreen{
 	private Label bericht;
 	private NavigationController navigationController;
 
-	public void setScreenController(ScreensController screensController) {
+public void setScreenController(ScreensController screensController) {
 		this.screensController = screensController;	
 	}
 
-	public HomeView(NavigationController navigationController) {
-		this.navigationController = navigationController;
+	public HomeView() {
 		maakView();
 	}
 	private void maakView() {
@@ -30,7 +29,6 @@ public class HomeView extends AnchorPane implements ControlledScreen{
 			screensController.screenSet(Applet.ORDERLISTID);
 		});
 		bericht.setFont(new Font("Consolas", 20));
-		getChildren().add(navigationController);
 		getChildren().addAll(bericht,test);
 	
 		

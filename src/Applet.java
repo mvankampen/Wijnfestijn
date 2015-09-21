@@ -15,14 +15,14 @@ public class Applet extends Application {
     	//maakt de controller voor de schermen aan, handelt het display van de schermen af.
         screensController = new ScreensController();
         navigationController = new NavigationController(screensController);
-        screensController.screenLoad(Applet.getHomeid(), new HomeView(navigationController));
-        screensController.screenLoad(Applet.getOrderlistid(), new OrderListView(navigationController));
+        screensController.screenLoad(Applet.getHomeid(), new HomeView());
+        screensController.screenLoad(Applet.getOrderlistid(), new OrderListView());
         screensController.screenSet(Applet.getHomeid());
         //zet wel scherm er actief moet zijn
 
         //Voor jou sander scherm sander, comment hoofdscherm weg en enable deze
         Group root = new Group();
-        root.getChildren().addAll(screensController);
+        root.getChildren().addAll(screensController,navigationController);
         Scene scene = new Scene(root,1200,800);
         scene.getStylesheets().addAll(this.getClass().getResource("style/style.css").toExternalForm());
         stage.setScene(scene);
