@@ -21,10 +21,9 @@ public class HoofdScherm extends AnchorPane implements BeheerstScherm{
 		maakView();
 	}
 	private void maakView() {
-		getStylesheets().add("style/style.css");
 		getStyleClass().add("achtergrond");
-		setMinSize(1680,1050);
-		bericht = new Label("goi");
+		setMinSize(1200,800);
+		bericht = new Label("dennisi");
 		bericht.setFont(new Font("Consolas", 20));
 		getChildren().add(bericht);
 		
