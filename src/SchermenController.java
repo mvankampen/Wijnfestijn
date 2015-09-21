@@ -1,19 +1,20 @@
 import java.util.HashMap;
 
 import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
-public class SchermenController extends StackPane {
+public class SchermenController extends AnchorPane {
 	//Een hashmap, bezit paren gevormt door de schermen ID's
-	private HashMap<String, StackPane> schermen = new HashMap<>();
+	private HashMap<String, AnchorPane> schermen = new HashMap<>();
 	//methode voor het toevoegen van een scherm
-	public void schermToevoegen(String naam, StackPane stackPane){
-		schermen.put(naam, stackPane);
+	public void schermToevoegen(String naam, AnchorPane anchorPane){
+		schermen.put(naam, anchorPane);
 	}
-	public void schermLaden(String naam, StackPane stackPane) {
-		BeheerstScherm scherm = (BeheerstScherm) stackPane;
+	public void schermLaden(String naam, AnchorPane anchorPane) {
+		BeheerstScherm scherm = (BeheerstScherm) anchorPane;
 		scherm.setSchermManager(this);
-		schermToevoegen(naam, stackPane);
+		schermToevoegen(naam, anchorPane);
 	}
 	
 	public void schermUitladen(String naam){
