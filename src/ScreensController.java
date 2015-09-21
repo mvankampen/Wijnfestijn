@@ -8,20 +8,20 @@ public class ScreensController extends AnchorPane {
 	//Een hashmap, bezit paren gevormt door de schermen ID's
 	private HashMap<String, AnchorPane> schermen = new HashMap<>();
 	//methode voor het toevoegen van een scherm
-	public void schermToevoegen(String naam, AnchorPane anchorPane){
+	public void screenAdd(String naam, AnchorPane anchorPane){
 		schermen.put(naam, anchorPane);
 	}
-	public void schermLaden(String naam, AnchorPane anchorPane) {
-		ControlledScreen scherm = (ControlledScreen) anchorPane;
-		scherm.setSchermManager(this);
-		schermToevoegen(naam, anchorPane);
+	public void screenLoad(String naam, AnchorPane anchorPane) {
+		ControlledScreen screen = (ControlledScreen) anchorPane;
+		screen.setScreenController(this);
+		screenAdd(naam, anchorPane);
 	}
 	
-	public void schermUitladen(String naam){
+	public void screenRemove(String naam){
 		schermen.remove(naam);
 	}
 	
-	public void setScherm(String naam){
+	void screenSet(String naam){
 		if (schermen.get(naam) != null) {
 			if (!getChildren().isEmpty()) {
 				getChildren().remove(0);

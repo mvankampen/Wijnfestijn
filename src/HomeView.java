@@ -9,13 +9,11 @@ import javafx.scene.text.Font;
 public class HomeView extends AnchorPane implements ControlledScreen{
 
 	private ScreensController screensController;
-	private Button home;
-	private Button mailMenu;
-	private Rectangle rectangle;
+	private Button test;
 	private Label bericht;
 	private NavigationController navigationController;
-	@Override
-	public void setSchermManager(ScreensController schermController) {
+
+public void setScreenController(ScreensController screensController) {
 		this.screensController = screensController;	
 	}
 
@@ -27,9 +25,15 @@ public class HomeView extends AnchorPane implements ControlledScreen{
 		getStyleClass().add("background");
 		setMinSize(1200,800);
 		bericht = new Label("dennisi");
+		test = new Button("test");
+		test.setOnAction(e -> {
+			screensController.screenSet(Applet.ORDERLISTID);
+		});
 		bericht.setFont(new Font("Consolas", 20));
-		getChildren().add(bericht);
 		getChildren().add(navigationController);
+		getChildren().addAll(bericht,test);
+	
 		
 	}
-}
+	}
+

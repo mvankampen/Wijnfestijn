@@ -12,9 +12,8 @@ public class NavigationController extends AnchorPane implements ControlledScreen
 	private ComboBox<String> orderMenu;
 	private ObservableList<String> orderOptions;
 	private ScreensController screensController;
-	private String ORDERLISTID;
-	
-	@Override public void setSchermManager(ScreensController schermController) {
+	private String ORDERLISTID = "orderlist";
+	public void setScreenController(ScreensController screensController) {
 		this.screensController = screensController;
 		
 	}
@@ -23,9 +22,8 @@ public class NavigationController extends AnchorPane implements ControlledScreen
 		createMenu();
 	}
 	
-	private void createMenu(){
+	public void createMenu(){
 		//Home Button
-		ORDERLISTID = Applet.getOrderlistid();
 		GridPane navGrid = new GridPane();
 		navGrid.setVgap(58);
 		HBox hbButtons = new HBox();
@@ -33,7 +31,7 @@ public class NavigationController extends AnchorPane implements ControlledScreen
 		
 		homeButton.getStyleClass().add("nav_item");
 		homeButton.setOnAction(e -> {
-			
+			screensController.screenSet(ORDERLISTID);
 		});
 		//Mail Button
 		mailButton = new Button("Mail Menu");
@@ -49,15 +47,15 @@ public class NavigationController extends AnchorPane implements ControlledScreen
 		debtorsButton = new Button("Debiteuren Menu");
 		debtorsButton.getStyleClass().add("nav_item");
 		hbButtons.getChildren().addAll(homeButton,mailButton, orderMenu, customersButton,debtorsButton );
-		hbButtons.setAlignment(Pos.CENTER_RIGHT);
-		navGrid.add(hbButtons, 0, 2);
-		getChildren().add(navGrid);
+		navGrid.add(hbButtons, 2, 2);
+		getChildren().addAll(navGrid);
 	}
 	
 	
 	private void generateDropDownOptions(){
 		orderOptions = FXCollections.observableArrayList("option 1","option 2");// not done
 	}
+
 
 
 	

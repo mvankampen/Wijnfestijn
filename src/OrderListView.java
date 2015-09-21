@@ -17,6 +17,9 @@ public class OrderListView extends AnchorPane implements ControlledScreen {
     private TextField txtInput;
     private ImageView ivExample;
 
+    public void setScreenController(ScreensController screensController) {
+        this.screensController = screensController;
+    }
     public OrderListView(NavigationController navigationController) {
         maakView();
     }
@@ -35,8 +38,5 @@ public class OrderListView extends AnchorPane implements ControlledScreen {
         getChildren().addAll(this.lblSummary,this.lblCountText, this.lblCount, this.lblSelectText, this.txtInput, this.ivExample);
     }
 
-    @Override
-    public void setSchermManager(ScreensController schermController) {
-        this.screensController = schermController;
-    }
+ 
 }

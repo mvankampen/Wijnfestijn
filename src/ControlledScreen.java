@@ -1,4 +1,4 @@
 
 public interface ControlledScreen {
-	public void setSchermManager(ScreensController schermController);
+	public void setScreenController(ScreensController screensController);
 }

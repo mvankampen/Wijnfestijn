@@ -6,23 +6,22 @@ import javafx.stage.Stage;
 
 public class Applet extends Application {
     private static Stage stage;
-    private static ScreensController screenController;
+    private static ScreensController screensController;
     private NavigationController navigationController;
     private static final String HOMEID = "home";
     static final String ORDERLISTID = "orderlist";
     
     public void start(Stage stage) {
     	//maakt de controller voor de schermen aan, handelt het display van de schermen af.
-        screenController = new ScreensController();
+        screensController = new ScreensController();
         navigationController = new NavigationController();
-        screenController.schermLaden(Applet.getHomeid(), new HomeView(navigationController));
-        screenController.schermLaden(Applet.getOrderlistid(), new OrderListView(navigationController));
+        screensController.screenLoad(Applet.getHomeid(), new HomeView(navigationController));
+        screensController.screenLoad(Applet.getOrderlistid(), new OrderListView(navigationController));
         //zet wel scherm er actief moet zijn
-        screenController.setScherm(Applet.getHomeid());
+        screensController.screenSet(Applet.getHomeid());
         //Voor jou sander scherm sander, comment hoofdscherm weg en enable deze
-        //schermController.setScherm(Applet.getOrderlistid());
         Group root = new Group();
-        root.getChildren().add(screenController);
+        root.getChildren().addAll(screensController);
         Scene scene = new Scene(root,1200,800);
         scene.getStylesheets().addAll(this.getClass().getResource("style/style.css").toExternalForm());
         stage.setScene(scene);
