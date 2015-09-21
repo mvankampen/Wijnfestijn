@@ -21,7 +21,8 @@ public class NavigationController extends AnchorPane {
 	public void createMenu(){
 		//Home Button
 		GridPane navGrid = new GridPane();
-		navGrid.setVgap(58);
+		navGrid.setVgap(59);
+		navGrid.setHgap(10);
 		HBox hbButtons = new HBox();
 		homeButton = new Button("Home");
 		
@@ -50,7 +51,9 @@ public class NavigationController extends AnchorPane {
 		});
 		//Debtors Button
 		debtorsButton = new Button("Debiteuren Menu");
-		debtorsButton.getStyleClass().add("nav_item");
+		debtorsButton.getStyleClass().add("nav_end");
+		
+		//make the NavBar
 		hbButtons.getChildren().addAll(homeButton,mailButton, orderMenu, customersButton,debtorsButton );
 		navGrid.add(hbButtons, 2, 2);
 		getChildren().addAll(navGrid);

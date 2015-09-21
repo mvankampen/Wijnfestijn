@@ -1,5 +1,6 @@
 .root {
 	-fx-font-family: "verdana";
+	-fx-text-fill: #1a3d77;
 }
 #background {
     -fx-background-image: url("../images/defaultBG.png");
@@ -10,11 +11,28 @@
     -fx-background-position: top;
 }
 .nav_item{
-	-fx-background-color: transparent;
+	-fx-background-color: #f4cf22;
 	-fx-border-width: 0px 1px 0px 0px;
 	-fx-border-color: #000000;
-	-fx-font-size: 31;
+	-fx-font-size: 30;
+	-fx-text-fill: #1a3d77;
 }
+.nav_item:hover, .nav-item:focus{
+	-fx-background-color: #f4cf22;
+	-fx-opacity: 0.4;
+}
+.nav_end{
+	-fx-background-color: #f4cf22;
+	-fx-border-width: 0px 0px 0px 0px;
+	-fx-border-color: #000000;
+	-fx-font-size: 30;
+	-fx-text-fill: #1a3d77;
+}
+.nav_end:hover, .nav-item:focus{
+	-fx-background-color: #f4cf22;
+	-fx-opacity: 0.4;
+}
+
 
 /* 
 .otherBackground {
