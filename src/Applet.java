@@ -12,13 +12,15 @@ public class Applet extends Application {
 
     public void start(Stage stage) {
         schermManager = new SchermenController();
-        //schermManager.schermLaden(Applet.HOOFDSCHERMID, new Hoofdscherm());
+        schermManager.schermLaden(Applet.HOOFDSCHERMID, new HoofdScherm(new MaakNavigatie_controller()));
+        schermManager.setScherm(Applet.HOOFDSCHERMID);
         Group root = new Group();
         root.getChildren().add(schermManager);
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("style/style.css");
         stage.setScene(scene);
-        stage.setWidth(1000);
-        stage.setHeight(1200);
+        stage.setWidth(1200);
+        stage.setHeight(800);
         stage.setResizable(false);
         stage.show();
 

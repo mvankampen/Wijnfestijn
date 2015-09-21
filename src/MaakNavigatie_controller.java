@@ -10,6 +10,10 @@ public class MaakNavigatie_controller extends HBox implements BeheerstScherm{
 	private ObservableList<String> orderOptions;
 	private SchermenController schermController;
 	
+	@Override public void setSchermManager(SchermenController schermController) {
+		this.schermController = schermController;
+		
+	}
 	public MaakNavigatie_controller(){
 		generateDropDownOptions();
 		createMenu();
@@ -47,9 +51,6 @@ public class MaakNavigatie_controller extends HBox implements BeheerstScherm{
 		orderOptions = FXCollections.observableArrayList("option 1","option 2");// not done
 	}
 
-	@Override
-	public void setSchermManager(SchermenController schermController) {
-		this.schermController = schermController;
-		
-	}
+
+	
 }

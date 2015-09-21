@@ -13,11 +13,13 @@ public class HoofdScherm extends AnchorPane implements BeheerstScherm{
 	private Button mailMenu;
 	private Rectangle rectangle;
 	private Label bericht;
+	private MaakNavigatie_controller navController;
 	@Override
 	public void setSchermManager(SchermenController schermController) {
 		this.schermenController = schermenController;	
 	}
-	public HoofdScherm() {
+	public HoofdScherm(MaakNavigatie_controller navController) {
+		this.navController = navController;
 		maakView();
 	}
 	private void maakView() {
@@ -26,6 +28,7 @@ public class HoofdScherm extends AnchorPane implements BeheerstScherm{
 		bericht = new Label("dennisi");
 		bericht.setFont(new Font("Consolas", 20));
 		getChildren().add(bericht);
+		getChildren().add(navController);
 		
 	}
 }
