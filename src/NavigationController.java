@@ -12,7 +12,6 @@ public class NavigationController extends AnchorPane {
 	private ComboBox<String> orderMenu;
 	private ObservableList<String> orderOptions;
 	private ScreensController screensController;
-	private String ORDERLISTID = "orderlist";
 	public NavigationController(ScreensController screensController){
 		this.screensController = screensController;
 		generateDropDownOptions();
@@ -28,12 +27,16 @@ public class NavigationController extends AnchorPane {
 		
 		homeButton.getStyleClass().add("nav_item");
 		homeButton.setOnAction(e -> {
-			screensController.screenSet(ORDERLISTID);
+			screensController.screenSet(Applet.getHomeid());
 			
 		});
 		//Mail Button
 		mailButton = new Button("Mail Menu");
 		mailButton.getStyleClass().add("nav_item");
+		mailButton.setOnAction(e -> {
+			screensController.screenSet(Applet.getMailid());
+			
+		});
 		//Order ComboBox
 		orderMenu = new ComboBox<String>(orderOptions);
 		orderMenu.setValue("Bestel Menu");
@@ -41,6 +44,10 @@ public class NavigationController extends AnchorPane {
 		//Customer Button
 		customersButton = new Button("Klanten Menu");
 		customersButton.getStyleClass().add("nav_item");
+		customersButton.setOnAction(e -> {
+			screensController.screenSet(Applet.getCustomersid());
+			
+		});
 		//Debtors Button
 		debtorsButton = new Button("Debiteuren Menu");
 		debtorsButton.getStyleClass().add("nav_item");

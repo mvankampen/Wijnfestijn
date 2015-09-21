@@ -9,18 +9,16 @@ public class Applet extends Application {
     private static ScreensController screensController;
     private NavigationController navigationController;
     private static final String HOMEID = "home";
-    static final String ORDERLISTID = "orderlist";
+    private static final String ORDERLISTPRINTID = "orderlistprint";
+    private static final String MAILID = "mail";
+    private static final String CUSTOMERSID = "customers";
+    private static final String DEBITEURENID = "debiteuren";
     
     public void start(Stage stage) {
     	//maakt de controller voor de schermen aan, handelt het display van de schermen af.
-        screensController = new ScreensController();
+        fillScreensController();
         navigationController = new NavigationController(screensController);
-        screensController.screenLoad(Applet.getHomeid(), new HomeView());
-        screensController.screenLoad(Applet.getOrderlistid(), new OrderListView());
-        screensController.screenSet(Applet.getHomeid());
         //zet wel scherm er actief moet zijn
-
-        //Voor jou sander scherm sander, comment hoofdscherm weg en enable deze
         Group root = new Group();
         root.getChildren().addAll(screensController,navigationController);
         Scene scene = new Scene(root,1200,800);
@@ -29,9 +27,18 @@ public class Applet extends Application {
         stage.setWidth(1200);
         stage.setHeight(800);
         stage.setResizable(false);
+        stage.setTitle("A WarnerBrothers Product");
         stage.show();
 
     };
+    private void fillScreensController(){
+    	screensController = new ScreensController();
+    	screensController.screenLoad(Applet.getHomeid(), new HomeView());
+        screensController.screenLoad(Applet.getOrderlistprintid(), new OrderlistPrintView());
+        screensController.screenLoad(Applet.getMailid(), new MailView());
+        screensController.screenLoad(Applet.getCustomersid(), new CustomersView());
+        screensController.screenSet(Applet.getHomeid());
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -40,8 +47,20 @@ public class Applet extends Application {
 	public static String getHomeid() {
 		return HOMEID;
 	}
-	public static String getOrderlistid() {
-		return ORDERLISTID;
+	public static String getOrderlistprintid() {
+		return ORDERLISTPRINTID;
+	}
+
+	public static String getMailid() {
+		return MAILID;
+	}
+
+	public static String getDebiteurenid() {
+		return DEBITEURENID;
+	}
+
+	public static String getCustomersid() {
+		return CUSTOMERSID;
 	}
 
 }

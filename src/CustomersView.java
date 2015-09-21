@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-public class HomeView extends AnchorPane implements ControlledScreen{
+public class CustomersView extends AnchorPane implements ControlledScreen{
 
 	private ScreensController screensController;
 
@@ -14,7 +14,7 @@ public void setScreenController(ScreensController screensController) {
 		this.screensController = screensController;	
 	}
 
-	public HomeView() {
+	public CustomersView() {
 		createView();
 	}
 	private void createView() {
