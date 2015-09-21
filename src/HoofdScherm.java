@@ -8,7 +8,7 @@ import javafx.scene.text.Font;
 
 public class HoofdScherm extends AnchorPane implements BeheerstScherm{
 
-	public SchermenController schermenController;
+	private SchermenController schermenController;
 	private Button home;
 	private Button mailMenu;
 	private Rectangle rectangle;
@@ -17,6 +17,7 @@ public class HoofdScherm extends AnchorPane implements BeheerstScherm{
 	public void setSchermManager(SchermenController schermController) {
 		this.schermenController = schermenController;	
 	}
+
 	public HoofdScherm() {
 		maakView();
 	}

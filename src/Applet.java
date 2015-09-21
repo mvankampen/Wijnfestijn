@@ -7,16 +7,16 @@ import javafx.stage.Stage;
 public class Applet extends Application {
     private static Stage stage;
     private static SchermenController schermManager;
-    private static final String HOOFDSCHERMID = "hoofdscherm";
+    private static final String HOOFDSCHERMID = "bestellijstprintview";
     
 
     public void start(Stage stage) {
         schermManager = new SchermenController();
-        schermManager.schermLaden(Applet.HOOFDSCHERMID, new HoofdScherm());
+        schermManager.schermLaden(Applet.HOOFDSCHERMID, new BestellijstPrintView());
         schermManager.setScherm(Applet.HOOFDSCHERMID);
         Group root = new Group();
         root.getChildren().add(schermManager);
-        Scene scene = new Scene(root,1680,1050);
+        Scene scene = new Scene(root,1200,800);
         scene.getStylesheets().addAll(this.getClass().getResource("style/style.css").toExternalForm());
         stage.setScene(scene);
         stage.setResizable(true);
