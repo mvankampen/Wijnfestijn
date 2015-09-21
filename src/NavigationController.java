@@ -4,17 +4,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 
-public class MaakNavigatie_controller extends HBox implements BeheerstScherm{
+public class NavigationController extends HBox implements ControlledScreen{
 	private Button homeButton, mailButton, customersButton, debtorsButton;
 	private ComboBox<String> orderMenu;
 	private ObservableList<String> orderOptions;
-	private SchermenController schermController;
+	private ScreensController screensController;
 	
-	@Override public void setSchermManager(SchermenController schermController) {
-		this.schermController = schermController;
+	@Override public void setSchermManager(ScreensController schermController) {
+		this.screensController = screensController;
 		
 	}
-	public MaakNavigatie_controller(){
+	public NavigationController(){
 		generateDropDownOptions();
 		createMenu();
 	}
@@ -25,7 +25,7 @@ public class MaakNavigatie_controller extends HBox implements BeheerstScherm{
 		homeButton.getStyleClass().add("nav_item");
 		homeButton.setOnAction(e -> {
 			
-			schermController.setScherm(Applet.HOOFDSCHERMID);
+			screensController.setScherm(Applet.getHomeid());
 		});
 		//Mail Button
 		mailButton = new Button("Mail Menu");

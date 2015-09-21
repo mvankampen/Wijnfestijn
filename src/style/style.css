@@ -1,9 +1,9 @@
-#achtergrond {
-    -fx-background-image: url("../images/basisBackground.png");
+#background {
+    -fx-background-image: url("../images/defaultBG.png");
     -fx-background-position: top;
 }
-.achtergrond {
-    -fx-background-image: url("../images/basisBackground.png");
+.background {
+    -fx-background-image: url("../images/defaultBG.png");
     -fx-background-position: top;
 }
 /* 

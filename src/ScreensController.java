@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
-public class SchermenController extends AnchorPane {
+public class ScreensController extends AnchorPane {
 	//Een hashmap, bezit paren gevormt door de schermen ID's
 	private HashMap<String, AnchorPane> schermen = new HashMap<>();
 	//methode voor het toevoegen van een scherm
@@ -12,7 +12,7 @@ public class SchermenController extends AnchorPane {
 		schermen.put(naam, anchorPane);
 	}
 	public void schermLaden(String naam, AnchorPane anchorPane) {
-		BeheerstScherm scherm = (BeheerstScherm) anchorPane;
+		ControlledScreen scherm = (ControlledScreen) anchorPane;
 		scherm.setSchermManager(this);
 		schermToevoegen(naam, anchorPane);
 	}

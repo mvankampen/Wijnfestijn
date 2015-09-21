@@ -8,8 +8,8 @@ import javafx.scene.layout.AnchorPane;
 /**
  * Created by Sander de Jong on 21-9-2015.
  */
-public class BestellijstPrintView extends AnchorPane implements BeheerstScherm {
-    private SchermenController schermenController;
+public class OrderListView extends AnchorPane implements ControlledScreen {
+    private ScreensController screensController;
     private Label lblSummary;
     private Label lblCountText;
     private Label lblCount;
@@ -17,7 +17,7 @@ public class BestellijstPrintView extends AnchorPane implements BeheerstScherm {
     private TextField txtInput;
     private ImageView ivExample;
 
-    public BestellijstPrintView() {
+    public OrderListView() {
         maakView();
     }
 
@@ -36,7 +36,7 @@ public class BestellijstPrintView extends AnchorPane implements BeheerstScherm {
     }
 
     @Override
-    public void setSchermManager(SchermenController schermController) {
-        this.schermenController = schermController;
+    public void setSchermManager(ScreensController schermController) {
+        this.screensController = schermController;
     }
 }

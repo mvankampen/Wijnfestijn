@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 
 public class testView extends Application{
 
-	private MaakNavigatie_controller createNav;
+	private NavigationController createNav;
 	
 	public static void main(String args[]){
 		launch(args);
@@ -13,7 +13,7 @@ public class testView extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		createNav = new MaakNavigatie_controller();
+		createNav = new NavigationController();
 		StackPane root = new StackPane();
 		root.getChildren().add(createNav);
 		

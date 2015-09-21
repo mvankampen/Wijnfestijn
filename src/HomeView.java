@@ -6,30 +6,30 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-public class HoofdScherm extends AnchorPane implements BeheerstScherm{
+public class HomeView extends AnchorPane implements ControlledScreen{
 
-	private SchermenController schermenController;
+	private ScreensController screensController;
 	private Button home;
 	private Button mailMenu;
 	private Rectangle rectangle;
 	private Label bericht;
-	private MaakNavigatie_controller navController;
+	private NavigationController navigationController;
 	@Override
-	public void setSchermManager(SchermenController schermController) {
-		this.schermenController = schermenController;	
+	public void setSchermManager(ScreensController schermController) {
+		this.screensController = screensController;	
 	}
 
-	public HoofdScherm(MaakNavigatie_controller navController) {
-		this.navController = navController;
+	public HomeView(NavigationController navigationController) {
+		this.navigationController = navigationController;
 		maakView();
 	}
 	private void maakView() {
-		getStyleClass().add("achtergrond");
+		getStyleClass().add("background");
 		setMinSize(1200,800);
 		bericht = new Label("dennisi");
 		bericht.setFont(new Font("Consolas", 20));
 		getChildren().add(bericht);
-		getChildren().add(navController);
+		getChildren().add(navigationController);
 		
 	}
 }
