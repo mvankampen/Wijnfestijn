@@ -7,20 +7,19 @@ import javafx.stage.Stage;
 public class Applet extends Application {
     private static Stage stage;
     private static SchermenController schermManager;
-    private static final String HOOFDSCHERMID = "hoofdscherm";
-    private static final String MAILMENUID = "mailmenu";
+    static final String HOOFDSCHERMID = "hoofdscherm";
     
 
     public void start(Stage stage) {
         schermManager = new SchermenController();
-        schermManager.schermLaden(Applet.HOOFDSCHERMID, new HoofdScherm());
-        schermManager.setScherm(Applet.HOOFDSCHERMID);
+        //schermManager.schermLaden(Applet.HOOFDSCHERMID, new Hoofdscherm());
         Group root = new Group();
         root.getChildren().add(schermManager);
-        Scene scene = new Scene(root,1200,800);
-        scene.getStylesheets().addAll(this.getClass().getResource("style/style.css").toExternalForm());
+        Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setResizable(true);
+        stage.setWidth(1000);
+        stage.setHeight(1200);
+        stage.setResizable(false);
         stage.show();
 
     };
