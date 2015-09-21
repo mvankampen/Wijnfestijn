@@ -23,7 +23,7 @@ public class SchermenController extends StackPane {
 	public void setScherm(String naam){
 		if (schermen.get(naam) != null) {
 			if (!getChildren().isEmpty()) {
-				getChildren.remove(0);
+				getChildren().remove(0);
 				getChildren().add(0,schermen.get(naam));
 			} else {
 				getChildren().add(schermen.get(naam));
