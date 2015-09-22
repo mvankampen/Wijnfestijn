@@ -23,7 +23,12 @@ public class HomeView extends AnchorPane implements ControlledScreen{
 		setMinSize(1200,800);
 		TestLabel = new Label("This is test");
 		TestLabel.setLayoutY(200);
-		getChildren().add(TestLabel);
+		Button tstBtn = new Button("Ja toch niet dan");
+		tstBtn.setLayoutY(300);
+		tstBtn.setOnAction((event) -> { 
+			System.out.print("hello");
+			});
+		getChildren().addAll(tstBtn,TestLabel);
 	}
 }
 
