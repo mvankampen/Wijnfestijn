@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.HashMap;
 
+import interfaces.ControlledScreen;
 import javafx.scene.layout.AnchorPane;
 
 public class ScreensController extends AnchorPane {
@@ -21,7 +22,7 @@ public class ScreensController extends AnchorPane {
 		schermen.remove(naam);
 	}
 	
-	void screenSet(String naam){
+	public void screenSet(String naam){
 		if (schermen.get(naam) != null) {
 			if (!getChildren().isEmpty()) {
 				getChildren().remove(0);

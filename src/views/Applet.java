@@ -1,3 +1,5 @@
+package views;
+
 import controllers.NavigationController;
 import controllers.ScreensController;
 import javafx.application.Application;
@@ -5,10 +7,6 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import views.CustomersView;
-import views.HomeView;
-import views.MailView;
-import views.OrderlistPrintView;
 
 public class Applet extends Application {
     private static Stage stage;

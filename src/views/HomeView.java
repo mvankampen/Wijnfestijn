@@ -1,5 +1,7 @@
 package views;
 
+import controllers.ScreensController;
+import interfaces.ControlledScreen;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
