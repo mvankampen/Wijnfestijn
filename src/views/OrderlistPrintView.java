@@ -1,3 +1,7 @@
+package views;
+
+import controllers.ScreensController;
+import interfaces.ControlledScreen;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -6,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * Created by Sander de Jong on 21-9-2015.
  */
-public class OrderlistPrintView extends AnchorPane implements ControlledScreen {
+public class OrderlistPrintView extends AnchorPane implements ControlledScreen  {
     private ScreensController screensController;
     private Label lblSummary;
     private Label lblCountText;
@@ -14,7 +18,7 @@ public class OrderlistPrintView extends AnchorPane implements ControlledScreen {
     private Label lblSelectText;
     private TextField txtInput;
 
-    public void setScreenController(ScreensController screensController) {
+    @Override public void setScreenController(ScreensController screensController) {
         this.screensController = screensController;
     }
 
@@ -33,6 +37,4 @@ public class OrderlistPrintView extends AnchorPane implements ControlledScreen {
         txtInput = new TextField();
         getChildren().addAll(lblSummary, lblCountText, lblCount, lblSelectText, txtInput);
     }
-
-
 }

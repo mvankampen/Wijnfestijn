@@ -1,3 +1,7 @@
+package views;
+
+import controllers.NavigationController;
+import controllers.ScreensController;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -22,7 +26,7 @@ public class Applet extends Application {
         root.getChildren().addAll(screensController, navigationController);
         Scene scene = new Scene(root, 1200, 800);
         scene.getStylesheets()
-            .addAll(this.getClass().getResource("style/style.css").toExternalForm());
+            .addAll(this.getClass().getResource("../style/style.css").toExternalForm());
         stage.setScene(scene);
         stage.setWidth(1200);
         stage.setHeight(800);

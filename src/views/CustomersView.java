@@ -1,3 +1,7 @@
+package views;
+
+import controllers.ScreensController;
+import interfaces.ControlledScreen;
 import javafx.scene.layout.AnchorPane;
 
 public class CustomersView extends AnchorPane implements ControlledScreen {

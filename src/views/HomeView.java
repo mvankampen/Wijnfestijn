@@ -1,7 +1,11 @@
+package views;
+
+import controllers.ScreensController;
+import interfaces.ControlledScreen;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
-public class MailView extends AnchorPane implements ControlledScreen {
+public class HomeView extends AnchorPane implements ControlledScreen {
 
     private ScreensController screensController;
     private Label TestLabel;
@@ -10,16 +14,16 @@ public class MailView extends AnchorPane implements ControlledScreen {
         this.screensController = screensController;
     }
 
-    public MailView() {
+    public HomeView() {
         createView();
     }
 
     private void createView() {
         getStyleClass().add("background");
         setMinSize(1200, 800);
-        TestLabel = new Label("This is t3st");
+        TestLabel = new Label("This is test");
         TestLabel.setLayoutY(200);
-        TestLabel.setLayoutX(20);
         getChildren().add(TestLabel);
     }
 }
+

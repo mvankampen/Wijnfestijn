@@ -1,3 +1,5 @@
+package controllers;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -5,6 +7,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import views.Applet;
+
 
 public class NavigationController extends AnchorPane {
     private Button homeButton, mailButton, customersButton, debtorsButton;

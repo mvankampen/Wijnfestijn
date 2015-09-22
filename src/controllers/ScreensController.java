@@ -1,3 +1,6 @@
+package controllers;
+
+import interfaces.ControlledScreen;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.HashMap;
@@ -21,7 +24,7 @@ public class ScreensController extends AnchorPane {
         schermen.remove(naam);
     }
 
-    void screenSet(String naam) {
+    public void screenSet(String naam) {
         if (schermen.get(naam) != null) {
             if (!getChildren().isEmpty()) {
                 getChildren().remove(0);
@@ -31,5 +34,4 @@ public class ScreensController extends AnchorPane {
             }
         }
     }
-
 }
