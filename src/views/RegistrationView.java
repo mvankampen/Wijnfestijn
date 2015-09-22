@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 /**
  * Created by michael on 22-09-15.
@@ -32,8 +34,20 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     private void createView() {
+    	//Make the gridpane for the Navigation buttons
+    	GridPane contentPane = new GridPane();
+        contentPane.setLayoutY(200);
+        contentPane.setLayoutX(23);
+        //Create introduction Pane
+        GridPane introPane = new GridPane();
+ 		GridPane optionsPane = new GridPane();
+ 		//intro pane
         this.introLabel = new Label(
-            "Registreer jezelf voor het wijnproef evenement doormiddel van het invullen van alle onderstaande data. Nadat je op de knop hebt gedrukt kun je jouw bestellijst ophalen bij de balie zodat je wijnen kunt gaan proeven.");
+            "Registreer jezelf voor het wijnproef evenement doormiddel van het invullen"
+            + " van alle onderstaande data. Nadat je op de knop hebt gedrukt kun je jouw bestellijst ophalen bij de balie zodat je wijnen kunt gaan proeven.");
+        introLabel.setMaxWidth(700);
+        introLabel.setWrapText(true);
+        introPane.add(introLabel, 1, 1);
         this.surnameLabel = new Label("Achternaam :");
         this.surnameTextField = new TextField();
         this.insertionLabel = new Label("Tussenvoegsel :");
@@ -60,14 +74,17 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         this.registrationButton.setOnAction(e -> {
             System.out.println("Test fase");
         });
+        optionsPane.add(surnameLabel,1,1);
+        optionsPane.add(surnameTextField,2,1);
+        optionsPane.add(insertionLabel, 1,2);
+        optionsPane.add(insertionTextField, 2,2);
+        optionsPane.add(firstnameLabel, 1,3);
+        optionsPane.add(firstnameTextField,2,3);
 
-        getChildren().addAll(this.introLabel, this.surnameLabel, this.surnameTextField, this.insertionLabel,
-                this.insertionTextField, this.firstnameLabel, this.firstnameTextField,
-                this.streetnameLabel, this.streetnameTextField, this.streetnrLabel,
-                this.streetnrTextField, this.zipcodeLabel, this.zipcodeTextField, this.emailLabel,
-                this.emailTextField, this.salutationLabel, this.salutationTextField,
-                this.referralLabel, this.referralTextField, this.phoneLabel, this.phoneTextField,
-                this.lionsMemberLabel, this.lionsMemberTextField, this.registrationButton);
+        contentPane.add(introPane, 1, 1);
+        optionsPane.setVgap(20);
+        contentPane.add(optionsPane, 1, 6);
+        getChildren().addAll(contentPane);
 
     }
 }
