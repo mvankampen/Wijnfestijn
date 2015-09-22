@@ -13,13 +13,18 @@
 .nav_item{
 	-fx-background-color: #f4cf22;
 	-fx-border-width: 0px 1px 0px 0px;
-	-fx-border-color: #000000;
+	-fx-border-color: #1a3d77;
 	-fx-font-size: 30;
 	-fx-text-fill: #1a3d77;
 }
 .nav_item:hover, .nav-item:focus{
 	-fx-background-color: #f4cf22;
 	-fx-opacity: 0.4;
+}
+
+.nav_item .list-cell{
+	-fx-text-fill: #1a3d77;
+	-fx-background-color: #f4cf22;
 }
 .nav_end{
 	-fx-background-color: #f4cf22;
