@@ -16,6 +16,7 @@ public class Applet extends Application {
     private static final String MAILID = "mail";
     private static final String CUSTOMERSID = "customers";
     private static final String DEBITEURENID = "debiteuren";
+    private static final String REGISTRATIONID = "registration";
 
     public void start(Stage stage) {
         //maakt de controller voor de schermen aan, handelt het display van de schermen af.
@@ -42,7 +43,8 @@ public class Applet extends Application {
         screensController.screenLoad(Applet.getOrderlistprintid(), new OrderlistPrintView());
         screensController.screenLoad(Applet.getMailid(), new MailView());
         screensController.screenLoad(Applet.getCustomersid(), new CustomersView());
-        screensController.screenSet(Applet.getHomeid());
+        screensController.screenLoad(Applet.getRegistrationid(), new RegistrationView());
+        screensController.screenSet(Applet.getRegistrationid());
     }
 
     public static void main(String[] args) {
@@ -67,6 +69,10 @@ public class Applet extends Application {
 
     public static String getCustomersid() {
         return CUSTOMERSID;
+    }
+
+    public static String getRegistrationid() {
+        return REGISTRATIONID;
     }
 
 
