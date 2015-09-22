@@ -26,7 +26,7 @@ public class Applet extends Application {
         Group root = new Group();
         root.getChildren().addAll(screensController,navigationController);
         Scene scene = new Scene(root,1200,800);
-        scene.getStylesheets().addAll(this.getClass().getResource("style/style.css").toExternalForm());
+        scene.getStylesheets().addAll(this.getClass().getResource("../style/style.css").toExternalForm());
         stage.setScene(scene);
         stage.setWidth(1200);
         stage.setHeight(800);
