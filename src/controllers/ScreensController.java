@@ -1,8 +1,8 @@
+package controllers;
+
 import java.util.HashMap;
 
-import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 
 public class ScreensController extends AnchorPane {
 	//Een hashmap, bezit paren gevormt door de schermen ID's

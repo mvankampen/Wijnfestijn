@@ -1,7 +1,9 @@
+package views;
+
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
-public class MailView extends AnchorPane implements ControlledScreen{
+public class MailView extends AnchorPane implements ControlledScreen {
 
 	private ScreensController screensController;
 	private Label TestLabel;
