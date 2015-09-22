@@ -6,6 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 public class NavigationController extends AnchorPane {
 	private Button homeButton, mailButton, customersButton, debtorsButton;
@@ -40,8 +41,9 @@ public class NavigationController extends AnchorPane {
 		});
 		//Order ComboBox
 		orderMenu = new ComboBox<String>(orderOptions);
-		orderMenu.setValue("Bestel Menu");
 		orderMenu.getStyleClass().add("nav_item");
+		orderMenu.setValue("Bestel Menu");
+		
 		//Customer Button
 		customersButton = new Button("Klanten Menu");
 		customersButton.getStyleClass().add("nav_item");
