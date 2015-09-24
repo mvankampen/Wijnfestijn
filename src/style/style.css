@@ -21,6 +21,9 @@
 	-fx-text-fill:rgba(26, 61, 119, 0.5);
 }
 
+.rbbuttons {
+	-fx-text-fill: #1a3d77;
+}
 .nav_item .list-cell{
 	-fx-text-fill: #1a3d77;
 	-fx-background-color: #f4cf22;

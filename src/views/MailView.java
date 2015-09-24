@@ -39,9 +39,10 @@ public void setScreenController(ScreensController screensController) {
 		contentPane.setHgap(150);
 		
 		//Intro label
-		Label introLabel = new Label("Hier kunt u de mails opstellen. Kies welke mail u wilt"
-				+ " opstellen en voer\nde titel en body in. Klik op verzenden en de applicatie "
-				+ " doet de rest");
+		String introText = "Hier kunt u de mails opstellen. Kies welke mail u wilt"
+				+ " opstellen en voer\nde titel en body in. Klik op verzenden en de applicatie"
+				+ " doet de rest";
+		Label introLabel = new Label(introText);
 		
 		//Create VBoxes row 1
 		VBox titleBox = new VBox(15);
@@ -52,12 +53,14 @@ public void setScreenController(ScreensController screensController) {
 		
 		//Label texts row 1
 		String titleText = "Vul hier de titel in:";
-		String bodyText = "Vul de body in";
+		String bodyText = "Vul hier de body in";
 		
 		//Label texts row 2
 		String typeText = "Selecteer wat voor een soort\nmail u wilt verzenden";
 		String selectionText = "Met deze selectie wordt de\nmail verstuur naar:";
-		
+		String remindMailRbText = "Herinneringsmail";
+		String inviteMailRbText = "Uitnodigingsmail";
+		String thankMailRbText = "Bedankmail";
 		//Creating items row 1
 		Label titleLabel = new Label(titleText);
 		Label bodyLabel = new Label(bodyText);
@@ -68,12 +71,15 @@ public void setScreenController(ScreensController screensController) {
 		//Creating items row 2
 		Label typeLabel = new Label(typeText);
 		final ToggleGroup inviteGroup = new ToggleGroup();
-		RadioButton remindMailRb = new RadioButton("Herrineringsmail");
+		RadioButton remindMailRb = new RadioButton(remindMailRbText);
 		remindMailRb.setToggleGroup(inviteGroup);
-		RadioButton inviteMailRb = new RadioButton("Uitnodigingsmail");
+		remindMailRb.getStyleClass().add("rbbuttons");
+		RadioButton inviteMailRb = new RadioButton(inviteMailRbText);
 		inviteMailRb.setToggleGroup(inviteGroup);
-		RadioButton thankMailRb = new RadioButton("Bedankmail");
+		inviteMailRb.getStyleClass().add("rbbuttons");
+		RadioButton thankMailRb = new RadioButton(thankMailRbText);
 		thankMailRb.setToggleGroup(inviteGroup);
+		thankMailRb.getStyleClass().add("rbbuttons");
 		Button printButton = new Button("Printen");
 		printButton.getStyleClass().add("form_buttons");
 		
