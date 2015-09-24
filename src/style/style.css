@@ -18,8 +18,7 @@
 	-fx-text-fill: #1a3d77;
 }
 .nav_item:hover, .nav-item:focus{
-	-fx-background-color: #f4cf22;
-	-fx-opacity: 0.4;
+	-fx-text-fill:rgba(26, 61, 119, 0.5);
 }
 
 .nav_item .list-cell{
@@ -34,8 +33,7 @@
 	-fx-text-fill: #1a3d77;
 }
 .nav_end:hover, .nav-item:focus{
-	-fx-background-color: #f4cf22;
-	-fx-opacity: 0.4;
+	-fx-text-fill:rgba(26, 61, 119, 0.5);
 }
 .homeview_title{
 	-fx-text-fill: #1a3d77;
@@ -48,9 +46,15 @@
 
 .form_buttons{
 	-fx-background-color: #f4cf22;
+	-fx-font-family: "verdana";
+	-fx-font-weight:bold;
+	-fx-text-fill: #1a3d77;
 	-fx-padding: 10px;
 }
 
+.form_buttons:hover,.form_buttons:focus{
+	-fx-text-fill:rgba(26, 61, 119, 0.5);
+}
 /* 
 .otherBackground {
     -fx-background-image: url("../images/buildings_plain.jpg");
