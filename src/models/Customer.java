@@ -10,6 +10,7 @@ public class Customer {
     private String streetname;
     private int streetnr;
     private String zipcode;
+    private String city;
     private String email;
     private String salutation;
     private String referral;
@@ -18,7 +19,7 @@ public class Customer {
 
 
     public Customer(String lastname, String firstname, String insertion, String streetname,
-                    int streetnr, String zipcode, String email, String salutation,
+                    int streetnr, String zipcode, String city, String email, String salutation,
                     String referral, String phone, String lionsMember) {
         this.lastname = lastname;
         this.firstname = firstname;
@@ -26,6 +27,7 @@ public class Customer {
         this.streetname = streetname;
         this.streetnr = streetnr;
         this.zipcode = zipcode;
+        this.city = city;
         this.email = email;
         this.salutation = salutation;
         this.referral = referral;
@@ -56,6 +58,8 @@ public class Customer {
     public String getZipcode() {
         return zipcode;
     }
+
+    public String getCity() { return city; }
 
     public String getEmail() {
         return email;
@@ -100,6 +104,8 @@ public class Customer {
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
+
+    public void setCity(String city) { this.city = city; }
 
     public void setEmail(String email) {
         this.email = email;
