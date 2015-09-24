@@ -11,7 +11,7 @@ import java.util.Properties;
  * Created by Sander de Jong on 22-9-2015.
  */
 public class MailService {
-    private final String senderID = "sanderdejong@outlook.com";
+    private final String senderID = "testmail@mail.com";
     private final String host = "localhost";
     private Mail mail;
 
