@@ -37,7 +37,19 @@
 	-fx-background-color: #f4cf22;
 	-fx-opacity: 0.4;
 }
+.homeview_title{
+	-fx-text-fill: #1a3d77;
+	-fx-font-size: 22px;
+}
 
+.label{
+	-fx-text-fill: #1a3d77;
+}
+
+.form_buttons{
+	-fx-background-color: yellow;
+	-fx-padding: 10px;
+}
 
 /* 
 .otherBackground {
