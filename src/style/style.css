@@ -1,6 +1,8 @@
 .root {
 	-fx-font-family: "verdana";
 	-fx-text-fill: #1a3d77;
+	-fx-border-width: 0px 0px 0px 0px;
+	-fx-padding: 0px 0px 0px 0px;
 }
 #background {
     -fx-background-image: url("../images/defaultBG.png");
@@ -41,6 +43,36 @@
 .homeview_title{
 	-fx-text-fill: #1a3d77;
 	-fx-font-size: 22px;
+	-fx-border-width: 0px 0px 0px 0px;
+	-fx-padding: 0px 0px 0px 0px;
+}
+
+.homeview_title:visited, .homeview_title:active{
+	-fx-text-fill: #1a3d77;
+	-fx-font-size: 22px;
+	-fx-border-width: 0px 0px 0px 0px;
+	-fx-padding: 0px 0px 0px 0px;
+	-fx-underline: false;
+}
+
+.homeview_title:hover{
+	-fx-underline: true;
+}
+
+.default_hyperlink{
+	-fx-text-fill: #1a3d77;
+	-fx-border-width: 0px 0px 0px 0px;
+	-fx-padding: 0px 0px 0px 0px;
+	-fx-text-decoration: none !important;
+}
+.default_hyperlink:visited, .default_hyperlink:active{
+	-fx-text-fill: #1a3d77;
+	-fx-border-width: 0px 0px 0px 0px;
+	-fx-padding: 0px 0px 0px 0px;
+	-fx-underline: false;
+}
+.default_hyperlink:hover{
+	-fx-underline: true;
 }
 
 .label{

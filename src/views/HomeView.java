@@ -4,6 +4,7 @@ import controllers.ScreensController;
 import interfaces.ControlledScreen;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -11,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextFlow;
 
 
 public class HomeView extends AnchorPane implements ControlledScreen {
@@ -45,15 +47,41 @@ public class HomeView extends AnchorPane implements ControlledScreen {
 				+ " Klik op de actie die u wilt ondernemen");
 		introBox.getChildren().add(introLabel);
 
-		// Label texts row 1
-		String orderTitle = "Bestellijst opties";
-		String orderText1 = "Printen persoonlijke bestellijsten";
-		String orderText2 = "Invoeren van de persoonlijke bestellijsten (maakt orders en facturen)";
-		String orderText3 = "Maak een nieuwe bestellijst aan(Doormiddel van CSV";
-		String orderText4 = "Bewerk of verwijder een al bestaande bestellijst";
+		// Making the hyperlinks row 1
+		Hyperlink OrderlistLink = new Hyperlink ("Bestellijst opties");
+		OrderlistLink.getStyleClass().add("homeview_title");
+		Hyperlink orderText1 = new Hyperlink ("Printen persoonlijke bestellijsten");
+		orderText1.getStyleClass().add("default_hyperlink");
+		Hyperlink orderText2 = new Hyperlink ("Invoeren van de persoonlijke bestellijsten (maakt orders en facturen)");
+		orderText2.getStyleClass().add("default_hyperlink");
+		Hyperlink orderText3 = new Hyperlink ("Maak een nieuwe bestellijst aan(Doormiddel van CSV)");
+		orderText3.getStyleClass().add("default_hyperlink");
+		Hyperlink orderText4 = new Hyperlink ("Bewerk of verwijder een al bestaande bestellijst");
+		orderText4.getStyleClass().add("default_hyperlink");
 		String debtorsTitle = "Debiteuren opties";
 		String debtorText = "Genereer de debiteurenlijst";
 
+		// Setting the directions for the hyperlinks row 1
+		OrderlistLink.setOnAction(event -> {
+			//no link defined yet, placeholder
+			//screensController.screenSet(Applet.getMailid());
+        });
+		orderText1.setOnAction(event -> {
+			//no link defined yet, placeholder
+			//screensController.screenSet(Applet.getMailid());
+        });
+		orderText2.setOnAction(event -> {
+			//no link defined yet, placeholder
+			//screensController.screenSet(Applet.getMailid());
+        });
+		orderText3.setOnAction(event -> {
+			//no link defined yet, placeholder
+			//screensController.screenSet(Applet.getMailid());
+        });
+		orderText4.setOnAction(event -> {
+			//no link defined yet, placeholder
+			//screensController.screenSet(Applet.getMailid());
+        });
 		// Label texts row 2
 		String mailTitle = "Mail opties";
 		String mailText1 = "Maak en verstuur een uitnodigingsmail";
@@ -63,13 +91,12 @@ public class HomeView extends AnchorPane implements ControlledScreen {
 		String customerText1 = "Bewerk of verwijder bestaande klanten";
 		String customerText2 = "Open het klanten registreren scherm";
 
-		// Creating labels row 1
-		Label orderTitleLabel = new Label(orderTitle);
-		orderTitleLabel.getStyleClass().add("homeview_title");
-		Label orderLabel1 = new Label(orderText1);
-		Label orderLabel2 = new Label(orderText2);
-		Label orderLabel3 = new Label(orderText3);
-		Label orderLabel4 = new Label(orderText4);
+		// Set the text flow objects in row 1
+		TextFlow orderTitle = new TextFlow(OrderlistLink);
+		TextFlow orderLabel1 = new TextFlow(orderText1);
+		TextFlow orderLabel2 = new TextFlow(orderText2);
+		TextFlow orderLabel3 = new TextFlow(orderText3);
+		TextFlow orderLabel4 = new TextFlow(orderText4);
 		Label debtorsTitleLabel = new Label(debtorsTitle);
 		debtorsTitleLabel.getStyleClass().add("homeview_title");
 		Label debtorsLabel = new Label(debtorText);
@@ -87,7 +114,7 @@ public class HomeView extends AnchorPane implements ControlledScreen {
 
 		// Adding labels row 1
 		optionsPane.add(new Label(), 1, 1);
-		optionsPane.add(orderTitleLabel, 1, 2);
+		optionsPane.add(orderTitle, 1, 2);
 		optionsPane.add(orderLabel1, 1, 3);
 		optionsPane.add(orderLabel2, 1, 4);
 		optionsPane.add(orderLabel3, 1, 5);
