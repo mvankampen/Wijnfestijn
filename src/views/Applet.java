@@ -44,6 +44,7 @@ public class Applet extends Application {
         screensController.screenLoad(Applet.getMailid(), new MailView());
         screensController.screenLoad(Applet.getCustomersid(), new CustomersView());
         screensController.screenLoad(Applet.getRegistrationid(), new RegistrationView());
+        screensController.screenLoad(Applet.getDebiteurenid(), new DebtorsView());
         screensController.screenSet(Applet.getHomeid());
     }
 

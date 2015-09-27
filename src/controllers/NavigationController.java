@@ -60,6 +60,10 @@ public class NavigationController extends AnchorPane {
         customersButton.setOnAction(e -> {
             screensController.screenSet(Applet.getCustomersid());
         });
+        // debtor button event.
+        debtorsButton.setOnAction(e -> {
+            screensController.screenSet(Applet.getDebiteurenid());
+        });
         //make the NavBar
         hbButtons.getChildren().addAll(homeButton, mailButton, orderMenu, 
           customersButton, debtorsButton);
