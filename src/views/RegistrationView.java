@@ -3,7 +3,6 @@ package views;
 import controllers.ScreensController;
 import interfaces.ControlledScreen;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -44,11 +43,10 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         introbox.setLayoutY(200);
         introbox.setLayoutX(100);
         // Create GridPane
-        GridPane registrationPane = new GridPane();
-        registrationPane.setLayoutY(275);
-        registrationPane.setLayoutX(100);
-        registrationPane.setHgap(75);
-        //registrationPane.setVgap(25);
+        GridPane contentPane = new GridPane();
+        contentPane.setLayoutY(275);
+        contentPane.setLayoutX(100);
+        contentPane.setHgap(150);
         String introText =
             "Registreer jezelf voor het wijnproef evenement doormiddel van het invullen van alle onderstaande data.\nNadat je op de knop hebt gedrukt kun je jouw bestellijst ophalen bij de balie zodat je wijnen kunt gaan proeven.";
         this.introLabel = new Label(introText);
@@ -80,43 +78,35 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         this.registrationButton = new Button("Registreer");
         this.registrationButton.getStyleClass().add("form_buttons");
 
-        registrationPane.setHalignment(surnameLabel, HPos.LEFT);
-        registrationPane.add(surnameLabel, 0, 0);
-        registrationPane.add(surnameTextField, 0, 1);
-        registrationPane.setHalignment(insertionLabel, HPos.LEFT);
-        registrationPane.add(insertionLabel, 1, 0);
-        registrationPane.add(insertionTextField, 1, 1);
-        registrationPane.setHalignment(firstnameLabel, HPos.LEFT);
-        registrationPane.add(firstnameLabel, 2, 0);
-        registrationPane.add(firstnameTextField, 2, 1);
-        registrationPane.setHalignment(streetnameLabel, HPos.LEFT);
-        registrationPane.add(streetnameLabel, 0, 3);
-        registrationPane.add(streetnameTextField, 0, 4);
-        registrationPane.setHalignment(streetnrLabel, HPos.LEFT);
-        registrationPane.add(streetnrLabel, 1, 3);
-        registrationPane.add(streetnrTextField, 1, 4);
-        registrationPane.setHalignment(zipcodeLabel, HPos.LEFT);
-        registrationPane.add(zipcodeLabel, 2, 3);
-        registrationPane.add(zipcodeTextField, 2, 4);
-        registrationPane.setHalignment(emailLabel, HPos.LEFT);
-        registrationPane.add(emailLabel, 0, 5);
-        registrationPane.add(emailTextField, 0, 6);
-        registrationPane.setHalignment(salutationLabel, HPos.LEFT);
-        registrationPane.add(salutationLabel, 1, 5);
-        registrationPane.add(salutationTextField, 1, 6);
-        registrationPane.setHalignment(referralLabel, HPos.LEFT);
-        registrationPane.add(referralLabel, 2, 5);
-        registrationPane.add(referralTextField, 2, 6);
-        registrationPane.setHalignment(phoneLabel, HPos.LEFT);
-        registrationPane.add(phoneLabel, 0, 7);
-        registrationPane.add(phoneTextField, 0, 8);
-        registrationPane.setHalignment(lionsMemberLabel, HPos.LEFT);
-        registrationPane.add(lionsMemberLabel, 1, 7);
-        registrationPane.add(lionsMemberTextField, 1, 8);
-        registrationPane.add(registrationButton, 2, 8);
+        HBox row1 = new HBox(75);
+        HBox row2 = new HBox(75);
+        HBox row3 = new HBox();
+        HBox row4 = new HBox();
+        HBox row5 = new HBox();
+        HBox row6 = new HBox();
+        HBox row7 = new HBox();
+        HBox row8 = new HBox();
 
 
-        getChildren().addAll(introbox, registrationPane);
+        row1.getChildren().addAll(surnameLabel, insertionLabel, firstnameLabel);
+        row2.getChildren().addAll(surnameTextField, insertionTextField, firstnameTextField);
+        row3.getChildren().addAll(streetnameLabel,streetnrLabel,zipcodeLabel);
+        row4.getChildren().addAll(streetnameTextField, streetnrTextField, zipcodeTextField);
+        row5.getChildren().addAll(emailLabel,salutationLabel,referralLabel);
+        row6.getChildren().addAll(emailTextField,salutationTextField,referralTextField);
+        row7.getChildren().addAll(phoneLabel,lionsMemberLabel);
+        row8.getChildren().addAll(phoneTextField,lionsMemberTextField,registrationButton);
+
+        contentPane.add(row1, 0, 0);
+        contentPane.add(row2, 0, 1);
+        contentPane.add(row3, 0, 2);
+        contentPane.add(row4, 0, 3);
+        contentPane.add(row5, 0, 4);
+        contentPane.add(row6, 0, 5);
+        contentPane.add(row7, 0, 6);
+        contentPane.add(row8, 0, 7);
+
+        getChildren().addAll(introbox, contentPane);
 
     }
 }
