@@ -14,9 +14,11 @@ import views.Applet;
 
 
 public class NavigationController extends AnchorPane {
-    private Button homeButton, mailButton, customersButton, debtorsButton;
+    private Button homeButton, mailButton, debtorsButton;
     private ComboBox<TextFlow> orderMenu;
+    private ComboBox<TextFlow> customerMenu;
     private ObservableList<TextFlow> orderOptions;
+    private ObservableList<TextFlow> customerOptions;
     private ScreensController screensController;
 
     public NavigationController(ScreensController screensController) {
@@ -36,8 +38,10 @@ public class NavigationController extends AnchorPane {
         navGrid.setHgap(10);
         
         //Default text combobox
-        Hyperlink defaultLink = new Hyperlink("Bestellijst");
-        defaultLink.getStyleClass().add("default_hyperlink");
+        Hyperlink orderDefaultLink = new Hyperlink("Bestellijst");
+        Hyperlink customerDefaultLink = new Hyperlink("Klanten");
+        orderDefaultLink.getStyleClass().add("default_hyperlink");
+        customerDefaultLink.getStyleClass().add("default_hyperlink");
         
         //Home Button
         homeButton = new Button("Home");
@@ -48,10 +52,11 @@ public class NavigationController extends AnchorPane {
         //Order ComboBox
         orderMenu = new ComboBox<TextFlow>(orderOptions);
         orderMenu.getStyleClass().add("nav_item");
-        orderMenu.setValue(new TextFlow(defaultLink));
+        orderMenu.setValue(new TextFlow(orderDefaultLink));
         //Customer Button
-        customersButton = new Button("Klanten Menu");
-        customersButton.getStyleClass().add("nav_item");
+        customerMenu = new ComboBox<TextFlow>(customerOptions);
+        customerMenu.setValue(new TextFlow(customerDefaultLink));
+        customerMenu.getStyleClass().add("nav_item");
         //Debtors Button
         debtorsButton = new Button("Debiteuren Menu");
         debtorsButton.getStyleClass().add("nav_end");
@@ -65,38 +70,51 @@ public class NavigationController extends AnchorPane {
             screensController.screenSet(Applet.getMailid());
         });
         //For the Customer button, set CustomerScreen
-        customersButton.setOnAction(e -> {
-            screensController.screenSet(Applet.getCustomersid());
-        });
         // debtor button event.
         debtorsButton.setOnAction(e -> {
             screensController.screenSet(Applet.getDebiteurenid());
         });
         //make the NavBar
         hbButtons.getChildren().addAll(homeButton, mailButton, orderMenu, 
-          customersButton, debtorsButton);
+          customerMenu, debtorsButton);
         navGrid.add(hbButtons, 2, 2);
         getChildren().addAll(navGrid);
 }
     //This will be generating the dropdown options, Event handling in progress
     private void generateDropDownOptions() {
-    	Hyperlink orderList = new Hyperlink("Bestellijst 1");
-    	Hyperlink orderList2 = new Hyperlink("Bestellijst 2");
-    	orderList.getStyleClass().add("default_hyperlink");
-    	orderList2.getStyleClass().add("default_hyperlink");
-    	
-    	orderList.setOnAction(event -> {
+    	Hyperlink orderLink1 = new Hyperlink("Bestellijst 1");
+    	Hyperlink orderLink2 = new Hyperlink("Bestellijst 2");
+    	orderLink1.getStyleClass().add("default_hyperlink");
+    	orderLink2.getStyleClass().add("default_hyperlink");
+    	Hyperlink customerLink1 = new Hyperlink("Customer 1");
+    	Hyperlink customerLink2 = new Hyperlink("Customer 2");
+    	customerLink1.getStyleClass().add("default_hyperlink");
+    	customerLink2.getStyleClass().add("default_hyperlink");
+    	orderLink1.setOnAction(event -> {
 			// no link defined yet, placeholder
 			// screensController.screenSet(Applet.getMailid());
 		});
     	
-    	orderList2.setOnAction(event -> {
+    	orderLink2.setOnAction(event -> {
+			// no link defined yet, placeholder
+			// screensController.screenSet(Applet.getMailid());
+		});
+    	customerLink1.setOnAction(event -> {
 			// no link defined yet, placeholder
 			// screensController.screenSet(Applet.getMailid());
 		});
     	
-    	TextFlow orderFlow1 = new TextFlow(orderList);
-    	TextFlow orderFlow2 = new TextFlow(orderList2);
+    	customerLink2.setOnAction(event -> {
+			// no link defined yet, placeholder
+			// screensController.screenSet(Applet.getMailid());
+		});
+    	TextFlow orderFlow1 = new TextFlow(orderLink1);
+    	TextFlow orderFlow2 = new TextFlow(orderLink2);
+    	TextFlow customerFlow1 = new TextFlow(customerLink1);
+    	TextFlow customerFlow2 = new TextFlow(customerLink2);
+    	
+    	
         orderOptions = FXCollections.observableArrayList(orderFlow1, orderFlow2);
+        customerOptions = FXCollections.observableArrayList(customerFlow1, customerFlow2);
     }
 }
