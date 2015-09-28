@@ -17,22 +17,8 @@ public class Customer {
     private String phone;
     private String lionsMember;
 
+    public Customer() {
 
-    public Customer(String lastname, String firstname, String insertion, String streetname,
-                    int streetnr, String zipcode, String city, String email, String salutation,
-                    String referral, String phone, String lionsMember) {
-        this.lastname = lastname;
-        this.firstname = firstname;
-        this.insertion = insertion;
-        this.streetname = streetname;
-        this.streetnr = streetnr;
-        this.zipcode = zipcode;
-        this.city = city;
-        this.email = email;
-        this.salutation = salutation;
-        this.referral = referral;
-        this.phone = phone;
-        this.lionsMember = lionsMember;
     }
 
     public String getLastname() {
