@@ -1,6 +1,7 @@
 package views;
 
 import DAO.Database;
+import controllers.ControllersController;
 import controllers.NavigationController;
 import controllers.ScreensController;
 import javafx.application.Application;
@@ -14,36 +15,28 @@ import java.sql.SQLException;
 
 public class Applet extends Application {
     private static Stage stage;
-    private static ScreensController screensController;
     private Database database;
-    private NavigationController navigationController;
-    private static final String HOMEID = "home";
-    private static final String ORDERLISTPRINTID = "orderlistprint";
-    private static final String MAILID = "mail";
-    private static final String CUSTOMERSID = "customers";
-    private static final String DEBITEURENID = "debiteuren";
-    private static final String REGISTRATIONID = "registration";
+    private ControllersController CC;
 
     public void start(Stage stage) throws SQLException {
-        try {
-            this.database = Database.getInstance();
-        } catch (SQLException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Database Connection - ERROR");
-            alert.setContentText("Er kan geen verbinding gemaakt worden met de database");
-            alert.showAndWait().ifPresent(response -> {
-                if (response == ButtonType.OK) {
-                    System.exit(0);
-                }
-            });
-        }
+//        try {
+//            this.database = Database.getInstance();
+//        } catch (SQLException ex) {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setHeaderText("Database Connection - ERROR");
+//            alert.setContentText("Er kan geen verbinding gemaakt worden met de database");
+//            alert.showAndWait().ifPresent(response -> {
+//                if (response == ButtonType.OK) {
+//                    System.exit(0);
+//                }
+//            });
+//        }
 
         //maakt de controller voor de schermen aan, handelt het display van de schermen af.
-        fillScreensController();
-        navigationController = new NavigationController(screensController);
+        this.CC = new ControllersController();
         //zet wel scherm er actief moet zijn
         Group root = new Group();
-        root.getChildren().addAll(screensController, navigationController);
+        root.getChildren().addAll(CC.getScreensController(), this.CC.getNavigationController());
         Scene scene = new Scene(root, 1200, 800);
         scene.getStylesheets()
             .addAll(this.getClass().getResource("../style/style.css").toExternalForm());
@@ -56,45 +49,4 @@ public class Applet extends Application {
 
 
     }
-
-    private void fillScreensController() {
-        screensController = new ScreensController();
-        screensController.screenLoad(Applet.getHomeid(), new HomeView());
-        screensController.screenLoad(Applet.getOrderlistprintid(), new OrderlistPrintView());
-        screensController.screenLoad(Applet.getMailid(), new MailView());
-        screensController.screenLoad(Applet.getCustomersid(), new CustomersView());
-        screensController.screenLoad(Applet.getRegistrationid(), new RegistrationView());
-        screensController.screenLoad(Applet.getDebiteurenid(), new DebtorsView());
-        screensController.screenSet(Applet.getHomeid());
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    public static String getHomeid() {
-        return HOMEID;
-    }
-
-    public static String getOrderlistprintid() {
-        return ORDERLISTPRINTID;
-    }
-
-    public static String getMailid() {
-        return MAILID;
-    }
-
-    public static String getDebiteurenid() {
-        return DEBITEURENID;
-    }
-
-    public static String getCustomersid() {
-        return CUSTOMERSID;
-    }
-
-    public static String getRegistrationid() {
-        return REGISTRATIONID;
-    }
-
-
 }

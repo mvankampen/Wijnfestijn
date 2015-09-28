@@ -4,8 +4,10 @@ import views.HomeView;
 
 public class HomeController {
 	HomeView homeView;
+	private ScreensController screensController;
 	
-	public HomeController(HomeView homeView){
+	public HomeController(HomeView homeView, ScreensController screensController){
+		this.screensController = screensController;
 		this.homeView = homeView;
 		addHyperlinkEventHandling();
 	}
@@ -13,8 +15,8 @@ public class HomeController {
 	public void addHyperlinkEventHandling(){
 		// Setting the directions for the hyperlinks on row 1
 		homeView.orderlistLink.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
+			System.out.println("hai");
+			screensController.screenSet(ControllersController.getMAILID());
 		});
 		homeView.orderLink1.setOnAction(event -> {
 			// no link defined yet, placeholder
