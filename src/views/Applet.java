@@ -1,15 +1,21 @@
 package views;
 
+import DAO.Database;
 import controllers.NavigationController;
 import controllers.ScreensController;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+
+import java.sql.SQLException;
 
 public class Applet extends Application {
     private static Stage stage;
     private static ScreensController screensController;
+    private Database database;
     private NavigationController navigationController;
     private static final String HOMEID = "home";
     private static final String ORDERLISTPRINTID = "orderlistprint";
@@ -18,7 +24,20 @@ public class Applet extends Application {
     private static final String DEBITEURENID = "debiteuren";
     private static final String REGISTRATIONID = "registration";
 
-    public void start(Stage stage) {
+    public void start(Stage stage) throws SQLException {
+        try {
+            this.database = Database.getInstance();
+        } catch (SQLException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Database Connection - ERROR");
+            alert.setContentText("Er kan geen verbinding gemaakt worden met de database");
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    System.exit(0);
+                }
+            });
+        }
+
         //maakt de controller voor de schermen aan, handelt het display van de schermen af.
         fillScreensController();
         navigationController = new NavigationController(screensController);
@@ -34,6 +53,7 @@ public class Applet extends Application {
         stage.setResizable(false);
         stage.setTitle("A WarnerBrothers Product");
         stage.show();
+
 
     }
 
