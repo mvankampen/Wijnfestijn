@@ -4,16 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import views.Applet;
 
 
 public class NavigationController extends AnchorPane {
     private Button homeButton, mailButton, customersButton, debtorsButton;
-    private ComboBox<String> orderMenu;
-    private ObservableList<String> orderOptions;
+    private ComboBox<TextFlow> orderMenu;
+    private ObservableList<TextFlow> orderOptions;
     private ScreensController screensController;
 
     public NavigationController(ScreensController screensController) {
@@ -31,6 +34,11 @@ public class NavigationController extends AnchorPane {
         HBox hbButtons = new HBox();
         navGrid.setVgap(59);
         navGrid.setHgap(10);
+        
+        //Default text combobox
+        Hyperlink defaultLink = new Hyperlink("Bestellijst");
+        defaultLink.getStyleClass().add("default_hyperlink");
+        
         //Home Button
         homeButton = new Button("Home");
         homeButton.getStyleClass().add("nav_item");
@@ -38,9 +46,9 @@ public class NavigationController extends AnchorPane {
         mailButton = new Button("Mail Menu");
         mailButton.getStyleClass().add("nav_item");
         //Order ComboBox
-        orderMenu = new ComboBox<String>(orderOptions);
+        orderMenu = new ComboBox<TextFlow>(orderOptions);
         orderMenu.getStyleClass().add("nav_item");
-        orderMenu.setValue("Bestel Menu");
+        orderMenu.setValue(new TextFlow(defaultLink));
         //Customer Button
         customersButton = new Button("Klanten Menu");
         customersButton.getStyleClass().add("nav_item");
@@ -72,6 +80,23 @@ public class NavigationController extends AnchorPane {
 }
     //This will be generating the dropdown options, Event handling in progress
     private void generateDropDownOptions() {
-        orderOptions = FXCollections.observableArrayList("option 1", "option 2");
+    	Hyperlink orderList = new Hyperlink("Bestellijst 1");
+    	Hyperlink orderList2 = new Hyperlink("Bestellijst 2");
+    	orderList.getStyleClass().add("default_hyperlink");
+    	orderList2.getStyleClass().add("default_hyperlink");
+    	
+    	orderList.setOnAction(event -> {
+			// no link defined yet, placeholder
+			// screensController.screenSet(Applet.getMailid());
+		});
+    	
+    	orderList2.setOnAction(event -> {
+			// no link defined yet, placeholder
+			// screensController.screenSet(Applet.getMailid());
+		});
+    	
+    	TextFlow orderFlow1 = new TextFlow(orderList);
+    	TextFlow orderFlow2 = new TextFlow(orderList2);
+        orderOptions = FXCollections.observableArrayList(orderFlow1, orderFlow2);
     }
 }
