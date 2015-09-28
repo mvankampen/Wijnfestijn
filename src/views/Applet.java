@@ -17,12 +17,6 @@ public class Applet extends Application {
     private static Stage stage;
     private Database database;
     private ControllersController CC;
-    private static final String HOMEID = "home";
-    private static final String ORDERLISTPRINTID = "orderlistprint";
-    private static final String MAILID = "mail";
-    private static final String CUSTOMERSID = "customers";
-    private static final String DEBITEURENID = "debiteuren";
-    private static final String REGISTRATIONID = "registration";
 
     public void start(Stage stage) throws SQLException {
 //        try {
@@ -40,7 +34,6 @@ public class Applet extends Application {
 
         //maakt de controller voor de schermen aan, handelt het display van de schermen af.
         this.CC = new ControllersController();
-        fillScreensController();
         //zet wel scherm er actief moet zijn
         Group root = new Group();
         root.getChildren().addAll(CC.getScreensController(), this.CC.getNavigationController());
@@ -55,16 +48,5 @@ public class Applet extends Application {
         stage.show();
 
 
-    }
-
-    private void fillScreensController() {
-        // Id's komen nog uit applet, nog fixen.
-        this.CC.getScreensController().screenLoad(this.CC.getHOMEID(), new HomeView());
-        this.CC.getScreensController().screenLoad(this.CC.getORDERLISTPRINTID(), new OrderlistPrintView());
-        this.CC.getScreensController().screenLoad(this.CC.getMAILID(), new MailView());
-        this.CC.getScreensController().screenLoad(this.CC.getCUSTOMERSID(), new CustomersView());
-        this.CC.getScreensController().screenLoad(this.CC.getREGISTRATIONID(), new RegistrationView());
-        this.CC.getScreensController().screenLoad(this.CC.getDEBITEURENID(), new DebtorsView());
-        this.CC.getScreensController().screenSet(this.CC.getHOMEID());
     }
 }

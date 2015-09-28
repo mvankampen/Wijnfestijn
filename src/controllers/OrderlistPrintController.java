@@ -1,15 +1,15 @@
 package controllers;
 
 import views.OrderListView;
-import views.OrderlistPrintView;
+import views.OrderListPrintView;
 
 /**
  * Created by Sander de Jong on 28-9-2015.
  */
-public class OrderlistPrintController {
-    private OrderlistPrintView orderlistPrintViewView;
+public class OrderListPrintController {
+    private OrderListPrintView orderlistPrintViewView;
 
-    public OrderlistPrintController(OrderlistPrintView orderlistPrintViewView) {
-        this.orderlistPrintViewView = new OrderlistPrintView();
+    public OrderListPrintController(OrderListPrintView orderlistPrintViewView) {
+        this.orderlistPrintViewView = new OrderListPrintView();
     }
 }

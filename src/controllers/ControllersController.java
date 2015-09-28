@@ -17,9 +17,17 @@ public class ControllersController {
     private DebtorsController debtorsController;
     private HomeController homeController;
     private MailController mailController;
-    private OrderlistPrintController orderlistPrintController;
+    private OrderListPrintController orderListPrintController;
     private OrderListController orderListController;
     private RegistrationController registrationController;
+    
+    private HomeView homeView;
+    private MailView mailView;
+    private OrderListPrintView orderListPrintView;
+    private CustomersView customersView;
+    private RegistrationView registrationView;
+    private OrderListView orderListView;
+    private DebtorsView debtorsView; 
 
     private static final String HOMEID = "home";
     private static final String ORDERLISTPRINTID = "orderlistprint";
@@ -29,22 +37,45 @@ public class ControllersController {
     private static final String REGISTRATIONID = "registration";
 
     public ControllersController() {
-        createControllers();
+    	createViews();
+    	createControllers();
+        fillScreensController();
     }
 
+    
+    private void createViews() {
+    	homeView = new HomeView();
+    	mailView = new MailView();
+    	orderListPrintView = new OrderListPrintView();
+    	customersView = new CustomersView();
+    	registrationView = new RegistrationView();
+    	orderListView = new OrderListView();
+    	debtorsView = new DebtorsView();
+    	
+    }
     private void createControllers() {
         this.screensController = new ScreensController();
+        this.homeController = new HomeController(homeView, this.screensController);
         this.navigationController = new NavigationController(this.screensController);
-        this.customerController = new CustomerController(new CustomersView(), new CustomerDAO());
-        this.debtorsController = new DebtorsController(new DebtorsView(), new OrderDAO(), new CustomerDAO());
-        this.homeController = new HomeController(new HomeView());
-        this.mailController = new MailController(new MailView());
-        this.orderlistPrintController = new OrderlistPrintController(new OrderlistPrintView());
-        this.orderListController = new OrderListController(new OrderListView());
-        this.registrationController = new RegistrationController(new RegistrationView(), new CustomerDAO(),
+        this.customerController = new CustomerController(customersView, new CustomerDAO());
+        this.debtorsController = new DebtorsController(debtorsView, new OrderDAO(), new CustomerDAO());
+        this.mailController = new MailController(mailView);
+        this.orderListPrintController = new OrderListPrintController(orderListPrintView);
+        this.orderListController = new OrderListController(orderListView);
+        this.registrationController = new RegistrationController(registrationView, new CustomerDAO(),
                 new Customer());
     }
-
+    public void fillScreensController() {
+        // Id's komen nog uit applet, nog fixen.
+    	screensController.screenLoad(getHOMEID(),homeView);
+        screensController.screenLoad(getORDERLISTPRINTID(), orderListPrintView);
+       	screensController.screenLoad(getMAILID(), mailView);
+        screensController.screenLoad(getCUSTOMERSID(), customersView);
+        screensController.screenLoad(getREGISTRATIONID(), registrationView);
+        screensController.screenLoad(getDEBITEURENID(), debtorsView);
+        screensController.screenSet(getHOMEID());
+    }
+    
     public ScreensController getScreensController() {
         return screensController;
     }

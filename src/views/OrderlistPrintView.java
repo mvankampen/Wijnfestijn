@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * Created by Sander de Jong on 21-9-2015.
  */
-public class OrderlistPrintView extends AnchorPane implements ControlledScreen  {
+public class OrderListPrintView extends AnchorPane implements ControlledScreen  {
     private ScreensController screensController;
     private Label lblSummary;
     private Label lblCountText;
@@ -22,7 +22,7 @@ public class OrderlistPrintView extends AnchorPane implements ControlledScreen  
         this.screensController = screensController;
     }
 
-    public OrderlistPrintView() {
+    public OrderListPrintView() {
         maakView();
     }
 

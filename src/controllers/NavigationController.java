@@ -63,16 +63,16 @@ public class NavigationController extends AnchorPane {
         /*make lambda event handling*/
         //For the home button, set HomeScreen
         homeButton.setOnAction(e -> {
-            screensController.screenSet(Applet.getHomeid());
+            screensController.screenSet(ControllersController.getHOMEID());
         });
         //For the mail button, set MailScreen
         mailButton.setOnAction(e -> {
-            screensController.screenSet(Applet.getMailid());
+            screensController.screenSet(ControllersController.getMAILID());
         });
         //For the Customer button, set CustomerScreen
         // debtor button event.
         debtorsButton.setOnAction(e -> {
-            screensController.screenSet(Applet.getDebiteurenid());
+            screensController.screenSet(ControllersController.getDEBITEURENID());
         });
         //make the NavBar
         hbButtons.getChildren().addAll(homeButton, mailButton, orderMenu, 
