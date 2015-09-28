@@ -3,12 +3,11 @@ package views;
 import controllers.ScreensController;
 import interfaces.ControlledScreen;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 
 /**
  * Created by michael on 22-09-15.
@@ -46,7 +45,8 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         GridPane contentPane = new GridPane();
         contentPane.setLayoutY(275);
         contentPane.setLayoutX(100);
-        contentPane.setHgap(150);
+        contentPane.setHgap(50);
+        contentPane.setVgap(25);
         String introText =
             "Registreer jezelf voor het wijnproef evenement doormiddel van het invullen van alle onderstaande data.\nNadat je op de knop hebt gedrukt kun je jouw bestellijst ophalen bij de balie zodat je wijnen kunt gaan proeven.";
         this.introLabel = new Label(introText);
@@ -57,7 +57,7 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         this.surnameTextField = new TextField();
         this.insertionLabel = new Label("Tussenvoegsel :");
         this.insertionTextField = new TextField();
-        this.firstnameLabel = new Label("Voornaam / initialen :");
+        this.firstnameLabel = new Label("Voornaam :");
         this.firstnameTextField = new TextField();
         this.streetnameLabel = new Label("Straat :");
         this.streetnameTextField = new TextField();
@@ -78,33 +78,35 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         this.registrationButton = new Button("Registreer");
         this.registrationButton.getStyleClass().add("form_buttons");
 
-        HBox row1 = new HBox(75);
-        HBox row2 = new HBox(75);
-        HBox row3 = new HBox();
-        HBox row4 = new HBox();
-        HBox row5 = new HBox();
-        HBox row6 = new HBox();
-        HBox row7 = new HBox();
-        HBox row8 = new HBox();
 
+        VBox group1 = new VBox();
+        group1.getChildren().addAll(surnameLabel, surnameTextField);
+        VBox group2 = new VBox(streetnameLabel, streetnameTextField);
+        VBox group3 = new VBox(emailLabel, emailTextField);
+        VBox group4 = new VBox(phoneLabel, phoneTextField);
+        VBox group5 = new VBox(insertionLabel, insertionTextField);
+        VBox group6 = new VBox(streetnrLabel, streetnrTextField);
+        VBox group7 = new VBox(salutationLabel, salutationTextField);
+        VBox group8 = new VBox(lionsMemberLabel, lionsMemberTextField);
+        VBox group9 = new VBox(firstnameLabel, firstnameTextField);
+        VBox group10 = new VBox(zipcodeLabel, zipcodeTextField);
+        VBox group11 = new VBox(referralLabel, referralTextField);
+        VBox group12 = new VBox(registrationButton);
 
-        row1.getChildren().addAll(surnameLabel, insertionLabel, firstnameLabel);
-        row2.getChildren().addAll(surnameTextField, insertionTextField, firstnameTextField);
-        row3.getChildren().addAll(streetnameLabel,streetnrLabel,zipcodeLabel);
-        row4.getChildren().addAll(streetnameTextField, streetnrTextField, zipcodeTextField);
-        row5.getChildren().addAll(emailLabel,salutationLabel,referralLabel);
-        row6.getChildren().addAll(emailTextField,salutationTextField,referralTextField);
-        row7.getChildren().addAll(phoneLabel,lionsMemberLabel);
-        row8.getChildren().addAll(phoneTextField,lionsMemberTextField,registrationButton);
+        contentPane.add(group1, 0, 0);
+        contentPane.add(group2, 0, 1);
+        contentPane.add(group3, 0, 2);
+        contentPane.add(group4, 0, 3);
+        contentPane.add(group5, 1, 0);
+        contentPane.add(group6, 1, 1);
+        contentPane.add(group7, 1, 2);
+        contentPane.add(group8, 1, 3);
+        contentPane.add(group9, 2, 0);
+        contentPane.add(group10, 2, 1);
+        contentPane.add(group11, 2, 2);
+        contentPane.add(group12, 2, 3);
 
-        contentPane.add(row1, 0, 0);
-        contentPane.add(row2, 0, 1);
-        contentPane.add(row3, 0, 2);
-        contentPane.add(row4, 0, 3);
-        contentPane.add(row5, 0, 4);
-        contentPane.add(row6, 0, 5);
-        contentPane.add(row7, 0, 6);
-        contentPane.add(row8, 0, 7);
+        //contentPane.add(group4, 3, 4);
 
         getChildren().addAll(introbox, contentPane);
 
