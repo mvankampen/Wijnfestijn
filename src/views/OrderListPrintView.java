@@ -30,7 +30,7 @@ public class OrderListPrintView extends AnchorPane implements ControlledScreen  
         getStyleClass().add("background");
         setMinSize(1200, 800);
         lblSummary = new Label(
-            "Hier kunt u de gepersonaliseerde bestellijsten uit printen voor de klanten.");
+                "Hier kunt u de gepersonaliseerde bestellijsten uit printen voor de klanten.");
         lblCountText = new Label("Aantal bestellingen die geprint moeten worden:");
         lblCount = new Label("10");
         lblSelectText = new Label("Selecteer welke bestellijst u wilt uit printen");
