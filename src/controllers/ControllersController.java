@@ -17,7 +17,7 @@ public class ControllersController {
     private DebtorsController debtorsController;
     private HomeController homeController;
     private MailController mailController;
-    private OrderListPrintController orderListPrintController;
+   // private OrderListPrintController orderListPrintController;
     private OrderListController orderListController;
     private RegistrationController registrationController;
     
@@ -61,7 +61,7 @@ public class ControllersController {
         this.customerController = new CustomerController(customersView, new CustomerDAO());
         this.debtorsController = new DebtorsController(debtorsView, new OrderDAO(), new CustomerDAO());
         this.mailController = new MailController(mailView);
-        this.orderListPrintController = new OrderListPrintController(orderListPrintView);
+    //    this.orderListPrintController = new OrderListPrintController(orderListPrintView);
         this.orderListController = new OrderListController(orderListView);
         this.registrationController = new RegistrationController(registrationView, new CustomerDAO(),
                 new Customer());
