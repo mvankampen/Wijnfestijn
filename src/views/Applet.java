@@ -19,6 +19,9 @@ public class Applet extends Application {
     private ControllersController CC;
 
     public void start(Stage stage) throws SQLException {
+        // Dit is voor sander combo box crash
+        System.setProperty("glass.accessible.force", "false");
+
 //        try {
 //            this.database = Database.getInstance();
 //        } catch (SQLException ex) {
