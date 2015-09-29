@@ -2,9 +2,11 @@ package controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,6 +22,8 @@ public class NavigationController extends AnchorPane {
     private ObservableList<TextFlow> orderOptions;
     private ObservableList<TextFlow> customerOptions;
     private ScreensController screensController;
+    
+    TextFlow orderFlow1, orderFlow2;
 
     public NavigationController(ScreensController screensController) {
         this.screensController = screensController;
@@ -53,6 +57,22 @@ public class NavigationController extends AnchorPane {
         orderMenu = new ComboBox<TextFlow>(orderOptions);
         orderMenu.getStyleClass().add("nav_item");
         orderMenu.setValue(new TextFlow(orderDefaultLink));
+        orderMenu.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                String item = orderMenu.getSelectionModel().getSelectedItem().toString();
+                String flow1 = orderFlow1.parentProperty().getName().toString();
+                String flow2 = orderFlow2.getParent().toString();
+                
+                System.out.println(item + "<-- geklikt item");
+                System.out.println(flow1);
+                
+                if(item.equals(flow1)){
+                	System.out.println("geen equals, bitch");
+                }
+                //System.out.println("--" + item + "--" + flow1 + "--" + flow2);
+            }
+        });
         //Customer Button
         customerMenu = new ComboBox<TextFlow>(customerOptions);
         customerMenu.setValue(new TextFlow(customerDefaultLink));
@@ -108,8 +128,8 @@ public class NavigationController extends AnchorPane {
 			// no link defined yet, placeholder
 			// screensController.screenSet(Applet.getMailid());
 		});
-    	TextFlow orderFlow1 = new TextFlow(orderLink1);
-    	TextFlow orderFlow2 = new TextFlow(orderLink2);
+    	orderFlow1 = new TextFlow(orderLink1);
+    	orderFlow2 = new TextFlow(orderLink2);
     	TextFlow customerFlow1 = new TextFlow(customerLink1);
     	TextFlow customerFlow2 = new TextFlow(customerLink2);
     	
