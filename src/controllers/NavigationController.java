@@ -25,7 +25,7 @@ public class NavigationController extends AnchorPane {
     private ObservableList<TextFlow> customerOptions;
     private ScreensController screensController;
     
-    TextFlow orderFlow1, orderFlow2;
+    private TextFlow orderFlow1, orderFlow2;
 
     public NavigationController(ScreensController screensController) {
         this.screensController = screensController;
@@ -64,10 +64,10 @@ public class NavigationController extends AnchorPane {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (newValue != null) {
-                    switch(newValue) {
-                        case "Bestellijst 1":  System.out.println("1");  break;
-                        case "Bestellijst 2":  System.out.println("2");  break;
-                    }
+                	switch(newValue) {
+                	case "Bestellijst 1":  linkList1();  break;
+                	case "Bestellijst 2":  linkList2();  break;
+            	}
                 }
             }
         });
@@ -151,5 +151,15 @@ public class NavigationController extends AnchorPane {
     	
         orderOptions = FXCollections.observableArrayList("Bestellijst 1", "Bestellijst 2");
         customerOptions = FXCollections.observableArrayList(customerFlow1, customerFlow2);
+    }
+    
+    public void linkList1(){
+    	screensController.screenSet(ControllersController.getORDERLISTPRINTID());
+    	orderMenu.setValue("Bestellijst");
+    }
+    
+    public void linkList2(){
+    	screensController.screenSet(ControllersController.getORDERLISTID());
+    	orderMenu.setValue("Bestellijst");
     }
 }
