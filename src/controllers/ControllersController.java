@@ -31,6 +31,7 @@ public class ControllersController {
 
     private static final String HOMEID = "home";
     private static final String ORDERLISTPRINTID = "orderlistprint";
+    private static final String ORDERLISTID = "orderlist";
     private static final String MAILID = "mail";
     private static final String CUSTOMERSID = "customers";
     private static final String DEBITEURENID = "debiteuren";
@@ -72,6 +73,7 @@ public class ControllersController {
        	screensController.screenLoad(getMAILID(), mailView);
         screensController.screenLoad(getCUSTOMERSID(), customersView);
         screensController.screenLoad(getREGISTRATIONID(), registrationView);
+        screensController.screenLoad(getORDERLISTID(), orderListView);
         screensController.screenLoad(getDEBITEURENID(), debtorsView);
         screensController.screenSet(getHOMEID());
     }
@@ -107,4 +109,9 @@ public class ControllersController {
     public static String getREGISTRATIONID() {
         return REGISTRATIONID;
     }
+
+
+	public static String getORDERLISTID() {
+		return ORDERLISTID;
+	}
 }
