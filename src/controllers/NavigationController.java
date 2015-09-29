@@ -1,5 +1,7 @@
 package controllers;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -17,9 +19,9 @@ import views.Applet;
 
 public class NavigationController extends AnchorPane {
     private Button homeButton, mailButton, debtorsButton;
-    private ComboBox<TextFlow> orderMenu;
+    private ComboBox<String> orderMenu;
     private ComboBox<TextFlow> customerMenu;
-    private ObservableList<TextFlow> orderOptions;
+    private ObservableList<String> orderOptions;
     private ObservableList<TextFlow> customerOptions;
     private ScreensController screensController;
     
@@ -54,25 +56,38 @@ public class NavigationController extends AnchorPane {
         mailButton = new Button("Mail Menu");
         mailButton.getStyleClass().add("nav_item");
         //Order ComboBox
-        orderMenu = new ComboBox<TextFlow>(orderOptions);
+        orderMenu = new ComboBox<>(orderOptions);
         orderMenu.getStyleClass().add("nav_item");
-        orderMenu.setValue(new TextFlow(orderDefaultLink));
-        orderMenu.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        orderMenu.setItems(orderOptions);
+        orderMenu.setValue("Bestellijst");
+        orderMenu.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void handle(MouseEvent t) {
-                String item = orderMenu.getSelectionModel().getSelectedItem().toString();
-                String flow1 = orderFlow1.parentProperty().getName().toString();
-                String flow2 = orderFlow2.getParent().toString();
-                
-                System.out.println(item + "<-- geklikt item");
-                System.out.println(flow1);
-                
-                if(item.equals(flow1)){
-                	System.out.println("geen equals, bitch");
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue != null) {
+                    switch(newValue) {
+                        case "Bestellijst 1":  System.out.println("1");  break;
+                        case "Bestellijst 2":  System.out.println("2");  break;
+                    }
                 }
-                //System.out.println("--" + item + "--" + flow1 + "--" + flow2);
             }
         });
+
+//        orderMenu.setOnMouseClicked(t -> {
+//            String item = orderMenu.getSelectionModel().getSelectedItem().toString();
+//            String flow1 = orderFlow1.parentProperty().getName().toString();
+//            String flow2 = orderFlow2.getParent().toString();
+//
+////            System.out.println(orderMenu.getSelectionModel().selectedItemProperty());
+//
+//            System.out.println(item + "<-- geklikt item");
+//            System.out.println(flow1);
+//
+//            if (item.equals(flow1)) {
+//                System.out.println("geen equals, bitch");
+//            }
+//            //System.out.println("--" + item + "--" + flow1 + "--" + flow2);
+//        });
+
         //Customer Button
         customerMenu = new ComboBox<TextFlow>(customerOptions);
         customerMenu.setValue(new TextFlow(customerDefaultLink));
@@ -134,7 +149,7 @@ public class NavigationController extends AnchorPane {
     	TextFlow customerFlow2 = new TextFlow(customerLink2);
     	
     	
-        orderOptions = FXCollections.observableArrayList(orderFlow1, orderFlow2);
+        orderOptions = FXCollections.observableArrayList("Bestellijst 1", "Bestellijst 2");
         customerOptions = FXCollections.observableArrayList(customerFlow1, customerFlow2);
     }
 }
