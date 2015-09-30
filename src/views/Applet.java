@@ -15,26 +15,11 @@ import java.sql.SQLException;
 
 public class Applet extends Application {
     private static Stage stage;
-    private Database database;
     private ControllersController CC;
 
     public void start(Stage stage) throws SQLException {
         // Dit is voor sander combo box crash
         System.setProperty("glass.accessible.force", "false");
-
-//        try {
-//            this.database = Database.getInstance();
-//        } catch (SQLException ex) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setHeaderText("Database Connection - ERROR");
-//            alert.setContentText("Er kan geen verbinding gemaakt worden met de database");
-//            alert.showAndWait().ifPresent(response -> {
-//                if (response == ButtonType.OK) {
-//                    System.exit(0);
-//                }
-//            });
-//        }
-
         //maakt de controller voor de schermen aan, handelt het display van de schermen af.
         this.CC = new ControllersController();
         //zet wel scherm er actief moet zijn
