@@ -8,6 +8,7 @@ import DAO.Database;
 import DAO.OrderDAO;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.AnchorPane;
 import models.Customer;
 import models.Mail;
 import services.MailService;
@@ -36,13 +37,14 @@ public class ControllersController {
 	private DebtorsView debtorsView;
 	private Database database;
 	private Connection connection;
+	private NavigationView navigationView;
 
 	private static final String HOMEID = "home";
 	private static final String ORDERLISTPRINTID = "orderlistprint";
 	private static final String ORDERLISTID = "orderlist";
 	private static final String MAILID = "mail";
 	private static final String CUSTOMERSID = "customers";
-	private static final String DEBITEURENID = "debiteuren";
+	private static final String DEBTORID = "debiteuren";
 	private static final String REGISTRATIONID = "registration";
 
 	public ControllersController() {
@@ -75,13 +77,13 @@ public class ControllersController {
 		registrationView = new RegistrationView();
 		orderListView = new OrderListView();
 		debtorsView = new DebtorsView();
-
+		navigationView = new NavigationView();
 	}
 
 	private void createControllers() {
 		this.screensController = new ScreensController();
 		this.homeController = new HomeController(homeView, this.screensController);
-		this.navigationController = new NavigationController(this.screensController);
+		this.navigationController = new NavigationController(this.screensController, navigationView);
 		this.customerController = new CustomerController(customersView, new CustomerDAO(connection));
 		this.debtorsController = new DebtorsController(debtorsView, new OrderDAO(), new CustomerDAO(connection));
 		this.mailController = new MailController(mailView);
@@ -99,7 +101,7 @@ public class ControllersController {
 		screensController.screenLoad(getCUSTOMERSID(), customersView);
 		screensController.screenLoad(getREGISTRATIONID(), registrationView);
 		screensController.screenLoad(getORDERLISTID(), orderListView);
-		screensController.screenLoad(getDEBITEURENID(), debtorsView);
+		screensController.screenLoad(getDEBTORID(), debtorsView);
 		screensController.screenSet(getHOMEID());
 	}
 
@@ -127,8 +129,8 @@ public class ControllersController {
 		return CUSTOMERSID;
 	}
 
-	public static String getDEBITEURENID() {
-		return DEBITEURENID;
+	public static String getDEBTORID() {
+		return DEBTORID;
 	}
 
 	public static String getREGISTRATIONID() {
@@ -137,5 +139,9 @@ public class ControllersController {
 
 	public static String getORDERLISTID() {
 		return ORDERLISTID;
+	}
+	
+	public NavigationView getNavigationView(){
+		return navigationView;
 	}
 }

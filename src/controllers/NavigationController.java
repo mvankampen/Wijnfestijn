@@ -9,120 +9,70 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import views.NavigationView;
 
 public class NavigationController extends AnchorPane {
-    private Button homeButton, mailButton, debtorsButton;
-    private ComboBox<String> orderMenu;
-    private ComboBox<String> customerMenu;
-    private ObservableList<String> orderOptions;
-    private ObservableList<String> customerOptions;
+    private NavigationView navigationView;
     private ScreensController screensController;
-    
-    // Create names for links
-    private final String ORDERTITLE = "Bestellijsten";
-    private final String ORDER1 = "Print lijsten";
-    private final String ORDER2 = "Order opstellen";
-    private final String CUSTOMERTITLE = "Klanten";
-    private final String CUSTOMER1 = "Aanpassen";
-    private final String CUSTOMER2 = "Registratie";
 
-    public NavigationController(ScreensController screensController) {
+    public NavigationController(ScreensController screensController, NavigationView navigationView) {
         this.screensController = screensController;
-        createNavbar();
+        this.navigationView = navigationView;
+        generateHandlers();
     }
 
-    public void createNavbar() {
-     //generateDropDownOptions();
-     generateContentGrid();
-    }
-    public void generateContentGrid(){
-    	orderOptions = FXCollections.observableArrayList(ORDER1, ORDER2);
-        customerOptions = FXCollections.observableArrayList(CUSTOMER1, CUSTOMER2);
-    	
-        //Make the gridpane for the Navigation buttons
-        GridPane navGrid = new GridPane();
-        HBox hbButtons = new HBox();
-        navGrid.setVgap(59);
-        navGrid.setHgap(10);
-        
-        //Home Button
-        homeButton = new Button("Home");
-        homeButton.getStyleClass().add("nav_item");
-        //Mail Button
-        mailButton = new Button("Mail Menu");
-        mailButton.getStyleClass().add("nav_item");
-        //Order ComboBox
-        orderMenu = new ComboBox<>(orderOptions);
-        orderMenu.getStyleClass().add("nav_item");
-        orderMenu.setValue(ORDERTITLE);
-        orderMenu.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+    public void generateHandlers(){
+    	navigationView.orderMenu.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            	customerMenu.setValue(CUSTOMERTITLE);
+            	navigationView.customerMenu.setValue(navigationView.CUSTOMERTITLE);
             	if (newValue != null) {
-	            	switch(newValue) {
-	            	case ORDER1:
+	            	if(newValue.equals(navigationView.ORDER1)){
 	            		screensController.screenSet(ControllersController.getORDERLISTPRINTID());
-	            		break;
-	            	case ORDER2:
+	            	}
+	            	else if(newValue.equals(navigationView.ORDER2)){
 	            		screensController.screenSet(ControllersController.getORDERLISTID());
-	            		break;
-	            	default:
 	            	}
                 }
             }
         });
-
-        //Customer Button
-        customerMenu = new ComboBox<String>(customerOptions);
-        customerMenu.setValue(CUSTOMERTITLE);
-        customerMenu.getStyleClass().add("nav_item");
-        customerMenu.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+    	
+    	navigationView.customerMenu.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            	orderMenu.setValue(ORDERTITLE);
+            	navigationView.orderMenu.setValue(navigationView.ORDERTITLE);
             	if (newValue != null) {
-	            	switch(newValue) {
-	            	case CUSTOMER1:
-	            		screensController.screenSet(ControllersController.getCUSTOMERSID());
-	            		break;
-	            	case CUSTOMER2:
+            		if(newValue.equals(navigationView.CUSTOMER1)){
+            			screensController.screenSet(ControllersController.getCUSTOMERSID());
+	            	}
+	            	else if(newValue.equals(navigationView.CUSTOMER2)){
 	            		screensController.screenSet(ControllersController.getREGISTRATIONID());
-	            		break;
-	            	default:
+	            	}
+	            	else if(newValue.equals(navigationView.CUSTOMER3)){
+	            		screensController.screenSet(ControllersController.getDEBTORID());
 	            	}
                 }
             }
         });
-        //Debtors Button
-        debtorsButton = new Button("Debiteuren Menu");
-        debtorsButton.getStyleClass().add("nav_end");
-        /*make lambda event handling*/
-        //For the home button, set HomeScreen
-        homeButton.setOnAction(e -> {
+    	//For the home button, set HomeScreen
+    	navigationView.homeButton.setOnAction(e -> {
             screensController.screenSet(ControllersController.getHOMEID());
             setComboBoxDefault();
         });
         //For the mail button, set MailScreen
-        mailButton.setOnAction(e -> {
+    	navigationView.mailButton.setOnAction(e -> {
             screensController.screenSet(ControllersController.getMAILID());
             setComboBoxDefault();
         });
         //For the Customer button, set CustomerScreen
-        // debtor button event.
-        debtorsButton.setOnAction(e -> {
-            screensController.screenSet(ControllersController.getDEBITEURENID());
-            setComboBoxDefault();
-        });
-        //make the NavBar
-        hbButtons.getChildren().addAll(homeButton, mailButton, orderMenu, 
-          customerMenu, debtorsButton);
-        navGrid.add(hbButtons, 2, 2);
-        getChildren().addAll(navGrid);
-}
+    	navigationView.settingsButton.setOnAction( e ->{
+    		//screensController.screenSet settings <------------------
+    		setComboBoxDefault();
+    	});
+    }
     // Set the ComboBox back to default value
     public void setComboBoxDefault(){
-    	orderMenu.setValue(ORDERTITLE);
-        customerMenu.setValue(CUSTOMERTITLE);
+    	navigationView.orderMenu.setValue(navigationView.ORDERTITLE);
+    	navigationView.customerMenu.setValue(navigationView.CUSTOMERTITLE);
     }
 }

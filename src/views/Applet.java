@@ -24,7 +24,7 @@ public class Applet extends Application {
         this.CC = new ControllersController();
         //zet wel scherm er actief moet zijn
         Group root = new Group();
-        root.getChildren().addAll(CC.getScreensController(), this.CC.getNavigationController());
+        root.getChildren().addAll(CC.getScreensController(), this.CC.getNavigationView());
         Scene scene = new Scene(root, 1200, 800);
         scene.getStylesheets()
             .addAll(this.getClass().getResource("../style/style.css").toExternalForm());
