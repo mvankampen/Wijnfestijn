@@ -42,11 +42,14 @@ public class NavigationController extends AnchorPane {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             	navigationView.orderMenu.setValue(navigationView.ORDERTITLE);
             	if (newValue != null) {
-            		if(newValue.equals(navigationView.ORDER1)){
+            		if(newValue.equals(navigationView.CUSTOMER1)){
             			screensController.screenSet(ControllersController.getCUSTOMERSID());
 	            	}
-	            	else if(newValue.equals(navigationView.ORDER2)){
+	            	else if(newValue.equals(navigationView.CUSTOMER2)){
 	            		screensController.screenSet(ControllersController.getREGISTRATIONID());
+	            	}
+	            	else if(newValue.equals(navigationView.CUSTOMER3)){
+	            		screensController.screenSet(ControllersController.getDEBTORID());
 	            	}
                 }
             }
@@ -62,11 +65,10 @@ public class NavigationController extends AnchorPane {
             setComboBoxDefault();
         });
         //For the Customer button, set CustomerScreen
-        // debtor button event.
-    	navigationView.debtorsButton.setOnAction(e -> {
-            screensController.screenSet(ControllersController.getDEBITEURENID());
-            setComboBoxDefault();
-        });
+    	navigationView.settingsButton.setOnAction( e ->{
+    		//screensController.screenSet settings <------------------
+    		setComboBoxDefault();
+    	});
     }
     // Set the ComboBox back to default value
     public void setComboBoxDefault(){

@@ -14,7 +14,7 @@ public class NavigationView extends AnchorPane{
 
 	private ScreensController screensController;
 	
-	public Button homeButton, mailButton, debtorsButton;
+	public Button homeButton, mailButton, settingsButton;
     public ComboBox<String> orderMenu;
     public ComboBox<String> customerMenu;
     public ObservableList<String> orderOptions;
@@ -27,6 +27,7 @@ public class NavigationView extends AnchorPane{
     public final String CUSTOMERTITLE = "Klanten";
     public final String CUSTOMER1 = "Aanpassen";
     public final String CUSTOMER2 = "Registratie";
+    public final String CUSTOMER3 = "Betalingen";
 
 	
 	public NavigationView(){
@@ -40,7 +41,7 @@ public class NavigationView extends AnchorPane{
 	
 	public void generateContentGrid(){
     	orderOptions = FXCollections.observableArrayList(ORDER1, ORDER2);
-        customerOptions = FXCollections.observableArrayList(CUSTOMER1, CUSTOMER2);
+        customerOptions = FXCollections.observableArrayList(CUSTOMER1, CUSTOMER2, CUSTOMER3);
     	
         //Make the gridpane for the Navigation buttons
         GridPane navGrid = new GridPane();
@@ -51,27 +52,27 @@ public class NavigationView extends AnchorPane{
         //Home Button
         homeButton = new Button("Home");
         homeButton.getStyleClass().add("nav_item");
+        
         //Mail Button
         mailButton = new Button("Mail Menu");
         mailButton.getStyleClass().add("nav_item");
+        
         //Order ComboBox
         orderMenu = new ComboBox<>(orderOptions);
         orderMenu.getStyleClass().add("nav_item");
         orderMenu.setValue(ORDERTITLE);
         
-
-        //Customer Button
+        //Customer ComboBox
         customerMenu = new ComboBox<String>(customerOptions);
         customerMenu.setValue(CUSTOMERTITLE);
         customerMenu.getStyleClass().add("nav_item");
         
-        //Debtors Button
-        debtorsButton = new Button("Debiteuren Menu");
-        debtorsButton.getStyleClass().add("nav_end");
+        //Settings Button
+        settingsButton = new Button("Instellingen");
+        settingsButton.getStyleClass().add("nav_item");
         
         //make the NavBar
-        hbButtons.getChildren().addAll(homeButton, mailButton, orderMenu, 
-        								customerMenu, debtorsButton);
+        hbButtons.getChildren().addAll(homeButton, mailButton, orderMenu, customerMenu, settingsButton);
         navGrid.add(hbButtons, 2, 2);
         getChildren().addAll(navGrid);
 	}
