@@ -18,13 +18,10 @@ public class NavigationController extends AnchorPane {
     public NavigationController(ScreensController screensController, NavigationView navigationView) {
         this.screensController = screensController;
         this.navigationView = navigationView;
-        createNavbar();
+        generateHandlers();
     }
 
-    public void createNavbar() {
-     generateContentGrid();
-    }
-    public void generateContentGrid(){
+    public void generateHandlers(){
     	navigationView.orderMenu.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -54,7 +51,7 @@ public class NavigationController extends AnchorPane {
                 }
             }
         });
-    	
+    	//For the home button, set HomeScreen
     	navigationView.homeButton.setOnAction(e -> {
             screensController.screenSet(ControllersController.getHOMEID());
             setComboBoxDefault();
