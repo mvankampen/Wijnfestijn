@@ -27,6 +27,7 @@ public class ControllersController {
 	// private OrderListPrintController orderListPrintController;
 	private OrderListController orderListController;
 	private RegistrationController registrationController;
+	private SettingsController settingsController;
 
 	private HomeView homeView;
 	private MailView mailView;
@@ -38,6 +39,7 @@ public class ControllersController {
 	private Database database;
 	private Connection connection;
 	private NavigationView navigationView;
+	private SettingsView settingsView;
 
 	private static final String HOMEID = "home";
 	private static final String ORDERLISTPRINTID = "orderlistprint";
@@ -46,6 +48,7 @@ public class ControllersController {
 	private static final String CUSTOMERSID = "customers";
 	private static final String DEBTORID = "debiteuren";
 	private static final String REGISTRATIONID = "registration";
+	private static final String SETTINGSID = "settings";
 
 	public ControllersController() {
 		createViews();
@@ -78,6 +81,7 @@ public class ControllersController {
 		orderListView = new OrderListView();
 		debtorsView = new DebtorsView();
 		navigationView = new NavigationView();
+		settingsView = new SettingsView();
 	}
 
 	private void createControllers() {
@@ -87,6 +91,7 @@ public class ControllersController {
 		this.customerController = new CustomerController(customersView, new CustomerDAO(connection));
 		this.debtorsController = new DebtorsController(debtorsView, new OrderDAO(), new CustomerDAO(connection));
 		this.mailController = new MailController(mailView);
+		this.settingsController = new SettingsController(settingsView);
 		// this.orderListPrintController = new
 		// OrderListPrintController(orderListPrintView);
 		this.orderListController = new OrderListController(orderListView);
@@ -102,6 +107,7 @@ public class ControllersController {
 		screensController.screenLoad(getREGISTRATIONID(), registrationView);
 		screensController.screenLoad(getORDERLISTID(), orderListView);
 		screensController.screenLoad(getDEBTORID(), debtorsView);
+		screensController.screenLoad(getSETTINGSID(), settingsView);
 		screensController.screenSet(getHOMEID());
 	}
 
@@ -139,6 +145,10 @@ public class ControllersController {
 
 	public static String getORDERLISTID() {
 		return ORDERLISTID;
+	}
+	
+	public static String getSETTINGSID() {
+		return SETTINGSID;
 	}
 	
 	public NavigationView getNavigationView(){

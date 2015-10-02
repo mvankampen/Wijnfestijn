@@ -66,7 +66,7 @@ public class NavigationController extends AnchorPane {
         });
         //For the Customer button, set CustomerScreen
     	navigationView.settingsButton.setOnAction( e ->{
-    		//screensController.screenSet settings <------------------
+    		screensController.screenSet(ControllersController.getSETTINGSID());
     		setComboBoxDefault();
     	});
     }
