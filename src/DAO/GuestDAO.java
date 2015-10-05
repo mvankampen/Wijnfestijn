@@ -1,7 +1,6 @@
 package DAO;
 
-import models.Order;
-import models.OrderLine;
+import models.Guest;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,26 +10,67 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Sander de Jong on 22-9-2015.
+ * Created by michael on 29-09-15.
  */
-public class OrderDAO {
+public class GuestDAO {
 
     private Connection connection;
     private PreparedStatement preparedStatement;
 
-    public OrderDAO(Connection connection) {
+    public GuestDAO(Connection connection) {
         this.connection = connection;
     }
 
-    // insertOrder
 
+    public void addGuest(Guest guest) {
+        try {
+            this.preparedStatement = null;
+            String sqlQuery = "INSERT INTO guest"
+                + "(guest_id, guest_timestamp, guest_lastname, guest_infix, guest_firstname, guest_salutation, guest_street, guest_streetnr, guest_zipcode, guest_city, guest_email, guest_phone, guest_comment, guest_referral) VALUES"
+                + "(DEFAULT, TIMESTAMP, ?,?,?,?,?,?,?,?,?,?,?)";
+            this.preparedStatement = this.connection.prepareStatement(sqlQuery);
+            this.preparedStatement.setString(1, guest.getLastname());
+            this.preparedStatement.setString(2, guest.getInfix());
+            this.preparedStatement.setString(3, guest.getSalutation());
+            this.preparedStatement.setString(4, guest.getStreet());
+            this.preparedStatement.setString(5, guest.getStreetnr());
+            this.preparedStatement.setString(6, guest.getZipcode());
+            this.preparedStatement.setString(7, guest.getCity());
+            this.preparedStatement.setString(8, guest.getEmail());
+            this.preparedStatement.setString(9, guest.getPhone());
+            this.preparedStatement.setString(10, guest.getComment());
+            this.preparedStatement.setString(11, guest.getReferral());
+            this.preparedStatement.executeUpdate();
+            this.connection.commit();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            try {
+                connection.rollback();
+                if (connection != null) {
+                    System.err.print("Transaction is being rolled back ");
+                }
+            } catch (SQLException ex) {
+                e.printStackTrace();
+            }
+        } finally {
+            try {
+                if (this.preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (!connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
 
-    //updateOrder
-    public void updateCustomer(Order guest) {
+    public void updateCustomer(Guest guest) {
         try {
             this.preparedStatement = null;
             String sqlQuery =
-                "UPDATE  guest SET order_completed = ?,";
+                "UPDATE  guest SET guest_lastname = ?, guest_infix = ?, guest_firstname = ?, guest_salutation = ?, guest_street = ?, guest_streetnr = ?, guest_zipcode = ?, guest_city = ?, guest_email = ?, guest_phone = ?, guest_comment = ?, guest_referral = ?, guest_noshow = ?";
             this.preparedStatement = connection.prepareStatement(sqlQuery);
             this.preparedStatement.setString(1, guest.getLastname());
             this.preparedStatement.setString(2, guest.getInfix());
@@ -70,17 +110,16 @@ public class OrderDAO {
         }
     }
 
-    //getAllOrders
-    public List<Order> getAllOrders() {
-        List<Order> orderList = new ArrayList<Order>();
+    public List<Guest> findGuestByLastname(String lastname) {
+        List<Guest> guestList = new ArrayList<>();
         try {
             this.preparedStatement = null;
-            String sqlQuery = "SELECT * FROM order";
+            String sqlQuery = "SELECT * FROM guest WHERE guest_lastname LIKE %?%";
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, lastname);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                OrderLine orderLine = new OrderLine();
-                Order order = new Order();
+                Guest guest = new Guest();
                 guest.setLastname(resultSet.getString("guest_lastname"));
                 guest.setInfix(resultSet.getString("guest_infix"));
                 guest.setFirstname(resultSet.getString("guest_firstname"));
@@ -95,7 +134,7 @@ public class OrderDAO {
                 guest.setReferral(resultSet.getString("guest_referral"));
                 guest.setNo_show(resultSet.getBoolean("guest_noshow"));
 
-                orderList.add(guest);
+                guestList.add(guest);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,5 +152,4 @@ public class OrderDAO {
         }
         return guestList;
     }
-
 }
