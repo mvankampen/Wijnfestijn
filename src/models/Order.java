@@ -7,7 +7,6 @@ import java.util.Date;
  * Created by Sander de Jong on 21-9-2015.
  */
 public class Order {
-    
     private Guest guest;
     private ArrayList<OrderLine> orderLines;
     private Date date;

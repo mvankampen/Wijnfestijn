@@ -26,24 +26,14 @@ public class OrderDAO {
 
 
     //updateOrder
-    public void updateCustomer(Order guest) {
+    public void updateOrder(Order order) {
         try {
             this.preparedStatement = null;
             String sqlQuery =
-                "UPDATE  guest SET order_completed = ?,";
+                "UPDATE  guest SET order_completed = ? WHERE order_timestamp = ?";
             this.preparedStatement = connection.prepareStatement(sqlQuery);
-            this.preparedStatement.setString(1, guest.getLastname());
-            this.preparedStatement.setString(2, guest.getInfix());
-            this.preparedStatement.setString(3, guest.getSalutation());
-            this.preparedStatement.setString(4, guest.getStreet());
-            this.preparedStatement.setString(5, guest.getStreetnr());
-            this.preparedStatement.setString(6, guest.getZipcode());
-            this.preparedStatement.setString(7, guest.getCity());
-            this.preparedStatement.setString(8, guest.getEmail());
-            this.preparedStatement.setString(9, guest.getPhone());
-            this.preparedStatement.setString(10, guest.getComment());
-            this.preparedStatement.setString(11, guest.getReferral());
-            this.preparedStatement.setBoolean(12, guest.getNo_show());
+            this.preparedStatement.setBoolean(1, order.isCompleted());
+            //this.preparedStatement.setDate(2, order.getDate());
             this.preparedStatement.executeUpdate();
             this.connection.commit();
         } catch (SQLException e) {
