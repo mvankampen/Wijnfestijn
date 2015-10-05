@@ -13,16 +13,9 @@ public class Mail {
     private String subject;
     private String body;
 
-    public Mail(InternetAddress recipient, String subject, String body) {
-        this.recipients.add(recipient);
+    public Mail(String subject, String body) {
         this.subject = subject;
         this. body = body;
-    }
-
-    public Mail(ArrayList<InternetAddress> recipients, String subject, String body) {
-        this.recipients = recipients;
-        this.subject = subject;
-        this.body = body;
     }
 
     public ArrayList<InternetAddress> getRecipients() {
