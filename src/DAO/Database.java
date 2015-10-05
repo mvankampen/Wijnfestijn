@@ -25,6 +25,7 @@ public class Database {
             e.printStackTrace();
         }
         connection = DriverManager.getConnection(LOCATION + DB_NAME,USER,PASSWORD);
+        connection.setAutoCommit(false);
     }
 
     public static Database getInstance() throws SQLException {

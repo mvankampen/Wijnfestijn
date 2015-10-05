@@ -1,29 +1,33 @@
 package models;
 
+
+import java.util.Date;
+
 /**
  * Created by Sander de Jong on 21-9-2015.
  */
 public class Wine {
     private String name;
+    private Date insertDate;
     private String sort;
     private String publisher;
     private int year;
     private String category;
     private double price;
     private int rank;
+    private boolean active = false;
 
-    public Wine(String name, String sort, String publisher, int year, String category, double price, int rank) {
-        this.name = name;
-        this.sort = sort;
-        this.publisher = publisher;
-        this.year = year;
-        this.category = category;
-        this.price = price;
-        this.rank = rank;
+    public Wine() {
+        this.insertDate = new Date();
+        this.active = true;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Date getInsertDate() {
+        return insertDate;
     }
 
     public String getSort() {
@@ -50,8 +54,16 @@ public class Wine {
         return rank;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setInsertDate(Date insertDate) {
+        this.insertDate = insertDate;
     }
 
     public void setSort(String sort) {
@@ -76,5 +88,9 @@ public class Wine {
 
     public void setRank(int rank) {
         this.rank = rank;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

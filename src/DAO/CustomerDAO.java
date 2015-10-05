@@ -25,7 +25,6 @@ public class CustomerDAO {
         this.preparedStatement = null;
         String sqlQuery = "SELECT * FROM ";
         try {
-            this.connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(sqlQuery);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,7 +39,6 @@ public class CustomerDAO {
                 + "(customer_lastname, customer_firstname, customer_insertion, customer_streetname, customer_streetnr, customer_zipcode, customer_city, customer_email, customer_salutation, customer_referral, customer_phone, customer_lionsmember) VALUES"
                 + "(?,?,?,?,?,?,?,?,?,?,?,?)";
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
-            this.connection.setAutoCommit(false);
             this.preparedStatement.setString(1, customer.getLastname());
             this.preparedStatement.setString(2, customer.getFirstname());
             this.preparedStatement.setString(3, customer.getInsertion());
@@ -60,7 +58,7 @@ public class CustomerDAO {
             try {
                 connection.rollback();
                 if (connection != null) {
-                    System.err.print("Transaction is being rolled back");
+                    System.err.print("Transaction is being rolled back ");
                 }
             } catch (SQLException ex) {
                 e.printStackTrace();
@@ -69,6 +67,9 @@ public class CustomerDAO {
             try {
                 if (this.preparedStatement != null) {
                     preparedStatement.close();
+                }
+                if (!connection.isClosed()) {
+                    connection.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -79,7 +80,6 @@ public class CustomerDAO {
     public void updateCustomer(Customer customer) {
         try {
             this.preparedStatement = null;
-            this.connection.setAutoCommit(false);
             String sqlQuery =
                 "UPDATE  customer SET customer_lastname = ?, customer_firstname = ?, customer_insertion = ?, customer_streetname = ?, customer_streetnr = ?, customer_zipcode = ?, customer_city = ?, customer_email = ?, customer_salutation = ?, customer_referral = ?, customer_phone = ?, customer_lionsmember = ?";
             this.preparedStatement = connection.prepareStatement(sqlQuery);
@@ -102,7 +102,7 @@ public class CustomerDAO {
             try {
                 connection.rollback();
                 if (connection != null) {
-                    System.err.print("Transaction is being rolled back");
+                    System.err.print("Transaction is being rolled back ");
                 }
             } catch (SQLException ex) {
                 e.printStackTrace();
@@ -111,6 +111,9 @@ public class CustomerDAO {
             try {
                 if (this.preparedStatement != null) {
                     preparedStatement.close();
+                }
+                if (!connection.isClosed()) {
+                    connection.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -122,7 +125,7 @@ public class CustomerDAO {
         List<Customer> customerList = new ArrayList<>();
         try {
             this.preparedStatement = null;
-            String sqlQuery = "SELECT * FROM customer WHERE customer_lastname = ?";
+            String sqlQuery = "SELECT * FROM customer WHERE customer_lastname LIKE %?%";
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
             preparedStatement.setString(2, lastname);
             ResultSet resultSet = preparedStatement.executeQuery();
