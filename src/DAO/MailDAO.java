@@ -77,10 +77,11 @@ public class MailDAO {
         ArrayList<InternetAddress> emailArraylist = new ArrayList<>();
         try {
             this.preparedStatement = null;
-            String sqlQuery = "SELECT guest_email FROM guest, orders WHERE orders_guest_id = 1 AND orders_completed = FALSE";
+            String sqlQuery = "SELECT guest_email FROM guest, orders WHERE orders_guest_id = guest_id AND orders_completed = FALSE";
 
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
             ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println("resultset");
             while (resultSet.next()) {
                 emailArraylist.add(new InternetAddress(resultSet.getString("guest_email")));
             }
