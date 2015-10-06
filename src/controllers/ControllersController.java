@@ -1,18 +1,16 @@
 package controllers;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import DAO.CustomerDAO;
 import DAO.Database;
+import DAO.GuestDAO;
+import DAO.MailDAO;
 import DAO.OrderDAO;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.AnchorPane;
-import models.Customer;
-import models.Mail;
-import services.MailService;
+import models.Guest;
 import views.*;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Created by Sander de Jong on 28-9-2015.
@@ -88,14 +86,14 @@ public class ControllersController {
 		this.screensController = new ScreensController();
 		this.homeController = new HomeController(homeView, this.screensController);
 		this.navigationController = new NavigationController(this.screensController, navigationView);
-		this.customerController = new CustomerController(customersView, new CustomerDAO(connection));
-		this.debtorsController = new DebtorsController(debtorsView, new OrderDAO(), new CustomerDAO(connection));
-		this.mailController = new MailController(mailView);
+		this.customerController = new CustomerController(customersView, new GuestDAO(connection));
+		this.debtorsController = new DebtorsController(debtorsView, new OrderDAO(connection), new GuestDAO(connection));
+		this.mailController = new MailController(mailView, new MailDAO(connection));
 		this.settingsController = new SettingsController(settingsView);
 		// this.orderListPrintController = new
 		// OrderListPrintController(orderListPrintView);
 		this.orderListController = new OrderListController(orderListView);
-		this.registrationController = new RegistrationController(registrationView, new CustomerDAO(connection), new Customer());
+		this.registrationController = new RegistrationController(registrationView, new GuestDAO(connection), new Guest());
 	}
 
 	public void fillScreensController() {

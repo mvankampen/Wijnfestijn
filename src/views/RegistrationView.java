@@ -3,11 +3,13 @@ package views;
 import controllers.ScreensController;
 import interfaces.ControlledScreen;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
  * Created by michael on 22-09-15.

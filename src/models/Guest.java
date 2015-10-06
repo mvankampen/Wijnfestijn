@@ -22,6 +22,22 @@ public class Guest {
 
     }
 
+    public Guest(String lastname, String infix, String firstname, String salutation, String street,
+        String streetnr, String zipcode, String city, String email,String phone, String comment, String referral) {
+        this.lastname = lastname;
+        this.infix = infix;
+        this.firstname = firstname;
+        this.salutation = salutation;
+        this.street = street;
+        this.streetnr = streetnr;
+        this.zipcode = zipcode;
+        this.city = city;
+        this.email = email;
+        this.phone = phone;
+        this.comment = comment;
+        this.referral = referral;
+    }
+
     public String getLastname() {
         return lastname;
     }

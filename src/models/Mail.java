@@ -1,8 +1,6 @@
 package models;
 
-import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

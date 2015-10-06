@@ -12,8 +12,7 @@ public class Order {
     private Date date;
     private boolean completed = false;
 
-    public Order(ArrayList<OrderLine> orderLines) {
-        this.orderLines = orderLines;
+    public Order() {
         this.date = new Date();
     }
 

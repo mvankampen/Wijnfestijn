@@ -3,7 +3,6 @@ package DAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 
 /**
  * Created by michael on 28-09-15.
@@ -11,9 +10,9 @@ import java.util.Properties;
 public class Database {
     private static Database _instance;
     private Connection connection = null;
-    private static final String DB_NAME = "";
+    private static final String DB_NAME = "wijnfestijnDB";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "margje30";
     private static final String DRIVER = "org.postgresql.Driver";
     private static final String LOCATION = "jdbc:postgresql://localhost:5432/";
 
