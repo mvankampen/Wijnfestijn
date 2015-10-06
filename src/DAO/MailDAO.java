@@ -33,11 +33,11 @@ public class MailDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Guest guest = new Guest();
-                guest.setLastname(resultSet.getString("guest_lastname"));
+                guest.setSurname(resultSet.getString("guest_lastname"));
                 guest.setInfix(resultSet.getString("guest_infix"));
                 guest.setFirstname(resultSet.getString("guest_firstname"));
                 guest.setSalutation(resultSet.getString("guest_salutation"));
-                guest.setStreet(resultSet.getString("guest_street"));
+                guest.setStreetname(resultSet.getString("guest_street"));
                 guest.setStreetnr(resultSet.getString("guest_streetnr"));
                 guest.setZipcode(resultSet.getString("guest_zipcode"));
                 guest.setCity(resultSet.getString("guest_city"));

@@ -16,13 +16,15 @@ import javafx.scene.layout.VBox;
  */
 public class RegistrationView extends AnchorPane implements ControlledScreen {
     private ScreensController screensController;
-    @FXML Label introLabel, surnameLabel, insertionLabel, firstnameLabel, streetnameLabel,
+    @FXML Label introLabel, surnameLabel, infixLabel, firstnameLabel, streetnameLabel,
         streetnrLabel, zipcodeLabel, emailLabel, salutationLabel, referralLabel, phoneLabel,
         lionsMemberLabel;
-    @FXML TextField surnameTextField, insertionTextField, firstnameTextField, streetnameTextField,
+    @FXML TextField surnameTextField, infixTextField, firstnameTextField, streetnameTextField,
         streetnrTextField, zipcodeTextField, emailTextField, salutationTextField, referralTextField,
         phoneTextField, lionsMemberTextField;
     @FXML Button registrationButton;
+	private TextField cityTextField;
+	private Label cityTextLabel;
 
 
     @Override public void setScreenController(ScreensController screensController) {
@@ -57,8 +59,8 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
 
         this.surnameLabel = new Label("Achternaam :");
         this.surnameTextField = new TextField();
-        this.insertionLabel = new Label("Tussenvoegsel :");
-        this.insertionTextField = new TextField();
+        this.infixLabel = new Label("Tussenvoegsel :");
+        this.infixTextField = new TextField();
         this.firstnameLabel = new Label("Voornaam :");
         this.firstnameTextField = new TextField();
         this.streetnameLabel = new Label("Straat :");
@@ -77,6 +79,8 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         this.phoneTextField = new TextField();
         this.lionsMemberLabel = new Label("Vul naam in van Lions lid :");
         this.lionsMemberTextField = new TextField();
+        this.cityTextLabel = new Label("City");
+        this.cityTextField = new TextField();
         this.registrationButton = new Button("Registreer");
         this.registrationButton.getStyleClass().add("form_buttons");
 
@@ -86,7 +90,7 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         VBox group2 = new VBox(streetnameLabel, streetnameTextField);
         VBox group3 = new VBox(emailLabel, emailTextField);
         VBox group4 = new VBox(phoneLabel, phoneTextField);
-        VBox group5 = new VBox(insertionLabel, insertionTextField);
+        VBox group5 = new VBox(infixLabel, infixTextField);
         VBox group6 = new VBox(streetnrLabel, streetnrTextField);
         VBox group7 = new VBox(salutationLabel, salutationTextField);
         VBox group8 = new VBox(lionsMemberLabel, lionsMemberTextField);
@@ -113,4 +117,44 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         getChildren().addAll(introbox, contentPane);
 
     }
+    public String getSurname() {
+    	return this.surnameTextField.getText();
+    }
+    public String getStreetname() {
+    	return this.streetnameTextField.getText();
+    }
+    public String getEmail() {
+    	return this.emailTextField.getText();
+    }
+    public String getPhone() {
+    	return this.phoneTextField.getText();
+    }
+    public String getInfix() {
+    	return this.infixTextField.getText();
+    }
+    public String getStreetnr() {
+    	return this.streetnameTextField.getText();
+    }
+    public String getSalutation() {
+    	return this.salutationTextField.getText();
+    }
+    public String getlionsMember() {
+    	return this.lionsMemberTextField.getText();
+    }
+    public String getFirstname() {
+    	return this.firstnameTextField.getText();
+    }
+    public String getZipcode() {
+    	return this.zipcodeTextField.getText();
+    }
+    public String getCity() {
+    	return this.cityTextLabel.getText();
+    }
+    public String getReferral() {
+    	return this.referralTextField.getText();
+    }
+    public Button getRegistrationButton() {
+    	return this.registrationButton;
+    }
+    
 }

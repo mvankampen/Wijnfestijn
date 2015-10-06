@@ -4,46 +4,45 @@ package models;
  * Created by Sander de Jong on 21-9-2015.
  */
 public class Guest {
-    private String lastname;
+    private String surname;
     private String infix;
     private String firstname;
     private String salutation;
-    private String street;
+    private String streetname;
     private String streetnr;
     private String zipcode;
     private String city;
     private String email;
     private String phone;
     private String comment;
-    private String referal;
+    private String referral;
     private Boolean no_show;
 
     public Guest() {
 
     }
 
-    public Guest(String lastname, String infix, String firstname, String salutation, String street,
-        String streetnr, String zipcode, String city, String email,String phone, String comment, String referal) {
-        this.lastname = lastname;
+    public Guest(String surname, String infix, String firstname, String salutation, String streetname,
+        String streetnr, String zipcode, String city, String email,String phone, String referral) {
+        this.surname = surname;
         this.infix = infix;
         this.firstname = firstname;
         this.salutation = salutation;
-        this.street = street;
+        this.streetname = streetname;
         this.streetnr = streetnr;
         this.zipcode = zipcode;
         this.city = city;
         this.email = email;
         this.phone = phone;
-        this.comment = comment;
-        this.referal = referal;
+        this.referral = referral;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getInfix() {
@@ -70,12 +69,12 @@ public class Guest {
         this.salutation = salutation;
     }
 
-    public String getStreet() {
-        return street;
+    public String getStreetname() {
+        return streetname;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setStreetname(String streetname) {
+        this.streetname = streetname;
     }
 
     public String getStreetnr() {
@@ -127,11 +126,11 @@ public class Guest {
     }
 
     public String getReferal() {
-        return referal;
+        return referral;
     }
 
     public void setReferal(String referal) {
-        this.referal = referal;
+        this.referral = referal;
     }
 
     public Boolean getNo_show() {
