@@ -2,6 +2,8 @@ package DAO;
 
 import models.Guest;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,18 +33,18 @@ public class MailDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Guest guest = new Guest();
-                guest.setLastname(resultSet.getString("guest_lastname"));
+                guest.setSurname(resultSet.getString("guest_lastname"));
                 guest.setInfix(resultSet.getString("guest_infix"));
                 guest.setFirstname(resultSet.getString("guest_firstname"));
                 guest.setSalutation(resultSet.getString("guest_salutation"));
-                guest.setStreet(resultSet.getString("guest_street"));
+                guest.setStreetname(resultSet.getString("guest_street"));
                 guest.setStreetnr(resultSet.getString("guest_streetnr"));
                 guest.setZipcode(resultSet.getString("guest_zipcode"));
                 guest.setCity(resultSet.getString("guest_city"));
                 guest.setEmail(resultSet.getString("guest_email"));
                 guest.setPhone(resultSet.getString("guest_phone"));
                 guest.setComment(resultSet.getString("guest_comment"));
-                guest.setReferral(resultSet.getString("guest_referral"));
+                guest.setReferal(resultSet.getString("guest_referral"));
                 guest.setNo_show(resultSet.getBoolean("guest_noshow"));
 
                 guestList.add(guest);
@@ -71,19 +73,23 @@ public class MailDAO {
         return null;
     }
 
-    public ArrayList<String> outstandingOrders() {
-        ArrayList<String> emailArraylist = new ArrayList<String>();
+    public ArrayList<InternetAddress> getOpenOrderGuests() {
+        ArrayList<InternetAddress> emailArraylist = new ArrayList<>();
         try {
-            String sqlQuery = "SELECT guest_email " + "FROM guest, orders "
-                + "WHERE orders_guest_id = guest_id AND orders_completed = FALSE";
+            this.preparedStatement = null;
+            String sqlQuery =
+                "SELECT guest_email FROM guest g INNER JOIN orders o ON o.orders_guest_id = g.guest_id WHERE o.orders_completed = FALSE";
 
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
             ResultSet resultSet = preparedStatement.executeQuery();
+
             while (resultSet.next()) {
-                emailArraylist.add(resultSet.getString("guest_email"));
+                emailArraylist.add(new InternetAddress(resultSet.getString("guest_email")));
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (AddressException e) {
             e.printStackTrace();
         }
         return emailArraylist;

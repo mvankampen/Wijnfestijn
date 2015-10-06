@@ -11,9 +11,9 @@ import java.util.Properties;
  * Created by Sander de Jong on 22-9-2015.
  */
 public class MailService {
-    private final String senderID = "";
-    private final String host = "";
-    private final String password = "";
+    private final String senderID = "groep5ipsenontvangbot@hotmail.com";
+    private final String host = "smtp.live.com";
+    private final String password = "Gro3p5IPSEN2";
     private Mail mail;
 
     public void sendMail() {

@@ -1,16 +1,15 @@
 package views;
 
 import DAO.Database;
+import DAO.GuestDAO;
 import controllers.ControllersController;
-import controllers.NavigationController;
-import controllers.ScreensController;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import models.Guest;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Applet extends Application {
@@ -23,6 +22,7 @@ public class Applet extends Application {
         //maakt de controller voor de schermen aan, handelt het display van de schermen af.
         this.CC = new ControllersController();
         //zet wel scherm er actief moet zijn
+
         Group root = new Group();
         root.getChildren().addAll(CC.getScreensController(), this.CC.getNavigationView());
         Scene scene = new Scene(root, 1200, 800);

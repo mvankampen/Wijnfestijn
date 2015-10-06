@@ -1,7 +1,7 @@
 package controllers;
 
-import DAO.CustomerDAO;
-import models.Customer;
+import DAO.GuestDAO;
+import models.Guest;
 import views.RegistrationView;
 
 /**
@@ -9,12 +9,22 @@ import views.RegistrationView;
  */
 public class RegistrationController {
     private RegistrationView registrationView;
-    private CustomerDAO customerDAO;
-    private Customer customer;
-
-    public RegistrationController(RegistrationView registrationView, CustomerDAO customerDAO, Customer customer) {
+    private GuestDAO guestDAO;
+    private Guest guest;
+    public RegistrationController(RegistrationView registrationView, GuestDAO guestDAO) {
         this.registrationView = registrationView;
-        this.customerDAO = customerDAO;
-        this.customer = customer;
+        this.guestDAO = guestDAO;
+        this.registrationView.getRegistrationButton().setOnAction(e -> sendRegistration());
+        
+    }
+    
+    public void sendRegistration() {
+    	this.guest = new Guest(registrationView.getSurname(),
+    			registrationView.getInfix(), registrationView.getFirstname(),
+    			registrationView.getSalutation(), registrationView.getStreetname(), 
+    			registrationView.getStreetnr(), registrationView.getZipcode(), 
+    			registrationView.getCity(), registrationView.getEmail(), 
+    			registrationView.getPhone(), registrationView.getReferral());
+    	this.guestDAO.addGuest(guest);
     }
 }
