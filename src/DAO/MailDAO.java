@@ -65,9 +65,27 @@ public class MailDAO {
     }
 
     //Uitnodiging
+
     // Bedankmail
     public List<Guest> thanksMail() {
-
+        return null;
     }
-    // Herindering Factuur
+
+    public ArrayList<String> outstandingOrders() {
+        ArrayList<String> emailArraylist = new ArrayList<String>();
+        try {
+            String sqlQuery = "SELECT guest_email " + "FROM guest, orders "
+                + "WHERE orders_guest_id = guest_id AND orders_completed = FALSE";
+
+            this.preparedStatement = this.connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                emailArraylist.add(resultSet.getString("guest_email"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return emailArraylist;
+    }
 }
