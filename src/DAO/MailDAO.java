@@ -73,6 +73,7 @@ public class MailDAO {
         return null;
     }
 
+    //
     public ArrayList<InternetAddress> getOpenOrderGuests() {
         ArrayList<InternetAddress> emailArraylist = new ArrayList<>();
         try {

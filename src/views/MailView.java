@@ -1,7 +1,10 @@
 package views;
 
 import controllers.ScreensController;
+import enums.MailType;
 import interfaces.ControlledScreen;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -19,6 +22,7 @@ public class MailView extends AnchorPane implements ControlledScreen {
     private TextArea bodyTextArea;
     private final ToggleGroup inviteGroup = new ToggleGroup();
     private Button mailButton = new Button("Verzenden");
+    private MailType mailType;
 
     public MailView() {
         createView();
@@ -61,6 +65,7 @@ public class MailView extends AnchorPane implements ControlledScreen {
         String remindMailRbText = "Herinneringsmail";
         String inviteMailRbText = "Uitnodigingsmail";
         String thankMailRbText = "Bedankmail";
+        String orderReminderRbText = "Factuur herinneringsmail";
         //Creating items row 1
         Label titleLabel = new Label(titleText);
         Label bodyLabel = new Label(bodyText);
@@ -79,13 +84,27 @@ public class MailView extends AnchorPane implements ControlledScreen {
         RadioButton thankMailRb = new RadioButton(thankMailRbText);
         thankMailRb.setToggleGroup(this.inviteGroup);
         thankMailRb.getStyleClass().add("rbbuttons");
+        RadioButton orderReminderRb = new RadioButton(orderReminderRbText);
+        orderReminderRb.setToggleGroup(this.inviteGroup);
+        orderReminderRb.getStyleClass().add("rbbuttons");
         this.mailButton = new Button("Verzenden");
         mailButton.getStyleClass().add("form_buttons");
+
+        this.inviteGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                if (inviteGroup.getSelectedToggle() != null) {
+                    mailType = MailType.values()[inviteGroup.getToggles().indexOf(newValue)];
+                    System.out.println(mailType.toString());
+
+                }
+            }
+        });
 
         //Adding to VBoxes
         titleBox.getChildren().addAll(titleLabel, titleTextArea);
         bodyBox.getChildren().addAll(bodyLabel, bodyTextArea);
-        typeBox.getChildren().addAll(remindMailRb, inviteMailRb, thankMailRb);
+        typeBox.getChildren().addAll(remindMailRb, inviteMailRb, thankMailRb, orderReminderRb);
 
         //Adding items row 1
         contentPane.add(introLabel, 0, 1);
@@ -108,8 +127,8 @@ public class MailView extends AnchorPane implements ControlledScreen {
         return this.bodyTextArea.getText();
     }
 
-    public Toggle getMailOption() {
-        return this.inviteGroup.getSelectedToggle();
+    public MailType getMailOption() {
+        return this.mailType;
     }
 
     public Button getMailButton() {

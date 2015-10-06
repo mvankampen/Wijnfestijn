@@ -24,7 +24,20 @@ public class MailController {
     public void sendMail() {
         System.out.println("test");
         this.mail = new Mail(this.mailView.getSubject(), this.mailView.getBody());
-        this.mail.setRecipients(this.mailDAO.getOpenOrderGuests());
+        switch (this.mailView.getMailOption()) {
+            case REMINDER:
+                System.out.println("reminder method aanroepen");
+                break;
+            case INVITATIONAL:
+                System.out.println("invitational method aanroepen (wss zelfde als reminder)");
+                break;
+            case THANKYOU:
+                System.out.println("Thank you method aanroepen");
+                break;
+            case OPENORDER:
+                this.mail.setRecipients(this.mailDAO.getOpenOrderGuests());
+                break;
+        }
         this.mailService.setMail(this.mail);
         this.mailService.sendMail();
     }
