@@ -8,86 +8,77 @@ import java.util.Date;
  */
 public class Wine {
     private String name;
-    private Date insertDate;
-    private String sort;
-    private String publisher;
-    private int year;
     private String category;
-    private double price;
-    private int rank;
-    private boolean active = false;
+    private String publisher;
+    private String type;
+    private String year;
+    private Double price;
+    private String rank;
+    private boolean active;
+
 
     public Wine() {
-        this.insertDate = new Date();
-        this.active = true;
     }
 
     public String getName() {
         return name;
     }
 
-    public Date getInsertDate() {
-        return insertDate;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public int getYear() {
-        return year;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCategory() {
         return category;
     }
 
-    public double getPrice() {
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public Double getPrice() {
         return price;
     }
 
-    public int getRank() {
-        return rank;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setInsertDate(Date insertDate) {
-        this.insertDate = insertDate;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
 
-    public void setYear(int year) {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
         this.year = year;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+
+    public String getRank() {
+        return rank;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public void setRank(int rank) {
+    public void setRank(String rank) {
         this.rank = rank;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     public void setActive(boolean active) {
