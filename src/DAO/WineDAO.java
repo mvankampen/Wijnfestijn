@@ -98,8 +98,8 @@ public class WineDAO {
         try {
             this.preparedStatement = null;
             String sqlQuery = "INSERT INTO wine"
-                + "(wine_id, wine_timstamp, wine_name, wine_category, wine_type, wine_publisher, wine_year, wine_price, wine_rank) VALUES "
-                + "(DEFAULT, TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ? ,?)";
+                + "(wine_name, wine_category, wine_type, wine_publisher, wine_year, wine_price, wine_rank) VALUES "
+                + "(?, ?, ?, ?, ?, ?, ?, ? ,?)";
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
 
             for (int i = 0; i < wines.size(); i++) {
@@ -141,7 +141,7 @@ public class WineDAO {
         try {
             this.preparedStatement = null;
             String sqlQuery =
-                "UPDATE wine SET wine_name = ?, wine_category = ?, wine_type = ?, wine_publisher = ?, wine_year = ?, wine_price = ?, wine_rank = ?, wine_active = ?";
+                "UPDATE wine SET wine_name = ?, wine_category = ?, wine_type = ?, wine_publisher = ?, wine_year = ?, wine_price = ?, wine_rank = ?, wine_active = ? WHERE wine_name = ?";
             this.preparedStatement = connection.prepareStatement(sqlQuery);
             this.preparedStatement.setString(1, wine.getName());
             this.preparedStatement.setString(2, wine.getCategory());
@@ -151,6 +151,7 @@ public class WineDAO {
             this.preparedStatement.setDouble(6, wine.getPrice());
             this.preparedStatement.setString(7, wine.getRank());
             this.preparedStatement.setBoolean(8, wine.isActive());
+            this.preparedStatement.setString(9, wine.getName());
             this.preparedStatement.executeUpdate();
             this.connection.commit();
         } catch (SQLException e) {

@@ -15,7 +15,7 @@ public class Guest {
     private String email;
     private String phone;
     private String comment;
-    private String referral;
+    private String referal;
     private Boolean no_show;
 
     public Guest() {
@@ -23,7 +23,7 @@ public class Guest {
     }
 
     public Guest(String lastname, String infix, String firstname, String salutation, String street,
-        String streetnr, String zipcode, String city, String email,String phone, String comment, String referral) {
+        String streetnr, String zipcode, String city, String email,String phone, String comment, String referal) {
         this.lastname = lastname;
         this.infix = infix;
         this.firstname = firstname;
@@ -35,7 +35,7 @@ public class Guest {
         this.email = email;
         this.phone = phone;
         this.comment = comment;
-        this.referral = referral;
+        this.referal = referal;
     }
 
     public String getLastname() {
@@ -126,12 +126,12 @@ public class Guest {
         this.comment = comment;
     }
 
-    public String getReferral() {
-        return referral;
+    public String getReferal() {
+        return referal;
     }
 
-    public void setReferral(String referral) {
-        this.referral = referral;
+    public void setReferal(String referal) {
+        this.referal = referal;
     }
 
     public Boolean getNo_show() {

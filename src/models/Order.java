@@ -43,4 +43,8 @@ public class Order {
     public ArrayList<OrderLine> getOrderLines() {
         return orderLines;
     }
+
+    public void setOrderLines(ArrayList<OrderLine> orderLines) {
+        this.orderLines = orderLines;
+    }
 }
