@@ -133,7 +133,7 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     	return this.infixTextField.getText();
     }
     public String getStreetnr() {
-    	return this.streetnameTextField.getText();
+    	return this.streetnrTextField.getText();
     }
     public String getSalutation() {
     	return this.salutationTextField.getText();
