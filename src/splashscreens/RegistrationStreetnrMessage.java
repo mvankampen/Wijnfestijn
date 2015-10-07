@@ -1,8 +1,8 @@
 package splashscreens;
 
-public class RegistrationStreernrMessage extends RegistrationDefaultMessage {
+public class RegistrationStreetnrMessage extends RegistrationDefaultMessage {
 	SplashDefault splashDefault;
-	public RegistrationStreernrMessage(SplashDefault splashDefault)
+	public RegistrationStreetnrMessage(SplashDefault splashDefault)
 	{
 		this.splashDefault = splashDefault;
 	}

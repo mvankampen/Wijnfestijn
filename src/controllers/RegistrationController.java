@@ -78,7 +78,7 @@ public class RegistrationController {
     		i++;
     	}
     	if(streetnr.trim().equals( "" )) {
-    		registrationSplash = new RegistrationStreernrMessage(registrationSplash);
+    		registrationSplash = new RegistrationStreetnrMessage(registrationSplash);
     	}
     	if(!zipcodeValidator.validate(zipcode.trim())) {
   	   		registrationSplash = new RegistrationZipcodeMessage(registrationSplash);
