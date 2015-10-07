@@ -1,6 +1,7 @@
 package controllers;
 
-import DAO.GuestDAO;
+import DAO.CustomerDAO;
+import models.Customer;
 import views.CustomersView;
 
 /**
@@ -8,10 +9,10 @@ import views.CustomersView;
  */
 public class CustomerController {
     private CustomersView customersView;
-    private GuestDAO guestDAO;
+    private CustomerDAO customerDAO;
 
-    public CustomerController(CustomersView customersView, GuestDAO guestDAO) {
+    public CustomerController(CustomersView customersView, CustomerDAO customer) {
         this.customersView = customersView;
-        this.guestDAO = guestDAO;
+        this.customerDAO = customer;
     }
 }

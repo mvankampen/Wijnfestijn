@@ -90,3 +90,7 @@
 .form_buttons:hover,.form_buttons:focus{
 	-fx-text-fill:rgba(26, 61, 119, 0.5);
 }
+
+.redStar{
+	-fx-text-fill: red;
+}

@@ -2,12 +2,9 @@ package DAO;
 
 import models.Wine;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.sql.Date;
+import java.util.*;
 
 /**
  * Created by Sander de Jong on 22-9-2015.
@@ -21,23 +18,23 @@ public class WineDAO {
         this.connection = connection;
     }
 
-   /* public ArrayList<Wine> getAllWine(ArrayList<Integer> wineID) {
+    public List<Wine> getAllWine() {
         List<Wine> wineList = new ArrayList<>();
         try {
             this.preparedStatement = null;
-            String sqlQuery =
-                "SELECT * FROM wine";
+            String sqlQuery = "SELECT * FROM wine";
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Wine wine = new Wine();
                 wine.setName(resultSet.getString("wine_name"));
-                wine.setCategory(resultSet.getString("wine_category"));
-                wine.setType(resultSet.getString("wine_type"));
+                wine.setInsertDate(resultSet.getDate("wine_insert_date"));
+                wine.setSort(resultSet.getString("wine_sort"));
                 wine.setPublisher(resultSet.getString("wine_publisher"));
-                wine.setYear(resultSet.getString("wine_year"));
+                wine.setYear(resultSet.getInt("wine_year"));
+                wine.setCategory(resultSet.getString("wine_category"));
                 wine.setPrice(resultSet.getDouble("wine_price"));
-                wine.setRank(resultSet.getString("wine_rank"));
+                wine.setRank(resultSet.getInt("wine_rank"));
                 wine.setActive(resultSet.getBoolean("wine_active"));
                 wineList.add(wine);
             }
@@ -57,23 +54,25 @@ public class WineDAO {
         }
         return wineList;
     }
-    public Wine getWineByName(String wineName) {
+
+    public Wine getWineById(int wineID) {
         Wine wine = null;
         try {
             this.preparedStatement = null;
-            String sqlQuery = "SELECT * FROM wine WHERE wine_name = ?";
+            String sqlQuery = "SELECT * FROM wine WHERE wine_id = ?";
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
-            preparedStatement.setString(1, wineName);
+            preparedStatement.setInt(1, wineID);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 wine = new Wine();
                 wine.setName(resultSet.getString("wine_name"));
-                wine.setCategory(resultSet.getString("wine_category"));
-                wine.setType(resultSet.getString("wine_type"));
+                wine.setInsertDate(resultSet.getDate("wine_insert_date"));
+                wine.setSort(resultSet.getString("wine_sort"));
                 wine.setPublisher(resultSet.getString("wine_publisher"));
-                wine.setYear(resultSet.getString("wine_year"));
+                wine.setYear(resultSet.getInt("wine_year"));
+                wine.setCategory(resultSet.getString("wine_category"));
                 wine.setPrice(resultSet.getDouble("wine_price"));
-                wine.setRank(resultSet.getString("wine_rank"));
+                wine.setRank(resultSet.getInt("wine_rank"));
                 wine.setActive(resultSet.getBoolean("wine_active"));
             }
         } catch (SQLException e) {
@@ -91,24 +90,28 @@ public class WineDAO {
             }
         }
         return wine;
-    }*/
+    }
 
-    public void insertAllWines(List<Wine> wines) {
+    public void insertAllWine(List<Wine> wines) {
         try {
             this.preparedStatement = null;
             String sqlQuery = "INSERT INTO wine"
-                + "(wine_name, wine_category, wine_type, wine_publisher, wine_year, wine_price, wine_rank) VALUES "
+                + "(wine_name, wine_insert_date, wine_sort, wine_publisher, wine_year, wine_category, wine_price, wine_rank, wine_active) VALUES "
                 + "(?, ?, ?, ?, ?, ?, ?, ? ,?)";
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
 
             for (int i = 0; i < wines.size(); i++) {
                 preparedStatement.setString(1, wines.get(i).getName());
-                preparedStatement.setString(2, wines.get(i).getCategory());
-                preparedStatement.setString(3, wines.get(i).getType());
+                java.util.Date date =  wines.get(i).getInsertDate();
+                Date sqlDate = new Date(date.getTime());
+                preparedStatement.setDate(2,  sqlDate);
+                preparedStatement.setString(3, wines.get(i).getSort());
                 preparedStatement.setString(4, wines.get(i).getPublisher());
-                preparedStatement.setString(5, wines.get(i).getYear());
-                preparedStatement.setDouble(6, wines.get(i).getPrice());
-                preparedStatement.setString(7, wines.get(i).getRank());
+                preparedStatement.setInt(5, wines.get(i).getYear());
+                preparedStatement.setString(6, wines.get(i).getCategory());
+                preparedStatement.setDouble(7, wines.get(i).getPrice());
+                preparedStatement.setInt(8, wines.get(i).getRank());
+                preparedStatement.setBoolean(9, wines.get(i).isActive());
                 preparedStatement.executeUpdate();
             }
             this.connection.commit();
@@ -140,17 +143,19 @@ public class WineDAO {
         try {
             this.preparedStatement = null;
             String sqlQuery =
-                "UPDATE wine SET wine_name = ?, wine_category = ?, wine_type = ?, wine_publisher = ?, wine_year = ?, wine_price = ?, wine_rank = ?, wine_active = ? WHERE wine_name = ?";
+                "UPDATE wine SET wine_name = ?, wine_sort = ?, wine_publisher = ?, wine_year = ?, wine_category = ?, wine_price = ?, wine_rank = ?";
             this.preparedStatement = connection.prepareStatement(sqlQuery);
             this.preparedStatement.setString(1, wine.getName());
-            this.preparedStatement.setString(2, wine.getCategory());
-            this.preparedStatement.setString(3, wine.getType());
+            java.util.Date date =  wine.getInsertDate();
+            Date sqlDate = new Date(date.getTime());
+            this.preparedStatement.setDate(2, sqlDate);
+            this.preparedStatement.setString(3, wine.getSort());
             this.preparedStatement.setString(4, wine.getPublisher());
-            this.preparedStatement.setString(5, wine.getYear());
-            this.preparedStatement.setDouble(6, wine.getPrice());
-            this.preparedStatement.setString(7, wine.getRank());
-            this.preparedStatement.setBoolean(8, wine.isActive());
-            this.preparedStatement.setString(9, wine.getName());
+            this.preparedStatement.setInt(5, wine.getYear());
+            this.preparedStatement.setString(6, wine.getCategory());
+            this.preparedStatement.setDouble(7, wine.getPrice());
+            this.preparedStatement.setInt(8, wine.getRank());
+            this.preparedStatement.setBoolean(9, wine.isActive());
             this.preparedStatement.executeUpdate();
             this.connection.commit();
         } catch (SQLException e) {
