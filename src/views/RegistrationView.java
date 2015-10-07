@@ -15,13 +15,14 @@ import javafx.scene.layout.*;
  */
 public class RegistrationView extends AnchorPane implements ControlledScreen {
     private ScreensController screensController;
-    @FXML Label introLabel, surnameLabel, infixLabel, firstnameLabel, streetnameLabel,
+    	@FXML Label introLabel, surnameLabel, infixLabel, firstnameLabel, streetnameLabel,
         streetnrLabel, zipcodeLabel, emailLabel, salutationLabel, referralLabel, phoneLabel,
         lionsMemberLabel, cityLabel, starLabel1, starLabel2, starLabel3, starLabel4, starLabel5, starLabel6,
         starLabel7, starLabel8, starLabel9;
-    @FXML TextField surnameTextField, infixTextField, firstnameTextField, streetnameTextField,
+    	@FXML TextField surnameTextField, infixTextField, firstnameTextField, streetnameTextField,
         streetnrTextField, zipcodeTextField, emailTextField, phoneTextField, lionsMemberTextField, cityTextField;
     @FXML Button registrationButton;
+    ComboBox<String> salutationComboBox, referralComboBox;
 
 
     @Override public void setScreenController(ScreensController screensController) {
@@ -87,14 +88,14 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         this.emailLabel = new Label("E-mail:");
         this.emailTextField = new TextField();
         this.salutationLabel = new Label("Aanspreektitel:");
-        ComboBox<String> salutationComboBox = new ComboBox<String>();
+        salutationComboBox = new ComboBox<String>();
         salutationComboBox.getItems().addAll(
             "De heer",
             "Mevrouw",
             "De heer en mevrouw"
         );
         this.referralLabel = new Label("Geattendeerd door:");
-        ComboBox<String> referralComboBox = new ComboBox<String>();
+        referralComboBox = new ComboBox<String>();
         referralComboBox.getItems().addAll(
             "Lions lid persoonlijk",
             "Lions mailing",
@@ -155,45 +156,45 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         getChildren().addAll(introbox, contentPane);
 
     }
-public String getSurname() {
-	return this.surnameTextField.getText();
-}
-public String getStreetname() {
-	return this.streetnameTextField.getText();
-}
-public String getEmail() {
-	return this.emailTextField.getText();
-}
-public String getPhone() {
-	return this.phoneTextField.getText();
-}
-public String getInfix() {
-	return this.infixTextField.getText();
-}
-public String getStreetnr() {
-	return this.streetnrTextField.getText();
-}
-public String getSalutation() {
-	return "hi";
-}
-public String getlionsMember() {
-	return this.lionsMemberTextField.getText();
-}
-public String getFirstname() {
-	return this.firstnameTextField.getText();
-}
-public String getZipcode() {
-	return this.zipcodeTextField.getText();
-}
-public String getCity() {
-	return this.cityTextField.getText();
-}
-public String getReferral() {
-	return "hi";
-}
-public Button getRegistrationButton() {
-	return this.registrationButton;
-}
+	public String getSurname() {
+		return this.surnameTextField.getText();
+	}
+	public String getStreetname() {
+		return this.streetnameTextField.getText();
+	}
+	public String getEmail() {
+		return this.emailTextField.getText();
+	}
+	public String getPhone() {
+		return this.phoneTextField.getText();
+	}
+	public String getInfix() {
+		return this.infixTextField.getText();
+	}
+	public String getStreetnr() {
+		return this.streetnrTextField.getText();
+	}
+	public String getSalutation() {
+		return this.salutationComboBox.getValue();
+	}
+	public String getlionsMember() {
+		return this.lionsMemberTextField.getText();
+	}
+	public String getFirstname() {
+		return this.firstnameTextField.getText();
+	}
+	public String getZipcode() {
+		return this.zipcodeTextField.getText();
+	}
+	public String getCity() {
+		return this.cityTextField.getText();
+	}
+	public String getReferral() {
+		return this.referralComboBox.getValue();
+	}
+	public Button getRegistrationButton() {
+		return this.registrationButton;
+	}
 
 }
 

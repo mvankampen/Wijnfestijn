@@ -18,7 +18,9 @@ public class RegistrationController {
     private GuestDAO guestDAO;
     private Guest guest;
     private int i;
-    private String content, surname, infix, firstname, salutation, streetname, streetnr, zipcode, city, email, phone, referral, comment;
+    private String context, surname, infix, firstname, salutation, 
+    streetname, streetnr, zipcode, city, email, phone, referral, 
+    comment;
     public RegistrationController(RegistrationView registrationView, GuestDAO guestDAO) {
         this.registrationView = registrationView;
         this.guestDAO = guestDAO;
@@ -49,16 +51,15 @@ public class RegistrationController {
     
     public void Alert() {
     	Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Information Dialog");
+		alert.setTitle("Alertbox voor");
 		alert.setHeaderText("Foutieve data");
-		alert.setContentText(content);
-
+		alert.setContentText(context);
 		alert.showAndWait();
 
     }
     
     public void validateData() {
-    	content = "";
+    	context = "";
     	i = 0;
     	EmailValidator emailValidator = new EmailValidator();
     	TextValidator textValidator = new TextValidator();
@@ -76,22 +77,33 @@ public class RegistrationController {
     		registrationSplash = new RegistrationStreetnameMessage(registrationSplash);
     		i++;
     	}
+    	if(streetnr.trim().equals( "" )) {
+    		registrationSplash = new RegistrationStreernrMessage(registrationSplash);
+    	}
     	if(!zipcodeValidator.validate(zipcode.trim())) {
   	   		registrationSplash = new RegistrationZipcodeMessage(registrationSplash);
   	   		i++;
   	   	}
+    	if(!textValidator.validate(city.trim())) {
+    		registrationSplash = new RegistrationCityMessage(registrationSplash);
+    		i++;
+    	}
     	if(!emailValidator.validate(email.trim())) {
   	        registrationSplash = new RegistrationEmailMessage(registrationSplash);
   	        i++;
   	    }
-  	   	
-  	   	
-  	  content = registrationSplash.getContextText();
+    	if(salutation == null) {
+    		registrationSplash = new RegistrationSalutationMessage(registrationSplash);
+    		i++;
+    	}
+    	if(referral == null) {
+    		registrationSplash = new RegistrationReferralMessage(registrationSplash);
+    	}
+    	context = registrationSplash.getContextText();
     }
     
 
     public void sendRegistration() {
-    	
     			this.guest = new Guest(surname, infix, firstname,
     			salutation, streetname, streetnr, zipcode, city, email, 
     			phone, referral, comment);
