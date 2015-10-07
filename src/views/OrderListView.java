@@ -46,19 +46,19 @@ public class OrderListView extends AnchorPane implements ControlledScreen {
             "Hier kunt u de order opstellen van de klant. Vul de gegevens in en klik op de \ngenereer OF genereer & volgende button. Genereer en volgende zorgt er\nvoor dat u terug komt op dit scherm.");
         introBox.getChildren().add(this.introLabel);
 
-        VBox vBoxCustomer = new VBox();
+        VBox vBoxCustomer = new VBox(10);
         surnameLabel = new Label("Klant achternaam:");
         surnameTextField = new TextField();
         vBoxCustomer.getChildren().addAll(surnameLabel, surnameTextField);
 
-        VBox vBoxListview = new VBox();
-        this.selectCustomerLabel = new Label("Selecteer klant (indien nodig)");
+        VBox vBoxListview = new VBox(10);
+        this.selectCustomerLabel = new Label("Selecteer klant (indien nodig):");
         this.customerListview = new ListView();
         this.customerListview.setMaxHeight(100);
         vBoxListview.getChildren().addAll(this.selectCustomerLabel, customerListview);
 
         VBox vBoxOrderList = new VBox(10);
-        this.orderLabel = new Label("Welke bestellijst?");
+        this.orderLabel = new Label("Welk bestellijst?");
         this.orderlistComboBox = new ComboBox();
         this.standardCheckbox = new CheckBox("Stel in als standaard");
         vBoxOrderList.getChildren().addAll(orderLabel, orderlistComboBox, standardCheckbox);
@@ -75,13 +75,12 @@ public class OrderListView extends AnchorPane implements ControlledScreen {
 
         VBox vBoxOrder = new VBox();
         vBoxOrder.setPadding(new Insets(0, 0, 0, 20));
-        vBoxOrder.setSpacing(20);
         this.wineLabel = new Label("Wijn nummer:");
         this.amountLabel = new Label("Aantal dozen:");
         this.wineTextField1 = new TextField();
         this.amountTextField1 = new TextField();
         GridPane orderGridPane = new GridPane();
-        orderGridPane.setHgap(10);
+        orderGridPane.setHgap(20);
         orderGridPane.setVgap(10);
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(50);
