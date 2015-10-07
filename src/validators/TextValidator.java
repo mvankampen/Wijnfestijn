@@ -7,11 +7,10 @@ public class TextValidator {
 	private Pattern pattern;
 	private Matcher matcher;
 
-	private static final String FILLED_PATTERN = 
-			"^[\\p{L} .'-]+$";
+	private static final String FILLED_PATTERN = "^[\\p{L} .'-]+$";
 
 	public TextValidator() {
-	    pattern = Pattern.compile(FILLED_PATTERN);
+		pattern = Pattern.compile(FILLED_PATTERN);
 	}
 
 	/**
@@ -23,8 +22,8 @@ public class TextValidator {
 	 */
 	public boolean validate(final String hex) {
 
-	    matcher = pattern.matcher(hex);
-	    return matcher.matches();
+		matcher = pattern.matcher(hex);
+		return matcher.matches();
 
 	}
 }

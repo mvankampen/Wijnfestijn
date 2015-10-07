@@ -17,12 +17,17 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     private ScreensController screensController;
     	@FXML Label introLabel, surnameLabel, infixLabel, firstnameLabel, streetnameLabel,
         streetnrLabel, zipcodeLabel, emailLabel, salutationLabel, referralLabel, phoneLabel,
-        lionsMemberLabel, cityLabel, starLabel1, starLabel2, starLabel3, starLabel4, starLabel5, starLabel6,
+        cityLabel, starLabel1, starLabel2, starLabel3, starLabel4, starLabel5, starLabel6,
         starLabel7, starLabel8, starLabel9;
+    	public Label lionsMemberLabel;
     	@FXML TextField surnameTextField, infixTextField, firstnameTextField, streetnameTextField,
-        streetnrTextField, zipcodeTextField, emailTextField, phoneTextField, lionsMemberTextField, cityTextField;
+        streetnrTextField, zipcodeTextField, emailTextField, phoneTextField;
+		@FXML
+		public TextField lionsMemberTextField;
+		@FXML
+		TextField cityTextField;
     @FXML Button registrationButton;
-    ComboBox<String> salutationComboBox, referralComboBox;
+    public ComboBox<String> salutationComboBox, referralComboBox;
 
 
     @Override public void setScreenController(ScreensController screensController) {
@@ -106,8 +111,10 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         );
         this.phoneLabel = new Label("Telefoon nummer:");
         this.phoneTextField = new TextField();
-        this.lionsMemberLabel = new Label("Vul naam in van Lions lid:");
+        this.lionsMemberLabel = new Label();
+        lionsMemberLabel.setVisible(false);
         this.lionsMemberTextField = new TextField();
+        lionsMemberTextField.setVisible(false);
         this.cityLabel = new Label("Stad:");
         this.cityTextField = new TextField();
         this.registrationButton = new Button("Registreer");
