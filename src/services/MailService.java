@@ -19,9 +19,18 @@ public class MailService {
     public void sendMail() {
         if (!this.mail.equals(null)) {
             Properties properties = System.getProperties();
+            properties.put("mail.smtp.auth", "false");
+            properties.put("mail.smtp.starttls.enable", "true");
             properties.setProperty("mail.smtp.host", this.host);
-            properties.setProperty("mail.smtp.password", this.password);
-            Session session = Session.getDefaultInstance(properties);
+            properties.setProperty("mail.smtp.port", "25");
+
+            Authenticator authenticator = new Authenticator () {
+                public PasswordAuthentication getPasswordAuthentication(){
+                    return new PasswordAuthentication(senderID, password);
+                }
+            };
+
+            Session session = Session.getInstance(properties, authenticator);
 
             Address[] recipients = new InternetAddress[this.mail.getRecipients().size()];
             for (int i = 0; i < recipients.length; i++) {
