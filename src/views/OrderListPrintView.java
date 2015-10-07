@@ -45,19 +45,19 @@ public class OrderListPrintView extends AnchorPane implements ControlledScreen {
         HBox introBox = new HBox();
 
         this.introLabel =
-            new Label("Hier kunt u de gepersonaliseerde bestellijsten uitprinten voor de klanten.");
+            new Label("Hier kunt u de gepersonaliseerde bestellijsten uit printen voor de klanten");
         introBox.getChildren().add(introLabel);
 
         VBox vertBox1 = new VBox();
         vertBox1.setSpacing(20);
-        VBox vertBox2 = new VBox(10);
+        VBox vertBox2 = new VBox();
         vertBox2.setPadding(new Insets(0, 0, 0, 40));
         VBox buttonBox = new VBox();
 
 
         this.exampleLabel = new Label("Print voorbeeld:");
         this.amountLabel = new Label("Aantal bestellijsten die geprint\nzullen worden: 10");
-        this.listLabel = new Label("Selecteer welke bestellijst u wilt uitprinten:");
+        this.listLabel = new Label("Selecteer welke bestellijst u wilt uit printen");
         this.listItems = new ComboBox();
         this.printButton = new Button("Printen");
         this.printButton.getStyleClass().add("form_buttons");

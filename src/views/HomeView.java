@@ -44,8 +44,8 @@ public class HomeView extends AnchorPane implements ControlledScreen {
 		optionsPane.setLayoutY(200);
 
 		// intro Box
-		Label introLabel = new Label("Dit menu is voorzien van directe links naar alle functies."
-				+ " Klik op de actie die u wilt ondernemen:");
+		Label introLabel = new Label("Dit menu is voorzien van alle directe links naar alle functies."
+				+ " Klik op de actie die u wilt ondernemen");
 		introBox.getChildren().add(introLabel);
 
 		// Making the hyperlinks row 1
@@ -55,9 +55,9 @@ public class HomeView extends AnchorPane implements ControlledScreen {
 		orderLink1.getStyleClass().add("default_hyperlink");
 		orderLink2 = new Hyperlink("Invoeren van de persoonlijke bestellijsten (maakt orders en facturen)");
 		orderLink2.getStyleClass().add("default_hyperlink");
-		orderLink3 = new Hyperlink("Maak een nieuwe bestellijst aan (doormiddel van een .CSV bestand)");
+		orderLink3 = new Hyperlink("Maak een nieuwe bestellijst aan(Doormiddel van CSV)");
 		orderLink3.getStyleClass().add("default_hyperlink");
-		orderLink4 = new Hyperlink("Bewerk of verwijder een bestaande bestellijst");
+		orderLink4 = new Hyperlink("Bewerk of verwijder een al bestaande bestellijst");
 		orderLink4.getStyleClass().add("default_hyperlink");
 		debtorsTitle = new Hyperlink("Debiteuren opties");
 		debtorsTitle.getStyleClass().add("homeview_title");

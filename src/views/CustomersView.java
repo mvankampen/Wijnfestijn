@@ -4,10 +4,7 @@ import controllers.ScreensController;
 import interfaces.ControlledScreen;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -39,7 +36,7 @@ public class CustomersView extends AnchorPane implements ControlledScreen {
 		contentPane.setHgap(150);
 		
 		//Intro label
-		String introText = "Hier kunt u de data van een geselecteerde klant aanpassen.";
+		String introText = "Hier kunt u de data van een geselecteerde klant aanpassen";
 		Label introLabel = new Label(introText);
 		
 		//Create VBoxes row 1
@@ -50,11 +47,11 @@ public class CustomersView extends AnchorPane implements ControlledScreen {
 		//Create VBoxes row 2
 		
 		//Label texts row 1
-		String customerText = "Vul hier de achternaam van de klant in:";
-		String selectionText = "Selecteer welke klant u wilt wijzigen:";
+		String customerText = "Vul hier de achternaam van de klant in :";
+		String selectionText = "Selecteer welke klant u wilt wijzigen";
 		
 		//Label texts row 2
-		String adjustText = "Selecteer data om te wijzigen en wijzig dit vervolgens:";
+		String adjustText = "Selecteer data om te wijzigen & wijzig dit:";
 		//Creating items row 1
 		Label customerLabel = new Label(customerText);
 		Label selectionLabel = new Label(selectionText);

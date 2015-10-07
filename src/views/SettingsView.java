@@ -45,16 +45,16 @@ public class SettingsView extends AnchorPane implements ControlledScreen {
 
         HBox introBox = new HBox();
         this.introLabel = new Label(
-            "Hier kunt u de mailtemplates en login gegevens van de afzender mail invullen");
+            "Hier kunt u de mailtemplates & login gegevens van de afzender mail invullen");
         introBox.getChildren().add(this.introLabel);
 
-        VBox vBoxCustomer = new VBox(10);
+        VBox vBoxCustomer = new VBox();
         templateLabel = new Label("Selecteer de desbetreffende template:");
         surnameTextField = new TextField();
         vBoxCustomer.getChildren().addAll(templateLabel, surnameTextField);
 
         VBox vBoxOrderList = new VBox(10);
-        this.orderLabel = new Label("Voor welke mail is deze template?:");
+        this.orderLabel = new Label("Voor welke mail is deze Template?");
         this.orderlistComboBox = new ComboBox();
         vBoxOrderList.getChildren().addAll(orderLabel, orderlistComboBox);
 
@@ -67,11 +67,11 @@ public class SettingsView extends AnchorPane implements ControlledScreen {
         VBox vBoxOrder = new VBox();
         vBoxOrder.setPadding(new Insets(0, 0, 0, 20));
         vBoxOrder.setSpacing(20);
-        this.exampleLabel = new Label("Example:");
+        this.exampleLabel = new Label("example:");
         this.exampleField = new TextField();
         GridPane orderGridPane = new GridPane();
         orderGridPane.setHgap(0);
-        orderGridPane.setVgap(10);
+        orderGridPane.setVgap(0);
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(50);
         ColumnConstraints col2 = new ColumnConstraints();
