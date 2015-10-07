@@ -15,11 +15,11 @@ import javafx.scene.layout.*;
  */
 public class RegistrationView extends AnchorPane implements ControlledScreen {
     private ScreensController screensController;
-    @FXML Label introLabel, surnameLabel, insertionLabel, firstnameLabel, streetnameLabel,
+    @FXML Label introLabel, surnameLabel, infixLabel, firstnameLabel, streetnameLabel,
         streetnrLabel, zipcodeLabel, emailLabel, salutationLabel, referralLabel, phoneLabel,
         lionsMemberLabel, cityLabel, starLabel1, starLabel2, starLabel3, starLabel4, starLabel5, starLabel6,
         starLabel7, starLabel8, starLabel9;
-    @FXML TextField surnameTextField, insertionTextField, firstnameTextField, streetnameTextField,
+    @FXML TextField surnameTextField, infixTextField, firstnameTextField, streetnameTextField,
         streetnrTextField, zipcodeTextField, emailTextField, phoneTextField, lionsMemberTextField, cityTextField;
     @FXML Button registrationButton;
 
@@ -74,8 +74,8 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         this.starLabel9.getStyleClass().add("redStar");
         this.surnameLabel = new Label("Achternaam:");
         this.surnameTextField = new TextField();
-        this.insertionLabel = new Label("Tussenvoegsel:");
-        this.insertionTextField = new TextField();
+        this.infixLabel = new Label("Tussenvoegsel:");
+        this.infixTextField = new TextField();
         this.firstnameLabel = new Label("Voornaam:");
         this.firstnameTextField = new TextField();
         this.streetnameLabel = new Label("Straat:");
@@ -121,7 +121,7 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         VBox group3 = new VBox(10, group3_Ster, cityTextField);
         HBox group4_Ster = new HBox(referralLabel, starLabel4);
         VBox group4 = new VBox(10, group4_Ster, referralComboBox);
-        VBox group5 = new VBox(10, insertionLabel, insertionTextField);
+        VBox group5 = new VBox(10, infixLabel, infixTextField);
         HBox group6_Ster = new HBox(streetnrLabel, starLabel5);
         VBox group6 = new VBox(10, group6_Ster, streetnrTextField);
         HBox group7_Ster = new HBox(emailLabel, starLabel6);
@@ -155,5 +155,45 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
         getChildren().addAll(introbox, contentPane);
 
     }
+public String getSurname() {
+	return this.surnameTextField.getText();
+}
+public String getStreetname() {
+	return this.streetnameTextField.getText();
+}
+public String getEmail() {
+	return this.emailTextField.getText();
+}
+public String getPhone() {
+	return this.phoneTextField.getText();
+}
+public String getInfix() {
+	return this.infixTextField.getText();
+}
+public String getStreetnr() {
+	return this.streetnrTextField.getText();
+}
+public String getSalutation() {
+	return "hi";
+}
+public String getlionsMember() {
+	return this.lionsMemberTextField.getText();
+}
+public String getFirstname() {
+	return this.firstnameTextField.getText();
+}
+public String getZipcode() {
+	return this.zipcodeTextField.getText();
+}
+public String getCity() {
+	return this.cityTextField.getText();
+}
+public String getReferral() {
+	return "hi";
+}
+public Button getRegistrationButton() {
+	return this.registrationButton;
+}
+
 }
 
