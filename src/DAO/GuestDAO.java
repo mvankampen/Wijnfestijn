@@ -115,15 +115,17 @@ public class GuestDAO {
         }
     }
 
-    public List<Guest> findGuestByLastname(String lastname) {
-        List<Guest> guestList = new ArrayList<>();
+    public ArrayList<Guest> findGuestByLastname(String lastname) {
+        ArrayList<Guest> guestList = new ArrayList<>();
         try {
             this.preparedStatement = null;
-            String sqlQuery = "SELECT * FROM guest WHERE guest_lastname LIKE %?%";
+            System.out.println("Begin methode");
+            String sqlQuery = "SELECT * FROM guest WHERE LOWER(guest_lastname)  LIKE ?";
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
-            preparedStatement.setString(1, lastname);
+            preparedStatement.setString(1, lastname + '%');
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                System.out.println("Ik ben hier");
                 Guest guest =
                     new Guest(resultSet.getInt("guest_id"), resultSet.getString("guest_lastname"),
                         resultSet.getString("guest_infix"), resultSet.getString("guest_firstname"),
@@ -133,6 +135,7 @@ public class GuestDAO {
                         resultSet.getString("guest_email"), resultSet.getString("guest_phone"),
                         resultSet.getString("guest_referal"), resultSet.getString("guest_comment"),
                         resultSet.getBoolean("guest_noshow"));
+                System.out.println(guest.getSurname());
                 guestList.add(guest);
             }
         } catch (SQLException e) {
@@ -142,9 +145,9 @@ public class GuestDAO {
                 if (this.preparedStatement != null) {
                     preparedStatement.close();
                 }
-                if (!connection.isClosed()) {
+                /*if (!connection.isClosed()) {
                     connection.close();
-                }
+                }*/
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
