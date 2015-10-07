@@ -4,45 +4,65 @@ package models;
  * Created by Sander de Jong on 21-9-2015.
  */
 public class Guest {
-    private String surname;
+    private int id;
+    private String lastname;
     private String infix;
     private String firstname;
     private String salutation;
-    private String streetname;
+    private String street;
     private String streetnr;
     private String zipcode;
     private String city;
     private String email;
     private String phone;
     private String comment;
-    private String referral;
-    private Boolean no_show;
+    private String referal;
+    private Boolean no_show = false;
 
-    public Guest() {
-
-    }
-
-    public Guest(String surname, String infix, String firstname, String salutation, String streetname,
-        String streetnr, String zipcode, String city, String email,String phone, String referral) {
-        this.surname = surname;
+    public Guest(String lastname, String infix, String firstname, String salutation, String street,
+        String streetnr, String zipcode, String city, String email,String phone, String referal, String comment) {
+        this.lastname = lastname;
         this.infix = infix;
         this.firstname = firstname;
         this.salutation = salutation;
-        this.streetname = streetname;
+        this.street = street;
         this.streetnr = streetnr;
         this.zipcode = zipcode;
         this.city = city;
         this.email = email;
         this.phone = phone;
-        this.referral = referral;
+        this.comment = comment;
+        this.referal = referal;
+    }
+
+    public Guest(int id, String lastname, String infix, String firstname, String salutation, String street,
+        String streetnr, String zipcode, String city, String email,String phone, String referal, String comment, boolean no_show) {
+        this.id = id;
+        this.lastname = lastname;
+        this.infix = infix;
+        this.firstname = firstname;
+        this.salutation = salutation;
+        this.street = street;
+        this.streetnr = streetnr;
+        this.zipcode = zipcode;
+        this.city = city;
+        this.email = email;
+        this.phone = phone;
+        this.comment = comment;
+        this.referal = referal;
+        this.no_show = no_show;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getSurname() {
-        return surname;
+        return lastname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setSurname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getInfix() {
@@ -70,11 +90,11 @@ public class Guest {
     }
 
     public String getStreetname() {
-        return streetname;
+        return street;
     }
 
-    public void setStreetname(String streetname) {
-        this.streetname = streetname;
+    public void setStreetname(String street) {
+        this.street = street;
     }
 
     public String getStreetnr() {
@@ -126,11 +146,11 @@ public class Guest {
     }
 
     public String getReferal() {
-        return referral;
+        return referal;
     }
 
     public void setReferal(String referal) {
-        this.referral = referal;
+        this.referal = referal;
     }
 
     public Boolean getNo_show() {

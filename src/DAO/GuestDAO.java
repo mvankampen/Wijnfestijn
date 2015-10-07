@@ -22,13 +22,14 @@ public class GuestDAO {
     }
 
 
-    public void addGuest(Guest guest) {
+    public Guest addGuest(Guest guest) {
+        Guest currentGuest = null;
         try {
-        	System.out.println("READY TO FIREEEEEEEE");
             this.preparedStatement = null;
             String sqlQuery = "INSERT INTO guest"
                 + "(guest_lastname, guest_infix, guest_firstname, guest_salutation, guest_street, guest_streetnr, guest_zipcode, guest_city, guest_email, guest_phone, guest_referal, guest_comment) VALUES"
                 + "(?,?,?,?,?,?,?,?,?,?,?,?)";
+
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
             this.preparedStatement.setString(1, guest.getSurname());
             this.preparedStatement.setString(2, guest.getInfix());
@@ -66,13 +67,14 @@ public class GuestDAO {
                 System.out.println(e.getMessage());
             }
         }
+        return currentGuest;
     }
 
     public void updateCustomer(Guest guest) {
         try {
             this.preparedStatement = null;
             String sqlQuery =
-                "UPDATE  guest SET guest_lastname = ?, guest_infix = ?, guest_firstname = ?, guest_salutation = ?, guest_street = ?, guest_streetnr = ?, guest_zipcode = ?, guest_city = ?, guest_email = ?, guest_phone = ?, guest_comment = ?, guest_referal = ?, guest_noshow = ?";
+                "UPDATE  guest SET guest_lastname = ?, guest_infix = ?, guest_firstname = ?, guest_salutation = ?, guest_street = ?, guest_streetnr = ?, guest_zipcode = ?, guest_city = ?, guest_email = ?, guest_phone = ?, guest_comment = ?, guest_referal = ?, guest_noshow = ? WHERE guest_id = ?";
             this.preparedStatement = connection.prepareStatement(sqlQuery);
             this.preparedStatement.setString(1, guest.getSurname());
             this.preparedStatement.setString(2, guest.getInfix());
@@ -86,6 +88,7 @@ public class GuestDAO {
             this.preparedStatement.setString(10, guest.getComment());
             this.preparedStatement.setString(11, guest.getReferal());
             this.preparedStatement.setBoolean(12, guest.getNo_show());
+            this.preparedStatement.setInt(13, guest.getId());
             this.preparedStatement.executeUpdate();
             this.connection.commit();
         } catch (SQLException e) {
@@ -121,21 +124,15 @@ public class GuestDAO {
             preparedStatement.setString(1, lastname);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Guest guest = new Guest();
-                guest.setSurname(resultSet.getString("guest_lastname"));
-                guest.setInfix(resultSet.getString("guest_infix"));
-                guest.setFirstname(resultSet.getString("guest_firstname"));
-                guest.setSalutation(resultSet.getString("guest_salutation"));
-                guest.setStreetname(resultSet.getString("guest_street"));
-                guest.setStreetnr(resultSet.getString("guest_streetnr"));
-                guest.setZipcode(resultSet.getString("guest_zipcode"));
-                guest.setCity(resultSet.getString("guest_city"));
-                guest.setEmail(resultSet.getString("guest_email"));
-                guest.setPhone(resultSet.getString("guest_phone"));
-                guest.setComment(resultSet.getString("guest_comment"));
-                guest.setReferal(resultSet.getString("guest_referral"));
-                guest.setNo_show(resultSet.getBoolean("guest_noshow"));
-
+                Guest guest =
+                    new Guest(resultSet.getInt("guest_id"), resultSet.getString("guest_lastname"),
+                        resultSet.getString("guest_infix"), resultSet.getString("guest_firstname"),
+                        resultSet.getString("guest_salutation"),
+                        resultSet.getString("guest_street"), resultSet.getString("guest_streetnr"),
+                        resultSet.getString("guest_zipcode"), resultSet.getString("guest_city"),
+                        resultSet.getString("guest_email"), resultSet.getString("guest_phone"),
+                        resultSet.getString("guest_referal"), resultSet.getString("guest_comment"),
+                        resultSet.getBoolean("guest_noshow"));
                 guestList.add(guest);
             }
         } catch (SQLException e) {

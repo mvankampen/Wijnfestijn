@@ -1,7 +1,10 @@
 package controllers;
 
 import DAO.GuestDAO;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import models.Guest;
+import splashscreens.*;
 import validators.EmailValidator;
 import validators.TextValidator;
 import validators.ZipcodeValidator;
@@ -14,7 +17,8 @@ public class RegistrationController {
     private RegistrationView registrationView;
     private GuestDAO guestDAO;
     private Guest guest;
-    private String surname, infix, firstname, salutation, streetname, streetnr, zipcode, city, email, phone, referral;
+    private int i;
+    private String content, surname, infix, firstname, salutation, streetname, streetnr, zipcode, city, email, phone, referral, comment;
     public RegistrationController(RegistrationView registrationView, GuestDAO guestDAO) {
         this.registrationView = registrationView;
         this.guestDAO = guestDAO;
@@ -27,42 +31,62 @@ public class RegistrationController {
     	firstname = registrationView.getFirstname();
     	salutation = registrationView.getSalutation();
     	streetname = registrationView.getStreetname();
-    	streetnr = registrationView.getStreetname();
+    	streetnr = registrationView.getStreetnr();
     	zipcode =registrationView.getZipcode();
 		city = registrationView.getCity();
 		email = registrationView.getEmail();
 		phone = registrationView.getPhone();
 		referral = registrationView.getReferral();
+		comment = "hi";
 		validateData();
-		
+		if(i > 0) {
+			Alert();
+		}
+		else {
+			sendRegistration();
+		}
+    }
+    
+    public void Alert() {
+    	Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Information Dialog");
+		alert.setHeaderText("Foutieve data");
+		alert.setContentText(content);
+
+		alert.showAndWait();
+
     }
     
     public void validateData() {
+    	content = "";
+    	i = 0;
     	EmailValidator emailValidator = new EmailValidator();
     	TextValidator textValidator = new TextValidator();
     	ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
+    	SplashDefault registrationSplash = new RegistrationSplash();
     	if(!textValidator.validate(surname.trim())) {
-    		 System.out.print("Achternaam moet worden ingevuld \n");
-   	        /*
-   	           Action that you want to take. For ex. make email id field red
-   	           or give message box saying invalid email id.
-   	        */
+			registrationSplash = new RegistrationSurnameMessage(registrationSplash);
+			i++;
     	}
     	if(!textValidator.validate(firstname.trim())) {
-  	   		System.out.print("Je moet een naam invullen \n");
+  	   		registrationSplash = new RegistrationFirstnameMessage(registrationSplash);
+  	   		i++;
   	   	}
-    	
-  	   	if(!emailValidator.validate(email.trim())) {
-  	        System.out.print("Invalid Email ID \n");
-  	        /*
-  	           Action that you want to take. For ex. make email id field red
-  	           or give message box saying invalid email id.
-  	        */
+    	if(!textValidator.validate(streetname.trim())) {
+    		registrationSplash = new RegistrationStreetnameMessage(registrationSplash);
+    		i++;
+    	}
+    	if(!zipcodeValidator.validate(zipcode.trim())) {
+  	   		registrationSplash = new RegistrationZipcodeMessage(registrationSplash);
+  	   		i++;
+  	   	}
+    	if(!emailValidator.validate(email.trim())) {
+  	        registrationSplash = new RegistrationEmailMessage(registrationSplash);
+  	        i++;
   	    }
-  	   	if(!zipcodeValidator.validate(zipcode.trim())) {
-  	   		System.out.print("Je zip moet bestaan uit 4 cijfers, 2 letters \n");
-  	   	}
   	   	
+  	   	
+  	  content = registrationSplash.getContextText();
     }
     
 
@@ -70,7 +94,7 @@ public class RegistrationController {
     	
     			this.guest = new Guest(surname, infix, firstname,
     			salutation, streetname, streetnr, zipcode, city, email, 
-    			phone, referral);
+    			phone, referral, comment);
     	   		this.guestDAO.addGuest(guest);
     }
 }

@@ -21,7 +21,7 @@ public class WineDAO {
         this.connection = connection;
     }
 
-    public List<Wine> getAllWine() {
+   /* public ArrayList<Wine> getAllWine(ArrayList<Integer> wineID) {
         List<Wine> wineList = new ArrayList<>();
         try {
             this.preparedStatement = null;
@@ -57,7 +57,6 @@ public class WineDAO {
         }
         return wineList;
     }
-
     public Wine getWineByName(String wineName) {
         Wine wine = null;
         try {
@@ -92,7 +91,7 @@ public class WineDAO {
             }
         }
         return wine;
-    }
+    }*/
 
     public void insertAllWines(List<Wine> wines) {
         try {

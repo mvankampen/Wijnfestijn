@@ -5,11 +5,15 @@ package models;
  */
 public class OrderLine {
     private Order order;
+    private Wine wine;
     private int amount;
 
-    public OrderLine(int amount, Order order) {
+
+    public OrderLine(int amount, Order order, Wine wine) {
         this.amount = amount;
         this.order = order;
+        this.wine = wine;
+
     }
 
     public int getAmount() {
@@ -26,5 +30,13 @@ public class OrderLine {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public Wine getWine() {
+        return wine;
+    }
+
+    public void setWine(Wine wine) {
+        this.wine = wine;
     }
 }

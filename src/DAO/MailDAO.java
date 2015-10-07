@@ -32,21 +32,15 @@ public class MailDAO {
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Guest guest = new Guest();
-                guest.setSurname(resultSet.getString("guest_lastname"));
-                guest.setInfix(resultSet.getString("guest_infix"));
-                guest.setFirstname(resultSet.getString("guest_firstname"));
-                guest.setSalutation(resultSet.getString("guest_salutation"));
-                guest.setStreetname(resultSet.getString("guest_street"));
-                guest.setStreetnr(resultSet.getString("guest_streetnr"));
-                guest.setZipcode(resultSet.getString("guest_zipcode"));
-                guest.setCity(resultSet.getString("guest_city"));
-                guest.setEmail(resultSet.getString("guest_email"));
-                guest.setPhone(resultSet.getString("guest_phone"));
-                guest.setComment(resultSet.getString("guest_comment"));
-                guest.setReferal(resultSet.getString("guest_referral"));
-                guest.setNo_show(resultSet.getBoolean("guest_noshow"));
-
+                Guest guest =
+                    new Guest(resultSet.getInt("guest_id"), resultSet.getString("guest_lastname"),
+                        resultSet.getString("guest_infix"), resultSet.getString("guest_firstname"),
+                        resultSet.getString("guest_salutation"),
+                        resultSet.getString("guest_street"), resultSet.getString("guest_streetnr"),
+                        resultSet.getString("guest_zipcode"), resultSet.getString("guest_city"),
+                        resultSet.getString("guest_email"), resultSet.getString("guest_phone"),
+                        resultSet.getString("guest_referal"), resultSet.getString("guest_comment"),
+                        resultSet.getBoolean("guest_noshow"));
                 guestList.add(guest);
             }
         } catch (SQLException e) {
@@ -73,7 +67,6 @@ public class MailDAO {
         return null;
     }
 
-    //
     public ArrayList<InternetAddress> getOpenOrderGuests() {
         ArrayList<InternetAddress> emailArraylist = new ArrayList<>();
         try {
