@@ -1,6 +1,7 @@
 package views;
 
 import controllers.ScreensController;
+import interfaces.ControlledScreen;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;

@@ -1,10 +1,7 @@
 package views;
 
 import controllers.ScreensController;
-import enums.MailType;
 import interfaces.ControlledScreen;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -22,7 +19,6 @@ public class MailView extends AnchorPane implements ControlledScreen {
     private TextArea bodyTextArea;
     private final ToggleGroup inviteGroup = new ToggleGroup();
     private Button mailButton = new Button("Verzenden");
-    private MailType mailType;
 
     public MailView() {
         createView();
@@ -45,27 +41,26 @@ public class MailView extends AnchorPane implements ControlledScreen {
         //Intro label
         String introText = "Hier kunt u de mails opstellen. Kies welke mail u wilt"
                 + " opstellen en voer\nde titel en body in. Klik op verzenden en de applicatie"
-                + " doet de rest";
+                + " doet de rest.";
         Label introLabel = new Label(introText);
 
         //Create VBoxes row 1
-        VBox titleBox = new VBox(15);
-        VBox bodyBox = new VBox(15);
+        VBox titleBox = new VBox(10);
+        VBox bodyBox = new VBox(10);
 
         //Create VBoxes row 2
         VBox typeBox = new VBox(10);
 
         //Label texts row 1
         String titleText = "Vul hier de titel in:";
-        String bodyText = "Vul hier de body in";
+        String bodyText = "Vul hier de body in:";
 
         //Label texts row 2
-        String typeText = "Selecteer wat voor een soort\nmail u wilt verzenden";
-        String selectionText = "Met deze selectie wordt de\nmail verstuur naar:";
+        String typeText = "Selecteer wat voor een soort\nmail u wilt verzenden:";
+        String selectionText = "Met deze selectie wordt de\nmail verstuurd naar:";
         String remindMailRbText = "Herinneringsmail";
         String inviteMailRbText = "Uitnodigingsmail";
         String thankMailRbText = "Bedankmail";
-        String orderReminderRbText = "Factuur herinneringsmail";
         //Creating items row 1
         Label titleLabel = new Label(titleText);
         Label bodyLabel = new Label(bodyText);
@@ -84,27 +79,13 @@ public class MailView extends AnchorPane implements ControlledScreen {
         RadioButton thankMailRb = new RadioButton(thankMailRbText);
         thankMailRb.setToggleGroup(this.inviteGroup);
         thankMailRb.getStyleClass().add("rbbuttons");
-        RadioButton orderReminderRb = new RadioButton(orderReminderRbText);
-        orderReminderRb.setToggleGroup(this.inviteGroup);
-        orderReminderRb.getStyleClass().add("rbbuttons");
         this.mailButton = new Button("Verzenden");
         mailButton.getStyleClass().add("form_buttons");
-
-        this.inviteGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                if (inviteGroup.getSelectedToggle() != null) {
-                    mailType = MailType.values()[inviteGroup.getToggles().indexOf(newValue)];
-                    System.out.println(mailType.toString());
-
-                }
-            }
-        });
 
         //Adding to VBoxes
         titleBox.getChildren().addAll(titleLabel, titleTextArea);
         bodyBox.getChildren().addAll(bodyLabel, bodyTextArea);
-        typeBox.getChildren().addAll(remindMailRb, inviteMailRb, thankMailRb, orderReminderRb);
+        typeBox.getChildren().addAll(remindMailRb, inviteMailRb, thankMailRb);
 
         //Adding items row 1
         contentPane.add(introLabel, 0, 1);
@@ -127,8 +108,8 @@ public class MailView extends AnchorPane implements ControlledScreen {
         return this.bodyTextArea.getText();
     }
 
-    public MailType getMailOption() {
-        return this.mailType;
+    public Toggle getMailOption() {
+        return this.inviteGroup.getSelectedToggle();
     }
 
     public Button getMailButton() {
