@@ -8,7 +8,7 @@ public class TextValidator {
 	private Matcher matcher;
 
 	private static final String FILLED_PATTERN = 
-			"\\A\\S+\\Z";
+			"^[\\p{L} .'-]+$";
 
 	public TextValidator() {
 	    pattern = Pattern.compile(FILLED_PATTERN);
