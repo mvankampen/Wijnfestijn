@@ -1,6 +1,6 @@
 package controllers;
 
-import DAO.CustomerDAO;
+import DAO.GuestDAO;
 import DAO.OrderDAO;
 import views.DebtorsView;
 
@@ -10,11 +10,11 @@ import views.DebtorsView;
 public class DebtorsController {
     private DebtorsView debtorsView;
     private OrderDAO orderDAO;
-    private CustomerDAO customerDAO;
+    private GuestDAO guestDAO;
 
-    public DebtorsController(DebtorsView debtorsView, OrderDAO orderDAO, CustomerDAO customerDAO) {
+    public DebtorsController(DebtorsView debtorsView, OrderDAO orderDAO, GuestDAO guestDAO) {
         this.debtorsView = debtorsView;
         this.orderDAO = orderDAO;
-        this.customerDAO = customerDAO;
+        this.guestDAO = guestDAO;
     }
 }

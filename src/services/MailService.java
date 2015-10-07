@@ -11,38 +11,42 @@ import java.util.Properties;
  * Created by Sander de Jong on 22-9-2015.
  */
 public class MailService {
-    private final String senderID = "";
-    private final String host = "";
-    private final String password = "";
+    private final String username = "groep5ipsenontvangbot@gmail.com";
+    private final String password = "Gro3p5IPSEN2";
     private Mail mail;
 
     public void sendMail() {
-        if (!this.mail.equals(null)) {
-            Properties properties = System.getProperties();
-            properties.setProperty("mail.smtp.host", this.host);
-            properties.setProperty("mail.smtp.password", this.password);
-            Session session = Session.getDefaultInstance(properties);
+        Address[] recipients = new InternetAddress[this.mail.getRecipients().size()];
+        for (int i = 0; i < recipients.length; i++) {
+            recipients[i] = this.mail.getRecipients().get(i);
+        }
 
-            Address[] recipients = new InternetAddress[this.mail.getRecipients().size()];
-            for (int i = 0; i < recipients.length; i++) {
-                recipients[i] = this.mail.getRecipients().get(i);
-            }
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
 
-            try {
-                MimeMessage message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(this.senderID));
-                message.addRecipients(Message.RecipientType.CC, recipients);
-                message.setSubject(this.mail.getSubject());
-                message.setText(this.mail.getBody());
-                Transport.send(message);
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
 
-            } catch (MessagingException ex) {
-                ex.printStackTrace();
-            }
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("from-email@gmail.com"));
+            message.setRecipients(Message.RecipientType.BCC, recipients);
+            message.setSubject(this.mail.getSubject());
+            message.setText(this.mail.getBody());
+            Transport.send(message);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
         }
     }
-
-
 
     public void setMail(Mail mail) {
         this.mail = mail;
