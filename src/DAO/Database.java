@@ -12,9 +12,9 @@ public class Database {
     private Connection connection = null;
     private static final String DB_NAME = "wijnfestijnDB";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "root";
     private static final String DRIVER = "org.postgresql.Driver";
-    private static final String LOCATION = "jdbc:postgresql://localhost:5432/";
+    private static final String LOCATION = "jdbc:postgresql://localhost:5433/";
 
     // Private constructor. Prevents instantiation from other classes.
     private Database() throws SQLException {
