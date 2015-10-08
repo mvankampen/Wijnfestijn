@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by michael on 29-09-15.
@@ -133,7 +132,6 @@ public class GuestDAO {
                         resultSet.getString("guest_email"), resultSet.getString("guest_phone"),
                         resultSet.getString("guest_referal"), resultSet.getString("guest_comment"),
                         resultSet.getBoolean("guest_noshow"));
-                System.out.println(guest.getSurname());
                 guestList.add(guest);
             }
         } catch (SQLException e) {
@@ -143,9 +141,6 @@ public class GuestDAO {
                 if (this.preparedStatement != null) {
                     preparedStatement.close();
                 }
-                /*zif (!connection.isClosed()) {
-                    connection.close();
-                }*/
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }

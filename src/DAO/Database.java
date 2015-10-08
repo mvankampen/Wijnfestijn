@@ -23,7 +23,7 @@ public class Database {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        connection = DriverManager.getConnection(LOCATION + DB_NAME,USER,PASSWORD);
+        connection = DriverManager.getConnection(LOCATION + DB_NAME, USER, PASSWORD);
         connection.setAutoCommit(false);
     }
 
