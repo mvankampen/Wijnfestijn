@@ -15,7 +15,6 @@ public class HomeController {
 	public void addHyperlinkEventHandling(){
 		// Setting the directions for the hyperlinks on row 1
 		homeView.orderlistLink.setOnAction(event -> {
-			System.out.println("hai");
 			screensController.screenSet(ControllersController.getMAILID());
 		});
 		homeView.orderLink1.setOnAction(event -> {

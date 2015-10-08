@@ -1,5 +1,4 @@
 package controllers;
-
 import DAO.GuestDAO;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -11,17 +10,19 @@ import validators.EmailValidator;
 import validators.TextValidator;
 import validators.ZipcodeValidator;
 import views.RegistrationView;
+import views.SplashscreenView;
 
 /**
  * Created by sander on 28-9-2015.
  */
 public class RegistrationController {
 	private RegistrationView registrationView;
+	private SplashscreenView splashscreenView;
 	private GuestDAO guestDAO;
 	private Guest guest;
 	private int i;
 	private boolean fieldActive;
-	private String context, surname, infix, firstname, salutation, streetname, streetnr, zipcode, city, email, phone,
+	private String context, header, title, surname, infix, firstname, salutation, streetname, streetnr, zipcode, city, email, phone,
 			referral, comment;
 
 	public RegistrationController(RegistrationView registrationView, GuestDAO guestDAO) {
@@ -80,20 +81,12 @@ public class RegistrationController {
 		comment = "hi";
 		validateData();
 		if (i > 0) {
-			Alert();
+			 splashscreenView = new SplashscreenView(title, header, context);
 		} else {
 			sendRegistration();
 		}
 	}
 
-	public void Alert() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Alertbox voor");
-		alert.setHeaderText("Foutieve data");
-		alert.setContentText(context);
-		alert.showAndWait();
-
-	}
 
 	public void validateData() {
 		context = "";
@@ -136,6 +129,8 @@ public class RegistrationController {
 		if (referral == null) {
 			registrationSplash = new RegistrationReferralMessage(registrationSplash);
 		}
+		title = registrationSplash.getTitleText();
+		header = registrationSplash.getHeaderText();
 		context = registrationSplash.getContextText();
 	}
 

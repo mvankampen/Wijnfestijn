@@ -1,5 +1,7 @@
 package splashscreens;
-
+/**
+ * Created by Alex on 07-10-15.
+ */
 public class RegistrationStreetnrMessage extends RegistrationDefaultMessage {
 	SplashDefault splashDefault;
 	public RegistrationStreetnrMessage(SplashDefault splashDefault)
@@ -10,4 +12,11 @@ public class RegistrationStreetnrMessage extends RegistrationDefaultMessage {
 	public String getContextText() {
 		return splashDefault.getContextText() + "Straatnummer kan niet leeg zijn\n";	
 	}
+	public String getTitleText() {
+		return splashDefault.getTitleText();
+	}
+	public String getHeaderText() {
+		return splashDefault.getHeaderText();
+	}
+
 }

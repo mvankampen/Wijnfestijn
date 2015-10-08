@@ -2,7 +2,9 @@ package validators;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * Created by Alex on 07-10-15.
+ */
 public class EmailValidator {
 	private Pattern pattern;
 	private Matcher matcher;

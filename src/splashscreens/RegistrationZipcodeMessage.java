@@ -1,5 +1,7 @@
 package splashscreens;
-
+/**
+ * Created by Alex on 07-10-15.
+ */
 public class RegistrationZipcodeMessage extends SplashDefault {
 	SplashDefault splashDefault;
 	public RegistrationZipcodeMessage(SplashDefault splashDefault)
@@ -11,5 +13,12 @@ public class RegistrationZipcodeMessage extends SplashDefault {
 		return splashDefault.getContextText() + "de postcode invoer is foutief\n";
 		
 	}
+	public String getTitleText() {
+		return splashDefault.getTitleText();
+	}
+	public String getHeaderText() {
+		return splashDefault.getHeaderText();
+	}
+
 
 }
