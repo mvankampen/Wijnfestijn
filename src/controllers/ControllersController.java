@@ -96,7 +96,7 @@ public class ControllersController {
         this.settingsController = new SettingsController(settingsView);
         // this.orderListPrintController = new
         // OrderListPrintController(orderListPrintView);
-        this.orderListController = new OrderListController(orderListView);
+        this.orderListController = new OrderListController(orderListView, new GuestDAO(connection));
         this.registrationController =
             new RegistrationController(registrationView, new GuestDAO(connection));
     }

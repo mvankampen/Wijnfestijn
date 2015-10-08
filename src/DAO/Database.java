@@ -12,7 +12,7 @@ public class Database {
     private Connection connection = null;
     private static final String DB_NAME = "wijnfestijnDB";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "";
     private static final String DRIVER = "org.postgresql.Driver";
     private static final String LOCATION = "jdbc:postgresql://localhost:5432/";
 
@@ -23,7 +23,7 @@ public class Database {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        connection = DriverManager.getConnection(LOCATION + DB_NAME,USER,PASSWORD);
+        connection = DriverManager.getConnection(LOCATION + DB_NAME, USER, PASSWORD);
         connection.setAutoCommit(false);
     }
 

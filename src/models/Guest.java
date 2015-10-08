@@ -20,7 +20,8 @@ public class Guest {
     private Boolean no_show = false;
 
     public Guest(String lastname, String infix, String firstname, String salutation, String street,
-        String streetnr, String zipcode, String city, String email,String phone, String referal, String comment) {
+        String streetnr, String zipcode, String city, String email, String phone, String referal,
+        String comment) {
         this.lastname = lastname;
         this.infix = infix;
         this.firstname = firstname;
@@ -35,8 +36,9 @@ public class Guest {
         this.referal = referal;
     }
 
-    public Guest(int id, String lastname, String infix, String firstname, String salutation, String street,
-        String streetnr, String zipcode, String city, String email,String phone, String referal, String comment, boolean no_show) {
+    public Guest(int id, String lastname, String infix, String firstname, String salutation,
+        String street, String streetnr, String zipcode, String city, String email, String phone,
+        String referal, String comment, boolean no_show) {
         this.id = id;
         this.lastname = lastname;
         this.infix = infix;

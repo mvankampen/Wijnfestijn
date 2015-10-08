@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by michael on 29-09-15.
@@ -115,13 +114,13 @@ public class GuestDAO {
         }
     }
 
-    public List<Guest> findGuestByLastname(String lastname) {
-        List<Guest> guestList = new ArrayList<>();
+    public ArrayList<Guest> findGuestByLastname(String lastname) {
+        ArrayList<Guest> guestList = new ArrayList<>();
         try {
             this.preparedStatement = null;
-            String sqlQuery = "SELECT * FROM guest WHERE guest_lastname LIKE %?%";
+            String sqlQuery = "SELECT * FROM guest WHERE LOWER(guest_lastname)  LIKE ?";
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
-            preparedStatement.setString(1, lastname);
+            preparedStatement.setString(1, lastname + '%');
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Guest guest =
@@ -141,9 +140,6 @@ public class GuestDAO {
             try {
                 if (this.preparedStatement != null) {
                     preparedStatement.close();
-                }
-                if (!connection.isClosed()) {
-                    connection.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());

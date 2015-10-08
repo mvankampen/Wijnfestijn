@@ -106,4 +106,20 @@ public class OrderListView extends AnchorPane implements ControlledScreen {
 
         getChildren().addAll(contentPane);
     }
+
+    public Button getExtraInputBtn() {
+        return extraInputBtn;
+    }
+
+    public Button getMakeOrderBtn() {
+        return makeOrderBtn;
+    }
+
+    public Button getOrderContinueBtn() {
+        return orderContinueBtn;
+    }
+
+    public TextField getSurnameTextField() {
+        return surnameTextField;
+    }
 }
