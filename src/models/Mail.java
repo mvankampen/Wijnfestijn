@@ -1,5 +1,7 @@
 package models;
 
+import enums.MailType;
+
 import javax.mail.internet.InternetAddress;
 import java.util.ArrayList;
 
@@ -10,6 +12,10 @@ public class Mail {
     private ArrayList<InternetAddress> recipients;
     private String subject;
     private String body;
+
+
+
+    private MailType mailType;
 
     public Mail(String subject, String body) {
         this.subject = subject;
@@ -39,4 +45,14 @@ public class Mail {
     public void setBody(String body) {
         this.body = body;
     }
+
+    public MailType getMailType() {
+        return mailType;
+    }
+
+    public void setMailType(MailType mailType) {
+        this.mailType = mailType;
+    }
+
+
 }

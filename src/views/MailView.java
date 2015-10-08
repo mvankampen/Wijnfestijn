@@ -9,6 +9,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import models.Mail;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 
 public class MailView extends AnchorPane implements ControlledScreen {
 
@@ -20,12 +25,23 @@ public class MailView extends AnchorPane implements ControlledScreen {
 
     private TextField titleTextArea;
     private TextArea bodyTextArea;
-    private final ToggleGroup inviteGroup = new ToggleGroup();
-    private Button mailButton = new Button("Verzenden");
-    private MailType mailType;
 
-    public MailView() {
+
+
+    private ToggleGroup inviteGroup = new ToggleGroup();
+    private Button mailButton = new Button("Verzenden");
+
+
+    private Mail mail;
+
+    public MailView(Mail mail) {
+        this.mail = mail;
         createView();
+    }
+
+    public void updateFields() {
+        this.titleTextArea.setText(this.mail.getSubject());
+        this.bodyTextArea.setText(this.mail.getBody());
     }
 
     private void createView() {
@@ -90,16 +106,6 @@ public class MailView extends AnchorPane implements ControlledScreen {
         this.mailButton = new Button("Verzenden");
         mailButton.getStyleClass().add("form_buttons");
 
-        this.inviteGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                if (inviteGroup.getSelectedToggle() != null) {
-                    mailType = MailType.values()[inviteGroup.getToggles().indexOf(newValue)];
-                    System.out.println(mailType.toString());
-
-                }
-            }
-        });
 
         //Adding to VBoxes
         titleBox.getChildren().addAll(titleLabel, titleTextArea);
@@ -127,11 +133,16 @@ public class MailView extends AnchorPane implements ControlledScreen {
         return this.bodyTextArea.getText();
     }
 
-    public MailType getMailOption() {
-        return this.mailType;
-    }
-
     public Button getMailButton() {
         return this.mailButton;
     }
+
+    public ToggleGroup getInviteGroup() {
+        return inviteGroup;
+    }
+    public void setMail(Mail mail) {
+        this.mail = mail;
+    }
+
+
 }

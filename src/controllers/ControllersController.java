@@ -7,6 +7,7 @@ import DAO.OrderDAO;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import models.Guest;
+import models.Mail;
 import views.*;
 
 import java.sql.Connection;
@@ -73,7 +74,7 @@ public class ControllersController {
 
     private void createViews() {
         homeView = new HomeView();
-        mailView = new MailView();
+        mailView = new MailView(new Mail("", ""));
         orderListPrintView = new OrderListPrintView();
         customersView = new CustomersView();
         registrationView = new RegistrationView();
