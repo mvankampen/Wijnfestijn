@@ -119,13 +119,11 @@ public class GuestDAO {
         ArrayList<Guest> guestList = new ArrayList<>();
         try {
             this.preparedStatement = null;
-            System.out.println("Begin methode");
             String sqlQuery = "SELECT * FROM guest WHERE LOWER(guest_lastname)  LIKE ?";
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, lastname + '%');
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                System.out.println("Ik ben hier");
                 Guest guest =
                     new Guest(resultSet.getInt("guest_id"), resultSet.getString("guest_lastname"),
                         resultSet.getString("guest_infix"), resultSet.getString("guest_firstname"),
@@ -145,7 +143,7 @@ public class GuestDAO {
                 if (this.preparedStatement != null) {
                     preparedStatement.close();
                 }
-                /*if (!connection.isClosed()) {
+                /*zif (!connection.isClosed()) {
                     connection.close();
                 }*/
             } catch (SQLException e) {
