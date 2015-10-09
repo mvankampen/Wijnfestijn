@@ -9,7 +9,7 @@ import javafx.scene.layout.*;
 
 
 /**
- * Created by Sander de Jong on 21-9-2015.
+ * Created by Dennis Sloove on 21-9-2015.
  */
 public class SettingsView extends AnchorPane implements ControlledScreen {
     private ScreensController screensController;
@@ -41,6 +41,7 @@ public class SettingsView extends AnchorPane implements ControlledScreen {
     	templatesComboBox = new ComboBox<String>(options);
     	templatesComboBox.setValue("Templates");
     	templateArea = new TextArea();
+    	templateArea.setEditable(false);
     	saveButton = new Button("Opslaan");
     	saveButton.getStyleClass().add("form_buttons");
     	
