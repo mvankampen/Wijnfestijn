@@ -1,2 +1,1 @@
-titel2
-body2
+Reminder standaard template
