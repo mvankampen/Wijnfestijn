@@ -16,7 +16,7 @@ public class SettingsView extends AnchorPane implements ControlledScreen {
     public TextField changeEmailField;
     public ComboBox<String> templatesComboBox;
     public TextArea templateArea;
-    public Button saveButton;
+    public Button saveButton, resetButton;
 
     public void setScreenController(ScreensController screensController) {
         this.screensController = screensController;
@@ -44,6 +44,8 @@ public class SettingsView extends AnchorPane implements ControlledScreen {
     	templateArea.setEditable(false);
     	saveButton = new Button("Opslaan");
     	saveButton.getStyleClass().add("form_buttons");
+    	resetButton = new Button("Reset deze template");
+    	resetButton.getStyleClass().add("form_buttons");
     	
     	VBox contentVBox = new VBox(25);
     	
@@ -51,12 +53,13 @@ public class SettingsView extends AnchorPane implements ControlledScreen {
     	emailHBox.getChildren().addAll(changeEmailField);
     	
     	HBox templatesHBox = new HBox(20);
-    	templatesHBox.getChildren().addAll(templatesComboBox, templateArea);
+    	templatesHBox.getChildren().addAll(templatesComboBox, templateArea, resetButton);
     	
     	HBox saveButtonBox = new HBox(20);
     	saveButtonBox.getChildren().addAll(saveButton);
     	
-    	contentVBox.getChildren().addAll(new Label("Wijzig het standaard e-mail adres "), emailHBox, new Label("Wijzig de templates: "), templatesHBox, saveButtonBox);
+    	contentVBox.getChildren().addAll(new Label("Wijzig het standaard e-mail adres "),
+    			emailHBox, new Label("Wijzig de templates: "), templatesHBox, saveButtonBox);
     	
     	
     	//Create a BorderPane
