@@ -1,6 +1,5 @@
 package views;
 
-import controllers.GuestCell;
 import controllers.ScreensController;
 import interfaces.ControlledScreen;
 import javafx.collections.FXCollections;
