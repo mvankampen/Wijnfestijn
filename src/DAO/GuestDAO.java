@@ -69,11 +69,11 @@ public class GuestDAO {
         return currentGuest;
     }
 
-    public void updateCustomer(Guest guest) {
+    public void updateGuest(Guest guest) {
         try {
             this.preparedStatement = null;
             String sqlQuery =
-                "UPDATE  guest SET guest_lastname = ?, guest_infix = ?, guest_firstname = ?, guest_salutation = ?, guest_street = ?, guest_streetnr = ?, guest_zipcode = ?, guest_city = ?, guest_email = ?, guest_phone = ?, guest_comment = ?, guest_referal = ?, guest_noshow = ? WHERE guest_id = ?";
+                "UPDATE guest SET guest_lastname = ?, guest_infix = ?, guest_firstname = ?, guest_salutation = ?, guest_street = ?, guest_streetnr = ?, guest_zipcode = ?, guest_city = ?, guest_email = ?, guest_phone = ?, guest_comment = ?, guest_referal = ?, guest_noshow = ? WHERE guest_id = ?";
             this.preparedStatement = connection.prepareStatement(sqlQuery);
             this.preparedStatement.setString(1, guest.getSurname());
             this.preparedStatement.setString(2, guest.getInfix());
@@ -124,14 +124,21 @@ public class GuestDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Guest guest =
-                    new Guest(resultSet.getInt("guest_id"), resultSet.getString("guest_lastname"),
-                        resultSet.getString("guest_infix"), resultSet.getString("guest_firstname"),
+                    new Guest(resultSet.getInt("guest_id"), 
+                    	resultSet.getString("guest_lastname"),
+                        resultSet.getString("guest_infix"),
+                        resultSet.getString("guest_firstname"),
                         resultSet.getString("guest_salutation"),
-                        resultSet.getString("guest_street"), resultSet.getString("guest_streetnr"),
-                        resultSet.getString("guest_zipcode"), resultSet.getString("guest_city"),
-                        resultSet.getString("guest_email"), resultSet.getString("guest_phone"),
-                        resultSet.getString("guest_referal"), resultSet.getString("guest_comment"),
-                        resultSet.getBoolean("guest_noshow"));
+                        resultSet.getString("guest_street"), 
+                        resultSet.getString("guest_streetnr"),
+                        resultSet.getString("guest_zipcode"), 
+                        resultSet.getString("guest_city"),
+                        resultSet.getString("guest_email"), 
+                        resultSet.getString("guest_phone"),
+                        resultSet.getString("guest_referal"), 
+                        resultSet.getString("guest_comment"),
+                        resultSet.getBoolean("guest_noshow")
+                        );
                 guestList.add(guest);
             }
         } catch (SQLException e) {
