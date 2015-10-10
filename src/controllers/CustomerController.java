@@ -32,7 +32,6 @@ public class CustomerController {
 	public CustomerController(CustomersView customersView, GuestDAO guestDAO) {
 		this.customersView = customersView;
 		this.guestDAO = guestDAO;
-		System.out.println(" hahaha");
 		createAutocomplete();
 
 		/*
@@ -67,8 +66,9 @@ public class CustomerController {
 					}
 				});
 		autoCompletionBinding.setOnAutoCompleted(event -> this.currentGuest = event.getCompletion());
+		customersView.getUpdateButton().setOnAction(e -> submitChange());
 		customersView.getSurnameTextField().setOnKeyPressed(new EventHandler<KeyEvent>() {
-
+			
 			@Override
 			public void handle(KeyEvent ke) {
 				if (ke.getCode().equals(KeyCode.ENTER)) {
@@ -79,10 +79,12 @@ public class CustomerController {
 		});
 	}
 
+	@SuppressWarnings("unchecked")
 	public void importCurrentGuest() {
 		//First row : surName
 		final ObservableList<Guest> data = FXCollections.observableArrayList(currentGuest);
 		customersView.getEditableGuest().setEditable(true);
+		customersView.getEditableGuest().getColumns().clear();
 		TableColumn<Guest, String> surnameCol = new TableColumn<Guest, String>("Surname");
 		surnameCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("surname"));
 		surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -110,7 +112,7 @@ public class CustomerController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setFirstname(t.getNewValue());
 			}
 		});
-		TableColumn<Guest, String> salutationCol = new TableColumn<Guest, String>("Surname");
+		TableColumn<Guest, String> salutationCol = new TableColumn<Guest, String>("Salutation");
 		salutationCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("salutation"));
 		salutationCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		salutationCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
@@ -120,6 +122,7 @@ public class CustomerController {
 			}
 		});
 		TableColumn<Guest, String> streetCol = new TableColumn<Guest, String>("Streetname");
+		System.out.println("In Streetname staat " + currentGuest.getStreetname());
 		streetCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("streetname"));
 		streetCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		streetCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
@@ -129,6 +132,7 @@ public class CustomerController {
 			}
 		});
 		TableColumn<Guest, String> streetnrCol = new TableColumn<Guest, String>("Streetnr");
+		System.out.println("In Streetnr staat " + currentGuest.getStreetnr());
 		streetnrCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("streetnr"));
 		streetnrCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		streetnrCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
@@ -136,11 +140,12 @@ public class CustomerController {
 			public void handle(CellEditEvent<Guest, String> t) {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setStreetnr(t.getNewValue());
 			}
-		});
+		}); 
 		TableColumn<Guest, String> zipcodeCol = new TableColumn<Guest, String>("Zipcode");
-		streetnrCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("zipcode"));
-		streetnrCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		streetnrCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
+		System.out.println("In zipcode staat " + currentGuest.getZipcode());
+		zipcodeCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("zipcode"));
+		zipcodeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		zipcodeCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
 			@Override
 			public void handle(CellEditEvent<Guest, String> t) {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setZipcode(t.getNewValue());
@@ -173,11 +178,18 @@ public class CustomerController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPhone(t.getNewValue());
 			}
 		});
+		TableColumn<Guest, String> referralCol = new TableColumn<Guest, String>("Referral");
+		referralCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("Referral"));
+		referralCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		referralCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
+			@Override
+			public void handle(CellEditEvent<Guest, String> t) {
+				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setReferal(t.getNewValue());
+			}
+		});
 		customersView.getEditableGuest().setItems(data);
-		System.out.println("root");
-		customersView.getEditableGuest().getColumns().addAll(surnameCol,infixCol,firstnameCol,salutationCol,streetCol,streetnrCol,zipcodeCol,cityCol,emailCol,phoneCol);
+		customersView.getEditableGuest().getColumns().addAll(surnameCol,infixCol,firstnameCol,salutationCol,streetCol,streetnrCol,zipcodeCol,cityCol,emailCol,phoneCol,referralCol);
 		customersView.getEditableGuest().refresh();	
-		customersView.getUpdateButton().setOnAction(e -> submitChange());
 	}
 	public void submitChange() {
 		this.guestDAO.updateGuest(currentGuest);
