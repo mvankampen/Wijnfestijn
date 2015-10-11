@@ -1,9 +1,11 @@
 package models;
 
+import javafx.collections.ObservableList;
+
 /**
  * Created by Sander de Jong on 21-9-2015.
  */
-public class Guest {
+public class Guest{
     private int id;
     private String lastname;
     private String infix;
