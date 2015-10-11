@@ -195,9 +195,10 @@ public class CustomerController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setReferal(t.getNewValue());
 			}
 		});
+		customersView.getEditableGuest().getColumns().clear();
 		customersView.getEditableGuest().setItems(data);
 		customersView.getEditableGuest().getColumns().addAll(surnameCol,infixCol,firstnameCol,salutationCol,streetCol,streetnrCol,zipcodeCol,cityCol,emailCol,phoneCol,referralCol);
-		customersView.getEditableGuest().refresh();	
+
 	}
 	public void validateData() {
 		context = "";
