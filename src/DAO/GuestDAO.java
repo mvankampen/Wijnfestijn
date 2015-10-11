@@ -54,18 +54,7 @@ public class GuestDAO {
             } catch (SQLException ex) {
                 e.printStackTrace();
             }
-        } finally {
-            try {
-                if (this.preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (!connection.isClosed()) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        } 
         return currentGuest;
     }
 

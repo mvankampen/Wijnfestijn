@@ -22,18 +22,19 @@ public class RegistrationController {
 	private Guest guest;
 	private int i;
 	private boolean fieldActive;
+	private ScreensController screensController;
 	private String context, header, title, surname, infix, firstname, salutation, streetname, streetnr, zipcode, city, email, phone,
 			referral, comment;
 
-	public RegistrationController(RegistrationView registrationView, GuestDAO guestDAO) {
+	public RegistrationController(RegistrationView registrationView, GuestDAO guestDAO, ScreensController screensController) {
 		this.registrationView = registrationView;
+		this.screensController = screensController;
 		this.guestDAO = guestDAO;
 		generateHandlers();
-		this.registrationView.getRegistrationButton().setOnAction(e -> readData());
-
 	}
 
 	public void generateHandlers() {
+		this.registrationView.getRegistrationButton().setOnAction(e -> readData());
 		registrationView.referralComboBox.getSelectionModel().selectedItemProperty()
 				.addListener(new ChangeListener<String>() {
 					public void changed(ObservableValue<? extends String> observable, String o, String newValue) {
@@ -135,8 +136,21 @@ public class RegistrationController {
 	}
 
 	public void sendRegistration() {
+		SplashDefault registrationSplash = new RegistrationSplash();
+		registrationSplash = new RegistrationCompleteMessage(registrationSplash);
+		title = registrationSplash.getTitleText();
+		header = registrationSplash.getHeaderText();
+		context = registrationSplash.getContextText();
 		this.guest = new Guest(surname, infix, firstname, salutation, streetname, streetnr, zipcode, city, email, phone,
 				referral, comment);
 		this.guestDAO.addGuest(guest);
+		splashscreenView = new SplashscreenView(title, header, context);
+		resetController();
+	}
+	public void resetController() {
+		screensController.screenRemove(ControllersController.getREGISTRATIONID());
+		this.registrationView = new RegistrationView();
+		screensController.screenLoadSet(ControllersController.getREGISTRATIONID(), registrationView);
+		generateHandlers();
 	}
 }

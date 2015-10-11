@@ -98,7 +98,7 @@ public class ControllersController {
         // OrderListPrintController(orderListPrintView);
         this.orderListController = new OrderListController(orderListView, new GuestDAO(connection));
         this.registrationController =
-            new RegistrationController(registrationView, new GuestDAO(connection));
+            new RegistrationController(registrationView, new GuestDAO(connection), screensController);
     }
 
     public void fillScreensController() {

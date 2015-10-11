@@ -23,7 +23,12 @@ public class ScreensController extends AnchorPane {
     public void screenRemove(String naam) {
         schermen.remove(naam);
     }
-
+    
+    public void screenLoadSet(String naam, AnchorPane anchorPane) {
+    	screenLoad(naam, anchorPane);
+    	screenSet(naam);
+    }
+    
     public void screenSet(String naam) {
         if (schermen.get(naam) != null) {
             if (!getChildren().isEmpty()) {
