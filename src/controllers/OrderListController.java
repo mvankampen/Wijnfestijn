@@ -19,6 +19,8 @@ import splashscreens.GeneralSplash;
 import splashscreens.RegistrationCompleteMessage;
 import splashscreens.SplashDefault;
 
+import java.util.ArrayList;
+
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import views.OrderListView;
@@ -41,6 +43,7 @@ public class OrderListController {
     private ScreensController screensController;
     private TableColumn<OrderLine, Wine> winenameCol;
     private TableColumn<OrderLine, Integer> amountCol;
+    private ArrayList<String> help;
 
 
     public OrderListController(OrderListView orderListView, GuestDAO guestDAO, WineDAO wineDAO,
@@ -96,9 +99,11 @@ public class OrderListController {
 		screensController.screenLoadSet(ControllersController.getORDERLISTID(), orderListView);
 		createAutoComplete();
 		generateHandlers();
+		help.clear();
 	}
 
     private void makeTable() {
+    	help = new ArrayList();
         data = FXCollections.observableArrayList();
         winenameCol = new TableColumn("Wijn");
         winenameCol.setMinWidth(100);
@@ -126,12 +131,20 @@ public class OrderListController {
     }
 
     private void addOrder() {
+    	
         Wine wine = wineDAO.getWineById(orderListView.getWinenumberInt());
+        String helptool = wine.getName();
+        if(help.contains(helptool)) {
+        	System.out.println("DONT FUCKING ADD THE SAME THING TWICE");
+        }
+        else {
+        help.add(helptool);
         int amount = orderListView.getAmountInt();
         data.add(new OrderLine(amount, wine));
         this.orderListView.getTableView().getColumns().clear();
         this.orderListView.getTableView().setItems(data);
         this.orderListView.getTableView().getColumns().addAll(winenameCol, amountCol);
+        }
     }
 
 
