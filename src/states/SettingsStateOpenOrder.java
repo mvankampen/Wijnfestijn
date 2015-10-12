@@ -16,7 +16,8 @@ public class SettingsStateOpenOrder implements SettingsState{
 	
 	public void fileToVariable() {
 		String line;
-		pathToFile = SettingsState.class.getClassLoader().getResource("templates/OPENORDER.txt").toString();
+		//defaultPath from SettingsState class
+		pathToFile = defaultPath + "INVITATIONAL.txt";
 		pathToFile = pathToFile.substring(6, pathToFile.length());
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(pathToFile));

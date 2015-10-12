@@ -95,48 +95,49 @@ public class RegistrationController {
 		EmailValidator emailValidator = new EmailValidator();
 		TextValidator textValidator = new TextValidator();
 		ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
-		SplashDefault registrationSplash = new RegistrationSplash();
+		SplashDefault registrationSplash = new GeneralSplash();
 		if (!textValidator.validate(surname.trim())) {
-			registrationSplash = new RegistrationSurnameMessage(registrationSplash);
+			registrationSplash = new SplashSurnameMessage(registrationSplash);
 			i++;
 		}
 		if (!textValidator.validate(firstname.trim())) {
-			registrationSplash = new RegistrationFirstnameMessage(registrationSplash);
+			registrationSplash = new SplashFirstnameMessage(registrationSplash);
 			i++;
 		}
 		if (!textValidator.validate(streetname.trim())) {
-			registrationSplash = new RegistrationStreetnameMessage(registrationSplash);
+			registrationSplash = new SplashStreetnameMessage(registrationSplash);
 			i++;
 		}
 		if (streetnr.trim().equals("")) {
-			registrationSplash = new RegistrationStreetnrMessage(registrationSplash);
+			registrationSplash = new SplashStreetnrMessage(registrationSplash);
 		}
 		if (!zipcodeValidator.validate(zipcode.trim())) {
-			registrationSplash = new RegistrationZipcodeMessage(registrationSplash);
+			registrationSplash = new SplashZipcodeMessage(registrationSplash);
 			i++;
 		}
 		if (!textValidator.validate(city.trim())) {
-			registrationSplash = new RegistrationCityMessage(registrationSplash);
+			registrationSplash = new SplashCityMessage(registrationSplash);
 			i++;
 		}
 		if (!emailValidator.validate(email.trim())) {
-			registrationSplash = new RegistrationEmailMessage(registrationSplash);
+			registrationSplash = new SplashEmailMessage(registrationSplash);
 			i++;
 		}
 		if (salutation == null) {
-			registrationSplash = new RegistrationSalutationMessage(registrationSplash);
+			registrationSplash = new SplashSalutationMessage(registrationSplash);
 			i++;
 		}
 		if (referral == null) {
-			registrationSplash = new RegistrationReferralMessage(registrationSplash);
+			registrationSplash = new SplashReferralMessage(registrationSplash);
 		}
+		registrationSplash = new RegistrationSetHead(registrationSplash);
 		title = registrationSplash.getTitleText();
 		header = registrationSplash.getHeaderText();
 		context = registrationSplash.getContextText();
 	}
 
 	public void sendRegistration() {
-		SplashDefault registrationSplash = new RegistrationSplash();
+		SplashDefault registrationSplash = new GeneralSplash();
 		registrationSplash = new RegistrationCompleteMessage(registrationSplash);
 		title = registrationSplash.getTitleText();
 		header = registrationSplash.getHeaderText();
