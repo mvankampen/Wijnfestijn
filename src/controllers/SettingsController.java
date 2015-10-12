@@ -9,8 +9,14 @@ import java.util.ArrayList;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import splashscreens.GeneralSplash;
+import splashscreens.SettingsSetHead;
+import splashscreens.SplashDefault;
+import splashscreens.SplashEmailMessage;
 import states.*;
+import validators.EmailValidator;
 import views.SettingsView;
+import views.SplashscreenView;
 
 /**
  * Created by Dennis Sloove on 28-9-2015.
@@ -19,8 +25,9 @@ public class SettingsController {
     private SettingsView settingsView;
     private SettingsState settingsState;
     private ArrayList<SettingsState> statesList;
+    private String title, header, context;
     private String defaultPath = SettingsController.class.getClassLoader().getResource("templates/").toString();
-
+    private int i;
     public SettingsController(SettingsView settingsView) {
         this.settingsView = settingsView;
         settingsView.changeEmailField.setText(getDefaultMailAdress());
@@ -33,13 +40,19 @@ public class SettingsController {
     public void generateHandler(){
     	// Save button handler
     	settingsView.saveButton.setOnAction(e ->{
-		changeMailAdress();
+		validateEmail();
+		if(i<1){
+			changeMailAdress();
 		settingsView.templatesComboBox.setValue("Templates");
 		disableTemplateArea();
 		for(SettingsState ss : statesList){
 			ss.writeToFile();
 		}
 		refreshTemplateArea();
+		}
+		else {
+			SplashscreenView splashscreenView = new SplashscreenView(title, header, context);
+		}
     	});
     	
     	// Reset button handler
@@ -113,6 +126,18 @@ public class SettingsController {
      * 
      * Retrieve the default email from DEFAULTMAIL.txt
      */
+    public void validateEmail(){
+    	EmailValidator emailValidator = new EmailValidator();
+    	SplashDefault settingsSplash = new GeneralSplash();
+    	if (!emailValidator.validate(settingsView.changeEmailField.getText().trim())) {
+    		settingsSplash = new SplashEmailMessage(settingsSplash);
+    		i++;
+    	}
+    	settingsSplash = new SettingsSetHead(settingsSplash);
+    	title = settingsSplash.getTitleText();
+    	header = settingsSplash.getHeaderText();
+    	context = settingsSplash.getContextText();
+    }
     public String getDefaultMailAdress(){
     	String path = defaultPath + "DEFAULTMAIL.txt";
     	path = path.substring(6, path.length());

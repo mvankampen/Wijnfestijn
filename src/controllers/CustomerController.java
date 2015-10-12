@@ -19,17 +19,18 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import models.Guest;
-import splashscreens.RegistrationCityMessage;
-import splashscreens.RegistrationEmailMessage;
-import splashscreens.RegistrationFirstnameMessage;
-import splashscreens.RegistrationReferralMessage;
-import splashscreens.RegistrationSalutationMessage;
-import splashscreens.RegistrationSplash;
-import splashscreens.RegistrationStreetnameMessage;
-import splashscreens.RegistrationStreetnrMessage;
-import splashscreens.RegistrationSurnameMessage;
-import splashscreens.RegistrationZipcodeMessage;
+import splashscreens.GeneralSplash;
+import splashscreens.RegistrationSetHead;
+import splashscreens.SplashCityMessage;
 import splashscreens.SplashDefault;
+import splashscreens.SplashEmailMessage;
+import splashscreens.SplashFirstnameMessage;
+import splashscreens.SplashReferralMessage;
+import splashscreens.SplashSalutationMessage;
+import splashscreens.SplashStreetnameMessage;
+import splashscreens.SplashStreetnrMessage;
+import splashscreens.SplashSurnameMessage;
+import splashscreens.SplashZipcodeMessage;
 import validators.EmailValidator;
 import validators.TextValidator;
 import validators.ZipcodeValidator;
@@ -46,7 +47,7 @@ public class CustomerController {
 	EmailValidator emailValidator = new EmailValidator();
 	TextValidator textValidator = new TextValidator();
 	ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
-	SplashDefault registrationSplash = new RegistrationSplash();
+	SplashDefault registrationSplash = new GeneralSplash();
 	private SplashscreenView splashscreenView;
 	private String title, header, context;
 	private int i;
@@ -206,40 +207,40 @@ public class CustomerController {
 		EmailValidator emailValidator = new EmailValidator();
 		TextValidator textValidator = new TextValidator();
 		ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
-		SplashDefault registrationSplash = new RegistrationSplash();
+		SplashDefault registrationSplash = new GeneralSplash();
 		if (!textValidator.validate(currentGuest.getSurname().trim())) {
-			registrationSplash = new RegistrationSurnameMessage(registrationSplash);
+			registrationSplash = new SplashSurnameMessage(registrationSplash);
 			i++;
 		}
 		if (!textValidator.validate(currentGuest.getFirstname().trim())) {
-			registrationSplash = new RegistrationFirstnameMessage(registrationSplash);
+			registrationSplash = new SplashFirstnameMessage(registrationSplash);
 			i++;
 		}
 		if (!textValidator.validate(currentGuest.getStreetname().trim())) {
-			registrationSplash = new RegistrationStreetnameMessage(registrationSplash);
+			registrationSplash = new SplashStreetnameMessage(registrationSplash);
 			i++;
 		}
 		if (currentGuest.getStreetnr().trim().equals("")) {
-			registrationSplash = new RegistrationStreetnrMessage(registrationSplash);
+			registrationSplash = new SplashStreetnrMessage(registrationSplash);
 		}
 		if (!zipcodeValidator.validate(currentGuest.getZipcode().trim())) {
-			registrationSplash = new RegistrationZipcodeMessage(registrationSplash);
+			registrationSplash = new SplashZipcodeMessage(registrationSplash);
 			i++;
 		}
 		if (!textValidator.validate(currentGuest.getCity().trim())) {
-			registrationSplash = new RegistrationCityMessage(registrationSplash);
+			registrationSplash = new SplashCityMessage(registrationSplash);
 			i++;
 		}
 		if (!emailValidator.validate(currentGuest.getEmail().trim())) {
-			registrationSplash = new RegistrationEmailMessage(registrationSplash);
+			registrationSplash = new SplashEmailMessage(registrationSplash);
 			i++;
 		}
 		if (currentGuest.getSalutation() == null) {
-			registrationSplash = new RegistrationSalutationMessage(registrationSplash);
+			registrationSplash = new SplashSalutationMessage(registrationSplash);
 			i++;
 		}
 		if (currentGuest.getReferal() == null) {
-			registrationSplash = new RegistrationReferralMessage(registrationSplash);
+			registrationSplash = new SplashReferralMessage(registrationSplash);
 		}
 		title = registrationSplash.getTitleText();
 		header = registrationSplash.getHeaderText();
