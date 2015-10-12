@@ -16,6 +16,11 @@ public class OrderLine {
 
     }
 
+    public OrderLine(int amount, Wine wine) {
+        this.amount = amount;
+        this.wine = wine;
+    }
+
     public int getAmount() {
         return amount;
     }

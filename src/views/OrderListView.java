@@ -2,11 +2,14 @@ package views;
 
 import controllers.ScreensController;
 import interfaces.ControlledScreen;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.*;
+import models.Guest;
 import models.OrderLine;
 import models.Wine;
 
@@ -16,9 +19,9 @@ import models.Wine;
  */
 public class OrderListView extends AnchorPane implements ControlledScreen {
     private ScreensController screensController;
-    @FXML Label introLabel, surnameLabel, selectCustomerLabel, orderLabel, wineLabel, amountLabel;
-    @FXML TextField surnameTextField;
-    @FXML Button makeOrderBtn, extraInputBtn;
+    @FXML Label introLabel, surnameLabel, wineLabel, amountLabel;
+    @FXML TextField surnameTextField, winenumberTextField, amountTextField;
+    @FXML Button makeOrderBtn, orderBtn;
     @FXML TableView<OrderLine> tableView;
 
     @Override public void setScreenController(ScreensController screensController) {
@@ -47,6 +50,7 @@ public class OrderListView extends AnchorPane implements ControlledScreen {
         introBox.getChildren().add(this.introLabel);
 
         VBox vBoxCustomer = new VBox(10);
+        vBoxCustomer.setPadding(new Insets(0, 20, 0, 0));
         surnameLabel = new Label("Klant achternaam:");
         surnameTextField = new TextField();
         vBoxCustomer.getChildren()
@@ -56,33 +60,39 @@ public class OrderListView extends AnchorPane implements ControlledScreen {
         HBox vBoxButton = new HBox(30);
         this.makeOrderBtn = new Button("Maak order");
         this.makeOrderBtn.getStyleClass().add("form_buttons");
-        this.extraInputBtn = new Button("Extra invulvelden");
-        this.extraInputBtn.getStyleClass().add("form_buttons");
         vBoxButton.getChildren()
-            .addAll(this.makeOrderBtn, this.extraInputBtn);
+            .addAll(this.makeOrderBtn);
 
-        HBox vBoxOrder = new HBox();
-        vBoxOrder.setPadding(new Insets(0, 0, 0, 20));
         this.tableView = new TableView<>();
         this.tableView.setEditable(true);
-        this.tableView.setMaxWidth(400);
-        this.tableView.setMaxHeight(400);
-        TableColumn<OrderLine, Wine> wineColumn = new TableColumn<>("Wijn nummer");
-        TableColumn<OrderLine,Integer> amountColumn = new TableColumn<>("Aantal");
-        this.tableView.getColumns().addAll(wineColumn, amountColumn);
-        vBoxOrder.getChildren().add(this.tableView);
+        this.tableView.setMaxHeight(50);
+        this.tableView.setMinWidth(300);
+        Label placeholder = new Label();
+        placeholder.setText("Geen bestellingen geplaatst");
+        this.tableView.setPlaceholder(placeholder);
+   
+        HBox vboxOrder = new HBox(10);
+        this.wineLabel = new Label("Wijn nummer");
+        this.winenumberTextField = new TextField();
+        this.amountLabel = new Label("Aantal");
+        this.amountTextField = new TextField();
+        vboxOrder.getChildren().addAll(wineLabel,winenumberTextField,amountLabel,amountTextField);
 
+        this.orderBtn = new Button("Order plaatsen");
+        this.orderBtn.getStyleClass().add("form_buttons");
 
         contentPane.add(introBox, 0, 0);
         contentPane.add(vBoxCustomer, 0, 1);
         contentPane.add(vBoxButton, 0, 2);
-        contentPane.add(vBoxOrder, 1, 1);
+        contentPane.add(tableView, 1, 1);
+        contentPane.add(vboxOrder, 1,2);
+        contentPane.add(orderBtn, 1,3);
 
         getChildren().addAll(contentPane);
     }
 
-    public Button getExtraInputBtn() {
-        return extraInputBtn;
+    public Button getOrderBtn() {
+        return orderBtn;
     }
 
     public Button getMakeOrderBtn() {
@@ -91,5 +101,17 @@ public class OrderListView extends AnchorPane implements ControlledScreen {
 
     public TextField getSurnameTextField() {
         return surnameTextField;
+    }
+
+    public int getWinenumberInt() {
+        return Integer.parseInt(winenumberTextField.getText());
+    }
+
+    public TableView<OrderLine> getTableView() {
+        return tableView;
+    }
+
+    public int getAmountInt() {
+        return Integer.parseInt(amountTextField.getText());
     }
 }

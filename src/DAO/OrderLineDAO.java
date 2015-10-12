@@ -1,10 +1,14 @@
 package DAO;
 
+import javafx.collections.ObservableList;
+import models.Guest;
 import models.Order;
 import models.OrderLine;
+import models.Wine;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -14,18 +18,17 @@ import java.util.ArrayList;
 public class OrderLineDAO {
 
     private Connection connection;
-    private PreparedStatement preparedStatementOrderID;
+    private PreparedStatement preparedStatementWine;
     private PreparedStatement preparedStatement;
 
     public OrderLineDAO(Connection connection) {
         this.connection = connection;
     }
 
-    public void addOrderLines(ArrayList<OrderLine> orderLines, Order order) {
+    public void addOrderLines(ObservableList<OrderLine> orderLines, Order order) {
         try {
             this.preparedStatement = null;
-            String sqlQuery = "INSERT INTO orderline"
-                + "(orderline_order_id, orderline_wine_id, orderline_amount) VALUES " + "(?, ?, ?)";
+            String sqlQuery = "INSERT INTO orderline (orderline_order_id, orderline_wine_id, orderline_amount) VALUES " + "(?, ?, ?)";
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
 
             for (int i = 0; i < orderLines.size(); i++) {
@@ -44,17 +47,6 @@ public class OrderLineDAO {
                 }
             } catch (SQLException ex) {
                 e.printStackTrace();
-            }
-        } finally {
-            try {
-                if (this.preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (!connection.isClosed()) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
             }
         }
     }
@@ -82,17 +74,45 @@ public class OrderLineDAO {
             } catch (SQLException ex) {
                 e.printStackTrace();
             }
-        } finally {
-            try {
-                if (this.preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (!connection.isClosed()) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
         }
+    }
+
+    public ArrayList<OrderLine> findOrderlinesByOrder(Order order) {
+        ArrayList<OrderLine> orderLines = new ArrayList<>();
+        try {
+            this.preparedStatement = null;
+            String sqlQuery = "SELECT * FROM orderline WHERE orderline_order_id = ? ";
+            this.preparedStatement = this.connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, order.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Wine wine = findWineByOrderLine(resultSet.getInt("orderline_wine_id"));
+                OrderLine orderLine =
+                    new OrderLine(resultSet.getInt("orderline_amount"), order, wine);
+                orderLines.add(orderLine);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } return orderLines;
+    }
+
+    private Wine findWineByOrderLine(int orderline_wine_id) {
+        Wine wine = null;
+        try {
+            this.preparedStatementWine = null;
+            String sqlQuery = "SELECT * FROM wine WHERE wine_id = ?";
+            this.preparedStatementWine = this.connection.prepareStatement(sqlQuery);
+            preparedStatementWine.setInt(1, orderline_wine_id);
+            ResultSet resultSet = preparedStatementWine.executeQuery();
+            while (resultSet.next()) {
+                wine = new Wine(resultSet.getInt("wine_id"), resultSet.getString("wine_name"),
+                    resultSet.getString("wine_category"), resultSet.getString("wine_type"),
+                    resultSet.getString("wine_publisher"), resultSet.getString("wine_year"),
+                    resultSet.getDouble("wine_price"), resultSet.getString("wine_rank"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return wine;
     }
 }

@@ -27,7 +27,7 @@ public class OrderDAO {
             String sqlQuery = "INSERT INTO orders"
                 + "(orders_guest_id) VALUES (?) RETURNING orders_id, orders_timestamp";
             this.preparedStatement =
-                this.connection.prepareStatement(sqlQuery, PreparedStatement.RETURN_GENERATED_KEYS);
+                this.connection.prepareStatement(sqlQuery);
             this.preparedStatement.setInt(1, order.getGuest().getId());
             ResultSet resultSet = this.preparedStatement.executeQuery();
             if (resultSet != null && resultSet.next()) {
@@ -44,17 +44,6 @@ public class OrderDAO {
                 }
             } catch (SQLException ex) {
                 e.printStackTrace();
-            }
-        } finally {
-            try {
-                if (this.preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (!connection.isClosed()) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
             }
         }
         return currentOrder;
@@ -84,17 +73,6 @@ public class OrderDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (this.preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (!connection.isClosed()) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
         }
 
         return orderArrayList;

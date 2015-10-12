@@ -14,7 +14,8 @@ public class Order {
     private Date date;
     private boolean completed = false;
 
-    public Order() {
+    public Order(Guest guest) {
+        this.guest = guest;
         this.date = new Date();
     }
 

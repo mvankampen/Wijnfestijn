@@ -1,9 +1,6 @@
 package controllers;
 
-import DAO.Database;
-import DAO.GuestDAO;
-import DAO.MailDAO;
-import DAO.OrderDAO;
+import DAO.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import models.Guest;
@@ -96,7 +93,7 @@ public class ControllersController {
         this.settingsController = new SettingsController(settingsView);
         // this.orderListPrintController = new
         // OrderListPrintController(orderListPrintView);
-        this.orderListController = new OrderListController(orderListView, new GuestDAO(connection));
+        this.orderListController = new OrderListController(orderListView, new GuestDAO(connection), new WineDAO(connection), new OrderLineDAO(connection), new OrderDAO(connection), screensController);
         this.registrationController =
             new RegistrationController(registrationView, new GuestDAO(connection), screensController);
     }

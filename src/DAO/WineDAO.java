@@ -122,17 +122,6 @@ public class WineDAO {
             } catch (SQLException ex) {
                 e.printStackTrace();
             }
-        } finally {
-            try {
-                if (this.preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (!connection.isClosed()) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
         }
     }
 
@@ -163,17 +152,24 @@ public class WineDAO {
             } catch (SQLException ex) {
                 e.printStackTrace();
             }
-        } finally {
-            try {
-                if (this.preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (!connection.isClosed()) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
         }
+    }
+
+    public Wine getWineById(int wineId) {
+
+        Wine wine = null;
+        try {
+            this.preparedStatement = null;
+            String sqlQuery = "SELECT * FROM wine WHERE wine_id = ?";
+            this.preparedStatement = this.connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, wineId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                wine = new Wine(resultSet.getInt("wine_id"),resultSet.getString("wine_name"), resultSet.getString("wine_category"), resultSet.getString("wine_type"), resultSet.getString("wine_publisher"),resultSet.getString("wine_year"), resultSet.getDouble("wine_price"),resultSet.getString("wine_rank"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+        return wine;
     }
 }
