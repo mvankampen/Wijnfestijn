@@ -50,6 +50,7 @@ public class OrderListController {
         this.orderLineDAO = orderLineDAO;
         this.orderDAO = orderDAO;
         this.screensController = screensController;
+        this.pdfService = new PDFService();
         createAutoComplete();
     }
         public void createAutoComplete() {

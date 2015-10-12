@@ -4,6 +4,7 @@ import DAO.OrderDAO;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
+import models.Guest;
 import models.Order;
 
 import java.io.File;
@@ -11,6 +12,8 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Sander de Jong on 24-9-2015.
@@ -26,69 +29,80 @@ public class PDFService {
         try {
             checkDirectory(this.out);
             PdfWriter.getInstance(document, new FileOutputStream(out.toString() + "/test.pdf"));
+            document.open();
+
+            // Main paragraph
+            Paragraph preface = new Paragraph();
+
+            // Title
+            Paragraph title = new Paragraph("Lionsclub Oegstgeest/Warmond", this.fontHelveticaHeader);
+            title.setAlignment(Element.ALIGN_CENTER);
+            preface.add(title);
+
+            // Guest info
+            Paragraph guestInfo = new Paragraph("", this.fontHelveticaNormal);
+            guestInfo.add(getFullName(order.getGuest()));
+            guestInfo.add(new Paragraph(order.getGuest().getStreetname() + " " + order.getGuest().getStreetnr(), this.fontHelveticaNormal));
+            guestInfo.add(new Paragraph(order.getGuest().getZipcode() + " " + order.getGuest().getCity(), this.fontHelveticaNormal));
+            addEmptyLine(preface, 4);
+            preface.add(guestInfo);
+
+            // Order details
+            Paragraph orderDetails = new Paragraph("", this.fontHelveticaNormal);
+            orderDetails.add("Factuurdatum");
+            addTab(orderDetails, 2);
+            orderDetails.add(":");
+            addTab(orderDetails, 1);
+            orderDetails.add(new SimpleDateFormat("dd MM YYYY").format(order.getDate()));
+            orderDetails.add(new Paragraph("Factuurnummer", this.fontHelveticaNormal));
+            addTab(orderDetails, 2);
+            orderDetails.add(":");
+            addTab(orderDetails, 1);
+            orderDetails.add(Integer.toString(order.getId()));
+            orderDetails.add(new Paragraph("Debiteurennummer", this.fontHelveticaNormal));
+            addTab(orderDetails, 1);
+            orderDetails.add(":");
+            addTab(orderDetails, 1);
+            orderDetails.add(Integer.toString(order.getGuest().getId()));
+            addEmptyLine(orderDetails, 2);
+            preface.add(orderDetails);
+
+            // Order lines
+            Paragraph orderLines = new Paragraph("", this.fontHelveticaNormalBold);
+            orderLines.add("Code");
+            addTab(orderLines, 1);
+            orderLines.add("Aantal");
+            addTab(orderLines, 1);
+            orderLines.add("Wijn");
+            addTab(orderLines, 6);
+            orderLines.add("Jaar");
+            addTab(orderLines, 2);
+            orderLines.add("Per fles");
+            addTab(orderLines, 2);
+            orderLines.add("Bedrag");
+            addTab(orderLines, 2);
+            LineSeparator ls = new LineSeparator();
+            orderLines.add(ls);
+            preface.add(orderLines);
+
+            // Add every paragraph to document
+            document.add(preface);
+            document.newPage();
+            document.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        document.open();
-        // Main paragraph
-        Paragraph preface = new Paragraph();
+    }
 
-        // Title
-        Paragraph title = new Paragraph("Lionsclub Oegstgeest/Warmond", this.fontHelveticaHeader);
-        title.setAlignment(Element.ALIGN_CENTER);
-
-        addEmptyLine(preface, 3);
-        preface.add(new Paragraph("S. de Jong"));
-        preface.add(new Paragraph("Burggravenambacht 13"));
-        preface.add(new Paragraph("1433NR Kudelstaart"));
-        preface.add(title);
-
-        addEmptyLine(preface, 2);
-
-        Paragraph orderDetails = new Paragraph("", this.fontHelveticaNormal);
-        orderDetails.add("Factuurdatum");
-        addTab(orderDetails, 2);
-        orderDetails.add(":");
-        addTab(orderDetails, 1);
-        orderDetails.add("23 Septebmer 2013");
-
-        //addNewLine(orderDetails);
-
-        orderDetails.add("Factuurnummer");
-        addTab(orderDetails, 2);
-        orderDetails.add(":");
-        addTab(orderDetails, 1);
-        orderDetails.add("10001");
-
-        //addNewLine(orderDetails);
-
-        orderDetails.add("Debiteurennummer");
-        addTab(orderDetails, 1);
-        orderDetails.add(":");
-        addTab(orderDetails, 1);
-        orderDetails.add("10001");
-        addEmptyLine(orderDetails, 2);
-
-        Paragraph orderLines = new Paragraph("", this.fontHelveticaNormalBold);
-        orderLines.add("Code");
-        addTab(orderLines, 1);
-        orderLines.add("Aantal");
-        addTab(orderLines, 1);
-        orderLines.add("Wijn");
-        addTab(orderLines, 6);
-        orderLines.add("Jaar");
-        addTab(orderLines, 2);
-        orderLines.add("Per fles");
-        addTab(orderLines, 2);
-        orderLines.add("Bedrag");
-        addTab(orderLines, 2);
-        LineSeparator ls = new LineSeparator();
-        orderLines.add(ls);
-
-        preface.add(orderDetails);
-        preface.add(orderLines);
-        addEmptyLine(orderDetails, 1);
-
+    private String getFullName(Guest guest) {
+        String firstNameShort = guest.getFirstname().substring(0,1).toUpperCase() + ". ";
+        String result = firstNameShort;
+        if (!guest.getInfix().equals(null)) {
+         result += guest.getInfix() + " " + guest.getSurname();
+        } else {
+            result += guest.getSurname();
+        }
+        return result;
     }
 
     public void createCustomOrderList() {
