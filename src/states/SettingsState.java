@@ -3,9 +3,12 @@ package states;
 public interface SettingsState {
 	// Methods
 	public void fileToVariable();
-	public String getFileString();
+	public String getBody();
+	public String getTitle();
 	public void writeToFile();
-	public void updateFileVariable(String add);
-	public String getDefaultValue();
-	public String defaultPath = SettingsState.class.getClassLoader().getResource("templates/").toString();
+	public void updateBody(String add);
+	public void updateTitle(String add);
+	public String getDefaultBody();
+	public String getDefaultTitle();
+	public String defaultPath = "src/templates/";
 }

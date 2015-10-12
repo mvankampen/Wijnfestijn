@@ -71,8 +71,7 @@ public class MailController {
 
     public void sendMail() {
         System.out.println("test");
-        this.mail.setSubject(this.mailView.getSubject());
-        this.mail.setBody(this.mailView.getBody());
+        this.mail = new Mail(this.mailView.getSubject(), this.mailView.getBody());
         switch (this.mail.getMailType()) {
             case REMINDER:
                 System.out.println("reminder method aanroepen");

@@ -86,7 +86,7 @@ public class ControllersController {
         this.homeController = new HomeController(homeView, this.screensController);
         this.navigationController =
             new NavigationController(this.screensController, navigationView);
-        this.customerController = new CustomerController(customersView, new GuestDAO(connection), screensController);
+        this.customerController = new CustomerController(customersView, new GuestDAO(connection));
         this.debtorsController =
             new DebtorsController(debtorsView, new OrderDAO(connection), new GuestDAO(connection));
         this.mailController = new MailController(mailView, new MailDAO(connection));

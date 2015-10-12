@@ -19,9 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import models.Guest;
-import splashscreens.AdjustSetHead;
 import splashscreens.GeneralSplash;
-import splashscreens.RegistrationCompleteMessage;
 import splashscreens.RegistrationSetHead;
 import splashscreens.SplashCityMessage;
 import splashscreens.SplashDefault;
@@ -37,7 +35,6 @@ import validators.EmailValidator;
 import validators.TextValidator;
 import validators.ZipcodeValidator;
 import views.CustomersView;
-import views.RegistrationView;
 import views.SplashscreenView;
 
 /**
@@ -50,31 +47,16 @@ public class CustomerController {
 	EmailValidator emailValidator = new EmailValidator();
 	TextValidator textValidator = new TextValidator();
 	ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
-	SplashDefault adjustSplash = new GeneralSplash();
+	SplashDefault registrationSplash = new GeneralSplash();
 	private SplashscreenView splashscreenView;
-	private ScreensController screensController;
 	private String title, header, context;
 	private int i;
 
-	public CustomerController(CustomersView customersView, GuestDAO guestDAO, ScreensController screensController) {
+	public CustomerController(CustomersView customersView, GuestDAO guestDAO) {
 		this.customersView = customersView;
 		this.guestDAO = guestDAO;
-		this.screensController = screensController;
-		generateHandlers();
+		
 		createAutocomplete();
-	}
-	public void generateHandlers() {
-		customersView.getUpdateButton().setOnAction(e -> validateData());
-		customersView.getSurnameTextField().setOnKeyPressed(new EventHandler<KeyEvent>() {
-			
-			@Override
-			public void handle(KeyEvent ke) {
-				if (ke.getCode().equals(KeyCode.ENTER)) {
-					importCurrentGuest();
-				}
-			}
-
-		});
 	}
 	public void createAutocomplete() {
 		AutoCompletionBinding<Guest> autoCompletionBinding = TextFields.bindAutoCompletion(
@@ -92,6 +74,17 @@ public class CustomerController {
 					}
 				});
 		autoCompletionBinding.setOnAutoCompleted(event -> this.currentGuest = event.getCompletion());
+		customersView.getUpdateButton().setOnAction(e -> validateData());
+		customersView.getSurnameTextField().setOnKeyPressed(new EventHandler<KeyEvent>() {
+			
+			@Override
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ENTER)) {
+					importCurrentGuest();
+				}
+			}
+
+		});
 	}
 
 	@SuppressWarnings("unchecked")
@@ -214,45 +207,44 @@ public class CustomerController {
 		EmailValidator emailValidator = new EmailValidator();
 		TextValidator textValidator = new TextValidator();
 		ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
-		SplashDefault adjustSplash = new GeneralSplash();
+		SplashDefault registrationSplash = new GeneralSplash();
 		if (!textValidator.validate(currentGuest.getSurname().trim())) {
-			adjustSplash = new SplashSurnameMessage(adjustSplash);
+			registrationSplash = new SplashSurnameMessage(registrationSplash);
 			i++;
 		}
 		if (!textValidator.validate(currentGuest.getFirstname().trim())) {
-			adjustSplash = new SplashFirstnameMessage(adjustSplash);
+			registrationSplash = new SplashFirstnameMessage(registrationSplash);
 			i++;
 		}
 		if (!textValidator.validate(currentGuest.getStreetname().trim())) {
-			adjustSplash = new SplashStreetnameMessage(adjustSplash);
+			registrationSplash = new SplashStreetnameMessage(registrationSplash);
 			i++;
 		}
 		if (currentGuest.getStreetnr().trim().equals("")) {
-			adjustSplash = new SplashStreetnrMessage(adjustSplash);
+			registrationSplash = new SplashStreetnrMessage(registrationSplash);
 		}
 		if (!zipcodeValidator.validate(currentGuest.getZipcode().trim())) {
-			adjustSplash = new SplashZipcodeMessage(adjustSplash);
+			registrationSplash = new SplashZipcodeMessage(registrationSplash);
 			i++;
 		}
 		if (!textValidator.validate(currentGuest.getCity().trim())) {
-			adjustSplash = new SplashCityMessage(adjustSplash);
+			registrationSplash = new SplashCityMessage(registrationSplash);
 			i++;
 		}
 		if (!emailValidator.validate(currentGuest.getEmail().trim())) {
-			adjustSplash = new SplashEmailMessage(adjustSplash);
+			registrationSplash = new SplashEmailMessage(registrationSplash);
 			i++;
 		}
 		if (currentGuest.getSalutation() == null) {
-			adjustSplash = new SplashSalutationMessage(adjustSplash);
+			registrationSplash = new SplashSalutationMessage(registrationSplash);
 			i++;
 		}
 		if (currentGuest.getReferal() == null) {
-			adjustSplash = new SplashReferralMessage(adjustSplash);
+			registrationSplash = new SplashReferralMessage(registrationSplash);
 		}
-		adjustSplash = new AdjustSetHead(adjustSplash);
-		title = adjustSplash.getTitleText();
-		header = adjustSplash.getHeaderText();
-		context = adjustSplash.getContextText();
+		title = registrationSplash.getTitleText();
+		header = registrationSplash.getHeaderText();
+		context = registrationSplash.getContextText();
 		if(i > 0) {
 			splashscreenView = new SplashscreenView(title, header, context);
 		}
@@ -261,20 +253,12 @@ public class CustomerController {
 		}
 	}
 	public void submitChange() {
-		SplashDefault adjustSplash = new GeneralSplash();
-		adjustSplash = new RegistrationCompleteMessage(adjustSplash);
-		title = adjustSplash.getTitleText();
-		header = adjustSplash.getHeaderText();
-		context = adjustSplash.getContextText();
 		this.guestDAO.updateGuest(currentGuest);
-		splashscreenView = new SplashscreenView(title, header, context);
-		resetController();
 	}
-	public void resetController() {
-		screensController.screenRemove(ControllersController.getCUSTOMERSID());
-		this.customersView = new CustomersView();
-		screensController.screenLoadSet(ControllersController.getCUSTOMERSID(), customersView);
-		generateHandlers();
-		createAutocomplete();
+	public void fireAlert() {
+		title = registrationSplash.getTitleText();
+		header = registrationSplash.getHeaderText();
+		context = registrationSplash.getContextText();
+		
 	}
 }

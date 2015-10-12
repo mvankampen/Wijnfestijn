@@ -94,3 +94,13 @@
 .redStar{
 	-fx-text-fill: red;
 }
+
+.settings_title{
+	-fx-font-size: 22px;
+	-fx-font-style: italic;
+	-fx-underline: true;
+}
+
+.settings_white{
+	-fx-background-color:white;
+}
