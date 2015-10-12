@@ -26,11 +26,13 @@ public class SettingsController {
     private SettingsState settingsState;
     private ArrayList<SettingsState> statesList;
     private String title, header, context;
-    private String defaultPath = SettingsController.class.getClassLoader().getResource("templates/").toString();
+    private String defaultPath = "src/templates/";
     private int i;
+    private boolean saved = false;
+    
     public SettingsController(SettingsView settingsView) {
         this.settingsView = settingsView;
-        settingsView.changeEmailField.setText(getDefaultMailAdress());
+        setMailInfo();
         generateHandler();
         fillStateList();
     }
@@ -40,25 +42,27 @@ public class SettingsController {
     public void generateHandler(){
     	// Save button handler
     	settingsView.saveButton.setOnAction(e ->{
-		validateEmail();
-		if(i<1){
-			changeMailAdress();
-		settingsView.templatesComboBox.setValue("Templates");
-		disableTemplateArea();
-		for(SettingsState ss : statesList){
-			ss.writeToFile();
-		}
-		refreshTemplateArea();
-		}
-		else {
-			SplashscreenView splashscreenView = new SplashscreenView(title, header, context);
-		}
+			validateEmail();
+			if(i<1){
+				changeMailInfo();
+			settingsView.templatesComboBox.setValue("Templates");
+			disableTemplateArea();
+			for(SettingsState ss : statesList){
+				ss.writeToFile();
+			}
+			saved = true;
+			refreshTemplateArea();
+			}
+			else {
+				i = 0;
+				SplashscreenView splashscreenView = new SplashscreenView(title, header, context);
+			}
     	});
     	
     	// Reset button handler
     	settingsView.resetButton.setOnAction(e -> {
     		if(settingsView.templatesComboBox.getSelectionModel().getSelectedItem() != "Templates")
-    			settingsView.templateArea.setText(settingsState.getDefaultValue());
+    			settingsView.templateArea.setText(settingsState.getDefaultBody());
     	});
     	
     	// Template combobox event handler
@@ -66,15 +70,28 @@ public class SettingsController {
 			
     		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {	
 				setState();
-				settingsView.templateArea.setText(settingsState.getFileString());
+				settingsView.changeEmailTitleField.setText(settingsState.getTitle());
+				settingsView.templateArea.setText(settingsState.getBody());
 			}
     	});
     	
     	settingsView.templateArea.textProperty().addListener(new ChangeListener<String>(){
     		
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if(!settingsView.templateArea.getText().isEmpty())
-					settingsState.updateFileVariable(settingsView.templateArea.getText());
+						if(!saved){
+							settingsState.updateBody(settingsView.templateArea.getText());
+							saved = false;
+						}	
+			}
+    	});
+    	
+    	settingsView.changeEmailTitleField.textProperty().addListener(new ChangeListener<String>(){
+    		
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if(!saved){
+					settingsState.updateTitle(settingsView.changeEmailTitleField.getText());
+					saved = false;
+				}
 			}
     	});
     }
@@ -103,29 +120,27 @@ public class SettingsController {
     
     public void refreshTemplateArea(){
     	settingsView.templateArea.setText("");
+    	settingsView.changeEmailTitleField.setText("");
     }
     
-    public void changeMailAdress(){
+    public void changeMailInfo(){
     	// Select file
     	String path = defaultPath + "DEFAULTMAIL.txt";
-    	path = path.substring(6, path.length());
     	try {
     		// Create a new PrintWriter
 			PrintWriter pw = new PrintWriter(path);
 			pw.close(); 
 			// New PrintWriter intialize
 			pw = new PrintWriter(new BufferedWriter(new FileWriter(path, true)));
-			pw.write(settingsView.changeEmailField.getText());
+			pw.write(settingsView.changeEmailField.getText() + "\n");
+			pw.write(settingsView.defaultMailPasswordField.getText());
 			// Closing the PrintWriter
 			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
     }
-    /**
-     * 
-     * Retrieve the default email from DEFAULTMAIL.txt
-     */
+    
     public void validateEmail(){
     	EmailValidator emailValidator = new EmailValidator();
     	SplashDefault settingsSplash = new GeneralSplash();
@@ -138,23 +153,31 @@ public class SettingsController {
     	header = settingsSplash.getHeaderText();
     	context = settingsSplash.getContextText();
     }
-    public String getDefaultMailAdress(){
+    
+    /**
+     * Retrieve the default email from DEFAULTMAIL.txt
+     */
+    public void setMailInfo(){
     	String path = defaultPath + "DEFAULTMAIL.txt";
-    	path = path.substring(6, path.length());
-		String returnMail = "";
-		String line = null;
+  		String line = null;
+  		boolean gotName = false;
 		try {
 			// Create a new BufferedReader for DEFAULTMAIL.txt
 			BufferedReader br = new BufferedReader(new FileReader(path));
 			// Load the email address in the variable "returnMail"
-			if ((line = br.readLine()) != null){
-		        returnMail = line;
+			while ((line = br.readLine()) != null){
+				if(!gotName){
+					settingsView.changeEmailField.setText(line);
+					gotName = true;
+				}
+				else{
+					settingsView.defaultMailPasswordField.setText(line);
+				}
 		    }
 			// Closing the BufferedReader
 			br.close();
 		}catch (IOException e) {
 			e.printStackTrace();
 		}	
-    	return returnMail;
     }
 }
