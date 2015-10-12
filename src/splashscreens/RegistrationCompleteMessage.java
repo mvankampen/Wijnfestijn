@@ -1,6 +1,6 @@
 package splashscreens;
 
-public class RegistrationCompleteMessage extends RegistrationDefaultMessage {
+public class RegistrationCompleteMessage extends SplashDefaultMessage {
 	SplashDefault splashDefault;
 	public RegistrationCompleteMessage(SplashDefault splashDefault)
 	{

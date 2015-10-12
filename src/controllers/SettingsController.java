@@ -9,8 +9,14 @@ import java.util.ArrayList;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import splashscreens.GeneralSplash;
+import splashscreens.SettingsSetHead;
+import splashscreens.SplashDefault;
+import splashscreens.SplashEmailMessage;
 import states.*;
+import validators.EmailValidator;
 import views.SettingsView;
+import views.SplashscreenView;
 
 /**
  * Created by Dennis Sloove on 28-9-2015.
@@ -19,7 +25,9 @@ public class SettingsController {
     private SettingsView settingsView;
     private SettingsState settingsState;
     private ArrayList<SettingsState> statesList;
-
+    private String title, header, context;
+    private String defaultPath = SettingsController.class.getClassLoader().getResource("templates/").toString();
+    private int i;
     public SettingsController(SettingsView settingsView) {
         this.settingsView = settingsView;
         settingsView.changeEmailField.setText(getDefaultMailAdress());
@@ -32,19 +40,25 @@ public class SettingsController {
     public void generateHandler(){
     	// Save button handler
     	settingsView.saveButton.setOnAction(e ->{
-		changeMailAdress();
+		validateEmail();
+		if(i<1){
+			changeMailAdress();
 		settingsView.templatesComboBox.setValue("Templates");
 		disableTemplateArea();
 		for(SettingsState ss : statesList){
 			ss.writeToFile();
 		}
 		refreshTemplateArea();
+		}
+		else {
+			SplashscreenView splashscreenView = new SplashscreenView(title, header, context);
+		}
     	});
     	
     	// Reset button handler
     	settingsView.resetButton.setOnAction(e -> {
     		if(settingsView.templatesComboBox.getSelectionModel().getSelectedItem() != "Templates")
-    		settingsView.templateArea.setText(settingsState.getDefaultValue());
+    			settingsView.templateArea.setText(settingsState.getDefaultValue());
     	});
     	
     	// Template combobox event handler
@@ -93,13 +107,14 @@ public class SettingsController {
     
     public void changeMailAdress(){
     	// Select file
-    	String path = SettingsController.class.getClassLoader().getResource("templates/DEFAULTMAIL.txt").toString();
+    	String path = defaultPath + "DEFAULTMAIL.txt";
+    	path = path.substring(6, path.length());
     	try {
     		// Create a new PrintWriter
-			PrintWriter pw = new PrintWriter(path.substring(6, path.length()));
+			PrintWriter pw = new PrintWriter(path);
 			pw.close(); 
 			// New PrintWriter intialize
-			pw = new PrintWriter(new BufferedWriter(new FileWriter(path.substring(6, path.length()), true)));
+			pw = new PrintWriter(new BufferedWriter(new FileWriter(path, true)));
 			pw.write(settingsView.changeEmailField.getText());
 			// Closing the PrintWriter
 			pw.close();
@@ -111,13 +126,26 @@ public class SettingsController {
      * 
      * Retrieve the default email from DEFAULTMAIL.txt
      */
+    public void validateEmail(){
+    	EmailValidator emailValidator = new EmailValidator();
+    	SplashDefault settingsSplash = new GeneralSplash();
+    	if (!emailValidator.validate(settingsView.changeEmailField.getText().trim())) {
+    		settingsSplash = new SplashEmailMessage(settingsSplash);
+    		i++;
+    	}
+    	settingsSplash = new SettingsSetHead(settingsSplash);
+    	title = settingsSplash.getTitleText();
+    	header = settingsSplash.getHeaderText();
+    	context = settingsSplash.getContextText();
+    }
     public String getDefaultMailAdress(){
-    	String path = SettingsController.class.getClassLoader().getResource("templates/DEFAULTMAIL.txt").toString();
+    	String path = defaultPath + "DEFAULTMAIL.txt";
+    	path = path.substring(6, path.length());
 		String returnMail = "";
 		String line = null;
 		try {
 			// Create a new BufferedReader for DEFAULTMAIL.txt
-			BufferedReader br = new BufferedReader(new FileReader(path.substring(6, path.length())));
+			BufferedReader br = new BufferedReader(new FileReader(path));
 			// Load the email address in the variable "returnMail"
 			if ((line = br.readLine()) != null){
 		        returnMail = line;
