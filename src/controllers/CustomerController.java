@@ -19,7 +19,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import models.Guest;
+import splashscreens.AdjustSetHead;
 import splashscreens.GeneralSplash;
+import splashscreens.RegistrationCompleteMessage;
 import splashscreens.RegistrationSetHead;
 import splashscreens.SplashCityMessage;
 import splashscreens.SplashDefault;
@@ -47,7 +49,7 @@ public class CustomerController {
 	EmailValidator emailValidator = new EmailValidator();
 	TextValidator textValidator = new TextValidator();
 	ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
-	SplashDefault registrationSplash = new GeneralSplash();
+	SplashDefault adjustSplash = new GeneralSplash();
 	private SplashscreenView splashscreenView;
 	private String title, header, context;
 	private int i;
@@ -207,44 +209,45 @@ public class CustomerController {
 		EmailValidator emailValidator = new EmailValidator();
 		TextValidator textValidator = new TextValidator();
 		ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
-		SplashDefault registrationSplash = new GeneralSplash();
+		SplashDefault adjustSplash = new GeneralSplash();
 		if (!textValidator.validate(currentGuest.getSurname().trim())) {
-			registrationSplash = new SplashSurnameMessage(registrationSplash);
+			adjustSplash = new SplashSurnameMessage(adjustSplash);
 			i++;
 		}
 		if (!textValidator.validate(currentGuest.getFirstname().trim())) {
-			registrationSplash = new SplashFirstnameMessage(registrationSplash);
+			adjustSplash = new SplashFirstnameMessage(adjustSplash);
 			i++;
 		}
 		if (!textValidator.validate(currentGuest.getStreetname().trim())) {
-			registrationSplash = new SplashStreetnameMessage(registrationSplash);
+			adjustSplash = new SplashStreetnameMessage(adjustSplash);
 			i++;
 		}
 		if (currentGuest.getStreetnr().trim().equals("")) {
-			registrationSplash = new SplashStreetnrMessage(registrationSplash);
+			adjustSplash = new SplashStreetnrMessage(adjustSplash);
 		}
 		if (!zipcodeValidator.validate(currentGuest.getZipcode().trim())) {
-			registrationSplash = new SplashZipcodeMessage(registrationSplash);
+			adjustSplash = new SplashZipcodeMessage(adjustSplash);
 			i++;
 		}
 		if (!textValidator.validate(currentGuest.getCity().trim())) {
-			registrationSplash = new SplashCityMessage(registrationSplash);
+			adjustSplash = new SplashCityMessage(adjustSplash);
 			i++;
 		}
 		if (!emailValidator.validate(currentGuest.getEmail().trim())) {
-			registrationSplash = new SplashEmailMessage(registrationSplash);
+			adjustSplash = new SplashEmailMessage(adjustSplash);
 			i++;
 		}
 		if (currentGuest.getSalutation() == null) {
-			registrationSplash = new SplashSalutationMessage(registrationSplash);
+			adjustSplash = new SplashSalutationMessage(adjustSplash);
 			i++;
 		}
 		if (currentGuest.getReferal() == null) {
-			registrationSplash = new SplashReferralMessage(registrationSplash);
+			adjustSplash = new SplashReferralMessage(adjustSplash);
 		}
-		title = registrationSplash.getTitleText();
-		header = registrationSplash.getHeaderText();
-		context = registrationSplash.getContextText();
+		adjustSplash = new AdjustSetHead(adjustSplash);
+		title = adjustSplash.getTitleText();
+		header = adjustSplash.getHeaderText();
+		context = adjustSplash.getContextText();
 		if(i > 0) {
 			splashscreenView = new SplashscreenView(title, header, context);
 		}
@@ -253,12 +256,13 @@ public class CustomerController {
 		}
 	}
 	public void submitChange() {
+		SplashDefault adjustSplash = new GeneralSplash();
+		adjustSplash = new RegistrationCompleteMessage(adjustSplash);
+		title = adjustSplash.getTitleText();
+		header = adjustSplash.getHeaderText();
+		context = adjustSplash.getContextText();
 		this.guestDAO.updateGuest(currentGuest);
-	}
-	public void fireAlert() {
-		title = registrationSplash.getTitleText();
-		header = registrationSplash.getHeaderText();
-		context = registrationSplash.getContextText();
+		splashscreenView = new SplashscreenView(title, header, context);
 		
 	}
 }
