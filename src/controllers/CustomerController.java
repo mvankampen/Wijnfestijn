@@ -37,6 +37,7 @@ import validators.EmailValidator;
 import validators.TextValidator;
 import validators.ZipcodeValidator;
 import views.CustomersView;
+import views.RegistrationView;
 import views.SplashscreenView;
 
 /**
@@ -51,14 +52,29 @@ public class CustomerController {
 	ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
 	SplashDefault adjustSplash = new GeneralSplash();
 	private SplashscreenView splashscreenView;
+	private ScreensController screensController;
 	private String title, header, context;
 	private int i;
 
-	public CustomerController(CustomersView customersView, GuestDAO guestDAO) {
+	public CustomerController(CustomersView customersView, GuestDAO guestDAO, ScreensController screensController) {
 		this.customersView = customersView;
 		this.guestDAO = guestDAO;
-		
+		this.screensController = screensController;
+		generateHandlers();
 		createAutocomplete();
+	}
+	public void generateHandlers() {
+		customersView.getUpdateButton().setOnAction(e -> validateData());
+		customersView.getSurnameTextField().setOnKeyPressed(new EventHandler<KeyEvent>() {
+			
+			@Override
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ENTER)) {
+					importCurrentGuest();
+				}
+			}
+
+		});
 	}
 	public void createAutocomplete() {
 		AutoCompletionBinding<Guest> autoCompletionBinding = TextFields.bindAutoCompletion(
@@ -76,17 +92,6 @@ public class CustomerController {
 					}
 				});
 		autoCompletionBinding.setOnAutoCompleted(event -> this.currentGuest = event.getCompletion());
-		customersView.getUpdateButton().setOnAction(e -> validateData());
-		customersView.getSurnameTextField().setOnKeyPressed(new EventHandler<KeyEvent>() {
-			
-			@Override
-			public void handle(KeyEvent ke) {
-				if (ke.getCode().equals(KeyCode.ENTER)) {
-					importCurrentGuest();
-				}
-			}
-
-		});
 	}
 
 	@SuppressWarnings("unchecked")
@@ -263,6 +268,13 @@ public class CustomerController {
 		context = adjustSplash.getContextText();
 		this.guestDAO.updateGuest(currentGuest);
 		splashscreenView = new SplashscreenView(title, header, context);
-		
+		resetController();
+	}
+	public void resetController() {
+		screensController.screenRemove(ControllersController.getCUSTOMERSID());
+		this.customersView = new CustomersView();
+		screensController.screenLoadSet(ControllersController.getCUSTOMERSID(), customersView);
+		generateHandlers();
+		createAutocomplete();
 	}
 }
