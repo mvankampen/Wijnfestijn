@@ -47,6 +47,7 @@ public class MailController {
     }
 
     // Method moet worden verbeterd..
+    // ???? wat doet dit ?? - Sander
     private void setTextFields() {
         try {
             this.mail.setBody("");

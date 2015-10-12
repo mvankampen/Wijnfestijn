@@ -11,10 +11,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
-import models.Guest;
-import models.Order;
-import models.OrderLine;
-import models.Wine;
+import models.*;
+import services.PDFService;
 import splashscreens.GeneralSplash;
 import splashscreens.RegistrationCompleteMessage;
 import splashscreens.SplashDefault;
@@ -29,6 +27,7 @@ import views.SplashscreenView;
  * Created by Sander de Jong on 28-9-2015.
  */
 public class OrderListController {
+    private PDFService pdfService;
     private OrderListView orderListView;
     private GuestDAO guestDAO;
     private Guest currentGuest;
@@ -87,6 +86,7 @@ public class OrderListController {
 		Order order = new Order(this.currentGuest);
         order = this.orderDAO.addOrder(order);
         this.orderLineDAO.addOrderLines(data, order);
+        this.pdfService.createOrderPdf(order, this.orderDAO);
 		splashScreenView = new SplashscreenView(title, header, context);
         resetController();
     }

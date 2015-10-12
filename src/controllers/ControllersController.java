@@ -3,9 +3,7 @@ package controllers;
 import DAO.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import models.Guest;
 import models.Mail;
-import models.Pdf;
 import views.*;
 
 import java.sql.Connection;
@@ -98,8 +96,6 @@ public class ControllersController {
         this.orderListController = new OrderListController(orderListView, new GuestDAO(connection), new WineDAO(connection), new OrderLineDAO(connection), new OrderDAO(connection), screensController);
         this.registrationController =
             new RegistrationController(registrationView, new GuestDAO(connection), screensController);
-        this.pdfController = new PdfController(new OrderDAO(connection), new Pdf("Titel", "Onderwerp"));
-        this.pdfController.createOrderPdf();
     }
 
     public void fillScreensController() {
