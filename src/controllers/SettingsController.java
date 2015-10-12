@@ -19,6 +19,7 @@ public class SettingsController {
     private SettingsView settingsView;
     private SettingsState settingsState;
     private ArrayList<SettingsState> statesList;
+    private String defaultPath = SettingsController.class.getClassLoader().getResource("templates/").toString();
 
     public SettingsController(SettingsView settingsView) {
         this.settingsView = settingsView;
@@ -44,7 +45,7 @@ public class SettingsController {
     	// Reset button handler
     	settingsView.resetButton.setOnAction(e -> {
     		if(settingsView.templatesComboBox.getSelectionModel().getSelectedItem() != "Templates")
-    		settingsView.templateArea.setText(settingsState.getDefaultValue());
+    			settingsView.templateArea.setText(settingsState.getDefaultValue());
     	});
     	
     	// Template combobox event handler
@@ -93,13 +94,14 @@ public class SettingsController {
     
     public void changeMailAdress(){
     	// Select file
-    	String path = SettingsController.class.getClassLoader().getResource("templates/DEFAULTMAIL.txt").toString();
+    	String path = defaultPath + "DEFAULTMAIL.txt";
+    	path = path.substring(6, path.length());
     	try {
     		// Create a new PrintWriter
-			PrintWriter pw = new PrintWriter(path.substring(6, path.length()));
+			PrintWriter pw = new PrintWriter(path);
 			pw.close(); 
 			// New PrintWriter intialize
-			pw = new PrintWriter(new BufferedWriter(new FileWriter(path.substring(6, path.length()), true)));
+			pw = new PrintWriter(new BufferedWriter(new FileWriter(path, true)));
 			pw.write(settingsView.changeEmailField.getText());
 			// Closing the PrintWriter
 			pw.close();
@@ -112,12 +114,13 @@ public class SettingsController {
      * Retrieve the default email from DEFAULTMAIL.txt
      */
     public String getDefaultMailAdress(){
-    	String path = SettingsController.class.getClassLoader().getResource("templates/DEFAULTMAIL.txt").toString();
+    	String path = defaultPath + "DEFAULTMAIL.txt";
+    	path = path.substring(6, path.length());
 		String returnMail = "";
 		String line = null;
 		try {
 			// Create a new BufferedReader for DEFAULTMAIL.txt
-			BufferedReader br = new BufferedReader(new FileReader(path.substring(6, path.length())));
+			BufferedReader br = new BufferedReader(new FileReader(path));
 			// Load the email address in the variable "returnMail"
 			if ((line = br.readLine()) != null){
 		        returnMail = line;
