@@ -23,6 +23,7 @@ public class OrderView extends AnchorPane implements ControlledScreen {
     @FXML TextField surnameTextField, winenumberTextField, amountTextField;
     @FXML Button makeOrderBtn, orderBtn;
     @FXML TableView<OrderLine> tableView;
+	private Button removeBtn;
 
     @Override public void setScreenController(ScreensController screensController) {
         this.screensController = screensController;
@@ -79,6 +80,8 @@ public class OrderView extends AnchorPane implements ControlledScreen {
         vboxOrder.getChildren().addAll(wineLabel,winenumberTextField,amountLabel,amountTextField);
 
         this.orderBtn = new Button("Order plaatsen");
+        this.removeBtn = new Button("Verwijder selectie");
+        this.removeBtn.getStyleClass().add("form_buttons");
         this.orderBtn.getStyleClass().add("form_buttons");
 
         contentPane.add(introBox, 0, 0);
@@ -87,10 +90,13 @@ public class OrderView extends AnchorPane implements ControlledScreen {
         contentPane.add(tableView, 1, 1);
         contentPane.add(vboxOrder, 1,2);
         contentPane.add(orderBtn, 1,3);
+        contentPane.add(removeBtn, 1, 4);
 
         getChildren().addAll(contentPane);
     }
-
+    public Button getRemoveBtn() {
+    	return removeBtn;
+    }
     public Button getOrderBtn() {
         return orderBtn;
     }
