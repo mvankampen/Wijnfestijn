@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
  */
 public class DebtorsView extends AnchorPane implements ControlledScreen {
     private ScreensController screensController;
+    private  Button generateButton;
 
     public DebtorsView() {
         createView();
@@ -59,7 +60,7 @@ public class DebtorsView extends AnchorPane implements ControlledScreen {
         TextArea debtArea = new TextArea();
         debtArea.setMaxHeight(2000);
 
-        Button generateButton = new Button("Genereren");
+        generateButton = new Button("Genereren");
         Button saveButton = new Button("Opslaan");
         generateButton.getStyleClass().add("form_buttons");
         saveButton.getStyleClass().add("form_buttons");
@@ -74,5 +75,8 @@ public class DebtorsView extends AnchorPane implements ControlledScreen {
         contentPane.add(buttonBox,0, 3);
 
         getChildren().add(contentPane);
+    }
+    public Button getGenerateButton(){
+    	return generateButton;
     }
 }

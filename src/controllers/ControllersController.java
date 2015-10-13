@@ -39,9 +39,9 @@ public class ControllersController {
 
     private static final String HOMEID = "home";
     private static final String ORDERLISTPRINTID = "orderlistprint";
-    private static final String ORDERLISTID = "orderlist";
+    private static final String ORDERID = "order";
     private static final String MAILID = "mail";
-    private static final String CUSTOMERSID = "customers";
+    private static final String GUESTID = "customers";
     private static final String DEBTORID = "debiteuren";
     private static final String REGISTRATIONID = "registration";
     private static final String SETTINGSID = "settings";
@@ -103,9 +103,9 @@ public class ControllersController {
         screensController.screenLoad(getHOMEID(), homeView);
         screensController.screenLoad(getORDERLISTPRINTID(), orderListPrintView);
         screensController.screenLoad(getMAILID(), mailView);
-        screensController.screenLoad(getCUSTOMERSID(), adjustGuestView);
+        screensController.screenLoad(getGUESTID(), adjustGuestView);
         screensController.screenLoad(getREGISTRATIONID(), registrationView);
-        screensController.screenLoad(getORDERLISTID(), orderView);
+        screensController.screenLoad(getORDERID(), orderView);
         screensController.screenLoad(getDEBTORID(), debtorsView);
         screensController.screenLoad(getSETTINGSID(), settingsView);
         screensController.screenSet(getHOMEID());
@@ -131,8 +131,8 @@ public class ControllersController {
         return MAILID;
     }
 
-    public static String getCUSTOMERSID() {
-        return CUSTOMERSID;
+    public static String getGUESTID() {
+        return GUESTID;
     }
 
     public static String getDEBTORID() {
@@ -143,8 +143,8 @@ public class ControllersController {
         return REGISTRATIONID;
     }
 
-    public static String getORDERLISTID() {
-        return ORDERLISTID;
+    public static String getORDERID() {
+        return ORDERID;
     }
 
     public static String getSETTINGSID() {
