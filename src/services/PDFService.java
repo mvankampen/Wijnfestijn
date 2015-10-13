@@ -97,7 +97,7 @@ public class PDFService {
 
             ArrayList<OrderLine> tempOrderLines = orderDAO.findOrderlinesByOrder(order);
             for(int i = 0; i < tempOrderLines.size(); i++) {
-                orderTable.addCell((new Paragraph(tempOrderLines.get(i).getWine().getId())));
+                orderTable.addCell((new Paragraph(Integer.toString(tempOrderLines.get(i).getWine().getId()))));
                 orderTable.addCell((new Paragraph(Integer.toString(tempOrderLines.get(i).getAmount()))));
                 orderTable.addCell((new Paragraph(tempOrderLines.get(i).getWine().getName())));
                 orderTable.addCell((new Paragraph(tempOrderLines.get(i).getWine().getYear())));
