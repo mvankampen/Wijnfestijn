@@ -16,6 +16,7 @@ import models.OrderLine;
 import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -74,14 +75,12 @@ public class PDFService {
             orderDetailsTable.addCell(new Paragraph("Debiteurennummer", this.fontHelveticaNormal));
             orderDetailsTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
             orderDetailsTable.addCell(new Paragraph(Integer.toString(order.getGuest().getId()), this.fontHelveticaNormal));
-            preface.add(orderDetailsTable);
 
-//            Paragraph orderDetails = new Paragraph("", this.fontHelveticaNormal);
-//            orderDetails.add("Factuurdatum : " + new SimpleDateFormat("dd MM YYYY").format(order.getDate()));
-//            orderDetails.add(new Paragraph("Factuurnummer : " + Integer.toString(order.getId()), this.fontHelveticaNormal));
-//            orderDetails.add(new Paragraph("Debiteurennummer : " + Integer.toString(order.getGuest().getId()), this.fontHelveticaNormal));
-//            addEmptyLine(orderDetails, 2);
-//            preface.add(orderDetails);
+            orderDetailsTable.addCell(new Paragraph("Betreft", this.fontHelveticaNormal));
+            orderDetailsTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
+            orderDetailsTable.addCell(new Paragraph("Wijnfestijn"));
+            preface.add(orderDetailsTable);
+            addEmptyLine(preface, 2);
 
             PdfPTable orderTable = new PdfPTable(6); // 6 col
             orderTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
@@ -95,15 +94,26 @@ public class PDFService {
             orderTable.addCell((new Paragraph("Per fles", this.fontHelveticaNormalBold)));
             orderTable.addCell((new Paragraph("Bedrag", this.fontHelveticaNormalBold)));
 
+            double total = 0;
             ArrayList<OrderLine> tempOrderLines = orderDAO.findOrderlinesByOrder(order);
             for(int i = 0; i < tempOrderLines.size(); i++) {
-                orderTable.addCell((new Paragraph(tempOrderLines.get(i).getWine().getId())));
-                orderTable.addCell((new Paragraph(Integer.toString(tempOrderLines.get(i).getAmount()))));
-                orderTable.addCell((new Paragraph(tempOrderLines.get(i).getWine().getName())));
-                orderTable.addCell((new Paragraph(tempOrderLines.get(i).getWine().getYear())));
-                orderTable.addCell((new Paragraph(tempOrderLines.get(i).getWine().getPrice().toString())));
-                orderTable.addCell((new Paragraph(Integer.toString(tempOrderLines.get(i).getAmount()))));
+                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getId()));
+                orderTable.addCell(new Paragraph(Integer.toString(tempOrderLines.get(i).getAmount())));
+                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getName()));
+                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getYear()));
+                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getPrice().toString()));
+                double a = (tempOrderLines.get(i).getAmount() * tempOrderLines.get(i).getWine().getPrice());
+                total += a;
+                orderTable.addCell(Double.toString(a));
             }
+            orderTable.addCell(new Paragraph("Totaal", this.fontHelveticaNormalBold));
+            orderTable.addCell(new Paragraph(""));
+            orderTable.addCell(new Paragraph(""));
+            orderTable.addCell(new Paragraph(""));
+            orderTable.addCell(new Paragraph(""));
+            PdfPCell c = new PdfPCell(new Paragraph(Double.toString(total)));
+            c.setBorder(Rectangle.TOP);
+            orderTable.addCell(c);
             preface.add(orderTable);
 
             // Add every paragraph to document
@@ -151,5 +161,9 @@ public class PDFService {
         for (int i = 0; i < number; i++) {
             paragraph.add(Chunk.TABBING);
         }
+    }
+
+    private String calcTotal() {
+        return null;
     }
 }
