@@ -1,12 +1,19 @@
 package services;
 
 import DAO.OrderDAO;
+import DAO.OrderLineDAO;
 import com.itextpdf.text.*;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import models.Guest;
 import models.Order;
+import models.OrderLine;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
@@ -14,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 /**
  * Created by Sander de Jong on 24-9-2015.
@@ -37,6 +45,7 @@ public class PDFService {
             // Title
             Paragraph title = new Paragraph("Lionsclub Oegstgeest/Warmond", this.fontHelveticaHeader);
             title.setAlignment(Element.ALIGN_CENTER);
+            addEmptyLine(title, 2);
             preface.add(title);
 
             // Guest info
@@ -44,46 +53,58 @@ public class PDFService {
             guestInfo.add(getFullName(order.getGuest()));
             guestInfo.add(new Paragraph(order.getGuest().getStreetname() + " " + order.getGuest().getStreetnr(), this.fontHelveticaNormal));
             guestInfo.add(new Paragraph(order.getGuest().getZipcode() + " " + order.getGuest().getCity(), this.fontHelveticaNormal));
-            addEmptyLine(preface, 4);
+            addEmptyLine(guestInfo, 2);
             preface.add(guestInfo);
 
-            // Order details
-            Paragraph orderDetails = new Paragraph("", this.fontHelveticaNormal);
-            orderDetails.add("Factuurdatum");
-            addTab(orderDetails, 2);
-            orderDetails.add(":");
-            addTab(orderDetails, 1);
-            orderDetails.add(new SimpleDateFormat("dd MM YYYY").format(order.getDate()));
-            orderDetails.add(new Paragraph("Factuurnummer", this.fontHelveticaNormal));
-            addTab(orderDetails, 2);
-            orderDetails.add(":");
-            addTab(orderDetails, 1);
-            orderDetails.add(Integer.toString(order.getId()));
-            orderDetails.add(new Paragraph("Debiteurennummer", this.fontHelveticaNormal));
-            addTab(orderDetails, 1);
-            orderDetails.add(":");
-            addTab(orderDetails, 1);
-            orderDetails.add(Integer.toString(order.getGuest().getId()));
-            addEmptyLine(orderDetails, 2);
-            preface.add(orderDetails);
 
-            // Order lines
-            Paragraph orderLines = new Paragraph("", this.fontHelveticaNormalBold);
-            orderLines.add("Code");
-            addTab(orderLines, 1);
-            orderLines.add("Aantal");
-            addTab(orderLines, 1);
-            orderLines.add("Wijn");
-            addTab(orderLines, 6);
-            orderLines.add("Jaar");
-            addTab(orderLines, 2);
-            orderLines.add("Per fles");
-            addTab(orderLines, 2);
-            orderLines.add("Bedrag");
-            addTab(orderLines, 2);
-            LineSeparator ls = new LineSeparator();
-            orderLines.add(ls);
-            preface.add(orderLines);
+            // Order details
+            PdfPTable orderDetailsTable = new PdfPTable(3);
+            orderDetailsTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+            orderDetailsTable.setWidthPercentage(100);
+            float[] columnWidthOrdertable = {2f, 0.5f, 2f};
+            orderDetailsTable.setWidths(columnWidthOrdertable);
+            orderDetailsTable.addCell(new Paragraph("Factuurdatum", this.fontHelveticaNormal));
+            orderDetailsTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
+            orderDetailsTable.addCell(new Paragraph(new SimpleDateFormat("dd MM YYYY").format(order.getDate()), this.fontHelveticaNormal));
+
+            orderDetailsTable.addCell(new Paragraph("Factuurnummer", this.fontHelveticaNormal));
+            orderDetailsTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
+            orderDetailsTable.addCell(new Paragraph(Integer.toString(order.getId()), this.fontHelveticaNormal));
+
+            orderDetailsTable.addCell(new Paragraph("Debiteurennummer", this.fontHelveticaNormal));
+            orderDetailsTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
+            orderDetailsTable.addCell(new Paragraph(Integer.toString(order.getGuest().getId()), this.fontHelveticaNormal));
+            preface.add(orderDetailsTable);
+
+//            Paragraph orderDetails = new Paragraph("", this.fontHelveticaNormal);
+//            orderDetails.add("Factuurdatum : " + new SimpleDateFormat("dd MM YYYY").format(order.getDate()));
+//            orderDetails.add(new Paragraph("Factuurnummer : " + Integer.toString(order.getId()), this.fontHelveticaNormal));
+//            orderDetails.add(new Paragraph("Debiteurennummer : " + Integer.toString(order.getGuest().getId()), this.fontHelveticaNormal));
+//            addEmptyLine(orderDetails, 2);
+//            preface.add(orderDetails);
+
+            PdfPTable orderTable = new PdfPTable(6); // 6 col
+            orderTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+            orderTable.setWidthPercentage(100);
+            float[] columnWidthOrderTable = {0.5f, 0.5f, 3f, 0.5f, 0.5f, 0.5f};
+            orderTable.setWidths(columnWidthOrderTable);
+            orderTable.addCell((new Paragraph("Code", this.fontHelveticaNormalBold)));
+            orderTable.addCell((new Paragraph("Aantal", this.fontHelveticaNormalBold)));
+            orderTable.addCell((new Paragraph("Wijn", this.fontHelveticaNormalBold)));
+            orderTable.addCell((new Paragraph("Jaar", this.fontHelveticaNormalBold)));
+            orderTable.addCell((new Paragraph("Per fles", this.fontHelveticaNormalBold)));
+            orderTable.addCell((new Paragraph("Bedrag", this.fontHelveticaNormalBold)));
+
+            ArrayList<OrderLine> tempOrderLines = orderDAO.findOrderlinesByOrder(order);
+            for(int i = 0; i < tempOrderLines.size(); i++) {
+                orderTable.addCell((new Paragraph(tempOrderLines.get(i).getWine().getId())));
+                orderTable.addCell((new Paragraph(Integer.toString(tempOrderLines.get(i).getAmount()))));
+                orderTable.addCell((new Paragraph(tempOrderLines.get(i).getWine().getName())));
+                orderTable.addCell((new Paragraph(tempOrderLines.get(i).getWine().getYear())));
+                orderTable.addCell((new Paragraph(tempOrderLines.get(i).getWine().getPrice().toString())));
+                orderTable.addCell((new Paragraph(Integer.toString(tempOrderLines.get(i).getAmount()))));
+            }
+            preface.add(orderTable);
 
             // Add every paragraph to document
             document.add(preface);
