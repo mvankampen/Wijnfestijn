@@ -51,7 +51,7 @@ public class PDFService {
             // Guest info
             Paragraph guestInfo = new Paragraph("", this.fontHelveticaNormal);
             guestInfo.add(getFullName(order.getGuest()));
-            guestInfo.add(new Paragraph(order.getGuest().getStreetname() + " " + order.getGuest().getStreetnr(), this.fontHelveticaNormal));
+            guestInfo.add(new Paragraph(order.getGuest().getStreet() + " " + order.getGuest().getStreetnr(), this.fontHelveticaNormal));
             guestInfo.add(new Paragraph(order.getGuest().getZipcode() + " " + order.getGuest().getCity(), this.fontHelveticaNormal));
             addEmptyLine(guestInfo, 2);
             preface.add(guestInfo);

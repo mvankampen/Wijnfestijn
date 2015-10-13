@@ -21,16 +21,16 @@ import java.util.ArrayList;
 
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
-import views.OrderListView;
+import views.OrderView;
 import views.RegistrationView;
 import views.SplashscreenView;
 
 /**
  * Created by Sander de Jong on 28-9-2015.
  */
-public class OrderListController {
+public class OrderController {
     private PDFService pdfService;
-    private OrderListView orderListView;
+    private OrderView orderView;
     private GuestDAO guestDAO;
     private Guest currentGuest;
     private SplashscreenView splashScreenView;
@@ -42,12 +42,12 @@ public class OrderListController {
     private ScreensController screensController;
     private TableColumn<OrderLine, Wine> winenameCol;
     private TableColumn<OrderLine, Integer> amountCol;
-    private ArrayList<String> help;
+    private ArrayList<String> allWines;
 
 
-    public OrderListController(OrderListView orderListView, GuestDAO guestDAO, WineDAO wineDAO,
+    public OrderController(OrderView orderView, GuestDAO guestDAO, WineDAO wineDAO,
         OrderLineDAO orderLineDAO, OrderDAO orderDAO,ScreensController screensController) {
-        this.orderListView = orderListView;
+        this.orderView = orderView;
         this.guestDAO = guestDAO;
         this.wineDAO = wineDAO;
         this.orderLineDAO = orderLineDAO;
@@ -58,7 +58,7 @@ public class OrderListController {
     }
         public void createAutoComplete() {
         AutoCompletionBinding<Guest> autoCompletionBinding = TextFields
-            .bindAutoCompletion(orderListView.getSurnameTextField(),
+            .bindAutoCompletion(orderView.getSurnameTextField(),
                 t -> guestDAO.findGuestByLastname(t.getUserText()), new StringConverter<Guest>() {
                     @Override public String toString(Guest object) {
                         return object.getSurname() + ", " + object.getInfix() + " " + object
@@ -76,8 +76,8 @@ public class OrderListController {
     }
 
     private void generateHandlers() {
-        this.orderListView.getOrderBtn().setOnAction(event -> addOrder());
-        this.orderListView.getMakeOrderBtn().setOnAction(event -> sendOrder());
+        this.orderView.getOrderBtn().setOnAction(event -> addOrder());
+        this.orderView.getMakeOrderBtn().setOnAction(event -> sendOrder());
         makeTable();
     }
 
@@ -96,15 +96,15 @@ public class OrderListController {
     }
 	public void resetController() {
 		screensController.screenRemove(ControllersController.getORDERLISTID());
-		this.orderListView = new OrderListView();
-		screensController.screenLoadSet(ControllersController.getORDERLISTID(), orderListView);
+		this.orderView = new OrderView();
+		screensController.screenLoadSet(ControllersController.getORDERLISTID(), orderView);
 		createAutoComplete();
 		generateHandlers();
-		help.clear();
+		allWines.clear();
 	}
 
     private void makeTable() {
-    	help = new ArrayList();
+    	allWines = new ArrayList();
         data = FXCollections.observableArrayList();
         winenameCol = new TableColumn("Wijn");
         winenameCol.setMinWidth(100);
@@ -125,26 +125,26 @@ public class OrderListController {
         amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
 
-        this.orderListView.getTableView().getColumns().addAll(winenameCol, amountCol);
-        this.orderListView.getTableView()
+        this.orderView.getTableView().getColumns().addAll(winenameCol, amountCol);
+        this.orderView.getTableView()
             .setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
     }
 
     private void addOrder() {
     	
-        Wine wine = wineDAO.getWineById(orderListView.getWinenumberInt());
+        Wine wine = wineDAO.getWineById(orderView.getWinenumberInt());
         String helptool = wine.getName();
-        if(help.contains(helptool)) {
+        if(allWines.contains(helptool)) {
         	System.out.println("DONT FUCKING ADD THE SAME THING TWICE");
         }
         else {
-        help.add(helptool);
-        int amount = orderListView.getAmountInt();
+        allWines.add(helptool);
+        int amount = orderView.getAmountInt();
         data.add(new OrderLine(amount, wine));
-        this.orderListView.getTableView().getColumns().clear();
-        this.orderListView.getTableView().setItems(data);
-        this.orderListView.getTableView().getColumns().addAll(winenameCol, amountCol);
+        this.orderView.getTableView().getColumns().clear();
+        this.orderView.getTableView().setItems(data);
+        this.orderView.getTableView().getColumns().addAll(winenameCol, amountCol);
         }
     }
 

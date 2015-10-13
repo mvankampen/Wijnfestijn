@@ -20,7 +20,7 @@ public class RegistrationController {
 	private SplashscreenView splashscreenView;
 	private GuestDAO guestDAO;
 	private Guest guest;
-	private int i;
+	private int errorCounter;
 	private boolean fieldActive;
 	private ScreensController screensController;
 	private String context, header, title, surname, infix, firstname, salutation, streetname, streetnr, zipcode, city, email, phone,
@@ -81,7 +81,7 @@ public class RegistrationController {
 		}
 		comment = "hi";
 		validateData();
-		if (i > 0) {
+		if (errorCounter > 0) {
 			 splashscreenView = new SplashscreenView(title, header, context);
 		} else {
 			sendRegistration();
@@ -91,41 +91,41 @@ public class RegistrationController {
 
 	public void validateData() {
 		context = "";
-		i = 0;
+		errorCounter = 0;
 		EmailValidator emailValidator = new EmailValidator();
 		TextValidator textValidator = new TextValidator();
 		ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
 		SplashDefault registrationSplash = new GeneralSplash();
 		if (!textValidator.validate(surname.trim())) {
 			registrationSplash = new SplashSurnameMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
 		if (!textValidator.validate(firstname.trim())) {
 			registrationSplash = new SplashFirstnameMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
 		if (!textValidator.validate(streetname.trim())) {
 			registrationSplash = new SplashStreetnameMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
 		if (streetnr.trim().equals("")) {
 			registrationSplash = new SplashStreetnrMessage(registrationSplash);
 		}
 		if (!zipcodeValidator.validate(zipcode.trim())) {
 			registrationSplash = new SplashZipcodeMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
 		if (!textValidator.validate(city.trim())) {
 			registrationSplash = new SplashCityMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
 		if (!emailValidator.validate(email.trim())) {
 			registrationSplash = new SplashEmailMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
 		if (salutation == null) {
 			registrationSplash = new SplashSalutationMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
 		if (referral == null) {
 			registrationSplash = new SplashReferralMessage(registrationSplash);

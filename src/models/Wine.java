@@ -11,12 +11,14 @@ public class Wine {
     private String publisher;
     private String type;
     private String year;
-    private Double price;
     private String rank;
+    private Double price;
+    private Double costprice;
+    private Double margin;
     private boolean active;
+    
 
-
-    public Wine(int id, String name, String category, String publisher, String type, String year, double price, String rank) {
+    public Wine(int id, String name, String category, String publisher, String type, String year, double price, String rank, Double costprice, Double margin) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -25,6 +27,8 @@ public class Wine {
         this.year = year;
         this.price = price;
         this.rank = rank;
+        this.setCostprice(costprice);
+        this.setMargin(margin);
     }
 
     public int getId() {
@@ -68,4 +72,20 @@ public class Wine {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+	public Double getCostprice() {
+		return costprice;
+	}
+
+	public void setCostprice(Double costprice) {
+		this.costprice = costprice;
+	}
+
+	public Double getMargin() {
+		return margin;
+	}
+
+	public void setMargin(Double margin) {
+		this.margin = margin;
+	}
 }

@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class OrderLineDAO {
 
     private Connection connection;
-    private PreparedStatement preparedStatementWine;
     private PreparedStatement preparedStatement;
 
     public OrderLineDAO(Connection connection) {

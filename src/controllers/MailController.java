@@ -21,8 +21,8 @@ public class MailController {
     private Mail mail;
     private MailService mailService;
     private MailDAO mailDAO;
-    private BufferedReader br;
-    private FileReader fr;
+    private BufferedReader bufferedReader;
+    private FileReader fileReader;
 
     public MailController(MailView mailView, MailDAO mailDAO) {
         this.mail = new Mail("", "");

@@ -27,7 +27,7 @@ public class SettingsController {
     private ArrayList<SettingsState> statesList;
     private String title, header, context;
     private String defaultPath = "src/templates/";
-    private int i;
+    private int errorCounter;
     private boolean saved = false;
     
     public SettingsController(SettingsView settingsView) {
@@ -43,7 +43,7 @@ public class SettingsController {
     	// Save button handler
     	settingsView.saveButton.setOnAction(e ->{
 			validateEmail();
-			if(i<1){
+			if(errorCounter<1){
 				changeMailInfo();
 			settingsView.templatesComboBox.setValue("Templates");
 			disableTemplateArea();
@@ -54,7 +54,7 @@ public class SettingsController {
 			refreshTemplateArea();
 			}
 			else {
-				i = 0;
+				errorCounter = 0;
 				SplashscreenView splashscreenView = new SplashscreenView(title, header, context);
 			}
     	});
@@ -146,7 +146,7 @@ public class SettingsController {
     	SplashDefault settingsSplash = new GeneralSplash();
     	if (!emailValidator.validate(settingsView.changeEmailField.getText().trim())) {
     		settingsSplash = new SplashEmailMessage(settingsSplash);
-    		i++;
+    		errorCounter++;
     	}
     	settingsSplash = new SettingsSetHead(settingsSplash);
     	title = settingsSplash.getTitleText();

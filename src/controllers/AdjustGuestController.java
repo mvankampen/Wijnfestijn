@@ -34,14 +34,14 @@ import splashscreens.SplashZipcodeMessage;
 import validators.EmailValidator;
 import validators.TextValidator;
 import validators.ZipcodeValidator;
-import views.CustomersView;
+import views.AdjustGuestView;
 import views.SplashscreenView;
 
 /**
  * Created by Sander de Jong on 22-9-2015.
  */
-public class CustomerController {
-	private CustomersView customersView;
+public class AdjustGuestController {
+	private AdjustGuestView adjustGuestView;
 	private GuestDAO guestDAO;
 	private Guest currentGuest;
 	EmailValidator emailValidator = new EmailValidator();
@@ -50,10 +50,10 @@ public class CustomerController {
 	SplashDefault registrationSplash = new GeneralSplash();
 	private SplashscreenView splashscreenView;
 	private String title, header, context;
-	private int i;
+	private int errorCounter;
 
-	public CustomerController(CustomersView customersView, GuestDAO guestDAO) {
-		this.customersView = customersView;
+	public AdjustGuestController(AdjustGuestView adjustGuestView, GuestDAO guestDAO) {
+		this.adjustGuestView = adjustGuestView;
 		this.guestDAO = guestDAO;
 		
 		createAutocomplete();
@@ -61,7 +61,7 @@ public class CustomerController {
 	public void createAutocomplete() {
 		AutoCompletionBinding<Guest> autoCompletionBinding = TextFields.bindAutoCompletion(
 
-		customersView.getSurnameTextField(), t -> guestDAO.findGuestByLastname(t.getUserText()),
+		adjustGuestView.getSurnameTextField(), t -> guestDAO.findGuestByLastname(t.getUserText()),
 				new StringConverter<Guest>() {
 					@Override
 					public String toString(Guest object) {
@@ -74,8 +74,8 @@ public class CustomerController {
 					}
 				});
 		autoCompletionBinding.setOnAutoCompleted(event -> this.currentGuest = event.getCompletion());
-		customersView.getUpdateButton().setOnAction(e -> validateData());
-		customersView.getSurnameTextField().setOnKeyPressed(new EventHandler<KeyEvent>() {
+		adjustGuestView.getUpdateButton().setOnAction(e -> validateData());
+		adjustGuestView.getSurnameTextField().setOnKeyPressed(new EventHandler<KeyEvent>() {
 			
 			@Override
 			public void handle(KeyEvent ke) {
@@ -92,8 +92,8 @@ public class CustomerController {
 	
 		//First row : surName
 		final ObservableList<Guest> data = FXCollections.observableArrayList(currentGuest);
-		customersView.getEditableGuest().setEditable(true);
-		customersView.getEditableGuest().getColumns().clear();
+		adjustGuestView.getEditableGuest().setEditable(true);
+		adjustGuestView.getEditableGuest().getColumns().clear();
 		TableColumn<Guest, String> surnameCol = new TableColumn<Guest, String>("Surname");
 		surnameCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("surname"));
 		surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -131,13 +131,13 @@ public class CustomerController {
 			}
 		});
 		TableColumn<Guest, String> streetCol = new TableColumn<Guest, String>("Streetname");
-		System.out.println("In Streetname staat " + currentGuest.getStreetname());
+		System.out.println("In Streetname staat " + currentGuest.getStreet());
 		streetCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("streetname"));
 		streetCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		streetCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
 			@Override
 			public void handle(CellEditEvent<Guest, String> t) {
-				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setStreetname(t.getNewValue());
+				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setStreet(t.getNewValue());
 			}
 		});
 		TableColumn<Guest, String> streetnrCol = new TableColumn<Guest, String>("Streetnr");
@@ -196,48 +196,48 @@ public class CustomerController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setReferal(t.getNewValue());
 			}
 		});
-		customersView.getEditableGuest().getColumns().clear();
-		customersView.getEditableGuest().setItems(data);
-		customersView.getEditableGuest().getColumns().addAll(surnameCol,infixCol,firstnameCol,salutationCol,streetCol,streetnrCol,zipcodeCol,cityCol,emailCol,phoneCol,referralCol);
+		adjustGuestView.getEditableGuest().getColumns().clear();
+		adjustGuestView.getEditableGuest().setItems(data);
+		adjustGuestView.getEditableGuest().getColumns().addAll(surnameCol,infixCol,firstnameCol,salutationCol,streetCol,streetnrCol,zipcodeCol,cityCol,emailCol,phoneCol,referralCol);
 
 	}
 	public void validateData() {
 		context = "";
-		i = 0;
+		errorCounter = 0;
 		EmailValidator emailValidator = new EmailValidator();
 		TextValidator textValidator = new TextValidator();
 		ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
 		SplashDefault registrationSplash = new GeneralSplash();
 		if (!textValidator.validate(currentGuest.getSurname().trim())) {
 			registrationSplash = new SplashSurnameMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
 		if (!textValidator.validate(currentGuest.getFirstname().trim())) {
 			registrationSplash = new SplashFirstnameMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
-		if (!textValidator.validate(currentGuest.getStreetname().trim())) {
+		if (!textValidator.validate(currentGuest.getStreet().trim())) {
 			registrationSplash = new SplashStreetnameMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
 		if (currentGuest.getStreetnr().trim().equals("")) {
 			registrationSplash = new SplashStreetnrMessage(registrationSplash);
 		}
 		if (!zipcodeValidator.validate(currentGuest.getZipcode().trim())) {
 			registrationSplash = new SplashZipcodeMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
 		if (!textValidator.validate(currentGuest.getCity().trim())) {
 			registrationSplash = new SplashCityMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
 		if (!emailValidator.validate(currentGuest.getEmail().trim())) {
 			registrationSplash = new SplashEmailMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
 		if (currentGuest.getSalutation() == null) {
 			registrationSplash = new SplashSalutationMessage(registrationSplash);
-			i++;
+			errorCounter++;
 		}
 		if (currentGuest.getReferal() == null) {
 			registrationSplash = new SplashReferralMessage(registrationSplash);
@@ -245,7 +245,7 @@ public class CustomerController {
 		title = registrationSplash.getTitleText();
 		header = registrationSplash.getHeaderText();
 		context = registrationSplash.getContextText();
-		if(i > 0) {
+		if(errorCounter > 0) {
 			splashscreenView = new SplashscreenView(title, header, context);
 		}
 		else {

@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
  */
 public class Guest{
     private int id;
-    private String lastname;
+    private String surname;
     private String infix;
     private String firstname;
     private String salutation;
@@ -24,7 +24,7 @@ public class Guest{
     public Guest(String lastname, String infix, String firstname, String salutation, String street,
         String streetnr, String zipcode, String city, String email, String phone, String referal,
         String comment) {
-        this.lastname = lastname;
+        this.surname = lastname;
         this.infix = infix;
         this.firstname = firstname;
         this.salutation = salutation;
@@ -42,7 +42,7 @@ public class Guest{
         String street, String streetnr, String zipcode, String city, String email, String phone,
         String referal, String comment, boolean no_show) {
         this.id = id;
-        this.lastname = lastname;
+        this.surname = lastname;
         this.infix = infix;
         this.firstname = firstname;
         this.salutation = salutation;
@@ -62,11 +62,11 @@ public class Guest{
     }
 
     public String getSurname() {
-        return lastname;
+        return surname;
     }
 
     public void setSurname(String lastname) {
-        this.lastname = lastname;
+        this.surname = lastname;
     }
 
     public String getInfix() {
@@ -93,11 +93,11 @@ public class Guest{
         this.salutation = salutation;
     }
 
-    public String getStreetname() {
+    public String getStreet() {
         return street;
     }
 
-    public void setStreetname(String street) {
+    public void setStreet(String street) {
         this.street = street;
     }
 

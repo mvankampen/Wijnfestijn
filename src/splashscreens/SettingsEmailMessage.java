@@ -1,6 +1,7 @@
+
 package splashscreens;
 
-public class SettingsEmailMessage extends SettingsDefaultMessage {
+public class SettingsEmailMessage extends SplashDefaultMessage {
 	
 	SplashDefault splashDefault;
 	public SettingsEmailMessage(SplashDefault splashDefault)

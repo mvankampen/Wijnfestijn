@@ -147,7 +147,7 @@ public class OrderDAO {
                 wine = new Wine(resultSet.getInt("wine_id"), resultSet.getString("wine_name"),
                         resultSet.getString("wine_category"), resultSet.getString("wine_type"),
                         resultSet.getString("wine_publisher"), resultSet.getString("wine_year"),
-                        resultSet.getDouble("wine_price"), resultSet.getString("wine_rank"));
+                        resultSet.getDouble("wine_price"), resultSet.getString("wine_rank"), resultSet.getDouble("wine_costprice"), resultSet.getDouble("wine_margin"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -15,12 +15,12 @@ import java.sql.SQLException;
 public class ControllersController {
     private ScreensController screensController;
     private NavigationController navigationController;
-    private CustomerController customerController;
+    private AdjustGuestController adjustGuestController;
     private DebtorsController debtorsController;
     private HomeController homeController;
     private MailController mailController;
     // private OrderListPrintController orderListPrintController;
-    private OrderListController orderListController;
+    private OrderController orderController;
     private RegistrationController registrationController;
     private SettingsController settingsController;
     private PdfController pdfController;
@@ -28,9 +28,9 @@ public class ControllersController {
     private HomeView homeView;
     private MailView mailView;
     private OrderListPrintView orderListPrintView;
-    private CustomersView customersView;
+    private AdjustGuestView adjustGuestView;
     private RegistrationView registrationView;
-    private OrderListView orderListView;
+    private OrderView orderView;
     private DebtorsView debtorsView;
     private Database database;
     private Connection connection;
@@ -73,9 +73,9 @@ public class ControllersController {
         homeView = new HomeView();
         mailView = new MailView(new Mail("", ""));
         orderListPrintView = new OrderListPrintView();
-        customersView = new CustomersView();
+        adjustGuestView = new AdjustGuestView();
         registrationView = new RegistrationView();
-        orderListView = new OrderListView();
+        orderView = new OrderView();
         debtorsView = new DebtorsView();
         navigationView = new NavigationView();
         settingsView = new SettingsView();
@@ -86,14 +86,14 @@ public class ControllersController {
         this.homeController = new HomeController(homeView, this.screensController);
         this.navigationController =
             new NavigationController(this.screensController, navigationView);
-        this.customerController = new CustomerController(customersView, new GuestDAO(connection));
+        this.adjustGuestController = new AdjustGuestController(adjustGuestView, new GuestDAO(connection));
         this.debtorsController =
             new DebtorsController(debtorsView, new OrderDAO(connection), new GuestDAO(connection));
         this.mailController = new MailController(mailView, new MailDAO(connection));
         this.settingsController = new SettingsController(settingsView);
         // this.orderListPrintController = new
         // OrderListPrintController(orderListPrintView);
-        this.orderListController = new OrderListController(orderListView, new GuestDAO(connection), new WineDAO(connection), new OrderLineDAO(connection), new OrderDAO(connection), screensController);
+        this.orderController = new OrderController(orderView, new GuestDAO(connection), new WineDAO(connection), new OrderLineDAO(connection), new OrderDAO(connection), screensController);
         this.registrationController =
             new RegistrationController(registrationView, new GuestDAO(connection), screensController);
     }
@@ -103,9 +103,9 @@ public class ControllersController {
         screensController.screenLoad(getHOMEID(), homeView);
         screensController.screenLoad(getORDERLISTPRINTID(), orderListPrintView);
         screensController.screenLoad(getMAILID(), mailView);
-        screensController.screenLoad(getCUSTOMERSID(), customersView);
+        screensController.screenLoad(getCUSTOMERSID(), adjustGuestView);
         screensController.screenLoad(getREGISTRATIONID(), registrationView);
-        screensController.screenLoad(getORDERLISTID(), orderListView);
+        screensController.screenLoad(getORDERLISTID(), orderView);
         screensController.screenLoad(getDEBTORID(), debtorsView);
         screensController.screenLoad(getSETTINGSID(), settingsView);
         screensController.screenSet(getHOMEID());

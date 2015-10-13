@@ -34,7 +34,7 @@ public class GuestDAO {
             this.preparedStatement.setString(2, guest.getInfix());
             this.preparedStatement.setString(3, guest.getFirstname());
             this.preparedStatement.setString(4, guest.getSalutation());
-            this.preparedStatement.setString(5, guest.getStreetname());
+            this.preparedStatement.setString(5, guest.getStreet());
             this.preparedStatement.setString(6, guest.getStreetnr());
             this.preparedStatement.setString(7, guest.getZipcode());
             this.preparedStatement.setString(8, guest.getCity());
@@ -68,7 +68,7 @@ public class GuestDAO {
             this.preparedStatement.setString(2, guest.getInfix());
             this.preparedStatement.setString(3, guest.getFirstname());
             this.preparedStatement.setString(4, guest.getSalutation());
-            this.preparedStatement.setString(5, guest.getStreetname());
+            this.preparedStatement.setString(5, guest.getStreet());
             this.preparedStatement.setString(6, guest.getStreetnr());
             this.preparedStatement.setString(7, guest.getZipcode());
             this.preparedStatement.setString(8, guest.getCity());

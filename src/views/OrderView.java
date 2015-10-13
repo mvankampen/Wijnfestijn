@@ -17,7 +17,7 @@ import models.Wine;
 /**
  * Created by Sander de Jong on 21-9-2015.
  */
-public class OrderListView extends AnchorPane implements ControlledScreen {
+public class OrderView extends AnchorPane implements ControlledScreen {
     private ScreensController screensController;
     @FXML Label introLabel, surnameLabel, wineLabel, amountLabel;
     @FXML TextField surnameTextField, winenumberTextField, amountTextField;
@@ -28,7 +28,7 @@ public class OrderListView extends AnchorPane implements ControlledScreen {
         this.screensController = screensController;
     }
 
-    public OrderListView() {
+    public OrderView() {
         createView();
     }
 

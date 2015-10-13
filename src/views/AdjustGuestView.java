@@ -24,7 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import models.Guest;
 
-public class CustomersView extends AnchorPane implements ControlledScreen {
+public class AdjustGuestView extends AnchorPane implements ControlledScreen {
 
     private Button updateButton;
 	private ScreensController screensController;
@@ -35,7 +35,7 @@ public class CustomersView extends AnchorPane implements ControlledScreen {
     
     }
 
-    public CustomersView() {
+    public AdjustGuestView() {
     	createView();
 	}
 	
