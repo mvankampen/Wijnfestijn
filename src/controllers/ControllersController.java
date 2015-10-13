@@ -3,7 +3,6 @@ package controllers;
 import DAO.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import models.Guest;
 import models.Mail;
 import views.*;
 
@@ -24,6 +23,7 @@ public class ControllersController {
     private OrderListController orderListController;
     private RegistrationController registrationController;
     private SettingsController settingsController;
+    private PdfController pdfController;
 
     private HomeView homeView;
     private MailView mailView;

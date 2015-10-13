@@ -10,9 +10,9 @@ import java.sql.SQLException;
 public class Database {
     private static Database _instance;
     private Connection connection = null;
-    private static final String DB_NAME = "wijnfestijnDB";
+    private static final String DB_NAME = "ipsen";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "sander";
     private static final String DRIVER = "org.postgresql.Driver";
     private static final String LOCATION = "jdbc:postgresql://localhost:5432/";
 
