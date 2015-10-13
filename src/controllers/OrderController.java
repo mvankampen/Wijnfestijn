@@ -79,6 +79,7 @@ public class OrderController {
 
     private void generateHandlers() {
         this.orderView.getOrderBtn().setOnAction(event -> addOrder());
+        this.orderView.getRemoveBtn().setOnAction(event -> removeOrder());
         this.orderView.getMakeOrderBtn().setOnAction(event -> sendOrder());
         makeTable();
     }
@@ -109,9 +110,9 @@ public class OrderController {
     }
 	public void resetController() {
 		
-		screensController.screenRemove(ControllersController.getORDERLISTID());
+		screensController.screenRemove(ControllersController.getORDERID());
 		this.orderView = new OrderView();
-		screensController.screenLoadSet(ControllersController.getORDERLISTID(), orderView);
+		screensController.screenLoadSet(ControllersController.getORDERID(), orderView);
 		createAutoComplete();
 		generateHandlers();
 		allWines.clear();
@@ -144,7 +145,14 @@ public class OrderController {
             .setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
     }
-
+    private void removeOrder() {
+    	ObservableList<OrderLine> orderlineSelected, allOrderlines;
+    	allOrderlines = this.orderView.getTableView().getItems();
+    	orderlineSelected = this.orderView.getTableView().getSelectionModel().getSelectedItems();
+    	String helptool = this.orderView.getTableView().getSelectionModel().getSelectedItem().getWine().getName();
+    	allWines.remove(helptool);
+    	orderlineSelected.forEach(allOrderlines::remove);
+    }
     private void addOrder() {
     	SplashDefault orderSplash = new SplashDefault();
         Wine wine = wineDAO.getWineById(orderView.getWinenumberInt());

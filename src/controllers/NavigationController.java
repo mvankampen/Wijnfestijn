@@ -25,7 +25,7 @@ public class NavigationController extends AnchorPane {
 	            		screensController.screenSet(ControllersController.getORDERLISTPRINTID());
 	            	}
 	            	else if(newValue.equals(navigationView.ORDER2)){
-	            		screensController.screenSet(ControllersController.getORDERLISTID());
+	            		screensController.screenSet(ControllersController.getORDERID());
 	            	}
                 }
             }
@@ -37,7 +37,7 @@ public class NavigationController extends AnchorPane {
             	navigationView.orderMenu.setValue(navigationView.ORDERTITLE);
             	if (newValue != null) {
             		if(newValue.equals(navigationView.CUSTOMER1)){
-            			screensController.screenSet(ControllersController.getCUSTOMERSID());
+            			screensController.screenSet(ControllersController.getGUESTID());
 	            	}
 	            	else if(newValue.equals(navigationView.CUSTOMER2)){
 	            		screensController.screenSet(ControllersController.getREGISTRATIONID());

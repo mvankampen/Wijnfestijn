@@ -4,6 +4,8 @@ import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 import DAO.GuestDAO;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -12,6 +14,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
@@ -19,6 +22,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import models.Guest;
+import splashscreens.AdjustCompleteMessage;
 import splashscreens.GeneralSplash;
 import splashscreens.RegistrationSetHead;
 import splashscreens.SplashCityMessage;
@@ -47,7 +51,7 @@ public class AdjustGuestController {
 	EmailValidator emailValidator = new EmailValidator();
 	TextValidator textValidator = new TextValidator();
 	ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
-	SplashDefault registrationSplash = new GeneralSplash();
+	SplashDefault adjustSplash = new GeneralSplash();
 	private SplashscreenView splashscreenView;
 	private String title, header, context;
 	private int errorCounter;
@@ -94,8 +98,7 @@ public class AdjustGuestController {
 		final ObservableList<Guest> data = FXCollections.observableArrayList(currentGuest);
 		adjustGuestView.getEditableGuest().setEditable(true);
 		adjustGuestView.getEditableGuest().getColumns().clear();
-		TableColumn<Guest, String> surnameCol = new TableColumn<Guest, String>("Surname");
-		surnameCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("surname"));
+		TableColumn<Guest, String> surnameCol = createColumn("Surname","surname");
 		surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		surnameCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
 			@Override
@@ -103,8 +106,7 @@ public class AdjustGuestController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setSurname(t.getNewValue());
 				}
 		});
-		TableColumn<Guest, String> infixCol = new TableColumn<Guest, String>("infix");
-		infixCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("infix"));
+		TableColumn<Guest, String> infixCol = createColumn("Infix","infix");
 		infixCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		infixCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
 			@Override
@@ -112,8 +114,7 @@ public class AdjustGuestController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setInfix(t.getNewValue());
 			}
 		});
-		TableColumn<Guest, String> firstnameCol = new TableColumn<Guest, String>("Firstname");
-		firstnameCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstname"));
+		TableColumn<Guest, String> firstnameCol = createColumn("Firstname","firstname");
 		firstnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		firstnameCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
 			@Override
@@ -121,8 +122,7 @@ public class AdjustGuestController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setFirstname(t.getNewValue());
 			}
 		});
-		TableColumn<Guest, String> salutationCol = new TableColumn<Guest, String>("Salutation");
-		salutationCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("salutation"));
+		TableColumn<Guest, String> salutationCol = createColumn("Salutation","salutation");
 		salutationCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		salutationCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
 			@Override
@@ -130,9 +130,7 @@ public class AdjustGuestController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setSalutation(t.getNewValue());
 			}
 		});
-		TableColumn<Guest, String> streetCol = new TableColumn<Guest, String>("Streetname");
-		System.out.println("In Streetname staat " + currentGuest.getStreet());
-		streetCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("streetname"));
+		TableColumn<Guest, String> streetCol = createColumn("Straatnaam","street");
 		streetCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		streetCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
 			@Override
@@ -140,9 +138,7 @@ public class AdjustGuestController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setStreet(t.getNewValue());
 			}
 		});
-		TableColumn<Guest, String> streetnrCol = new TableColumn<Guest, String>("Streetnr");
-		System.out.println("In Streetnr staat " + currentGuest.getStreetnr());
-		streetnrCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("streetnr"));
+		TableColumn<Guest, String> streetnrCol = createColumn("Streetnr","streetnr");
 		streetnrCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		streetnrCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
 			@Override
@@ -150,9 +146,7 @@ public class AdjustGuestController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setStreetnr(t.getNewValue());
 			}
 		}); 
-		TableColumn<Guest, String> zipcodeCol = new TableColumn<Guest, String>("Zipcode");
-		System.out.println("In zipcode staat " + currentGuest.getZipcode());
-		zipcodeCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("zipcode"));
+		TableColumn<Guest, String> zipcodeCol = createColumn("Zipcode","zipcode");
 		zipcodeCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		zipcodeCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
 			@Override
@@ -160,8 +154,7 @@ public class AdjustGuestController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setZipcode(t.getNewValue());
 			}
 		});
-		TableColumn<Guest, String> cityCol = new TableColumn<Guest, String>("City");
-		cityCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("city"));
+		TableColumn<Guest, String> cityCol = createColumn("City","city");
 		cityCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		cityCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
 			@Override
@@ -169,8 +162,7 @@ public class AdjustGuestController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setCity(t.getNewValue());
 			}
 		});
-		TableColumn<Guest, String> emailCol = new TableColumn<Guest, String>("Email");
-		emailCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("email"));
+		TableColumn<Guest, String> emailCol = createColumn("Email","email");
 		emailCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		emailCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
 			@Override
@@ -178,8 +170,7 @@ public class AdjustGuestController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setEmail(t.getNewValue());
 			}
 		});
-		TableColumn<Guest, String> phoneCol = new TableColumn<Guest, String>("Phone");
-		phoneCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("phone"));
+		TableColumn<Guest, String> phoneCol =createColumn("Phone","phone");
 		phoneCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		phoneCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
 			@Override
@@ -187,8 +178,7 @@ public class AdjustGuestController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPhone(t.getNewValue());
 			}
 		});
-		TableColumn<Guest, String> referralCol = new TableColumn<Guest, String>("Referral");
-		referralCol.setCellValueFactory(new PropertyValueFactory<Guest, String>("Referal"));
+		TableColumn<Guest, String> referralCol = createColumn("Referral","referal");
 		referralCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		referralCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
 			@Override
@@ -196,55 +186,72 @@ public class AdjustGuestController {
 				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setReferal(t.getNewValue());
 			}
 		});
+		TableColumn<Guest, Boolean> activeCol = createColumn("no Show", "no_show");
+		 activeCol.setCellFactory(col -> {
+	            CheckBoxTableCell<Guest, Boolean> cell = new CheckBoxTableCell<>(index -> {
+	                BooleanProperty active = new SimpleBooleanProperty(adjustGuestView.getEditableGuest().getItems().get(index).getNo_show());
+	                active.addListener((obs, wasActive, isNowActive) -> {
+	                    Guest item = adjustGuestView.getEditableGuest().getItems().get(index);
+	                    item.setNo_show(isNowActive);
+	                });
+	                return active ;
+	            });
+	            return cell ;
+	        });
 		adjustGuestView.getEditableGuest().getColumns().clear();
 		adjustGuestView.getEditableGuest().setItems(data);
-		adjustGuestView.getEditableGuest().getColumns().addAll(surnameCol,infixCol,firstnameCol,salutationCol,streetCol,streetnrCol,zipcodeCol,cityCol,emailCol,phoneCol,referralCol);
+		adjustGuestView.getEditableGuest().getColumns().addAll(surnameCol,infixCol,firstnameCol,salutationCol,streetCol,streetnrCol,zipcodeCol,cityCol,emailCol,phoneCol,referralCol, activeCol);
 
 	}
+	 private <S,T> TableColumn<S,T> createColumn(String title, String propertyName) {
+	        TableColumn<S,T> col = new TableColumn<>(title);
+	        col.setCellValueFactory(new PropertyValueFactory<>(propertyName));
+	        return col;
+	    }
 	public void validateData() {
 		context = "";
 		errorCounter = 0;
 		EmailValidator emailValidator = new EmailValidator();
 		TextValidator textValidator = new TextValidator();
 		ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
-		SplashDefault registrationSplash = new GeneralSplash();
+		SplashDefault adjustSplash = new GeneralSplash();
 		if (!textValidator.validate(currentGuest.getSurname().trim())) {
-			registrationSplash = new SplashSurnameMessage(registrationSplash);
+			adjustSplash = new SplashSurnameMessage(adjustSplash);
 			errorCounter++;
 		}
 		if (!textValidator.validate(currentGuest.getFirstname().trim())) {
-			registrationSplash = new SplashFirstnameMessage(registrationSplash);
+			adjustSplash = new SplashFirstnameMessage(adjustSplash);
 			errorCounter++;
 		}
 		if (!textValidator.validate(currentGuest.getStreet().trim())) {
-			registrationSplash = new SplashStreetnameMessage(registrationSplash);
+			adjustSplash = new SplashStreetnameMessage(adjustSplash);
 			errorCounter++;
 		}
 		if (currentGuest.getStreetnr().trim().equals("")) {
-			registrationSplash = new SplashStreetnrMessage(registrationSplash);
+			adjustSplash = new SplashStreetnrMessage(adjustSplash);
 		}
 		if (!zipcodeValidator.validate(currentGuest.getZipcode().trim())) {
-			registrationSplash = new SplashZipcodeMessage(registrationSplash);
+			adjustSplash = new SplashZipcodeMessage(adjustSplash);
 			errorCounter++;
 		}
 		if (!textValidator.validate(currentGuest.getCity().trim())) {
-			registrationSplash = new SplashCityMessage(registrationSplash);
+			adjustSplash = new SplashCityMessage(adjustSplash);
 			errorCounter++;
 		}
 		if (!emailValidator.validate(currentGuest.getEmail().trim())) {
-			registrationSplash = new SplashEmailMessage(registrationSplash);
+			adjustSplash = new SplashEmailMessage(adjustSplash);
 			errorCounter++;
 		}
 		if (currentGuest.getSalutation() == null) {
-			registrationSplash = new SplashSalutationMessage(registrationSplash);
+			adjustSplash = new SplashSalutationMessage(adjustSplash);
 			errorCounter++;
 		}
 		if (currentGuest.getReferal() == null) {
-			registrationSplash = new SplashReferralMessage(registrationSplash);
+			adjustSplash = new SplashReferralMessage(adjustSplash);
+			errorCounter++;
 		}
-		title = registrationSplash.getTitleText();
-		header = registrationSplash.getHeaderText();
-		context = registrationSplash.getContextText();
+		adjustSplash = new AdjustCompleteMessage(adjustSplash);
+		setSplashScreenView(adjustSplash);
 		if(errorCounter > 0) {
 			splashscreenView = new SplashscreenView(title, header, context);
 		}
@@ -253,12 +260,18 @@ public class AdjustGuestController {
 		}
 	}
 	public void submitChange() {
+		SplashDefault adjustSplash = new GeneralSplash();
+		adjustSplash = new AdjustCompleteMessage(adjustSplash);
+		setSplashScreenView(adjustSplash);
+		splashscreenView = new SplashscreenView(title, header, context);
 		this.guestDAO.updateGuest(currentGuest);
+		adjustGuestView.getEditableGuest().getColumns().clear();
+		adjustGuestView.getSurnameTextField().clear();
 	}
-	public void fireAlert() {
-		title = registrationSplash.getTitleText();
-		header = registrationSplash.getHeaderText();
-		context = registrationSplash.getContextText();
+	public void setSplashScreenView(SplashDefault adjustSplash) {
+		title = adjustSplash.getTitleText();
+		header = adjustSplash.getHeaderText();
+		context = adjustSplash.getContextText();
 		
 	}
 }
