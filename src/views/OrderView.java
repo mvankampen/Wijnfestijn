@@ -102,7 +102,13 @@ public class OrderView extends AnchorPane implements ControlledScreen {
     public TextField getSurnameTextField() {
         return surnameTextField;
     }
-
+    public TextField getWinenumberTextField() {
+		return winenumberTextField;
+    }
+    
+    public TextField getAmountTextField() {
+    	return amountTextField;
+    }
     public int getWinenumberInt() {
         return Integer.parseInt(winenumberTextField.getText());
     }

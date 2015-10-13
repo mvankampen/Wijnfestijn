@@ -14,7 +14,9 @@ import javafx.util.StringConverter;
 import models.*;
 import services.PDFService;
 import splashscreens.GeneralSplash;
-import splashscreens.RegistrationCompleteMessage;
+import splashscreens.OrderCompleteMessage;
+import splashscreens.OrderDuplicateMessage;
+import splashscreens.OrderEmptyMessage;
 import splashscreens.SplashDefault;
 
 import java.util.ArrayList;
@@ -80,21 +82,33 @@ public class OrderController {
         this.orderView.getMakeOrderBtn().setOnAction(event -> sendOrder());
         makeTable();
     }
-
+    private void setSplashScreenView(SplashDefault orderSplash) {
+    	title = orderSplash.getTitleText();
+		header = orderSplash.getHeaderText();
+		context = orderSplash.getContextText();
+    }
     private void sendOrder() {
-    	SplashDefault registrationSplash = new GeneralSplash();
-		registrationSplash = new RegistrationCompleteMessage(registrationSplash);
-		title = registrationSplash.getTitleText();
-		header = registrationSplash.getHeaderText();
-		context = registrationSplash.getContextText();
+    	SplashDefault orderSplash = new GeneralSplash();
+		if(allWines.isEmpty())
+		{
+			orderSplash = new OrderEmptyMessage(orderSplash);
+			setSplashScreenView(orderSplash);
+			splashScreenView = new SplashscreenView(title, header, context);
+		}
+		else{
+		orderSplash = new OrderCompleteMessage(orderSplash);
+		setSplashScreenView(orderSplash);
 		Order order = new Order(this.currentGuest);
         order = this.orderDAO.addOrder(order);
         this.orderLineDAO.addOrderLines(data, order);
         this.pdfService.createOrderPdf(order, this.orderDAO);
 		splashScreenView = new SplashscreenView(title, header, context);
+		
         resetController();
+		}
     }
 	public void resetController() {
+		
 		screensController.screenRemove(ControllersController.getORDERLISTID());
 		this.orderView = new OrderView();
 		screensController.screenLoadSet(ControllersController.getORDERLISTID(), orderView);
@@ -124,7 +138,7 @@ public class OrderController {
         amountCol.setMinWidth(100);
         amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
-
+        this.orderView.getTableView().getColumns().clear();
         this.orderView.getTableView().getColumns().addAll(winenameCol, amountCol);
         this.orderView.getTableView()
             .setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -132,15 +146,19 @@ public class OrderController {
     }
 
     private void addOrder() {
-    	
+    	SplashDefault orderSplash = new SplashDefault();
         Wine wine = wineDAO.getWineById(orderView.getWinenumberInt());
+        int amount = orderView.getAmountInt();
         String helptool = wine.getName();
+        this.orderView.getAmountTextField().clear();
+        this.orderView.getWinenumberTextField().clear();
         if(allWines.contains(helptool)) {
-        	System.out.println("DONT FUCKING ADD THE SAME THING TWICE");
+        	orderSplash = new OrderDuplicateMessage(orderSplash);
+        	setSplashScreenView(orderSplash);
+        	splashScreenView = new SplashscreenView(title, header, context);
         }
         else {
         allWines.add(helptool);
-        int amount = orderView.getAmountInt();
         data.add(new OrderLine(amount, wine));
         this.orderView.getTableView().getColumns().clear();
         this.orderView.getTableView().setItems(data);
