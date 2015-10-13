@@ -73,9 +73,10 @@ public class SettingsView extends AnchorPane implements ControlledScreen {
     			resetButton
     	);
     	
-    	HBox saveButtonBox = new HBox(20);
+    	HBox saveButtonBox = new HBox(100);
     	saveButtonBox.getChildren().addAll(saveButton);
     	saveButtonBox.setAlignment(Pos.CENTER);
+    	HBox.setMargin(saveButton, new Insets(0,0,0,105));
     	
     	Label emailLabel = new Label("E-mail settings");
     	emailLabel.getStyleClass().add("settings_title");
