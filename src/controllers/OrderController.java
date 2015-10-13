@@ -149,6 +149,8 @@ public class OrderController {
     	ObservableList<OrderLine> orderlineSelected, allOrderlines;
     	allOrderlines = this.orderView.getTableView().getItems();
     	orderlineSelected = this.orderView.getTableView().getSelectionModel().getSelectedItems();
+    	String helptool = this.orderView.getTableView().getSelectionModel().getSelectedItem().getWine().getName();
+    	allWines.remove(helptool);
     	orderlineSelected.forEach(allOrderlines::remove);
     }
     private void addOrder() {
