@@ -17,10 +17,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.DateFormat;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -66,7 +63,7 @@ public class PDFService {
             orderDetailsTable.setWidths(columnWidthOrdertable);
             orderDetailsTable.addCell(new Paragraph("Factuurdatum", this.fontHelveticaNormal));
             orderDetailsTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
-            orderDetailsTable.addCell(new Paragraph(new SimpleDateFormat("dd MM YYYY").format(order.getDate()), this.fontHelveticaNormal));
+            orderDetailsTable.addCell(new Paragraph(new SimpleDateFormat("dd-MM-YYYY").format(order.getDate()), this.fontHelveticaNormal));
 
             orderDetailsTable.addCell(new Paragraph("Factuurnummer", this.fontHelveticaNormal));
             orderDetailsTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
@@ -101,23 +98,28 @@ public class PDFService {
                 orderTable.addCell(new Paragraph(Integer.toString(tempOrderLines.get(i).getAmount()), this.fontHelveticaNormal));
                 orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getName(), this.fontHelveticaNormal));
                 orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getYear(), this.fontHelveticaNormal));
-                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getPrice().toString(), this.fontHelveticaNormal));
+                double price = tempOrderLines.get(i).getWine().getPrice();
+                orderTable.addCell(new Paragraph(Double.toString(price), this.fontHelveticaNormal));
                 double a = (tempOrderLines.get(i).getAmount() * tempOrderLines.get(i).getWine().getPrice());
                 total += a;
-                orderTable.addCell(new Paragraph(Double.toString(a), this.fontHelveticaNormal));
+                BigDecimal roundedBigDecimalPrice = BigDecimal.valueOf(a).setScale(2, RoundingMode.HALF_UP);
+                double roundedDoublePrice = roundedBigDecimalPrice.doubleValue();
+                orderTable.addCell(new Paragraph(Double.toString(roundedDoublePrice), this.fontHelveticaNormal));
             }
             orderTable.addCell(new Paragraph("Totaal", this.fontHelveticaNormalBold));
             orderTable.addCell(new Paragraph(""));
             orderTable.addCell(new Paragraph(""));
             orderTable.addCell(new Paragraph(""));
             orderTable.addCell(new Paragraph(""));
-            PdfPCell c = new PdfPCell(new Paragraph(Double.toString(total), this.fontHelveticaNormalBold));
+            BigDecimal roundedBigDecimalTotalPrice = BigDecimal.valueOf(total).setScale(2, RoundingMode.HALF_UP);
+            double roundedDoubleTotalPrice = roundedBigDecimalTotalPrice.doubleValue();
+            PdfPCell c = new PdfPCell(new Paragraph(Double.toString(roundedDoubleTotalPrice), this.fontHelveticaNormalBold));
             c.setBorder(Rectangle.TOP);
             orderTable.addCell(c);
             preface.add(orderTable);
 
             addEmptyLine(preface, 4);
-            Paragraph requestMessage = new Paragraph("Wij verzoeken u vriendelijk het totaalbedrag binnen 7 dagenna " +
+            Paragraph requestMessage = new Paragraph("Wij verzoeken u vriendelijk het totaalbedrag binnen 7 dagen na " +
                     "factuurdatum over te maken op bankrekening 123456 t.n.v. Lionsclub Oegstgeest/Warmond onder " +
                     "vermelding van het factuurnummer.", this.fontHelveticaNormal);
             addEmptyLine(requestMessage, 4);
@@ -132,7 +134,7 @@ public class PDFService {
             address.add(new Paragraph("Adres:", this.fontHelveticaNormal));
             address.add(new Paragraph("Noordman Wijnimport", this.fontHelveticaNormal));
             address.add(new Paragraph("Flevoweg 17", this.fontHelveticaNormal));
-            address.add(new Paragraph("2318 BZ Leidenn", this.fontHelveticaNormal));
+            address.add(new Paragraph("2318BZ Leiden", this.fontHelveticaNormal));
             addEmptyLine(address, 3);
             address.add(new LineSeparator());
             addEmptyLine(address, 1);
