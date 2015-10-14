@@ -27,14 +27,14 @@ public class OrderDAO {
         try {
             this.preparedStatement = null;
             String sqlQuery = "INSERT INTO orders"
-                + "(orders_guest_id) VALUES (?) RETURNING orders_id, orders_timestamp";
+                + "(orders_guest_id) VALUES (?) RETURNING orders_id, orders_timestamp, orders_completed";
             this.preparedStatement =
                 this.connection.prepareStatement(sqlQuery);
             this.preparedStatement.setInt(1, order.getGuest().getId());
             ResultSet resultSet = this.preparedStatement.executeQuery();
             if (resultSet != null && resultSet.next()) {
                 currentOrder = new Order(resultSet.getInt(1), order.getGuest(),
-                    resultSet.getTimestamp("orders_timestamp"));
+                    resultSet.getTimestamp("orders_timestamp"), resultSet.getBoolean("orders_completed"));
             }
             this.connection.commit();
         } catch (SQLException e) {
@@ -70,7 +70,7 @@ public class OrderDAO {
                         resultSet.getString("guest_referal"), resultSet.getString("guest_comment"),
                         resultSet.getBoolean("guest_noshow"));
                 Order order = new Order(resultSet.getInt(1), guest,
-                    resultSet.getTimestamp("orders_timestamp"));
+                    resultSet.getTimestamp("orders_timestamp"), resultSet.getBoolean("orders_completed"));
                 orderArrayList.add(order);
             }
         } catch (SQLException e) {

@@ -19,10 +19,11 @@ public class Order {
         this.date = new Date();
     }
 
-    public Order(int id, Guest guest, Timestamp orderTimestamp) {
+    public Order(int id, Guest guest, Timestamp orderTimestamp, boolean completed) {
         this.id = id;
         this.guest = guest;
         this.date = new Date(orderTimestamp.getTime());
+        this.completed = completed;
     }
 
     public Date getDate() {
