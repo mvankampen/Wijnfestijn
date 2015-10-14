@@ -13,6 +13,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.opencsv.CSVReader;
+
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Wine;
@@ -21,9 +26,9 @@ import views.ImportWineListView;
 public class ImportWineListController {
 	private ScreensController screensController;
 	ImportWineListView importWineListView;
-	private boolean csvSelected = false, lineDone = false;
-	File importFile;
-	String CSVTextPath = "src/templates/WINELIST.txt";
+	File importFile = null;
+	boolean csvSelected = false, firstRow = true;
+	CSVReader csvReader;
 	ArrayList<Wine> wineList;
 	
 	final FileChooser fileChooser = new FileChooser();
@@ -33,12 +38,46 @@ public class ImportWineListController {
 		this.importWineListView = importWineListView;
 		generateHandlers();
 	}
-	
+
 	public void generateHandlers(){
 		importWineListView.importButton.setOnAction(e -> {
-			importFile = fileChooser.showOpenDialog(new Stage());	
+			importFile = fileChooser.showOpenDialog(new Stage());
 			if(isCSV(importFile)){
-				readCSV(importFile);
+				try {
+					wineList = new ArrayList<Wine>();
+					String[] parts = null;
+					csvReader = new CSVReader(new FileReader(importFile));
+					String[] nextLine;
+					while((nextLine = csvReader.readNext()) != null){
+						if(!firstRow){
+							for(String s : nextLine){
+								parts = s.split(";");
+							}
+						}
+						else{
+							//importWineListView.wineListArea.appendText(nextLine[0].replace(";", " | ") + "\n");
+							firstRow = false;
+						}
+						
+						if(parts != null){
+							wineList.add(new Wine(
+									parts[0], parts[1], parts[2],
+									Double.parseDouble(parts[3]), parts[4], parts[5],
+									parts[6], Double.parseDouble(parts[7])
+							));
+						parts = null;
+						nextLine = null;
+						}
+					}
+					for(Wine w : wineList){
+						//importWineListView.wineListArea.appendText((w.getName() + " | " + w.getPublisher() + " | " + w.getYear() + " | " + w.getPrice() + " | " + w.getRank() + " | " + w.getCategory() + " | " + w.getType() + " | " + w.getCostprice()) + "\n");
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			else{
+				System.out.println("Dit is geen .CSV bestand");
 			}
 		});
 	}
@@ -50,63 +89,35 @@ public class ImportWineListController {
 		return csvSelected;
 	}
 	
-	public void readCSV(File importFile){
-		try {
-			wineList = new ArrayList<Wine>();
-			ArrayList<Object> list = new ArrayList<Object>();
-			
-			int count = 0, count2 = 0;
-			boolean firstLine = true;
-			String line = null;
-			Scanner scanner = new Scanner(importFile);
-			scanner.useDelimiter(";");
-			String temp = null;
-			
-			while(scanner.hasNext()){
-				line = null;
-				count++;
-				line = scanner.next();
-				if(count >= 8){
-					count2++;
-					if(!line.contains("\n")){
-						list.add(line);
-					}
-					else{
-						Object[] parts = line.split("\n");
-						if(parts.length == 2){
-							if(firstLine){
-								firstLine = false;
-								list.add(parts[1].toString());
-							}
-							else{
-								list.add(parts[0].toString());
-							}
-						}	
-						else{
-							list.add(parts[0].toString());
-						}
-					}
-				}
-				if(count2 >= 8){
-					for(Object o : list){
-						System.out.println(count2 + " " + o);
-					}
-					count2 = 0;
-					
-					wineList.add(new Wine(
-							list.get(0).toString(), list.get(1).toString(), list.get(2).toString(),
-							Double.parseDouble(list.get(3).toString()), list.get(4).toString(), list.get(5).toString(),
-							list.get(6).toString(), Double.parseDouble(list.get(7).toString())
-					));
-					list = new ArrayList<Object>();
-				}
-			}
-			for(Wine w : wineList){
-				System.out.println(w.getName());
-			}
-			scanner.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void createTableHeaders(){
+		TableColumn nameCol = new TableColumn("Name");
+		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+		
+		TableColumn publisherCol = new TableColumn("Publisher");
+		publisherCol.setCellValueFactory(new PropertyValueFactory<>("publisher"));
+		
+		TableColumn yearCol = new TableColumn("Year");
+		yearCol.setCellValueFactory(new PropertyValueFactory<>("year"));
+		
+		TableColumn priceCol = new TableColumn("Price");
+		priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+		
+		TableColumn rankCol = new TableColumn("Rank");
+		rankCol.setCellValueFactory(new PropertyValueFactory<>("rank"));
+		
+		TableColumn categoryCol = new TableColumn("Category");
+		categoryCol.setCellValueFactory(new PropertyValueFactory<>("category"));
+		
+		TableColumn typeCol = new TableColumn("Type");
+		typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+		
+		TableColumn costpriceCol = new TableColumn("Cost price");
+		costpriceCol.setCellValueFactory(new PropertyValueFactory<>("cost price"));
+		
+		importWineListView.table.getColumns().addAll(
+													nameCol, publisherCol, yearCol, priceCol,
+													rankCol, categoryCol, typeCol, costpriceCol
+												);
 	}
 }
