@@ -99,7 +99,7 @@ public class ControllersController {
             new NavigationController(this.screensController, navigationView);
         this.adjustGuestController = new AdjustGuestController(adjustGuestView, new GuestDAO(connection));
         this.debtorsController =
-            new DebtorsController(debtorsView, new OrderDAO(connection), new GuestDAO(connection));
+            new DebtorsController(debtorsView, new OrderDAO(connection), new GuestDAO(connection), screensController);
         this.mailController = new MailController(mailView, new MailDAO(connection), this.mailService);
         this.settingsController = new SettingsController(settingsView);
         // this.orderListPrintController = new

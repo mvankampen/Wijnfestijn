@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.sql.SQLException;
 
 public class Applet extends Application {
@@ -38,6 +39,9 @@ public class Applet extends Application {
         stage.setResizable(false);
         stage.setTitle("A WarnerBrothers Product");
         stage.show();
+        File file = new File(".");
+        System.out.println(new File("DEFAULTMAIL.txt").getAbsolutePath());
+        for(String fileNames : file.list()) System.out.println(fileNames);
 
 
     }

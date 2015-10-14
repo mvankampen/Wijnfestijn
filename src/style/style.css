@@ -104,3 +104,11 @@
 .settings_white{
 	-fx-background-color:white;
 }
+.editableColumn.table-cell { 
+-fx-background-color:lightyellow;
+-fx-background: lightyellow ;
+-fx-alignment:CENTER-RIGHT;
+-fx-border-width: .5px; 
+-fx-border-style: solid;
+-fx-border-color:grey;
+}

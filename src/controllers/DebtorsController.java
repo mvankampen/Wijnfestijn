@@ -17,6 +17,7 @@ import models.Order;
 import models.OrderLine;
 import models.Wine;
 import views.DebtorsView;
+import views.OrderView;
 
 /**
  * Created by Sander de Jong on 28-9-2015.
@@ -28,27 +29,30 @@ public class DebtorsController {
     private Order selectedDebtor;
     private ArrayList<Order> debtorsArrayList;
     private ObservableList<Order> data;
-    private TableColumn<Order, Guest> testCol;
+    private TableColumn<Order, Guest> emailCol;
     private TableColumn<Order, Boolean> activeCol;
+    private ScreensController screensController;
     
 
-    public DebtorsController(DebtorsView debtorsView, OrderDAO orderDAO, GuestDAO guestDAO) {
+    public DebtorsController(DebtorsView debtorsView, OrderDAO orderDAO, GuestDAO guestDAO, ScreensController screensController) {
         this.debtorsView = debtorsView;
         this.orderDAO = orderDAO;
         this.guestDAO = guestDAO;
+        this.screensController = screensController;
         generateHandlers();   
+        
     }
     private void generateHandlers() {
     	makeTable(); 
-    	this.debtorsView.getGenerateButton().setOnAction(e -> testFunction());
+    	this.debtorsView.getGenerateButton().setOnAction(e -> generateDebtors());
     	this.debtorsView.getSaveButton().setOnAction(e -> submitChanges());
     }
     private void makeTable() {
     	data = FXCollections.observableArrayList();
-    	 testCol = new TableColumn<Order, Guest>("De gast");
-         testCol.setMinWidth(200);
-         testCol.setCellValueFactory(new PropertyValueFactory<>("guest"));
-         testCol.setCellFactory(e -> {
+    	 emailCol = new TableColumn<Order, Guest>("Gast email");
+         emailCol.setMinWidth(250);
+         emailCol.setCellValueFactory(new PropertyValueFactory<>("guest"));
+         emailCol.setCellFactory(e -> {
              return new TableCell<Order, Guest>() {
                  @Override protected void updateItem(Guest item, boolean empty) {
                      super.updateItem(item, empty);
@@ -58,8 +62,9 @@ public class DebtorsController {
                  }
              };
          });
-         activeCol = new TableColumn<Order, Boolean>("Active");
+         activeCol = new TableColumn<Order, Boolean>("Order voltooid");
          activeCol.setCellValueFactory(new PropertyValueFactory<>("completed"));
+         activeCol.setMinWidth(150);
          activeCol.setCellFactory(col -> {
 	            CheckBoxTableCell<Order, Boolean> cell = new CheckBoxTableCell<>(index -> {
 	                BooleanProperty active = new SimpleBooleanProperty(debtorsView.getTableView().getItems().get(index).getCompleted());
@@ -73,11 +78,12 @@ public class DebtorsController {
 	        });
         debtorsView.getTableView().getColumns().clear();
  		debtorsView.getTableView().setItems(data);
- 		debtorsView.getTableView().getColumns().addAll(testCol,activeCol);
+ 		debtorsView.getTableView().getColumns().addAll(emailCol,activeCol);
         
     }
-    private void testFunction() {
+    private void generateDebtors() {
     	debtorsArrayList = orderDAO.getAllNativeOrders();
+    	data.clear();
     	int j = 0;
     	while (debtorsArrayList.size() > j) {
     		data.add(debtorsArrayList.get(j));
@@ -86,7 +92,7 @@ public class DebtorsController {
     	debtorsArrayList.clear();
     	debtorsView.getTableView().getColumns().clear();
 		debtorsView.getTableView().setItems(data);
-		debtorsView.getTableView().getColumns().addAll(testCol, activeCol);
+		debtorsView.getTableView().getColumns().addAll(emailCol, activeCol);
     }
     private void submitChanges() {
     int n = 0;
@@ -94,6 +100,10 @@ public class DebtorsController {
     	orderDAO.updateOrder(data.get(n));
     	n++;
     }
+    screensController.screenRemove(ControllersController.getDEBTORID());
+    this.debtorsView = new DebtorsView();
+    screensController.screenLoadSet(ControllersController.getDEBTORID(), debtorsView);
+    generateHandlers();
 	debtorsArrayList.clear();
 	debtorsView.getTableView().getItems().clear();
 	debtorsView.getTableView().getColumns().clear();

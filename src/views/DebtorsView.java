@@ -62,7 +62,7 @@ public class DebtorsView extends AnchorPane implements ControlledScreen {
         Label lbldebtListText = new Label(debListText);
 	    tableView = new TableView<Order>();
 	    tableView.setEditable(true);
-
+	    
         generateButton = new Button("Genereren");
         saveButton = new Button("Opslaan");
         generateButton.getStyleClass().add("form_buttons");
