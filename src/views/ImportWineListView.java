@@ -9,11 +9,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import models.Wine;
 
 public class ImportWineListView extends AnchorPane implements ControlledScreen {
 	private ScreensController screensController;
-	public Button importButton;
-	public TableView<String> table;
+	private Button importButton;
+	private TableView<Wine> table;
 	
 	public void setScreenController(ScreensController screensController) {
 		this.screensController = screensController;
@@ -36,7 +37,7 @@ public class ImportWineListView extends AnchorPane implements ControlledScreen {
 		importButton.getStyleClass().add("form_buttons");
 		importButton.setAlignment(Pos.CENTER);
 		
-		table = new TableView<String>();
+		table = new TableView<Wine>();
 		
 		VBox contentBox = new VBox(20);
 		contentBox.getChildren().addAll(importButton, table);
@@ -47,5 +48,12 @@ public class ImportWineListView extends AnchorPane implements ControlledScreen {
 		bPane.setLayoutY(200);
 		
 		this.getChildren().add(bPane);
+	}
+	public TableView<Wine> getTable(){
+		return table;
+		
+	}
+	public Button getImportButton(){
+		return importButton;
 	}
 }

@@ -105,7 +105,7 @@ public class ControllersController {
         this.orderController = new OrderController(orderView, new GuestDAO(connection), new WineDAO(connection), new OrderLineDAO(connection), new OrderDAO(connection), screensController);
         this.registrationController =
             new RegistrationController(registrationView, new GuestDAO(connection), screensController);
-        this.importWineListController = new ImportWineListController(importWineListView, this.screensController);
+        this.importWineListController = new ImportWineListController(importWineListView, this.screensController, new WineDAO(connection));
         this.attendanceController = new AttendanceController(attendanceView, new GuestDAO(connection));
     }
 

@@ -97,8 +97,8 @@ public class WineDAO {
         try {
             this.preparedStatement = null;
             String sqlQuery = "INSERT INTO wine"
-                + "(wine_name, wine_category, wine_type, wine_publisher, wine_year, wine_price, wine_rank) VALUES "
-                + "(?, ?, ?, ?, ?, ?, ?, ? ,?)";
+                + "(wine_name, wine_category, wine_type, wine_publisher, wine_year, wine_price, wine_rank, wine_costprice) VALUES "
+                + "(?, ?, ?, ?, ?, ?, ?, ?)";
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
 
             for (int i = 0; i < wines.size(); i++) {
@@ -109,6 +109,7 @@ public class WineDAO {
                 preparedStatement.setString(5, wines.get(i).getYear());
                 preparedStatement.setDouble(6, wines.get(i).getPrice());
                 preparedStatement.setString(7, wines.get(i).getRank());
+                preparedStatement.setDouble(8, wines.get(i).getCostprice());
                 preparedStatement.executeUpdate();
             }
             this.connection.commit();
