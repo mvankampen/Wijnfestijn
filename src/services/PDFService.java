@@ -155,6 +155,7 @@ public class PDFService {
 
 
             // Add every paragraph to document
+            document.add(new Pagenu)
             document.add(preface);
             document.newPage();
             document.close();
