@@ -61,6 +61,34 @@ public class MailDAO {
     }
 
     //Uitnodiging
+    public ArrayList<InternetAddress> invitationMail() {
+        ArrayList<InternetAddress> emailArraylist = new ArrayList<>();
+        try {
+            this.preparedStatement = null;
+            String sqlQuery = "SELECT * FROM guest";
+            this.preparedStatement = this.connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                emailArraylist.add(new InternetAddress(resultSet.getString("guest_email")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (AddressException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (this.preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (!connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return emailArraylist;
+    }
 
     // Bedankmail
     public List<Guest> thanksMail() {
