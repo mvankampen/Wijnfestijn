@@ -127,5 +127,35 @@ public class GuestDAO {
         return guestList;
     }
 
-
+    public ArrayList<Guest> getAllGuest() {
+        ArrayList<Guest> guestList = new ArrayList<>();
+        try {
+            this.preparedStatement = null;
+            String sqlQuery = "SELECT * FROM guest";
+            this.preparedStatement = this.connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Guest guest =
+                    new Guest(resultSet.getInt("guest_id"),
+                        resultSet.getString("guest_lastname"),
+                        resultSet.getString("guest_infix"),
+                        resultSet.getString("guest_firstname"),
+                        resultSet.getString("guest_salutation"),
+                        resultSet.getString("guest_street"),
+                        resultSet.getString("guest_streetnr"),
+                        resultSet.getString("guest_zipcode"),
+                        resultSet.getString("guest_city"),
+                        resultSet.getString("guest_email"),
+                        resultSet.getString("guest_phone"),
+                        resultSet.getString("guest_referal"),
+                        resultSet.getString("guest_comment"),
+                        resultSet.getBoolean("guest_noshow")
+                    );
+                guestList.add(guest);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return guestList;
+    }
 }
