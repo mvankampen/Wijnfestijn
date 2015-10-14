@@ -4,6 +4,7 @@ import DAO.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import models.Mail;
+import services.MailService;
 import views.*;
 
 import java.sql.Connection;
@@ -19,7 +20,8 @@ public class ControllersController {
     private DebtorsController debtorsController;
     private HomeController homeController;
     private MailController mailController;
-    // private OrderListPrintController orderListPrintController;
+    private MailService mailService;
+   // private OrderListPrintController orderListPrintController;
     private OrderController orderController;
     private RegistrationController registrationController;
     private SettingsController settingsController;
@@ -98,11 +100,11 @@ public class ControllersController {
         this.adjustGuestController = new AdjustGuestController(adjustGuestView, new GuestDAO(connection));
         this.debtorsController =
             new DebtorsController(debtorsView, new OrderDAO(connection), new GuestDAO(connection));
-        this.mailController = new MailController(mailView, new MailDAO(connection));
+        this.mailController = new MailController(mailView, new MailDAO(connection), this.mailService);
         this.settingsController = new SettingsController(settingsView);
         // this.orderListPrintController = new
         // OrderListPrintController(orderListPrintView);
-        this.orderController = new OrderController(orderView, new GuestDAO(connection), new WineDAO(connection), new OrderLineDAO(connection), new OrderDAO(connection), screensController);
+        this.orderController = new OrderController(orderView, new GuestDAO(connection), new WineDAO(connection), new OrderLineDAO(connection), new OrderDAO(connection), screensController, mailService);
         this.registrationController =
             new RegistrationController(registrationView, new GuestDAO(connection), screensController);
         this.importWineListController = new ImportWineListController(importWineListView, this.screensController, new WineDAO(connection));

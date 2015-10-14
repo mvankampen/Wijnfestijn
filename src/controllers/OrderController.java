@@ -12,26 +12,24 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 import models.*;
-import services.PDFService;
-import splashscreens.GeneralSplash;
-import splashscreens.OrderCompleteMessage;
-import splashscreens.OrderDuplicateMessage;
-import splashscreens.OrderEmptyMessage;
-import splashscreens.SplashDefault;
-
-import java.util.ArrayList;
-
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
+import services.MailService;
+import services.PDFService;
+import splashscreens.*;
 import views.OrderView;
-import views.RegistrationView;
 import views.SplashscreenView;
+
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import java.util.ArrayList;
 
 /**
  * Created by Sander de Jong on 28-9-2015.
  */
 public class OrderController {
     private PDFService pdfService;
+    private MailService mailService;
     private OrderView orderView;
     private GuestDAO guestDAO;
     private Guest currentGuest;
@@ -48,17 +46,20 @@ public class OrderController {
 
 
     public OrderController(OrderView orderView, GuestDAO guestDAO, WineDAO wineDAO,
-        OrderLineDAO orderLineDAO, OrderDAO orderDAO,ScreensController screensController) {
+        OrderLineDAO orderLineDAO, OrderDAO orderDAO, ScreensController screensController,
+        MailService mailService) {
         this.orderView = orderView;
         this.guestDAO = guestDAO;
         this.wineDAO = wineDAO;
         this.orderLineDAO = orderLineDAO;
         this.orderDAO = orderDAO;
+        this.mailService = mailService;
         this.screensController = screensController;
         this.pdfService = new PDFService();
         createAutoComplete();
     }
-        public void createAutoComplete() {
+
+    public void createAutoComplete() {
         AutoCompletionBinding<Guest> autoCompletionBinding = TextFields
             .bindAutoCompletion(orderView.getSurnameTextField(),
                 t -> guestDAO.findGuestByLastname(t.getUserText()), new StringConverter<Guest>() {
@@ -83,43 +84,57 @@ public class OrderController {
         this.orderView.getMakeOrderBtn().setOnAction(event -> sendOrder());
         makeTable();
     }
+
     private void setSplashScreenView(SplashDefault orderSplash) {
-    	title = orderSplash.getTitleText();
-		header = orderSplash.getHeaderText();
-		context = orderSplash.getContextText();
+        title = orderSplash.getTitleText();
+        header = orderSplash.getHeaderText();
+        context = orderSplash.getContextText();
     }
+
     private void sendOrder() {
-    	SplashDefault orderSplash = new GeneralSplash();
-		if(allWines.isEmpty())
-		{
-			orderSplash = new OrderEmptyMessage(orderSplash);
-			setSplashScreenView(orderSplash);
-			splashScreenView = new SplashscreenView(title, header, context);
-		}
-		else{
-		orderSplash = new OrderCompleteMessage(orderSplash);
-		setSplashScreenView(orderSplash);
-		Order order = new Order(this.currentGuest);
-        order = this.orderDAO.addOrder(order);
-        this.orderLineDAO.addOrderLines(data, order);
-        this.pdfService.createOrderPdf(order, this.orderDAO);
-		splashScreenView = new SplashscreenView(title, header, context);
-		
-        resetController();
-		}
+        SplashDefault orderSplash = new GeneralSplash();
+        if (allWines.isEmpty()) {
+            orderSplash = new OrderEmptyMessage(orderSplash);
+            setSplashScreenView(orderSplash);
+            splashScreenView = new SplashscreenView(title, header, context);
+        } else {
+            orderSplash = new OrderCompleteMessage(orderSplash);
+            setSplashScreenView(orderSplash);
+            Order order = new Order(this.currentGuest);
+            order = this.orderDAO.addOrder(order);
+            this.orderLineDAO.addOrderLines(data, order);
+            Mail mail = new Mail("Factuur Wijnfestijn",
+                "<html><head></head><body>Beste " + this.pdfService.getFullName(order.getGuest())
+                    + "<p>Hierbij mailen wij u een factuur van uw gemaakte order op ons Wijnfestijn.</p><p>Met vriendelijke groet,<br />Lions-Club Oegstgeest/Warmond</p></body></html>");
+            try {
+                ArrayList<InternetAddress> arrayList = new ArrayList<>();
+                arrayList.add(new InternetAddress(order.getGuest().getEmail()));
+                mail.setRecipients(arrayList);
+            } catch (AddressException e) {
+                e.printStackTrace();
+            }
+            this.mailService.setMail(mail);
+            this.mailService.addAttachment(this.pdfService.createOrderPdf(order, this.orderDAO));
+            this.mailService.sendMail();
+
+            splashScreenView = new SplashscreenView(title, header, context);
+
+            resetController();
+        }
     }
-	public void resetController() {
-		
-		screensController.screenRemove(ControllersController.getORDERID());
-		this.orderView = new OrderView();
-		screensController.screenLoadSet(ControllersController.getORDERID(), orderView);
-		createAutoComplete();
-		generateHandlers();
-		allWines.clear();
-	}
+
+    public void resetController() {
+
+        screensController.screenRemove(ControllersController.getORDERID());
+        this.orderView = new OrderView();
+        screensController.screenLoadSet(ControllersController.getORDERID(), orderView);
+        createAutoComplete();
+        generateHandlers();
+        allWines.clear();
+    }
 
     private void makeTable() {
-    	allWines = new ArrayList();
+        allWines = new ArrayList();
         data = FXCollections.observableArrayList();
         winenameCol = new TableColumn("Wijn");
         winenameCol.setMinWidth(100);
@@ -141,36 +156,37 @@ public class OrderController {
 
         this.orderView.getTableView().getColumns().clear();
         this.orderView.getTableView().getColumns().addAll(winenameCol, amountCol);
-        this.orderView.getTableView()
-            .setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        this.orderView.getTableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
     }
+
     private void removeOrder() {
-    	ObservableList<OrderLine> orderlineSelected, allOrderlines;
-    	allOrderlines = this.orderView.getTableView().getItems();
-    	orderlineSelected = this.orderView.getTableView().getSelectionModel().getSelectedItems();
-    	String helptool = this.orderView.getTableView().getSelectionModel().getSelectedItem().getWine().getName();
-    	allWines.remove(helptool);
-    	orderlineSelected.forEach(allOrderlines::remove);
+        ObservableList<OrderLine> orderlineSelected, allOrderlines;
+        allOrderlines = this.orderView.getTableView().getItems();
+        orderlineSelected = this.orderView.getTableView().getSelectionModel().getSelectedItems();
+        String helptool =
+            this.orderView.getTableView().getSelectionModel().getSelectedItem().getWine().getName();
+        allWines.remove(helptool);
+        orderlineSelected.forEach(allOrderlines::remove);
     }
+
     private void addOrder() {
-    	SplashDefault orderSplash = new SplashDefault();
+        SplashDefault orderSplash = new SplashDefault();
         Wine wine = wineDAO.getWineById(orderView.getWinenumberInt());
         int amount = orderView.getAmountInt();
         String helptool = wine.getName();
         this.orderView.getAmountTextField().clear();
         this.orderView.getWinenumberTextField().clear();
-        if(allWines.contains(helptool)) {
-        	orderSplash = new OrderDuplicateMessage(orderSplash);
-        	setSplashScreenView(orderSplash);
-        	splashScreenView = new SplashscreenView(title, header, context);
-        }
-        else {
-        allWines.add(helptool);
-        data.add(new OrderLine(amount, wine));
-        this.orderView.getTableView().getColumns().clear();
-        this.orderView.getTableView().setItems(data);
-        this.orderView.getTableView().getColumns().addAll(winenameCol, amountCol);
+        if (allWines.contains(helptool)) {
+            orderSplash = new OrderDuplicateMessage(orderSplash);
+            setSplashScreenView(orderSplash);
+            splashScreenView = new SplashscreenView(title, header, context);
+        } else {
+            allWines.add(helptool);
+            data.add(new OrderLine(amount, wine));
+            this.orderView.getTableView().getColumns().clear();
+            this.orderView.getTableView().setItems(data);
+            this.orderView.getTableView().getColumns().addAll(winenameCol, amountCol);
         }
     }
 

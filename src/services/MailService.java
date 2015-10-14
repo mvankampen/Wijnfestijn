@@ -1,5 +1,6 @@
 package services;
 
+import enums.MailType;
 import models.Mail;
 
 import javax.activation.DataHandler;
@@ -10,6 +11,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -19,12 +22,11 @@ public class MailService {
     private final String username = "groep5ipsenontvangbot@gmail.com";
     private final String password = "Gro3p5IPSEN2";
     private Mail mail;
+    private Multipart multipart = new MimeMultipart("related");
+    private BodyPart messageBodyPart = new MimeBodyPart();
+    private DataSource fds;
 
     public void sendMail() {
-        Address[] recipients = new InternetAddress[this.mail.getRecipients().size()];
-        for (int i = 0; i < recipients.length; i++) {
-            recipients[i] = this.mail.getRecipients().get(i);
-        }
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -43,51 +45,13 @@ public class MailService {
                 try {
                     Message message = new MimeMessage(session);
                     message.setFrom(new InternetAddress("from-email@gmail.com"));
-                    message.setRecipients(Message.RecipientType.BCC, recipients);
+                    message.setRecipients(Message.RecipientType.BCC, addRecipients());
                     message.setSubject(mail.getSubject());
 
-                    MimeMultipart multipart = new MimeMultipart("related");
-                    BodyPart messageBodyPart = new MimeBodyPart();
                     messageBodyPart.setContent(mail.getBody(), "text/html");
                     multipart.addBodyPart(messageBodyPart);
-
-                    messageBodyPart = new MimeBodyPart();
-                    DataSource fds = new FileDataSource("src/images/header.png");
-                    messageBodyPart.setDataHandler(new DataHandler(fds));
-                    messageBodyPart.setHeader("Content-ID", "<header>");
-                    multipart.addBodyPart(messageBodyPart);
-
-
-                    messageBodyPart = new MimeBodyPart();
-                    DataSource fds2 = new FileDataSource
-                        ("src/images/inschrijfKnop.png");
-                    messageBodyPart.setDataHandler(new DataHandler(fds2));
-                    messageBodyPart.addHeader("Content-ID","<inschrijf>");
-                    // add it
-                    multipart.addBodyPart(messageBodyPart);
-
-                    messageBodyPart = new MimeBodyPart();
-                    DataSource fds3 = new FileDataSource
-                        ("src/images/facebookKnop.png");
-                    messageBodyPart.setDataHandler(new DataHandler(fds3));
-                    messageBodyPart.addHeader("Content-ID","<facebook>");
-                    // add it
-                    multipart.addBodyPart(messageBodyPart);
-
-                    messageBodyPart = new MimeBodyPart();
-                    DataSource fds4 = new FileDataSource
-                        ("src/images/contactKnop.png");
-                    messageBodyPart.setDataHandler(new DataHandler(fds4));
-                    messageBodyPart.addHeader("Content-ID","<contact>");
-                    // add it
-                    multipart.addBodyPart(messageBodyPart);
-
-
-
-
-
-
                     message.setContent(multipart);
+
                     Transport.send(message);
                 } catch (MessagingException e) {
                     throw new RuntimeException(e);
@@ -96,33 +60,56 @@ public class MailService {
         };
         Thread thread = new Thread(task);
         thread.start();
+    }
 
+    private Address[] addRecipients() {
+        Address[] recipients = new InternetAddress[this.mail.getRecipients().size()];
+        for (int i = 0; i < recipients.length; i++) {
+            recipients[i] = this.mail.getRecipients().get(i);
+        }
+        return recipients;
+    }
 
+    public void addAttachment(File file) {
+        try {
+            MimeBodyPart mimeBodyPart = new MimeBodyPart();
+            DataSource source = new FileDataSource(file);
+            mimeBodyPart.setDataHandler(new DataHandler(source));
+            mimeBodyPart.setFileName(file.getName());
+            this.multipart.addBodyPart(mimeBodyPart);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
 
-
-            /*MimeMultipart multipart = new MimeMultipart("related");
-            // first part (the html)
-            BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent(this.mail.getBody(), "text/html");
-            // add it
-            multipart.addBodyPart(messageBodyPart);
-            // second part (the image)
-            messageBodyPart = new MimeBodyPart();
-            System.out.println(("/images/header.png"));
+    public void addImage() {
+        try {
+            BodyPart messageBodyPart1 = new MimeBodyPart();
             DataSource fds = new FileDataSource("src/images/header.png");
-            messageBodyPart.setDataHandler(new DataHandler(fds));
-            messageBodyPart.setHeader("Content-ID", "header");
-            // add image to the multipart
-            multipart.addBodyPart(messageBodyPart);
-            // put everything together
-            message.setContent(multipart);*/
+            messageBodyPart1.setDataHandler(new DataHandler(fds));
+            messageBodyPart1.setHeader("Content-ID", "<header>");
+            multipart.addBodyPart(messageBodyPart1);
 
-            /*message.setContent(this.mail.getBody(), "text/html");
-            MimeBodyPart imagePart = new MimeBodyPart();
-            imagePart.setHeader("Content-ID", "AbcXyz123");
-            imagePart.setDisposition(MimeBodyPart.INLINE);
-            // attach the image file
-            imagePart.attachFile(new File());*/
+            BodyPart messageBodyPart2 = new MimeBodyPart();
+            fds = new FileDataSource("src/images/inschrijfKnop.png");
+            messageBodyPart2.setDataHandler(new DataHandler(fds));
+            messageBodyPart2.addHeader("Content-ID", "<inschrijf>");
+            multipart.addBodyPart(messageBodyPart2);
+
+            BodyPart messageBodyPart3 = new MimeBodyPart();
+            fds = new FileDataSource("src/images/facebookKnop.png");
+            messageBodyPart3.setDataHandler(new DataHandler(fds));
+            messageBodyPart3.addHeader("Content-ID", "<facebook>");
+            multipart.addBodyPart(messageBodyPart3);
+
+            BodyPart messageBodyPart4 = new MimeBodyPart();
+            fds = new FileDataSource("src/images/contactKnop.png");
+            messageBodyPart4.setDataHandler(new DataHandler(fds));
+            messageBodyPart4.addHeader("Content-ID", "<contact>");
+            multipart.addBodyPart(messageBodyPart4);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setMail(Mail mail) {

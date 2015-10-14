@@ -13,6 +13,11 @@ import javax.swing.text.html.parser.Parser;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Sander de Jong on 28-9-2015.
@@ -26,12 +31,12 @@ public class MailController {
     private FileReader fileReader;
     private Parser parser;
 
-    public MailController(MailView mailView, MailDAO mailDAO) {
+    public MailController(MailView mailView, MailDAO mailDAO, MailService mailService) {
         this.mail = new Mail("", "");
         this.mailDAO = mailDAO;
         this.mailView = mailView;
         this.mailView.setMail(this.mail);
-        this.mailService = new MailService();
+        this.mailService = mailService;
         this.mailView.getMailButton().setOnAction(e -> sendMail());
         mailViewListener();
     }
@@ -55,22 +60,13 @@ public class MailController {
     // ???? wat doet dit ?? - Sander
     private void setTextFields() {
         try {
-            this.mail.setBody("");
-            String line;
-            boolean subjectSet = false;
-            File file = new File("src/templates/" +
-                this.mail.getMailType().toString() + ".html");
-
-            bufferedReader = new BufferedReader(new FileReader(file));
-
-            while ((line = bufferedReader.readLine()) != null) {
-                if (!subjectSet) {
-                    this.mail.setSubject(line);
-                    subjectSet = true;
-                } else {
-                    this.mail.setBody(this.mail.getBody() + line + "\n");
-                }
-            }
+            String s = new Scanner(new File("src/templates/" + this.mail.getMailType().toString() + ".html")).
+                    useDelimiter("\\Z").next();
+            Pattern pattern = Pattern.compile("<title>(.+?)</title>");
+            Matcher matcher = pattern.matcher(s);
+            matcher.find();
+            this.mail.setSubject(matcher.group(1));
+            this.mail.setBody(s);
             this.mailView.updateFields();
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,7 +81,7 @@ public class MailController {
                 System.out.println("reminder method aanroepen");
                 break;
             case INVITATIONAL:
-                this.mail.setRecipients(this.mailDAO.invitationMail());
+                invitation();
                 break;
             case THANKYOU:
                 System.out.println("Thank you method aanroepen");
@@ -96,5 +92,10 @@ public class MailController {
         }
         this.mailService.setMail(this.mail);
         this.mailService.sendMail();
+    }
+
+    public void invitation() {
+        this.mail.setRecipients(this.mailDAO.invitationMail());
+        this.mailService.addImage();
     }
 }
