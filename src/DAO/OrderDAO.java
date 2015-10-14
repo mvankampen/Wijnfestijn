@@ -69,7 +69,7 @@ public class OrderDAO {
                         resultSet.getString("guest_email"), resultSet.getString("guest_phone"),
                         resultSet.getString("guest_referal"), resultSet.getString("guest_comment"),
                         resultSet.getBoolean("guest_noshow"));
-                Order order = new Order(resultSet.getInt(1), guest,
+                Order order = new Order(resultSet.getInt("orders_id"), guest,
                     resultSet.getTimestamp("orders_timestamp"), resultSet.getBoolean("orders_completed"));
                 orderArrayList.add(order);
             }
@@ -87,9 +87,12 @@ public class OrderDAO {
             String sqlQuery =
                 "UPDATE orders SET orders_completed = ? WHERE orders_timestamp = ? AND orders_id = ?";
             this.preparedStatement = connection.prepareStatement(sqlQuery);
-            this.preparedStatement.setBoolean(1, order.isCompleted());
+            this.preparedStatement.setBoolean(1, order.getCompleted());
+            System.out.println(order.getCompleted());
             this.preparedStatement.setTimestamp(2, new Timestamp(order.getDate().getTime()));
+            System.out.println(new Timestamp(order.getDate().getTime()));
             this.preparedStatement.setInt(3, order.getId());
+            System.out.println(order.getId());
             this.preparedStatement.executeUpdate();
             this.connection.commit();
         } catch (SQLException e) {
@@ -102,18 +105,7 @@ public class OrderDAO {
             } catch (SQLException ex) {
                 e.printStackTrace();
             }
-        } finally {
-            try {
-                if (this.preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (!connection.isClosed()) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        } 
     }
 
     public ArrayList<OrderLine> findOrderlinesByOrder(Order order) {

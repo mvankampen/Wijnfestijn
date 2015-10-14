@@ -34,7 +34,7 @@ public class Order {
         return id;
     }
 
-    public boolean isCompleted() {
+    public boolean getCompleted() {
         return completed;
     }
 

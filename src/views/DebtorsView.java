@@ -4,12 +4,14 @@ import controllers.ScreensController;
 import interfaces.ControlledScreen;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import models.Order;
 
 
 /**
@@ -18,7 +20,8 @@ import javafx.scene.layout.VBox;
 public class DebtorsView extends AnchorPane implements ControlledScreen {
     private ScreensController screensController;
     private  Button generateButton;
-
+    private TableView<Order> tableView;
+    private Button saveButton;
     public DebtorsView() {
         createView();
     }
@@ -57,16 +60,16 @@ public class DebtorsView extends AnchorPane implements ControlledScreen {
         //Creating items row 1
         Label lbldebText = new Label(debText);
         Label lbldebtListText = new Label(debListText);
-        TextArea debtArea = new TextArea();
-        debtArea.setMaxHeight(2000);
+	    tableView = new TableView<Order>();
+	    tableView.setEditable(true);
 
         generateButton = new Button("Genereren");
-        Button saveButton = new Button("Opslaan");
+        saveButton = new Button("Opslaan");
         generateButton.getStyleClass().add("form_buttons");
         saveButton.getStyleClass().add("form_buttons");
 
         //Adding to VBoxes
-        debtBox.getChildren().addAll(lbldebText, lbldebtListText, debtArea);
+        debtBox.getChildren().addAll(lbldebText, lbldebtListText, tableView);
         buttonBox.getChildren().addAll(generateButton, saveButton);
 
         //Adding items row 1
@@ -75,6 +78,12 @@ public class DebtorsView extends AnchorPane implements ControlledScreen {
         contentPane.add(buttonBox,0, 3);
 
         getChildren().add(contentPane);
+    }
+    public Button getSaveButton(){
+    	return saveButton;
+    }
+    public TableView<Order> getTableView(){
+    	return tableView;
     }
     public Button getGenerateButton(){
     	return generateButton;
