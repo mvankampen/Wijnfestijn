@@ -24,6 +24,7 @@ public class NavigationView extends AnchorPane{
     public final String ORDERTITLE = "Bestellijsten";
     public final String ORDER1 = "Print lijsten";
     public final String ORDER2 = "Order opstellen";
+    public final String ORDER3 = "Importeer wijnen";
     public final String CUSTOMERTITLE = "Klanten";
     public final String CUSTOMER1 = "Aanpassen";
     public final String CUSTOMER2 = "Registratie";
@@ -40,7 +41,7 @@ public class NavigationView extends AnchorPane{
 
 	
 	public void generateContentGrid(){
-    	orderOptions = FXCollections.observableArrayList(ORDER1, ORDER2);
+    	orderOptions = FXCollections.observableArrayList(ORDER1, ORDER2, ORDER3);
         customerOptions = FXCollections.observableArrayList(CUSTOMER1, CUSTOMER2, CUSTOMER3);
     	
         //Make the gridpane for the Navigation buttons

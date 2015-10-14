@@ -17,7 +17,17 @@ public class Wine {
     private Double margin;
     private boolean active;
     
-
+    public Wine(String name, String publisher, String year, double price, String rank, String category, String type, double costprice){
+    	this.name = name;
+    	this.publisher = publisher;
+    	this.year = year;
+    	this.price = price;
+    	this.rank = rank;
+    	this.category = category;
+    	this.type = type;
+    	this.costprice = costprice;
+    }
+    
     public Wine(int id, String name, String category, String publisher, String type, String year, double price, String rank, Double costprice, Double margin) {
         this.id = id;
         this.name = name;

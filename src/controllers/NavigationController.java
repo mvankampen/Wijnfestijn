@@ -27,6 +27,9 @@ public class NavigationController extends AnchorPane {
 	            	else if(newValue.equals(navigationView.ORDER2)){
 	            		screensController.screenSet(ControllersController.getORDERLISTID());
 	            	}
+	            	else if(newValue.equals(navigationView.ORDER3)){
+	            		screensController.screenSet(ControllersController.getIMPORTWINELISTID());
+	            	}
                 }
             }
         });
