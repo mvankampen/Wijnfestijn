@@ -37,7 +37,7 @@ public class PDFService {
         Document document = new Document();
         try {
             checkDirectory(this.out);
-            PdfWriter.getInstance(document, new FileOutputStream(out.toString() + "/test.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(out.toString() + "/" + order.getId() + ".pdf"));
             document.open();
 
             // Main paragraph
@@ -62,7 +62,7 @@ public class PDFService {
             PdfPTable orderDetailsTable = new PdfPTable(3);
             orderDetailsTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
             orderDetailsTable.setWidthPercentage(100);
-            float[] columnWidthOrdertable = {2f, 0.5f, 2f};
+            float[] columnWidthOrdertable = {0.6f, 0.2f, 1.5f};
             orderDetailsTable.setWidths(columnWidthOrdertable);
             orderDetailsTable.addCell(new Paragraph("Factuurdatum", this.fontHelveticaNormal));
             orderDetailsTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
@@ -78,7 +78,7 @@ public class PDFService {
 
             orderDetailsTable.addCell(new Paragraph("Betreft", this.fontHelveticaNormal));
             orderDetailsTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
-            orderDetailsTable.addCell(new Paragraph("Wijnfestijn"));
+            orderDetailsTable.addCell(new Paragraph("Wijnfestijn", this.fontHelveticaNormal));
             preface.add(orderDetailsTable);
             addEmptyLine(preface, 2);
 
@@ -97,26 +97,65 @@ public class PDFService {
             double total = 0;
             ArrayList<OrderLine> tempOrderLines = orderDAO.findOrderlinesByOrder(order);
             for(int i = 0; i < tempOrderLines.size(); i++) {
-                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getId()));
-                orderTable.addCell(new Paragraph(Integer.toString(tempOrderLines.get(i).getAmount())));
-                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getName()));
-                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getYear()));
-                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getPrice().toString()));
+                orderTable.addCell(new Paragraph(Integer.toString(tempOrderLines.get(i).getWine().getId()), this.fontHelveticaNormal));
+                orderTable.addCell(new Paragraph(Integer.toString(tempOrderLines.get(i).getAmount()), this.fontHelveticaNormal));
+                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getName(), this.fontHelveticaNormal));
+                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getYear(), this.fontHelveticaNormal));
+                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getPrice().toString(), this.fontHelveticaNormal));
                 double a = (tempOrderLines.get(i).getAmount() * tempOrderLines.get(i).getWine().getPrice());
                 total += a;
-                orderTable.addCell(Double.toString(a));
+                orderTable.addCell(new Paragraph(Double.toString(a), this.fontHelveticaNormal));
             }
             orderTable.addCell(new Paragraph("Totaal", this.fontHelveticaNormalBold));
             orderTable.addCell(new Paragraph(""));
             orderTable.addCell(new Paragraph(""));
             orderTable.addCell(new Paragraph(""));
             orderTable.addCell(new Paragraph(""));
-            PdfPCell c = new PdfPCell(new Paragraph(Double.toString(total)));
+            PdfPCell c = new PdfPCell(new Paragraph(Double.toString(total), this.fontHelveticaNormalBold));
             c.setBorder(Rectangle.TOP);
             orderTable.addCell(c);
             preface.add(orderTable);
 
+            addEmptyLine(preface, 4);
+            Paragraph requestMessage = new Paragraph("Wij verzoeken u vriendelijk het totaalbedrag binnen 7 dagenna " +
+                    "factuurdatum over te maken op bankrekening 123456 t.n.v. Lionsclub Oegstgeest/Warmond onder " +
+                    "vermelding van het factuurnummer.", this.fontHelveticaNormal);
+            addEmptyLine(requestMessage, 4);
+            preface.add(requestMessage);
+
+            Paragraph timeMessage = new Paragraph("U kunt uw bestelde wijnen ophalen op zaterdag 28 september tussen " +
+                    "12:00 en 16:00.", this.fontHelveticaNormal);
+            addEmptyLine(timeMessage, 1);
+            preface.add(timeMessage);
+
+            Paragraph address = new Paragraph("", this.fontHelveticaNormal);
+            address.add(new Paragraph("Adres:", this.fontHelveticaNormal));
+            address.add(new Paragraph("Noordman Wijnimport", this.fontHelveticaNormal));
+            address.add(new Paragraph("Flevoweg 17", this.fontHelveticaNormal));
+            address.add(new Paragraph("2318 BZ Leidenn", this.fontHelveticaNormal));
+            addEmptyLine(address, 3);
+            address.add(new LineSeparator());
+            addEmptyLine(address, 1);
+            address.add(new Paragraph("Lionsclub Oegstgeest/Warmond", this.fontHelveticaNormal));
+            //address.add(new Chunk(Chunk.NEWLINE));
+            preface.add(address);
+
+            PdfPTable bankTable = new PdfPTable(3);
+            bankTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+            bankTable.setWidthPercentage(101);
+            bankTable.setWidths(columnWidthOrdertable);
+            bankTable.addCell(new Paragraph("Bankrekening", this.fontHelveticaNormal));
+            bankTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
+            bankTable.addCell(new Paragraph("123456", this.fontHelveticaNormal));
+
+            bankTable.addCell(new Paragraph("Inschrijfnummer KvK Rijnland", this.fontHelveticaNormal));
+            bankTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
+            bankTable.addCell(new Paragraph("987654321", this.fontHelveticaNormal));
+            preface.add(bankTable);
+
+
             // Add every paragraph to document
+            document.add(new Pagenu)
             document.add(preface);
             document.newPage();
             document.close();
