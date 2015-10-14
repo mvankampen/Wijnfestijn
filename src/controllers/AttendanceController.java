@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.ArrayList;
+
 import DAO.GuestDAO;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -17,21 +19,32 @@ public class AttendanceController {
 
     private AttendanceView attendanceView;
     private GuestDAO guestDAO;
+    private ObservableList<Guest> data;
+    private ArrayList<Guest> allGuests;
 
     public AttendanceController(AttendanceView attendanceView, GuestDAO guestDAO) {
         this.attendanceView = attendanceView;
         this.guestDAO = guestDAO;
         generateHandlers();
-        importAllGuest();
+        makeTable();
+        importGuests();
     }
 
     private void generateHandlers() {
         this.attendanceView.getUpdateBtn().setOnAction(e -> validateData());
         this.attendanceView.getResetBtn().setOnAction(e -> resetNoShow());
     }
-
-    public void importAllGuest() {
-        final ObservableList<Guest> data = FXCollections.observableArrayList(guestDAO.getAllGuest());
+    public void importGuests() {
+    	int j = 0;
+    	allGuests = guestDAO.getAllGuest();
+    	while(allGuests.size() > j) {
+    		data.add(allGuests.get(j));
+    		j++;
+    	}
+    }
+    @SuppressWarnings("unchecked")
+	public void makeTable() {
+        data = FXCollections.observableArrayList();
         attendanceView.getTableView().setEditable(true);
         attendanceView.getTableView().getColumns().clear();
         TableColumn<Guest, String> surnameCol = createColumn("Surname", "surname");
@@ -150,10 +163,22 @@ public class AttendanceController {
     }
 
     private void resetNoShow() {
-
+    	int n = 0;
+    	while (data.size() > n) {
+    		this.data.get(n).setNo_show(false);
+    		this.guestDAO.updateGuest(data.get(n));
+    		n++;
+    	}
+    	data.clear();
+    	importGuests();
+        attendanceView.getTableView().setItems(data);
     }
 
     private void validateData() {
-
+    	int n = 0;
+    	while(data.size() > n) {
+    		this.guestDAO.updateGuest(data.get(n));
+    		n++;
+    	}
     }
 }
