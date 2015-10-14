@@ -14,62 +14,33 @@ public class HomeController {
 
 	public void addHyperlinkEventHandling(){
 		// Setting the directions for the hyperlinks on row 1
-		homeView.orderlistLink.setOnAction(event -> {
-			screensController.screenSet(ControllersController.getMAILID());
-		});
 		homeView.orderLink1.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
+			screensController.screenSet(ControllersController.getORDERLISTPRINTID());
 		});
 		homeView.orderLink2.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
+			screensController.screenSet(ControllersController.getORDERID());
 		});
 		homeView.orderLink3.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
+			screensController.screenSet(ControllersController.getIMPORTWINELISTID());
 		});
 		homeView.orderLink4.setOnAction(event -> {
 			// no link defined yet, placeholder
 			// screensController.screenSet(Applet.getMailid());
 		});
-		homeView.debtorsTitle.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
-		});
-		homeView.debtorLink1.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
-		});
-		
-		// Setting the directions for the hyperlinks row 2
-		homeView.mailTitleLink.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
-		});
 		homeView.mailLink1.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
-		});
-		homeView.mailLink2.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
-		});
-		homeView.mailLink3.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
-		});
-		homeView.customerTitleLink.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
+			screensController.screenSet(ControllersController.getMAILID());
 		});
 		homeView.customerLink1.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
+			screensController.screenSet(ControllersController.getGUESTID());
 		});
 		homeView.customerLink2.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
+			screensController.screenSet(ControllersController.getREGISTRATIONID());
+		});
+		homeView.customerLink3.setOnAction(event -> {
+			screensController.screenSet(ControllersController.getDEBTORID());
+		});
+		homeView.settingsLink1.setOnAction(event -> {
+			screensController.screenSet(ControllersController.getSETTINGSID());
 		});
 	}
 }
