@@ -25,6 +25,7 @@ public class ControllersController {
     private SettingsController settingsController;
     private PdfController pdfController;
     private ImportWineListController importWineListController;
+    private AttendanceController attendanceController;
 
     private HomeView homeView;
     private MailView mailView;
@@ -38,6 +39,7 @@ public class ControllersController {
     private NavigationView navigationView;
     private SettingsView settingsView;
     private ImportWineListView importWineListView;
+    private AttendanceView attendanceView;
 
     private static final String HOMEID = "home";
     private static final String ORDERLISTPRINTID = "orderlistprint";
@@ -48,6 +50,7 @@ public class ControllersController {
     private static final String REGISTRATIONID = "registration";
     private static final String SETTINGSID = "settings";
     private static final String IMPORTWINELISTID = "import list";
+    private static final String ATTENDANCEID = "attendance";
 
     public ControllersController() {
         createDatabaseConnection();
@@ -83,6 +86,8 @@ public class ControllersController {
         navigationView = new NavigationView();
         settingsView = new SettingsView();
         importWineListView = new ImportWineListView();
+        attendanceView = new AttendanceView();
+
     }
 
     private void createControllers() {
@@ -101,6 +106,7 @@ public class ControllersController {
         this.registrationController =
             new RegistrationController(registrationView, new GuestDAO(connection), screensController);
         this.importWineListController = new ImportWineListController(importWineListView, this.screensController);
+        this.attendanceController = new AttendanceController(attendanceView, new GuestDAO(connection));
     }
 
     public void fillScreensController() {
@@ -114,6 +120,7 @@ public class ControllersController {
         screensController.screenLoad(getDEBTORID(), debtorsView);
         screensController.screenLoad(getSETTINGSID(), settingsView);
         screensController.screenLoad(getIMPORTWINELISTID(), importWineListView);
+        screensController.screenLoad(getATTENDANCEID(), attendanceView);
         screensController.screenSet(getHOMEID());
     }
 
@@ -159,6 +166,10 @@ public class ControllersController {
     
     public static String getIMPORTWINELISTID(){
     	return IMPORTWINELISTID;
+    }
+
+    public static String getATTENDANCEID() {
+        return ATTENDANCEID;
     }
 
     public NavigationView getNavigationView() {
