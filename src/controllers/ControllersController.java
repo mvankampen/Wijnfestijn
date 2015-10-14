@@ -43,7 +43,7 @@ public class ControllersController {
     private static final String ORDERLISTPRINTID = "orderlistprint";
     private static final String ORDERID = "order";
     private static final String MAILID = "mail";
-    private static final String GUESTID = "customers";
+    private static final String GUESTID = "Guest";
     private static final String DEBTORID = "debiteuren";
     private static final String REGISTRATIONID = "registration";
     private static final String SETTINGSID = "settings";
