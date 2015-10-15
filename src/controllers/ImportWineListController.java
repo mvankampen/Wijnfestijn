@@ -106,28 +106,28 @@ public class ImportWineListController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void createTable(){
         data = FXCollections.observableArrayList();
-		TableColumn<Wine, String> nameCol = new TableColumn("Name");
+		TableColumn<Wine, String> nameCol = new TableColumn("Naam");
 		nameCol.setCellValueFactory(new PropertyValueFactory<Wine, String>("name"));
 		
-		TableColumn<Wine, String> publisherCol = new TableColumn("Publisher");
+		TableColumn<Wine, String> publisherCol = new TableColumn("Uitgever");
 		publisherCol.setCellValueFactory(new PropertyValueFactory<Wine, String>("publisher"));
 		
-		TableColumn<Wine, String> yearCol = new TableColumn("Year");
+		TableColumn<Wine, String> yearCol = new TableColumn("Jaar");
 		yearCol.setCellValueFactory(new PropertyValueFactory<Wine, String>("year"));
 		
-		TableColumn<Wine, Double> priceCol = new TableColumn("Price");
+		TableColumn<Wine, Double> priceCol = new TableColumn("Prijs");
 		priceCol.setCellValueFactory(new PropertyValueFactory<Wine, Double>("price"));
 		
 		TableColumn rankCol = new TableColumn("Rank");
 		rankCol.setCellValueFactory(new PropertyValueFactory<>("rank"));
 		
-		TableColumn categoryCol = new TableColumn("Category");
+		TableColumn categoryCol = new TableColumn("Categorie");
 		categoryCol.setCellValueFactory(new PropertyValueFactory<>("category"));
 		
 		TableColumn typeCol = new TableColumn("Type");
 		typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
 		
-		TableColumn costpriceCol = new TableColumn("Cost price");
+		TableColumn costpriceCol = new TableColumn("Kost price");
 		costpriceCol.setCellValueFactory(new PropertyValueFactory<>("costprice"));
 		importWineListView.getTable().getColumns().addAll(
 													nameCol, publisherCol, yearCol, priceCol,
