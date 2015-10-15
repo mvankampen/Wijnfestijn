@@ -100,7 +100,7 @@ public class MailController {
 
     public void invitation() {
         this.mail.setRecipients(this.mailDAO.invitationMail());
-        this.mailService.addImage();
+        //this.mailService.addImage();
     }
 
     String readFile(String fileName) throws IOException {
