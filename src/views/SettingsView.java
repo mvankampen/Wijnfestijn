@@ -110,4 +110,32 @@ public class SettingsView extends AnchorPane implements ControlledScreen {
     	
     	getChildren().addAll(bPane);
     }
+	
+	public TextField getChangeEmailField(){
+		return changeEmailField;
+	}
+	
+	public TextField getChangeEmailTitleField(){
+		return changeEmailTitleField;
+	}
+	
+	public PasswordField getDefaultMailPasswordField(){
+		return defaultMailPasswordField;
+	}
+	
+	public Button getResetButton(){
+		return resetButton;
+	}
+	
+	public Button getSaveButton(){
+		return saveButton;
+	}
+	
+	public ComboBox<String> getTemplatesComboBox(){
+		return templatesComboBox;
+	}
+	
+	public TextArea getTemplateArea(){
+		return templateArea;
+	}
 }

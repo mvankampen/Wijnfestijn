@@ -41,11 +41,11 @@ public class SettingsController {
      */
     public void generateHandler(){
     	// Save button handler
-    	settingsView.saveButton.setOnAction(e ->{
+    	settingsView.getTemplatesComboBox().setOnAction(e ->{
 			validateEmail();
 			if(errorCounter<1){
 				changeMailInfo();
-			settingsView.templatesComboBox.setValue("Templates");
+			settingsView.getTemplatesComboBox().setValue("Templates");
 			disableTemplateArea();
 			for(SettingsState ss : statesList){
 				ss.writeToFile();
@@ -60,36 +60,36 @@ public class SettingsController {
     	});
     	
     	// Reset button handler
-    	settingsView.resetButton.setOnAction(e -> {
-    		if(settingsView.templatesComboBox.getSelectionModel().getSelectedItem() != "Templates")
-    			settingsView.templateArea.setText(settingsState.getDefaultBody());
+    	settingsView.getResetButton().setOnAction(e -> {
+    		if(settingsView.getTemplatesComboBox().getSelectionModel().getSelectedItem() != "Templates")
+    			settingsView.getTemplateArea().setText(settingsState.getDefaultBody());
     	});
     	
     	// Template combobox event handler
-    	settingsView.templatesComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>(){
+    	settingsView.getTemplatesComboBox().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>(){
 			
     		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {	
 				setState();
-				settingsView.changeEmailTitleField.setText(settingsState.getTitle());
-				settingsView.templateArea.setText(settingsState.getBody());
+				settingsView.getChangeEmailTitleField().setText(settingsState.getTitle());
+				settingsView.getTemplateArea().setText(settingsState.getBody());
 			}
     	});
     	
-    	settingsView.templateArea.textProperty().addListener(new ChangeListener<String>(){
+    	settingsView.getTemplateArea().textProperty().addListener(new ChangeListener<String>(){
     		
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 						if(!saved){
-							settingsState.updateBody(settingsView.templateArea.getText());
+							settingsState.updateBody(settingsView.getTemplateArea().getText());
 							saved = false;
 						}	
 			}
     	});
     	
-    	settingsView.changeEmailTitleField.textProperty().addListener(new ChangeListener<String>(){
+    	settingsView.getChangeEmailTitleField().textProperty().addListener(new ChangeListener<String>(){
     		
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if(!saved){
-					settingsState.updateTitle(settingsView.changeEmailTitleField.getText());
+					settingsState.updateTitle(settingsView.getChangeEmailTitleField().getText());
 					saved = false;
 				}
 			}
@@ -105,22 +105,22 @@ public class SettingsController {
     }
     
     public void setState(){    	
-    	int typeNumber = settingsView.templatesComboBox.getSelectionModel().getSelectedIndex();
+    	int typeNumber = settingsView.getTemplatesComboBox().getSelectionModel().getSelectedIndex();
     	settingsState = statesList.get(typeNumber);
     	enableTemplateArea();
     }
     
     public void enableTemplateArea(){
-    	settingsView.templateArea.setEditable(true);
+    	settingsView.getTemplateArea().setEditable(true);
     }
     
     public void disableTemplateArea(){
-    	settingsView.templateArea.setEditable(false);
+    	settingsView.getTemplateArea().setEditable(false);
     }
     
     public void refreshTemplateArea(){
-    	settingsView.templateArea.setText("");
-    	settingsView.changeEmailTitleField.setText("");
+    	settingsView.getTemplateArea().setText("");
+    	settingsView.getChangeEmailTitleField().setText("");
     }
     
     public void changeMailInfo(){
@@ -132,8 +132,8 @@ public class SettingsController {
 			pw.close(); 
 			// New PrintWriter intialize
 			pw = new PrintWriter(new BufferedWriter(new FileWriter(path, true)));
-			pw.write(settingsView.changeEmailField.getText() + "\n");
-			pw.write(settingsView.defaultMailPasswordField.getText());
+			pw.write(settingsView.getChangeEmailField().getText() + "\n");
+			pw.write(settingsView.getDefaultMailPasswordField().getText());
 			// Closing the PrintWriter
 			pw.close();
 		} catch (IOException e) {
@@ -144,7 +144,7 @@ public class SettingsController {
     public void validateEmail(){
     	EmailValidator emailValidator = new EmailValidator();
     	SplashDefault settingsSplash = new GeneralSplash();
-    	if (!emailValidator.validate(settingsView.changeEmailField.getText().trim())) {
+    	if (!emailValidator.validate(settingsView.getChangeEmailField().getText().trim())) {
     		settingsSplash = new SplashEmailMessage(settingsSplash);
     		errorCounter++;
     	}
@@ -167,11 +167,11 @@ public class SettingsController {
 			// Load the email address in the variable "returnMail"
 			while ((line = br.readLine()) != null){
 				if(!gotName){
-					settingsView.changeEmailField.setText(line);
+					settingsView.getChangeEmailField().setText(line);
 					gotName = true;
 				}
 				else{
-					settingsView.defaultMailPasswordField.setText(line);
+					settingsView.getDefaultMailPasswordField().setText(line);
 				}
 		    }
 			// Closing the BufferedReader
