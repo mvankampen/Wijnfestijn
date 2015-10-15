@@ -63,7 +63,7 @@ public class OrderView extends AnchorPane implements ControlledScreen {
         this.makeOrderBtn.getStyleClass().add("form_buttons");
         vBoxButton.getChildren()
             .addAll(this.makeOrderBtn);
-
+        
         this.tableView = new TableView<>();
         this.tableView.setEditable(true);
         this.tableView.setMaxHeight(50);

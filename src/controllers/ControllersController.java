@@ -94,6 +94,7 @@ public class ControllersController {
 
     private void createControllers() {
         this.screensController = new ScreensController();
+        this.mailService = new MailService();
         this.homeController = new HomeController(homeView, this.screensController);
         this.navigationController =
             new NavigationController(this.screensController, navigationView);

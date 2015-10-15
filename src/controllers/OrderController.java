@@ -157,6 +157,7 @@ public class OrderController {
         this.orderView.getTableView().getColumns().clear();
         this.orderView.getTableView().getColumns().addAll(winenameCol, amountCol);
         this.orderView.getTableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        this.orderView.getTableView().setMinHeight(250);
 
     }
 
