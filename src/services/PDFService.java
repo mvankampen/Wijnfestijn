@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -31,7 +30,7 @@ public class PDFService {
     private Font fontHelveticaNormalBold = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
     private Font fontHelveticaNormal = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
 
-    public void createOrderPdf(Order order, OrderDAO orderDAO) {
+    public File createOrderPdf(Order order, OrderDAO orderDAO) {
         Document document = new Document();
         try {
             checkDirectory(this.out);
@@ -168,9 +167,10 @@ public class PDFService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return new File(out.toString() + "/" + order.getId() + ".pdf");
     }
 
-    private String getFullName(Guest guest) {
+    public String getFullName(Guest guest) {
         String firstNameShort = guest.getFirstname().substring(0,1).toUpperCase() + ". ";
         String result = firstNameShort;
         if (!guest.getInfix().equals(null)) {
