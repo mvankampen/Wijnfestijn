@@ -150,7 +150,7 @@ public class OrderController {
             };
         });
 
-        amountCol = new TableColumn("Amount");
+        amountCol = new TableColumn("Aantal");
         amountCol.setMinWidth(100);
         amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
