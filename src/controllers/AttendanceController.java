@@ -49,6 +49,7 @@ public class AttendanceController {
         attendanceView.getTableView().setEditable(true);
         attendanceView.getTableView().getColumns().clear();
         TableColumn<Guest, String> surnameCol = createColumn("Achternaam", "surname");
+        surnameCol.setMinWidth(130);
         surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         surnameCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
             @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
@@ -57,6 +58,7 @@ public class AttendanceController {
             }
         });
         TableColumn<Guest, String> infixCol = createColumn("Tussenvoegsel", "infix");
+        infixCol.setMinWidth(110);
         infixCol.setCellFactory(TextFieldTableCell.forTableColumn());
         infixCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
             @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
@@ -122,6 +124,7 @@ public class AttendanceController {
         });
         TableColumn<Guest, String> phoneCol = createColumn("Telefoonnummer", "phone");
         phoneCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        phoneCol.setMinWidth(120);
         phoneCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
             @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
                 ((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow()))
@@ -129,6 +132,7 @@ public class AttendanceController {
             }
         });
         TableColumn<Guest, String> referralCol = createColumn("Geattendeerd door", "referal");
+        referralCol.setMinWidth(140);
         referralCol.setCellFactory(TextFieldTableCell.forTableColumn());
         referralCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
             @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
@@ -137,7 +141,7 @@ public class AttendanceController {
             }
         });
         TableColumn<Guest, Boolean> activeCol = createColumn("Niet gekomen", "no_show");
-        activeCol.setMinWidth(90);
+        activeCol.setMinWidth(100);
         activeCol.setCellFactory(col -> {
             CheckBoxTableCell<Guest, Boolean> cell = new CheckBoxTableCell<>(index -> {
                 BooleanProperty active = new SimpleBooleanProperty(

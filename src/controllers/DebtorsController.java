@@ -49,6 +49,7 @@ public class DebtorsController {
     }
     private void makeTable() {
     	data = FXCollections.observableArrayList();
+        this.debtorsView.getTableView().setMaxHeight(400);
     	 emailCol = new TableColumn<Order, Guest>("Gast email");
          emailCol.setMinWidth(250);
          emailCol.setCellValueFactory(new PropertyValueFactory<>("guest"));

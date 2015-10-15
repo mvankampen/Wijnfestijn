@@ -53,6 +53,7 @@ public class AttendanceView extends AnchorPane implements ControlledScreen {
         tableView.setPlaceholder(placeholder);
         tableView.setMaxHeight(350);
         tableView.setMinWidth(1000);
+        tableView.setMaxWidth(1000);
 
         HBox hBox = new HBox();
         updateBtn = new Button("Update presentie");
