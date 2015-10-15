@@ -13,6 +13,7 @@ import javax.swing.text.html.parser.Parser;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
@@ -60,8 +61,11 @@ public class MailController {
     // ???? wat doet dit ?? - Sander
     private void setTextFields() {
         try {
-            String s = new Scanner(new File("src/templates/" + this.mail.getMailType().toString() + ".html")).
-                    useDelimiter("\\Z").next();
+//            String s = new Scanner(new File("src/templates/" + this.mail.getMailType().toString() + ".html")).
+//                    useDelimiter("\\Z").next();
+
+            String s = readFile("src/templates/" + this.mail.getMailType().toString() + ".html");
+
             Pattern pattern = Pattern.compile("<title>(.+?)</title>");
             Matcher matcher = pattern.matcher(s);
             matcher.find();
@@ -97,5 +101,22 @@ public class MailController {
     public void invitation() {
         this.mail.setRecipients(this.mailDAO.invitationMail());
         this.mailService.addImage();
+    }
+
+    String readFile(String fileName) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append("\n");
+                line = br.readLine();
+            }
+            return sb.toString();
+        } finally {
+            br.close();
+        }
     }
 }
