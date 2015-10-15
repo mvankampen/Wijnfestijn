@@ -63,6 +63,7 @@ public class OrderView extends AnchorPane implements ControlledScreen {
         this.makeOrderBtn.getStyleClass().add("form_buttons");
         vBoxButton.getChildren()
             .addAll(this.makeOrderBtn);
+       
         
         this.tableView = new TableView<>();
         this.tableView.setEditable(true);
@@ -78,9 +79,11 @@ public class OrderView extends AnchorPane implements ControlledScreen {
         this.amountLabel = new Label("Aantal");
         this.amountTextField = new TextField();
         vboxOrder.getChildren().addAll(wineLabel,winenumberTextField,amountLabel,amountTextField);
-
+        HBox buttonBox = new HBox(10);
         this.orderBtn = new Button("Order plaatsen");
         this.removeBtn = new Button("Verwijder selectie");
+        buttonBox.getChildren().addAll(this.orderBtn);
+        buttonBox.getChildren().addAll(this.removeBtn);
         this.removeBtn.getStyleClass().add("form_buttons");
         this.orderBtn.getStyleClass().add("form_buttons");
 
@@ -89,9 +92,7 @@ public class OrderView extends AnchorPane implements ControlledScreen {
         contentPane.add(vBoxButton, 0, 2);
         contentPane.add(tableView, 1, 1);
         contentPane.add(vboxOrder, 1,2);
-        contentPane.add(orderBtn, 1,3);
-        contentPane.add(removeBtn, 1, 4);
-
+        contentPane.add(buttonBox, 1,3);
         getChildren().addAll(contentPane);
     }
     public Button getRemoveBtn() {
