@@ -61,8 +61,9 @@ public class AdjustGuestView extends AnchorPane implements ControlledScreen {
 		VBox customerBox = new VBox(15);
 		VBox selectionBox = new VBox(15);
 		VBox updateBox = new VBox(10);
-		editableGuest.setMaxHeight(50);
+		editableGuest.setMaxHeight(120);
 		editableGuest.setMinWidth(1000);
+		editableGuest.setMaxWidth(1000);
 		Label placeholder = new Label();
 		placeholder.setText("Je hebt nog geen klant geselecteerd om te wijzigen, Selecteer iemand & druk op enter");
 		editableGuest.setPlaceholder(placeholder);

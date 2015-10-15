@@ -95,108 +95,114 @@ public class AdjustGuestController {
 	public void importCurrentGuest() {
 	
 		//First row : surName
-		final ObservableList<Guest> data = FXCollections.observableArrayList(currentGuest);
+		ObservableList<Guest> data = FXCollections.observableArrayList(currentGuest);
 		adjustGuestView.getEditableGuest().setEditable(true);
 		adjustGuestView.getEditableGuest().getColumns().clear();
-		TableColumn<Guest, String> surnameCol = createColumn("Surname","surname");
-		surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		surnameCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
-			@Override
-			public void handle(CellEditEvent<Guest, String> t) {
-				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setSurname(t.getNewValue());
-				}
-		});
-		TableColumn<Guest, String> infixCol = createColumn("Infix","infix");
-		infixCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		infixCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
-			@Override
-			public void handle(CellEditEvent<Guest, String> t) {
-				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setInfix(t.getNewValue());
-			}
-		});
-		TableColumn<Guest, String> firstnameCol = createColumn("Firstname","firstname");
-		firstnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		firstnameCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
-			@Override
-			public void handle(CellEditEvent<Guest, String> t) {
-				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setFirstname(t.getNewValue());
-			}
-		});
-		TableColumn<Guest, String> salutationCol = createColumn("Salutation","salutation");
-		salutationCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		salutationCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
-			@Override
-			public void handle(CellEditEvent<Guest, String> t) {
-				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setSalutation(t.getNewValue());
-			}
-		});
-		TableColumn<Guest, String> streetCol = createColumn("Straatnaam","street");
-		streetCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		streetCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
-			@Override
-			public void handle(CellEditEvent<Guest, String> t) {
-				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setStreet(t.getNewValue());
-			}
-		});
-		TableColumn<Guest, String> streetnrCol = createColumn("Streetnr","streetnr");
-		streetnrCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		streetnrCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
-			@Override
-			public void handle(CellEditEvent<Guest, String> t) {
-				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setStreetnr(t.getNewValue());
-			}
-		}); 
-		TableColumn<Guest, String> zipcodeCol = createColumn("Zipcode","zipcode");
-		zipcodeCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		zipcodeCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
-			@Override
-			public void handle(CellEditEvent<Guest, String> t) {
-				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setZipcode(t.getNewValue());
-			}
-		});
-		TableColumn<Guest, String> cityCol = createColumn("City","city");
-		cityCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		cityCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
-			@Override
-			public void handle(CellEditEvent<Guest, String> t) {
-				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setCity(t.getNewValue());
-			}
-		});
-		TableColumn<Guest, String> emailCol = createColumn("Email","email");
-		emailCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		emailCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
-			@Override
-			public void handle(CellEditEvent<Guest, String> t) {
-				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setEmail(t.getNewValue());
-			}
-		});
-		TableColumn<Guest, String> phoneCol =createColumn("Phone","phone");
-		phoneCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		phoneCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
-			@Override
-			public void handle(CellEditEvent<Guest, String> t) {
-				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPhone(t.getNewValue());
-			}
-		});
-		TableColumn<Guest, String> referralCol = createColumn("Referral","referal");
-		referralCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		referralCol.setOnEditCommit(new EventHandler<CellEditEvent<Guest, String>>() {
-			@Override
-			public void handle(CellEditEvent<Guest, String> t) {
-				((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow())).setReferal(t.getNewValue());
-			}
-		});
-		TableColumn<Guest, Boolean> activeCol = createColumn("no Show", "no_show");
-		 activeCol.setCellFactory(col -> {
+	        TableColumn<Guest, String> surnameCol = createColumn("Achternaam", "surname");
+	        surnameCol.setMinWidth(130);
+	        surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+	        surnameCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
+	            @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
+	                ((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+	                    .setSurname(t.getNewValue());
+	            }
+	        });
+	        TableColumn<Guest, String> infixCol = createColumn("Tussenvoegsel", "infix");
+	        infixCol.setMinWidth(110);
+	        infixCol.setCellFactory(TextFieldTableCell.forTableColumn());
+	        infixCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
+	            @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
+	                ((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+	                    .setInfix(t.getNewValue());
+	            }
+	        });
+	        TableColumn<Guest, String> firstnameCol = createColumn("Voornaam", "firstname");
+	        firstnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+	        firstnameCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
+	            @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
+	                ((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+	                    .setFirstname(t.getNewValue());
+	            }
+	        });
+	        TableColumn<Guest, String> salutationCol = createColumn("Aanhef", "salutation");
+	        salutationCol.setCellFactory(TextFieldTableCell.forTableColumn());
+	        salutationCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
+	            @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
+	                ((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+	                    .setSalutation(t.getNewValue());
+	            }
+	        });
+	        TableColumn<Guest, String> streetCol = createColumn("Straat", "street");
+	        streetCol.setCellFactory(TextFieldTableCell.forTableColumn());
+	        streetCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
+	            @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
+	                ((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+	                    .setStreet(t.getNewValue());
+	            }
+	        });
+	        TableColumn<Guest, String> streetnrCol = createColumn("Huis nr", "streetnr");
+	        streetnrCol.setCellFactory(TextFieldTableCell.forTableColumn());
+	        streetnrCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
+	            @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
+	                ((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+	                    .setStreetnr(t.getNewValue());
+	            }
+	        });
+	        TableColumn<Guest, String> zipcodeCol = createColumn("Postcode", "zipcode");
+	        zipcodeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+	        zipcodeCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
+	            @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
+	                ((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+	                    .setZipcode(t.getNewValue());
+	            }
+	        });
+	        TableColumn<Guest, String> cityCol = createColumn("Stad", "city");
+	        cityCol.setCellFactory(TextFieldTableCell.forTableColumn());
+	        cityCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
+	            @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
+	                ((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+	                    .setCity(t.getNewValue());
+	            }
+	        });
+	        TableColumn<Guest, String> emailCol = createColumn("Email", "email");
+	        emailCol.setCellFactory(TextFieldTableCell.forTableColumn());
+	        emailCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
+	            @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
+	                ((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+	                    .setEmail(t.getNewValue());
+	            }
+	        });
+	        TableColumn<Guest, String> phoneCol = createColumn("Telefoonnummer", "phone");
+	        phoneCol.setCellFactory(TextFieldTableCell.forTableColumn());
+	        phoneCol.setMinWidth(120);
+	        phoneCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
+	            @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
+	                ((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+	                    .setPhone(t.getNewValue());
+	            }
+	        });
+	        TableColumn<Guest, String> referralCol = createColumn("Geattendeerd door", "referal");
+	        referralCol.setMinWidth(140);
+	        referralCol.setCellFactory(TextFieldTableCell.forTableColumn());
+	        referralCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Guest, String>>() {
+	            @Override public void handle(TableColumn.CellEditEvent<Guest, String> t) {
+	                ((Guest) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+	                    .setReferal(t.getNewValue());
+	            }
+	        });
+	        TableColumn<Guest, Boolean> activeCol = createColumn("Niet gekomen", "no_show");
+	        activeCol.setMinWidth(100);
+	        activeCol.setCellFactory(col -> {
 	            CheckBoxTableCell<Guest, Boolean> cell = new CheckBoxTableCell<>(index -> {
-	                BooleanProperty active = new SimpleBooleanProperty(adjustGuestView.getEditableGuest().getItems().get(index).getNo_show());
+	                BooleanProperty active = new SimpleBooleanProperty(
+	                    adjustGuestView.getEditableGuest().getItems().get(index).getNo_show());
 	                active.addListener((obs, wasActive, isNowActive) -> {
 	                    Guest item = adjustGuestView.getEditableGuest().getItems().get(index);
 	                    item.setNo_show(isNowActive);
 	                });
-	                return active ;
+	                return active;
 	            });
-	            return cell ;
+	            return cell;
 	        });
 		adjustGuestView.getEditableGuest().getColumns().clear();
 		adjustGuestView.getEditableGuest().setItems(data);
