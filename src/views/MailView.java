@@ -41,6 +41,7 @@ public class MailView extends AnchorPane implements ControlledScreen {
 
     public void updateFields() {
         this.titleTextArea.setText(this.mail.getSubject());
+        System.out.println(this.mail.getBody());
         this.htmlEditor.setHtmlText(this.mail.getBody());
     }
 
