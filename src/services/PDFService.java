@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class PDFService {
     private Font fontHelveticaNormalBold = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
     private Font fontHelveticaNormal = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
 
-    public File createOrderPdf(Order order, OrderDAO orderDAO) {
+    public void createOrderPdf(Order order, OrderDAO orderDAO) {
         Document document = new Document();
         try {
             checkDirectory(this.out);
@@ -92,6 +93,7 @@ public class PDFService {
             orderTable.addCell((new Paragraph("Bedrag", this.fontHelveticaNormalBold)));
 
             double total = 0;
+            String euro = "\u20ac";
             ArrayList<OrderLine> tempOrderLines = orderDAO.findOrderlinesByOrder(order);
             for(int i = 0; i < tempOrderLines.size(); i++) {
                 orderTable.addCell(new Paragraph(Integer.toString(tempOrderLines.get(i).getWine().getId()), this.fontHelveticaNormal));
@@ -99,12 +101,14 @@ public class PDFService {
                 orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getName(), this.fontHelveticaNormal));
                 orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getYear(), this.fontHelveticaNormal));
                 double price = tempOrderLines.get(i).getWine().getPrice();
-                orderTable.addCell(new Paragraph(Double.toString(price), this.fontHelveticaNormal));
+                String formattedPrice = String.format("%.02f", price);
+                orderTable.addCell(new Paragraph(euro + formattedPrice, this.fontHelveticaNormal));
                 double a = (tempOrderLines.get(i).getAmount() * tempOrderLines.get(i).getWine().getPrice());
                 total += a;
                 BigDecimal roundedBigDecimalPrice = BigDecimal.valueOf(a).setScale(2, RoundingMode.HALF_UP);
                 double roundedDoublePrice = roundedBigDecimalPrice.doubleValue();
-                orderTable.addCell(new Paragraph(Double.toString(roundedDoublePrice), this.fontHelveticaNormal));
+                String formattedTotalPrice = String.format("%.02f", roundedDoublePrice);
+                orderTable.addCell(new Paragraph(euro + formattedTotalPrice, this.fontHelveticaNormal));
             }
             orderTable.addCell(new Paragraph("Totaal", this.fontHelveticaNormalBold));
             orderTable.addCell(new Paragraph(""));
@@ -113,7 +117,8 @@ public class PDFService {
             orderTable.addCell(new Paragraph(""));
             BigDecimal roundedBigDecimalTotalPrice = BigDecimal.valueOf(total).setScale(2, RoundingMode.HALF_UP);
             double roundedDoubleTotalPrice = roundedBigDecimalTotalPrice.doubleValue();
-            PdfPCell c = new PdfPCell(new Paragraph(Double.toString(roundedDoubleTotalPrice), this.fontHelveticaNormalBold));
+            String formattedTotalPrice = String.format("%.02f", roundedDoubleTotalPrice);
+            PdfPCell c = new PdfPCell(new Paragraph(euro + formattedTotalPrice, this.fontHelveticaNormalBold));
             c.setBorder(Rectangle.TOP);
             orderTable.addCell(c);
             preface.add(orderTable);
@@ -163,10 +168,9 @@ public class PDFService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new File(out.toString() + "/" + order.getId() + ".pdf");
     }
 
-    public String getFullName(Guest guest) {
+    private String getFullName(Guest guest) {
         String firstNameShort = guest.getFirstname().substring(0,1).toUpperCase() + ". ";
         String result = firstNameShort;
         if (!guest.getInfix().equals(null)) {
