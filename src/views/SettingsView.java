@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.*;
+import javafx.scene.web.HTMLEditor;
 
 
 /**
@@ -18,7 +19,7 @@ public class SettingsView extends AnchorPane implements ControlledScreen {
     private ScreensController screensController;
     public TextField changeEmailField, changeEmailTitleField;
     public ComboBox<String> templatesComboBox;
-    public TextArea templateArea;
+    public HTMLEditor templateArea;
     public Button saveButton, resetButton;
     public PasswordField defaultMailPasswordField;
 
@@ -44,9 +45,10 @@ public class SettingsView extends AnchorPane implements ControlledScreen {
     	changeEmailField = new TextField();
     	templatesComboBox = new ComboBox<String>(options);
     	templatesComboBox.setValue("Templates");
-    	templateArea = new TextArea();
-    	templateArea.setEditable(false);
+    	templateArea = new HTMLEditor();
+    	templateArea.setDisable(true);
     	templateArea.setMaxWidth(600);
+    	templateArea.setMaxHeight(300);
     	saveButton = new Button("Opslaan");
     	saveButton.getStyleClass().add("form_buttons");
     	resetButton = new Button("Reset deze template");
@@ -135,7 +137,7 @@ public class SettingsView extends AnchorPane implements ControlledScreen {
 		return templatesComboBox;
 	}
 	
-	public TextArea getTemplateArea(){
+	public HTMLEditor getTemplateArea(){
 		return templateArea;
 	}
 }

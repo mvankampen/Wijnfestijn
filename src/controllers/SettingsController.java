@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 import splashscreens.GeneralSplash;
 import splashscreens.SettingsSetHead;
 import splashscreens.SplashDefault;
@@ -27,7 +29,7 @@ public class SettingsController {
     private ArrayList<SettingsState> statesList;
     private String title, header, context;
     private String defaultPath = "src/templates/";
-    private int errorCounter;
+    private int errorCounter = 0;
     private boolean saved = false;
     
     public SettingsController(SettingsView settingsView) {
@@ -41,18 +43,18 @@ public class SettingsController {
      */
     public void generateHandler(){
     	// Save button handler
-    	settingsView.getTemplatesComboBox().setOnAction(e ->{
+    	settingsView.getSaveButton().setOnAction(e ->{
 			validateEmail();
 			if(errorCounter<1){
 				changeMailInfo();
-			settingsView.getTemplatesComboBox().setValue("Templates");
-			disableTemplateArea();
-			for(SettingsState ss : statesList){
-				ss.writeToFile();
-			}
-			saved = true;
-			refreshTemplateArea();
-			}
+				settingsView.getTemplatesComboBox().setValue("Templates");
+				disableTemplateArea();
+				for(SettingsState ss : statesList){
+					ss.writeToFile();
+				}
+				saved = true;
+				refreshTemplateArea();
+				}
 			else {
 				errorCounter = 0;
 				SplashscreenView splashscreenView = new SplashscreenView(title, header, context);
@@ -62,7 +64,7 @@ public class SettingsController {
     	// Reset button handler
     	settingsView.getResetButton().setOnAction(e -> {
     		if(settingsView.getTemplatesComboBox().getSelectionModel().getSelectedItem() != "Templates")
-    			settingsView.getTemplateArea().setText(settingsState.getDefaultBody());
+    			settingsView.getTemplateArea().setHtmlText(settingsState.getDefaultBody());
     	});
     	
     	// Template combobox event handler
@@ -71,18 +73,15 @@ public class SettingsController {
     		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {	
 				setState();
 				settingsView.getChangeEmailTitleField().setText(settingsState.getTitle());
-				settingsView.getTemplateArea().setText(settingsState.getBody());
+				settingsView.getTemplateArea().setHtmlText(settingsState.getBody());
 			}
     	});
     	
-    	settingsView.getTemplateArea().textProperty().addListener(new ChangeListener<String>(){
-    		
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-						if(!saved){
-							settingsState.updateBody(settingsView.getTemplateArea().getText());
-							saved = false;
-						}	
-			}
+    	settingsView.getTemplateArea().setOnKeyReleased(new EventHandler<KeyEvent>(){
+    		public void handle(KeyEvent event){
+    			settingsState.updateBody(settingsView.getTemplateArea().getHtmlText());
+				saved = false;
+    		}
     	});
     	
     	settingsView.getChangeEmailTitleField().textProperty().addListener(new ChangeListener<String>(){
@@ -111,15 +110,17 @@ public class SettingsController {
     }
     
     public void enableTemplateArea(){
-    	settingsView.getTemplateArea().setEditable(true);
+    	settingsView.getTemplateArea().setDisable(false);
+    	settingsView.getChangeEmailTitleField().setEditable(true);
     }
     
     public void disableTemplateArea(){
-    	settingsView.getTemplateArea().setEditable(false);
+    	settingsView.getTemplateArea().setDisable(true);
+    	settingsView.getChangeEmailField().setEditable(false);
     }
     
     public void refreshTemplateArea(){
-    	settingsView.getTemplateArea().setText("");
+    	settingsView.getTemplateArea().setHtmlText("");
     	settingsView.getChangeEmailTitleField().setText("");
     }
     
