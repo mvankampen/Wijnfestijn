@@ -62,7 +62,7 @@ public class OrderController {
     public void createAutoComplete() {
         AutoCompletionBinding<Guest> autoCompletionBinding = TextFields
             .bindAutoCompletion(orderView.getSurnameTextField(),
-                t -> guestDAO.findGuestByLastname(t.getUserText()), new StringConverter<Guest>() {
+                t -> guestDAO.findGuestBySurname(t.getUserText()), new StringConverter<Guest>() {
                     @Override public String toString(Guest object) {
                         return object.getSurname() + ", " + object.getInfix() + " " + object
                             .getFirstname();

@@ -57,7 +57,7 @@ public class GuestDAO {
         } 
         return currentGuest;
     }
-
+    //update the fields of the guest in the db with the new data
     public void updateGuest(Guest guest) {
         try {
             this.preparedStatement = null;
@@ -93,8 +93,8 @@ public class GuestDAO {
         } 
         
     }
-
-    public ArrayList<Guest> findGuestByLastname(String lastname) {
+    //used when the user wants to search for a specific guest, goes by surname
+	public ArrayList<Guest> findGuestBySurname(String lastname) {
         ArrayList<Guest> guestList = new ArrayList<>();
         try {
             this.preparedStatement = null;
@@ -126,7 +126,7 @@ public class GuestDAO {
         } 
         return guestList;
     }
-
+	//retrieves all guest rows in the database
     public ArrayList<Guest> getAllGuest() {
         ArrayList<Guest> guestList = new ArrayList<>();
         try {
@@ -151,6 +151,7 @@ public class GuestDAO {
                         resultSet.getString("guest_comment"),
                         resultSet.getBoolean("guest_noshow")
                     );
+                //adds each object in the ArrayList
                 guestList.add(guest);
             }
         } catch (SQLException e) {

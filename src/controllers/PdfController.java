@@ -1,12 +1,7 @@
 package controllers;
 
-import DAO.OrderDAO;
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.draw.LineSeparator;
-
 import java.io.File;
-import java.io.FileOutputStream;
 
 /**
  * Created by sander on 8-10-2015.

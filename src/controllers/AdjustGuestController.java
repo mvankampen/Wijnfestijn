@@ -65,7 +65,7 @@ public class AdjustGuestController {
 	public void createAutocomplete() {
 		AutoCompletionBinding<Guest> autoCompletionBinding = TextFields.bindAutoCompletion(
 
-		adjustGuestView.getSurnameTextField(), t -> guestDAO.findGuestByLastname(t.getUserText()),
+		adjustGuestView.getSurnameTextField(), t -> guestDAO.findGuestBySurname(t.getUserText()),
 				new StringConverter<Guest>() {
 					@Override
 					public String toString(Guest object) {

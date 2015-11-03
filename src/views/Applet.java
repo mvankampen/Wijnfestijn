@@ -15,7 +15,7 @@ public class Applet extends Application {
     }
  
     public void start(Stage stage) throws SQLException {
-        // workaround a combobox crash
+        // workaround for a combobox crash
         System.setProperty("glass.accessible.force", "false");
         //Controller that is responsible for creating all controllers and views
         this.CC = new ControllersController();

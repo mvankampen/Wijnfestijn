@@ -26,7 +26,7 @@ public class Database {
         connection = DriverManager.getConnection(LOCATION + DB_NAME, USER, PASSWORD);
         connection.setAutoCommit(false);
     }
-
+    //allows retrieval of the current database, or making a new database instance
     public static Database getInstance() throws SQLException {
         if (_instance == null) {
             _instance = new Database();
@@ -36,7 +36,7 @@ public class Database {
 
         return _instance;
     }
-
+    //allows retrieval of the current connection, used by DAOs
     public Connection getConnection() {
         return this.connection;
     }

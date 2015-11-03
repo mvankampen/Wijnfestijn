@@ -80,8 +80,9 @@ public class ImportGuestListController {
 						 */
 						Guest selectedGuest = new Guest(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5],
 								parts[6], parts[7], parts[8], parts[9], parts[10], parts[11]);
-						// puts the guest object in the arraylists
+						// puts the guest object in the arraylist
 						data.add(selectedGuest);
+						// reset parts and nextline to prevent errors
 						parts = null;
 						nextLine = null;
 					}
@@ -217,6 +218,7 @@ public class ImportGuestListController {
 		//prevents having duplicated columns in the table
 		importGuestListView.getTable().getColumns().clear();
 		importGuestListView.getTable().setItems(data);
+		//add all columns to the table
 		importGuestListView.getTable().getColumns().addAll(surnameCol, infixCol, firstnameCol, salutationCol, streetCol,
 				streetnrCol, zipcodeCol, cityCol, emailCol, phoneCol, referralCol);
 
