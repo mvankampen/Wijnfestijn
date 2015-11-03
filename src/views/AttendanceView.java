@@ -9,11 +9,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import models.Guest;
-//This screen is a AnchorPane and uses ControlledScreen
+
+//This screen is a AnchorPane and uses ControlledScreen as navigation manager
 public class AttendanceView extends AnchorPane implements ControlledScreen {
 	private TableView<Guest> tableView;
 	private Button updateBtn, resetBtn;
-
 
 	public void setScreenController(ScreensController screensController) {
 		// Used for registering itself in the hashMap of the ScreensController
@@ -25,6 +25,7 @@ public class AttendanceView extends AnchorPane implements ControlledScreen {
 		createView();
 		setUpContentPane();
 	}
+
 	// adds the style class and sets the fixed height to the screen
 	private void createView() {
 		getStyleClass().add("background");
@@ -38,10 +39,12 @@ public class AttendanceView extends AnchorPane implements ControlledScreen {
 		contentPane.setLayoutX(100);
 		contentPane.setLayoutY(200);
 		contentPane.setVgap(10);
-		/* creating all Strings, used to make the labels their content easier to
-		 adjust */
+		/*
+		 * creating all Strings, used to make the labels their content easier to
+		 * adjust
+		 */
 		String introText = "Hier kunt u de data van een geselecteerde klant aanpassen.";
-		
+
 		/*
 		 * creating all Labels, used to instruct the user towards what actions
 		 * he can perform within the view
@@ -55,8 +58,7 @@ public class AttendanceView extends AnchorPane implements ControlledScreen {
 		tableView.setMaxHeight(350);
 		tableView.setMinWidth(1000);
 		tableView.setMaxWidth(1000);
-		
-		
+
 		// creating the buttons and setting their properties
 		updateBtn = new Button("Update presentie");
 		updateBtn.getStyleClass().add("form_buttons");
@@ -74,6 +76,7 @@ public class AttendanceView extends AnchorPane implements ControlledScreen {
 		// Add the contentPane to the View
 		getChildren().add(contentPane);
 	}
+
 	// getters
 	public TableView<Guest> getTableView() {
 		return tableView;

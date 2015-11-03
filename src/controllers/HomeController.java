@@ -11,9 +11,8 @@ public class HomeController {
 		this.homeView = homeView;
 		addHyperlinkEventHandling();
 	}
-
+	//sets all the correct links to the corresponding hyperlinks
 	public void addHyperlinkEventHandling(){
-		// Setting the directions for the hyperlinks on row 1
 		homeView.orderLink1.setOnAction(event -> {
 			screensController.screenSet(ControllersController.getORDERLISTPRINTID());
 		});
@@ -24,8 +23,6 @@ public class HomeController {
 			screensController.screenSet(ControllersController.getIMPORTWINELISTID());
 		});
 		homeView.orderLink4.setOnAction(event -> {
-			// no link defined yet, placeholder
-			// screensController.screenSet(Applet.getMailid());
 		});
 		homeView.mailLink1.setOnAction(event -> {
 			screensController.screenSet(ControllersController.getMAILID());
