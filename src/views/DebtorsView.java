@@ -53,7 +53,6 @@ public class DebtorsView extends AnchorPane implements ControlledScreen {
 		 * adjust
 		 */
 		String introText = "Hier worden de klanten die nog een order open hebben staan in 1 lijst gezet.";
-		String debText = "Aantal debiteuren: 10";
 		String debListText = "Debiteurenlijst:";
 
 		/*
@@ -61,7 +60,6 @@ public class DebtorsView extends AnchorPane implements ControlledScreen {
 		 * he can perform within the view
 		 */
 		Label introLabel = new Label(introText);
-		Label lbldebText = new Label(debText);
 		Label lbldebtListText = new Label(debListText);
 
 		/* Creating all vboxes and hboxes that are used to organize the sectors
@@ -79,7 +77,7 @@ public class DebtorsView extends AnchorPane implements ControlledScreen {
 		saveButton.getStyleClass().add("form_buttons");
 
 		// Adding to the v/hboxes
-		debtBox.getChildren().addAll(lbldebText, lbldebtListText, tableView);
+		debtBox.getChildren().addAll(lbldebtListText, tableView);
 		buttonBox.getChildren().addAll(generateButton, saveButton);
 
 		// Adding all items to the contentpane
