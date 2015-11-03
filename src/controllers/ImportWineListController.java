@@ -31,6 +31,7 @@ public class ImportWineListController {
 	private ScreensController screensController;
 	ImportWineListView importWineListView;
 	private WineDAO wineDAO;
+	
 	File importFile = null;
 	boolean csvSelected = false, firstRow = true;
 	CSVReader csvReader;
@@ -51,6 +52,12 @@ public class ImportWineListController {
 		importWineListView.getImportButton().setOnAction(e -> {
 			fireCsv();
 			});
+		importWineListView.getUploadButton().setOnAction(e -> {
+			submitWines();
+		});
+	}
+	public void submitWines(){
+		wineDAO.insertAllWines(data);
 	}
 	public void fireCsv(){
 		importFile = fileChooser.showOpenDialog(new Stage());
@@ -75,8 +82,9 @@ public class ImportWineListController {
 						Wine testWine = new Wine(
 								parts[0], parts[1], parts[2],
 								Double.parseDouble(parts[3]), parts[4], parts[5],
-								parts[6], Double.parseDouble(parts[7]));
+								parts[6], Double.parseDouble(parts[7]),Double.parseDouble(parts[8]));
 						wineList.add(testWine);
+						System.out.println(testWine.getMargin());
 						data.add(testWine);
 						
 						System.out.println(data);
@@ -85,7 +93,7 @@ public class ImportWineListController {
 					}
 				}
 				importWineListView.getTable().setItems(data);
-				wineDAO.insertAllWines(data);
+				
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

@@ -1,14 +1,9 @@
 package views;
 
-import DAO.Database;
 import controllers.ControllersController;
-import controllers.NavigationController;
-import controllers.ScreensController;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -23,7 +18,7 @@ public class Applet extends Application {
     }
  
     public void start(Stage stage) throws SQLException {
-        // Dit is voor sander combo box crash
+        // workaround a combobox crash
         System.setProperty("glass.accessible.force", "false");
         //maakt de controller voor de schermen aan, handelt het display van de schermen af.
         this.CC = new ControllersController();

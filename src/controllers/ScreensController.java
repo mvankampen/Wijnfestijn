@@ -6,10 +6,15 @@ import javafx.scene.layout.AnchorPane;
 import java.util.HashMap;
 
 public class ScreensController extends AnchorPane {
-    //Een hashmap, bezit paren gevormt door de schermen ID's
+    /*The hashmap that functions as storage for all screens
+     * and is primarily used so we can stash views
+     */
+	
     private HashMap<String, AnchorPane> schermen = new HashMap<>();
 
-    //methode voor het toevoegen van een scherm
+    /*used to add a screen to the hashmap, together with a string 
+    * to make it easier to find the needed view
+    */
     public void screenAdd(String naam, AnchorPane anchorPane) {
         schermen.put(naam, anchorPane);
     }

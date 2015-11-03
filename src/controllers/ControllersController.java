@@ -17,6 +17,7 @@ public class ControllersController {
     private ScreensController screensController;
     private NavigationController navigationController;
     private AdjustGuestController adjustGuestController;
+    private ImportGuestListController importGuestListController;
     private DebtorsController debtorsController;
     private HomeController homeController;
     private MailController mailController;
@@ -32,6 +33,7 @@ public class ControllersController {
     private HomeView homeView;
     private MailView mailView;
     private OrderListPrintView orderListPrintView;
+    private ImportGuestListView importGuestListView;
     private AdjustGuestView adjustGuestView;
     private RegistrationView registrationView;
     private OrderView orderView;
@@ -52,6 +54,7 @@ public class ControllersController {
     private static final String REGISTRATIONID = "registration";
     private static final String SETTINGSID = "settings";
     private static final String IMPORTWINELISTID = "import list";
+    private static final String IMPORTGUESTLISTID = "importguest";
     private static final String ATTENDANCEID = "attendance";
 
     public ControllersController() {
@@ -84,6 +87,7 @@ public class ControllersController {
         adjustGuestView = new AdjustGuestView();
         registrationView = new RegistrationView();
         orderView = new OrderView();
+        importGuestListView = new ImportGuestListView();
         debtorsView = new DebtorsView();
         navigationView = new NavigationView();
         settingsView = new SettingsView();
@@ -108,6 +112,7 @@ public class ControllersController {
         this.orderController = new OrderController(orderView, new GuestDAO(connection), new WineDAO(connection), new OrderLineDAO(connection), new OrderDAO(connection), screensController, mailService);
         this.registrationController =
             new RegistrationController(registrationView, new GuestDAO(connection), screensController);
+        this.importGuestListController = new ImportGuestListController(importGuestListView, this.screensController, new GuestDAO(connection));
         this.importWineListController = new ImportWineListController(importWineListView, this.screensController, new WineDAO(connection));
         this.attendanceController = new AttendanceController(attendanceView, new GuestDAO(connection));
     }
@@ -123,8 +128,10 @@ public class ControllersController {
         screensController.screenLoad(getDEBTORID(), debtorsView);
         screensController.screenLoad(getSETTINGSID(), settingsView);
         screensController.screenLoad(getIMPORTWINELISTID(), importWineListView);
+        screensController.screenLoad(getIMPORTGUESTLISTID(), importGuestListView);
         screensController.screenLoad(getATTENDANCEID(), attendanceView);
-        screensController.screenSet(getHOMEID());
+        //screensController.screenSet(getHOMEID());
+        screensController.screenSet(getIMPORTGUESTLISTID());
     }
 
     public ScreensController getScreensController() {
@@ -178,4 +185,8 @@ public class ControllersController {
     public NavigationView getNavigationView() {
         return navigationView;
     }
+
+	public static String getIMPORTGUESTLISTID() {
+		return IMPORTGUESTLISTID;
+	}
 }
