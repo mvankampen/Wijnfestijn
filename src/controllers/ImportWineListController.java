@@ -34,6 +34,7 @@ public class ImportWineListController {
 		createTable();
 	}
 
+	// sets the lambda's for the buttons
 	public void generateHandlers() {
 		importWineListView.getImportButton().setOnAction(e -> {
 			fireCsv();
@@ -43,10 +44,13 @@ public class ImportWineListController {
 		});
 	}
 
+	// puts all data in the tableview ( so altered data goes through) in the
+	// database
 	public void submitWines() {
 		wineDAO.insertAllWines(data);
 	}
 
+	// used for reading out the data from a selected CSV file
 	public void fireCsv() {
 		// prompts the user to choose a CSV file
 		importFile = fileChooser.showOpenDialog(new Stage());
@@ -90,11 +94,12 @@ public class ImportWineListController {
 				e1.printStackTrace();
 			}
 		}
-		//error handling incase the file is not a CSV file
+		// error handling incase the file is not a CSV file
 		else {
 			System.out.println("Dit is geen .CSV bestand");
 		}
 	};
+
 	// checks if the file that is selected by the user is actually a .csv file
 	public boolean isCSV(File importFile) {
 		if (importFile.toString().substring(importFile.toString().length() - 4, importFile.toString().length())
@@ -105,7 +110,7 @@ public class ImportWineListController {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	//creates the tableview columns
+	// creates the tableview columns
 	public void createTable() {
 		data = FXCollections.observableArrayList();
 		TableColumn<Wine, String> nameCol = new TableColumn("Naam");
@@ -131,7 +136,7 @@ public class ImportWineListController {
 
 		TableColumn costpriceCol = new TableColumn("Kost price");
 		costpriceCol.setCellValueFactory(new PropertyValueFactory<>("costprice"));
-		//add all columns to the table
+		// add all columns to the table
 		importWineListView.getTable().getColumns().addAll(nameCol, publisherCol, yearCol, priceCol, rankCol,
 				categoryCol, typeCol, costpriceCol);
 	}
