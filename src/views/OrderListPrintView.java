@@ -1,6 +1,7 @@
 package views;
 
 import controllers.ScreensController;
+
 import interfaces.ControlledScreen;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -13,7 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
+//This screen is a AnchorPane and uses ControlledScreen as navigation manager
 public class OrderListPrintView extends AnchorPane implements ControlledScreen {
 
     @FXML Label introLabel, exampleLabel, listLabel, amountLabel;
@@ -21,56 +22,63 @@ public class OrderListPrintView extends AnchorPane implements ControlledScreen {
     @FXML ComboBox listItems;
     @FXML TextArea listArea;
 
-    private ScreensController screensController;
-
     public void setScreenController(ScreensController screensController) {
-        this.screensController = screensController;
+    	/*
+		 * Used for registering itself in the hashMap of the ScreensController
+		 * to enable navigation
+		 */
     }
 
     public OrderListPrintView() {
         createView();
+        setUpContentPane();
     }
-
+    
+    // adds the style class and sets the fixed height to the screen
     private void createView() {
         getStyleClass().add("background");
         setMinSize(1200, 800);
-        setUpContentPane();
+       
     }
 
     public void setUpContentPane() {
+    	// creating the gridpane, this is where all the displayed content goes
         GridPane contentPane = new GridPane();
         contentPane.setLayoutX(100);
         contentPane.setLayoutY(200);
-
+        /* Creating all vboxes that are used to organize the sectors used in the
+		* contentPane
+		*/ 
         HBox introBox = new HBox();
-
-        this.introLabel =
-            new Label("Hier kunt u de gepersonaliseerde bestellijsten uitprinten voor de klanten.");
-        introBox.getChildren().add(introLabel);
-
         VBox vertBox1 = new VBox();
         vertBox1.setSpacing(20);
         VBox vertBox2 = new VBox(10);
         vertBox2.setPadding(new Insets(0, 0, 0, 40));
         VBox buttonBox = new VBox();
+        /*
+		 * this label is used to work around setting a placeholder for a
+		 * tableView
+		 */
+        introLabel =
+            new Label("Hier kunt u de gepersonaliseerde bestellijsten uitprinten voor de klanten.");
+        exampleLabel = new Label("Print voorbeeld:");
+        amountLabel = new Label("Aantal bestellijsten die geprint\nzullen worden: 10");
+        listLabel = new Label("Selecteer welke bestellijst u wilt uitprinten:");
+        
+        // creating the buttons and setting their properties
+        printButton = new Button("Printen");
+        printButton.getStyleClass().add("form_buttons");
+        
+        listItems = new ComboBox();
+        listArea = new TextArea();
 
-
-        this.exampleLabel = new Label("Print voorbeeld:");
-        this.amountLabel = new Label("Aantal bestellijsten die geprint\nzullen worden: 10");
-        this.listLabel = new Label("Selecteer welke bestellijst u wilt uitprinten:");
-        this.listItems = new ComboBox();
-        this.printButton = new Button("Printen");
-        this.printButton.getStyleClass().add("form_buttons");
-
-        this.listArea = new TextArea();
-
-        //Add items to vertBoxes
+        //Add all items to their corresponding containers
         vertBox1.getChildren().addAll(amountLabel, listLabel, listItems);
         vertBox2.getChildren().addAll(exampleLabel, listArea);
         buttonBox.getChildren().add(printButton);
         buttonBox.setAlignment(Pos.BASELINE_RIGHT);
         vertBox2.setAlignment(Pos.CENTER);
-
+        introBox.getChildren().add(introLabel);
 
         contentPane.add(introBox, 0, 0);
         contentPane.add(vertBox1, 0, 1);
