@@ -1,16 +1,12 @@
 package DAO;
 
-import javafx.collections.ObservableList;
-import models.Guest;
-import models.Order;
-import models.OrderLine;
-import models.Wine;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+
+import javafx.collections.ObservableList;
+import models.Order;
+import models.OrderLine;
 
 /**
  * Created by michael on 06-10-15.
