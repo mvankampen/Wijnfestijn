@@ -2,10 +2,7 @@ package controllers;
 
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
-
 import com.opencsv.CSVReader;
-
 import DAO.GuestDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
