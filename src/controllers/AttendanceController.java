@@ -34,7 +34,7 @@ public class AttendanceController {
 		this.attendanceView.getUpdateBtn().setOnAction(e -> updateData());
 		this.attendanceView.getResetBtn().setOnAction(e -> resetNoShow());
 	}
-
+	//imports all Guests to the tableView
 	public void importGuests() {
 		int j = 0;
 		allGuests = guestDAO.getAllGuest();

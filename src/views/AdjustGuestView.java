@@ -18,8 +18,10 @@ public class AdjustGuestView extends AnchorPane implements ControlledScreen {
 	public TextField surnameTextField;
 
 	public void setScreenController(ScreensController screensController) {
-		// Used for registering itself in the hashMap of the ScreensController
-		// to enable navigation
+		/*
+		 * Used for registering itself in the hashMap of the ScreensController
+		 * to enable navigation
+		 */
 	}
 
 	public AdjustGuestView() {
@@ -42,8 +44,10 @@ public class AdjustGuestView extends AnchorPane implements ControlledScreen {
 		contentPane.setLayoutX(100);
 		contentPane.setVgap(25);
 		contentPane.setHgap(150);
-		// creating all Strings, used to make the labels their content easier to
-		// adjust
+		/*
+		 * creating all Strings, used to make the labels their content easier to
+		 * adjust
+		 */
 		String introText = "Hier kunt u de data van een geselecteerde klant aanpassen.";
 		String customerText = "Vul hier de achternaam van de klant in:";
 
@@ -52,19 +56,23 @@ public class AdjustGuestView extends AnchorPane implements ControlledScreen {
 		 * he can perform within the view
 		 */
 		Label introLabel = new Label(introText);
-		// this label is used to work around setting a placeholder for a
-		// tableView
+		/*
+		 * this label is used to work around setting a placeholder for a
+		 * tableView
+		 */
 		Label placeholder = new Label();
 		placeholder
 				.setText("Je hebt nog geen klant geselecteerd om te wijzigen, " + "Selecteer iemand & druk op enter");
 		Label customerLabel = new Label(customerText);
 
-		// Creating all vboxes that are used to organize the sectors used in the
-		// contentPane
+		/* Creating all vboxes that are used to organize the sectors used in the
+		* contentPane
+		*/ 
 		VBox customerBox = new VBox(15);
 
-		// TableView we use to show the selected Guest that the user wants to
-		// modify
+		/* TableView we use to show the selected Guest that the user wants to
+		* modify
+		*/ 
 		editableGuest.setMaxHeight(120);
 		editableGuest.setMinWidth(1000);
 		editableGuest.setMaxWidth(1000);
