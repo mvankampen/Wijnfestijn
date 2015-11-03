@@ -1,11 +1,7 @@
 package views;
 
 import controllers.ScreensController;
-import enums.MailType;
 import interfaces.ControlledScreen;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -13,75 +9,78 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.HTMLEditor;
 import models.Mail;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-
+//This screen is a AnchorPane and uses ControlledScreen as navigation manager
 public class MailView extends AnchorPane implements ControlledScreen {
 
-    private ScreensController screensController;
-    @FXML
     private TextField titleTextArea;
-    @FXML
     private Button mailButton = new Button("Verzenden");
-    @FXML
     private HTMLEditor htmlEditor;
 
     private ToggleGroup inviteGroup = new ToggleGroup();
     private Mail mail;
 
     public void setScreenController(ScreensController screensController) {
-        this.screensController = screensController;
+    	/*
+		 * Used for registering itself in the hashMap of the ScreensController
+		 * to enable navigation
+		 */
     }
 
     public MailView(Mail mail) {
         this.mail = mail;
+     // calling the methods that initialize different aspects of the view
         createView();
+        setUpContentPane();
     }
-
+    //? why is this here
     public void updateFields() {
         this.titleTextArea.setText(this.mail.getSubject());
-        System.out.println(this.mail.getBody());
         this.htmlEditor.setHtmlText(this.mail.getBody());
     }
-
+ // adds the style class and sets the fixed height to the screen
     private void createView() {
         getStyleClass().add("background");
         setMinSize(1200, 800);
-        setUpContentPane();
     }
 
     public void setUpContentPane() {
-        //contentPane details
+    	// creating the gridpane, this is where all the displayed content goes
         GridPane contentPane = new GridPane();
         contentPane.setLayoutX(100);
         contentPane.setLayoutY(200);
         contentPane.setVgap(10);
         contentPane.setHgap(25);
+        /*
+		 * creating all Strings, used to make the labels their content easier to
+		 * adjust
+		 */
+		String introText = "Hier kunt u de mails opstellen. Kies welke mail u wilt"
+				+ " opstellen en voer\nde titel en body in. Klik op verzenden en de applicatie" + " doet de rest";
+		/*
+		 * creating all Labels, used to instruct the user towards what actions
+		 * he can perform within the view
+		 */
+		Label introLabel = new Label(introText);
+		Label titleLabel = new Label("Vul hier de titel in:");
+		Label typeLabel = new Label("Selecteer wat voor een soort\nmail u wilt verzenden");
 
-        //Intro label
-        String introText = "Hier kunt u de mails opstellen. Kies welke mail u wilt"
-                + " opstellen en voer\nde titel en body in. Klik op verzenden en de applicatie"
-                + " doet de rest";
-        Label introLabel = new Label(introText);
-
-        //Create VBoxes row 1
+		/* Creating all vboxes that are used to organize the sectors used in the
+		* contentPane
+		*/ 
         VBox titleBox = new VBox();
         VBox bodyBox = new VBox();
-
-        //Create VBoxes row 2
         VBox typeBox = new VBox();
-
+        // creating the buttons and setting their properties
+        mailButton = new Button("Verzenden");
         this.mailButton = new Button("Verzenden");
-
-        //Creating items row 1
-        Label titleLabel = new Label("Vul hier de titel in:");
-        this.titleTextArea = new TextField();
-        this.htmlEditor = new HTMLEditor();
-        this.htmlEditor.setMaxHeight(300);
-
-        //Creating items row 2
-        Label typeLabel = new Label("Selecteer wat voor een soort\nmail u wilt verzenden");
+        mailButton.getStyleClass().add("form_buttons");
+        // creating the textareas
+        titleTextArea = new TextField();
+        // creating the HTMLeditor so the user can see HTMLstyling
+        htmlEditor = new HTMLEditor();
+        htmlEditor.setMaxHeight(300);
+        
+        // setting all radiobuttons, used to toggle which mail needs to be seen
         RadioButton remindMailRb = new RadioButton("Herinneringsmail");
         remindMailRb.setToggleGroup(this.inviteGroup);
         remindMailRb.getStyleClass().add("rbbuttons");
@@ -94,16 +93,11 @@ public class MailView extends AnchorPane implements ControlledScreen {
         RadioButton orderReminderRb = new RadioButton("Factuur herinneringsmail");
         orderReminderRb.setToggleGroup(this.inviteGroup);
         orderReminderRb.getStyleClass().add("rbbuttons");
-        this.mailButton = new Button("Verzenden");
-        mailButton.getStyleClass().add("form_buttons");
-
-
-        //Adding to VBoxes
+        
+        // adding all data
         titleBox.getChildren().addAll(titleLabel, titleTextArea);
         typeBox.getChildren().addAll(remindMailRb, inviteMailRb, thankMailRb, orderReminderRb);
         bodyBox.getChildren().add(htmlEditor);
-
-        //Adding items row 1
         contentPane.add(introLabel, 0, 1);
         contentPane.add(titleBox, 0, 2);
         contentPane.add(bodyBox, 0, 3);
@@ -115,6 +109,7 @@ public class MailView extends AnchorPane implements ControlledScreen {
         getChildren().add(contentPane);
     }
 
+    //getters
     public String getSubject() {
         return this.titleTextArea.getText();
     }
@@ -130,6 +125,7 @@ public class MailView extends AnchorPane implements ControlledScreen {
     public ToggleGroup getInviteGroup() {
         return inviteGroup;
     }
+    //setters
     public void setMail(Mail mail) {
         this.mail = mail;
     }

@@ -1,7 +1,5 @@
 package views;
 
-import controllers.ScreensController;
-import interfaces.ControlledScreen;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -11,8 +9,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 public class NavigationView extends AnchorPane{
-
-	private ScreensController screensController;
 	
 	public Button homeButton, mailButton, settingsButton;
     public ComboBox<String> orderMenu;
