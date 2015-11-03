@@ -23,7 +23,7 @@ public class OrderLineDAO {
     public OrderLineDAO(Connection connection) {
         this.connection = connection;
     }
-
+    //adds all given orderlines to the database
     public void addOrderLines(ObservableList<OrderLine> orderLines, Order order) {
         try {
             this.preparedStatement = null;
@@ -49,7 +49,7 @@ public class OrderLineDAO {
             }
         }
     }
-
+    //updates a already existing orderline in the db with the given values
     public void updateOrderLine(OrderLine orderLine, Order order) {
         try {
             this.preparedStatement = null;

@@ -8,23 +8,17 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
 import models.Guest;
 import splashscreens.AdjustCompleteMessage;
 import splashscreens.GeneralSplash;
-import splashscreens.RegistrationSetHead;
 import splashscreens.SplashCityMessage;
 import splashscreens.SplashDefault;
 import splashscreens.SplashEmailMessage;
@@ -52,7 +46,6 @@ public class AdjustGuestController {
 	TextValidator textValidator = new TextValidator();
 	ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
 	SplashDefault adjustSplash = new GeneralSplash();
-	private SplashscreenView splashscreenView;
 	private String title, header, context;
 	private int errorCounter;
 
@@ -259,7 +252,7 @@ public class AdjustGuestController {
 		adjustSplash = new AdjustCompleteMessage(adjustSplash);
 		setSplashScreenView(adjustSplash);
 		if(errorCounter > 0) {
-			splashscreenView = new SplashscreenView(title, header, context);
+			new SplashscreenView(title, header, context);
 		}
 		else {
 			submitChange();
@@ -269,7 +262,7 @@ public class AdjustGuestController {
 		SplashDefault adjustSplash = new GeneralSplash();
 		adjustSplash = new AdjustCompleteMessage(adjustSplash);
 		setSplashScreenView(adjustSplash);
-		splashscreenView = new SplashscreenView(title, header, context);
+		new SplashscreenView(title, header, context);
 		this.guestDAO.updateGuest(currentGuest);
 		adjustGuestView.getEditableGuest().getColumns().clear();
 		adjustGuestView.getSurnameTextField().clear();

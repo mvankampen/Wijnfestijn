@@ -36,13 +36,15 @@ public class DebtorsController {
         generateHandlers();   
         
     }
+    //makes the button handlers and calls the maketable method
     private void generateHandlers() {
         makeTable();
     	this.debtorsView.getGenerateButton().setOnAction(e -> generateDebtors());
     	this.debtorsView.getSaveButton().setOnAction(e -> submitChanges());
     }
     //Creating the columns for the tableview
-    private void makeTable() {
+    @SuppressWarnings("unchecked")
+	private void makeTable() {
     	data = FXCollections.observableArrayList();
         this.debtorsView.getTableView().setMaxHeight(400);
     	 emailCol = new TableColumn<Order, Guest>("Gast email");
@@ -81,7 +83,8 @@ public class DebtorsController {
         
     }
     //reads out all the debtors and adds them to the tableview array
-    private void generateDebtors() {
+    @SuppressWarnings("unchecked")
+	private void generateDebtors() {
     	debtorsArrayList = orderDAO.getAllNativeOrders();
     	data.clear();
     	int j = 0;
