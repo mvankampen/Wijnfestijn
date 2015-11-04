@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Wine;
+import splashscreens.CsvImportSucceedMessage;
 import splashscreens.CsvIncorrectFileMessage;
 import splashscreens.CsvIncorrectRowsWineMessage;
 import splashscreens.SplashDefault;
@@ -55,6 +56,10 @@ public class ImportWineListController {
 	// database
 	public void submitWines() {
 		wineDAO.insertAllWines(data);
+		SplashDefault wineCsvSplash = new SplashDefault();
+		wineCsvSplash = new CsvImportSucceedMessage(wineCsvSplash);
+		setSplashScreenView(wineCsvSplash);
+		resetFields();
 	}
 	
 	 private void setSplashScreenView(SplashDefault wineCsvSplash) {
@@ -92,21 +97,26 @@ public class ImportWineListController {
 					} else {
 						firstRow = false;
 					}
-
 					if (parts != null) {
-						/*
-						 * creates a new wine object based on the values pulled
-						 * from the csv file the user selected
-						 */
-						Wine testWine = new Wine(parts[0], parts[1], parts[2], Double.parseDouble(parts[3]), parts[4],
-								parts[5], parts[6], Double.parseDouble(parts[7]), Double.parseDouble(parts[8]));
-						// adds the wine object to the arraylist
-						data.add(testWine);
-						// reset parts and nextline to prevent errors
-						parts = null;
-						nextLine = null;
+						//Checks if the rows are equal to the size of the object we want to make
+						if(parts.length == 9){
+							/*
+							 * creates a new wine object based on the values pulled
+							 * from the csv file the user selected
+							 */
+							Wine testWine = new Wine(parts[0], parts[1], parts[2], Double.parseDouble(parts[3]), parts[4],
+									parts[5], parts[6], Double.parseDouble(parts[7]), Double.parseDouble(parts[8]));
+							// adds the wine object to the arraylist
+							data.add(testWine);
+							// reset parts and nextline to prevent errors
+							parts = null;
+							nextLine = null;
+						}
+						else{
+							wineCsvSplash = new CsvIncorrectRowsWineMessage(wineCsvSplash);
+							setSplashScreenView(wineCsvSplash);
+						}
 					}
-					else {System.out.println("This row is empty");}
 				}
 				// sets the arraylist used by the tableview as data, which we
 				// just filled
@@ -114,13 +124,10 @@ public class ImportWineListController {
 				
 
 			} catch (Exception e1) {
-				wineCsvSplash = new CsvIncorrectRowsWineMessage(wineCsvSplash);
-				setSplashScreenView(wineCsvSplash);
 				e1.printStackTrace();
 			}
 		}
 		else if(csvSelected == false) {
-			System.out.println("Dit is geen .CSV bestand");
 			wineCsvSplash = new CsvIncorrectFileMessage(wineCsvSplash);
 			setSplashScreenView(wineCsvSplash);
 			
