@@ -66,7 +66,7 @@ public class NavigationController extends AnchorPane {
         });
         //For the mail button, set MailScreen
         navigationView.getMailButton().setOnAction(e -> {
-            screensController.screenSet(ControllersController.getMAILID());
+           	CC.getMailController().resetFields();
             setComboBoxDefault();
         });
         //For the Customer button, set CustomerScreen

@@ -38,6 +38,7 @@ public class ControllersController {
 	private OrderController orderController;
 	private ImportGuestListController importGuestListController;
 	private ImportWineListController importWineListController;
+	private MailController mailController;
 	/*
 	 * strings used for screensController so we can identify which view is which
 	 * easily
@@ -110,7 +111,7 @@ public class ControllersController {
 		this.navigationController = new NavigationController(this.screensController, navigationView, this);
 		adjustGuestController = new AdjustGuestController(adjustGuestView, new GuestDAO(connection), screensController);
 		setDebtorsController(new DebtorsController(debtorsView, new OrderDAO(connection), new GuestDAO(connection), screensController));
-		new MailController(mailView, new MailDAO(connection), this.mailService);
+		setMailController(new MailController(mailView, new MailDAO(connection), this.mailService, screensController));
 		new SettingsController(settingsView);
 		orderController = new OrderController(orderView, new GuestDAO(connection), new WineDAO(connection), new OrderLineDAO(connection),
 				new OrderDAO(connection), screensController, mailService);
@@ -247,6 +248,14 @@ public class ControllersController {
 
 	public void setImportWineListController(ImportWineListController importWineListController) {
 		this.importWineListController = importWineListController;
+	}
+
+	public MailController getMailController() {
+		return mailController;
+	}
+
+	public void setMailController(MailController mailController) {
+		this.mailController = mailController;
 	}
 
 }

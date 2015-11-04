@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Toggle;
 import models.Mail;
 import services.MailService;
+import views.ImportWineListView;
 import views.MailView;
 
 import java.io.BufferedReader;
@@ -23,8 +24,10 @@ public class MailController {
     private Mail mail;
     private MailService mailService;
     private MailDAO mailDAO;
-    public MailController(MailView mailView, MailDAO mailDAO, MailService mailService) {
-        this.mail = new Mail("", "");
+    private ScreensController screensController;
+    public MailController(MailView mailView, MailDAO mailDAO, MailService mailService, ScreensController screensController) {
+        this.screensController = screensController;
+    	this.mail = new Mail("", "");
         this.mailDAO = mailDAO;
         this.mailView = mailView;
         this.mailView.setMail(this.mail);
@@ -32,7 +35,14 @@ public class MailController {
         this.mailView.getMailButton().setOnAction(e -> sendMail());
         mailViewListener();
     }
-
+    void resetFields() {
+    	screensController.screenRemove(ControllersController.getATTENDANCEID());
+		this.mail = new Mail("", "");
+    	this.mailView = new MailView(mail);
+    	this.mailView.setMail(this.mail);
+		screensController.screenLoadSet(ControllersController.getATTENDANCEID(), mailView);
+	    mailViewListener();
+    }
     private void mailViewListener() {
         this.mailView.getInviteGroup().selectedToggleProperty()
             .addListener(new ChangeListener<Toggle>() {
