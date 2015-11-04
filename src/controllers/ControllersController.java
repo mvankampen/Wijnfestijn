@@ -31,6 +31,10 @@ public class ControllersController {
 	private SettingsView settingsView;
 	private ImportWineListView importWineListView;
 	private AttendanceView attendanceView;
+	private AdjustGuestController adjustGuestController;
+	private DebtorsController debtorsController;
+	private RegistrationController registrationController;
+	private AttendanceController attendanceController;
 
 	/*
 	 * strings used for screensController so we can identify which view is which
@@ -101,17 +105,17 @@ public class ControllersController {
 		this.screensController = new ScreensController();
 		this.mailService = new MailService();
 		new HomeController(homeView, this.screensController);
-		this.navigationController = new NavigationController(this.screensController, navigationView);
-		new AdjustGuestController(adjustGuestView, new GuestDAO(connection));
-		new DebtorsController(debtorsView, new OrderDAO(connection), new GuestDAO(connection), screensController);
+		this.navigationController = new NavigationController(this.screensController, navigationView, this);
+		adjustGuestController = new AdjustGuestController(adjustGuestView, new GuestDAO(connection), screensController);
+		setDebtorsController(new DebtorsController(debtorsView, new OrderDAO(connection), new GuestDAO(connection), screensController));
 		new MailController(mailView, new MailDAO(connection), this.mailService);
 		new SettingsController(settingsView);
 		new OrderController(orderView, new GuestDAO(connection), new WineDAO(connection), new OrderLineDAO(connection),
 				new OrderDAO(connection), screensController, mailService);
-		new RegistrationController(registrationView, new GuestDAO(connection), screensController);
+		setRegistrationController(new RegistrationController(registrationView, new GuestDAO(connection), screensController));
 		new ImportGuestListController(importGuestListView, this.screensController, new GuestDAO(connection));
 		new ImportWineListController(importWineListView, this.screensController, new WineDAO(connection));
-		new AttendanceController(attendanceView, new GuestDAO(connection));
+		setAttendanceController(new AttendanceController(attendanceView, new GuestDAO(connection), screensController));
 	}
 
 	/*
@@ -191,4 +195,32 @@ public class ControllersController {
 	public static String getIMPORTGUESTLISTID() {
 		return IMPORTGUESTLISTID;
 	}
+	public AdjustGuestController getAdjustGuestControler() {
+		return adjustGuestController;
+	}
+
+	public DebtorsController getDebtorsController() {
+		return debtorsController;
+	}
+
+	public void setDebtorsController(DebtorsController debtorsController) {
+		this.debtorsController = debtorsController;
+	}
+
+	public RegistrationController getRegistrationController() {
+		return registrationController;
+	}
+
+	public void setRegistrationController(RegistrationController registrationController) {
+		this.registrationController = registrationController;
+	}
+
+	public AttendanceController getAttendanceController() {
+		return attendanceController;
+	}
+
+	public void setAttendanceController(AttendanceController attendanceController) {
+		this.attendanceController = attendanceController;
+	}
+
 }

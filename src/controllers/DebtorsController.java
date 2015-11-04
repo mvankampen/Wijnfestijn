@@ -26,13 +26,9 @@ public class DebtorsController {
     private ObservableList<Order> data;
     private TableColumn<Order, Guest> emailCol;
     private TableColumn<Order, Boolean> activeCol;
-    private ScreensController screensController;
-    
-
     public DebtorsController(DebtorsView debtorsView, OrderDAO orderDAO, GuestDAO guestDAO, ScreensController screensController) {
         this.debtorsView = debtorsView;
         this.orderDAO = orderDAO;
-        this.screensController = screensController;
         generateHandlers();   
         
     }
@@ -100,20 +96,19 @@ public class DebtorsController {
     }
     //updates the changed data in the database
     private void submitChanges() {
-    int n = 0;
-    while(data.size() > n) {
-    	orderDAO.updateOrder(data.get(n));
-    	n++;
+	    int n = 0;
+	    while(data.size() > n) {
+	    	orderDAO.updateOrder(data.get(n));
+	    	n++;
+	    }
+	    generateHandlers();
+		debtorsArrayList.clear();
     }
-    //makes a new view and links it back to this controller
-    screensController.screenRemove(ControllersController.getDEBTORID());
-    this.debtorsView = new DebtorsView();
-    screensController.screenLoadSet(ControllersController.getDEBTORID(), debtorsView);
-    generateHandlers();
     //clearing all content in the controller
-	debtorsArrayList.clear();
-	debtorsView.getTableView().getItems().clear();
-	debtorsView.getTableView().getColumns().clear();
-    }
+	public void resetFields() {
+
+		debtorsView.getTableView().getItems().clear();
+		debtorsView.getTableView().getColumns().clear();
+	}
     
 }

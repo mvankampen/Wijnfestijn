@@ -146,9 +146,9 @@ public class RegistrationController {
 				referral, comment);
 		this.guestDAO.addGuest(guest);
 		splashscreenView = new SplashscreenView(title, header, context);
-		resetController();
+		resetFields();
 	}
-	public void resetController() {
+	public void resetFields() {
 		screensController.screenRemove(ControllersController.getREGISTRATIONID());
 		this.registrationView = new RegistrationView();
 		screensController.screenLoadSet(ControllersController.getREGISTRATIONID(), registrationView);

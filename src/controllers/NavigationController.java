@@ -8,11 +8,13 @@ import views.NavigationView;
 public class NavigationController extends AnchorPane {
     private NavigationView navigationView;
     private ScreensController screensController;
+    private ControllersController CC;
 
     public NavigationController(ScreensController screensController,
-        NavigationView navigationView) {
+        NavigationView navigationView, ControllersController controllersController) {
         this.screensController = screensController;
         this.navigationView = navigationView;
+        this.CC = controllersController;
         generateHandlers();
     }
 
@@ -45,13 +47,16 @@ public class NavigationController extends AnchorPane {
                     navigationView.orderMenu.setValue(navigationView.ORDERTITLE);
                     if (newValue != null) {
                         if (newValue.equals(navigationView.CUSTOMER1)) {
-                            screensController.screenSet(ControllersController.getGUESTID());
+                        	//resetFields creates a new view and reloads the values of the DB
+                        	CC.getAdjustGuestControler().resetFields();
                         } else if (newValue.equals(navigationView.CUSTOMER2)) {
-                            screensController.screenSet(ControllersController.getREGISTRATIONID());
+                        	CC.getRegistrationController().resetFields();
                         } else if (newValue.equals(navigationView.CUSTOMER3)) {
+                        	//needs to be fixed
+                        	CC.getDebtorsController().resetFields();
                             screensController.screenSet(ControllersController.getDEBTORID());
                         } else if (newValue.equals(navigationView.CUSTOMER4)) {
-                            screensController.screenSet(ControllersController.getATTENDANCEID());
+                            CC.getAttendanceController().resetFields();
                         }
                     }
                 }

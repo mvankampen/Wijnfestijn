@@ -33,6 +33,7 @@ import validators.EmailValidator;
 import validators.TextValidator;
 import validators.ZipcodeValidator;
 import views.AdjustGuestView;
+import views.RegistrationView;
 import views.SplashscreenView;
 
 /**
@@ -48,11 +49,12 @@ public class AdjustGuestController {
 	SplashDefault adjustSplash = new GeneralSplash();
 	private String title, header, context;
 	private int errorCounter;
+	private ScreensController screensController;
 
-	public AdjustGuestController(AdjustGuestView adjustGuestView, GuestDAO guestDAO) {
+	public AdjustGuestController(AdjustGuestView adjustGuestView, GuestDAO guestDAO, ScreensController screensController) {
 		this.adjustGuestView = adjustGuestView;
 		this.guestDAO = guestDAO;
-		
+		this.screensController = screensController;
 		createAutocomplete();
 	}
 	public void createAutocomplete() {
@@ -264,8 +266,14 @@ public class AdjustGuestController {
 		setSplashScreenView(adjustSplash);
 		new SplashscreenView(title, header, context);
 		this.guestDAO.updateGuest(currentGuest);
-		adjustGuestView.getEditableGuest().getColumns().clear();
-		adjustGuestView.getSurnameTextField().clear();
+		resetFields();
+	}
+	
+	public void resetFields() {
+		screensController.screenRemove(ControllersController.getGUESTID());
+		this.adjustGuestView = new AdjustGuestView();
+		screensController.screenLoadSet(ControllersController.getGUESTID(), adjustGuestView);
+		createAutocomplete();
 	}
 	public void setSplashScreenView(SplashDefault adjustSplash) {
 		title = adjustSplash.getTitleText();

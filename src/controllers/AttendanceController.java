@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import models.Guest;
 import views.AttendanceView;
+import views.RegistrationView;
 
 public class AttendanceController {
 
@@ -21,18 +22,20 @@ public class AttendanceController {
 	private GuestDAO guestDAO;
 	private ObservableList<Guest> data;
 	private ArrayList<Guest> allGuests;
+	private ScreensController screensController;
 
-	public AttendanceController(AttendanceView attendanceView, GuestDAO guestDAO) {
+	public AttendanceController(AttendanceView attendanceView, GuestDAO guestDAO, ScreensController screensController) {
 		this.attendanceView = attendanceView;
 		this.guestDAO = guestDAO;
-		generateHandlers();
-		makeTable();
-		importGuests();
+		this.screensController = screensController;
+		generateHandlers();	
 	}
 
 	private void generateHandlers() {
 		this.attendanceView.getUpdateBtn().setOnAction(e -> updateData());
 		this.attendanceView.getResetBtn().setOnAction(e -> resetNoShow());
+		makeTable();
+		importGuests();
 	}
 	//imports all Guests to the tableView
 	public void importGuests() {
@@ -193,5 +196,11 @@ public class AttendanceController {
 			this.guestDAO.updateGuest(data.get(n));
 			n++;
 		}
+	}
+	public void resetFields() {
+		screensController.screenRemove(ControllersController.getATTENDANCEID());
+		this.attendanceView = new AttendanceView();
+		screensController.screenLoadSet(ControllersController.getATTENDANCEID(), attendanceView);
+		generateHandlers();
 	}
 }
