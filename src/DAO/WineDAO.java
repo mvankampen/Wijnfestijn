@@ -23,17 +23,11 @@ public class WineDAO {
 	// inserts all wines in the arraylist into the database
 	public void insertAllWines(List<Wine> wines) {
 		try {
-			setAllWinesFalse();
 			this.preparedStatement = null;
-
 			String sqlQuery = "INSERT INTO wine"
 					+ "(wine_name, wine_category, wine_type, wine_publisher, wine_year, wine_price, wine_rank, wine_costprice, wine_margin) VALUES "
 					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-
 			this.preparedStatement = this.connection.prepareStatement(sqlQuery);
-
-
 
 			for (int i = 0; i < wines.size(); i++) {
 				preparedStatement.setString(1, wines.get(i).getName());
@@ -59,29 +53,6 @@ public class WineDAO {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	private void setAllWinesFalse() {
-		try {
-			this.preparedStatement = null;
-			String setAllToFalse = "UPDATE wine SET wine_active = ? WHERE wine_active = ?";
-			this.preparedStatement = this.connection.prepareStatement(setAllToFalse);
-			preparedStatement.setBoolean(1, false);
-			preparedStatement.setBoolean(2, true);
-
-			this.connection.commit();
-		} catch (SQLException e) {
-			System.out.print(e.getMessage());
-			try {
-				connection.rollback();
-				if (connection != null) {
-					System.err.print("Transaction is being rolled back");
-				}
-			} catch (SQLException ex) {
-				e.printStackTrace();
-			}
-		}
-
 	}
 
 	// updates the selected wine with the new values

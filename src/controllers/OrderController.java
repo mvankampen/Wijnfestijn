@@ -90,6 +90,7 @@ public class OrderController {
         title = orderSplash.getTitleText();
         header = orderSplash.getHeaderText();
         context = orderSplash.getContextText();
+        splashScreenView = new SplashscreenView(title, header, context);
     }
 
     private void sendOrder() {
@@ -97,7 +98,7 @@ public class OrderController {
         if (allWines.isEmpty()) {
             orderSplash = new OrderEmptyMessage(orderSplash);
             setSplashScreenView(orderSplash);
-            splashScreenView = new SplashscreenView(title, header, context);
+            
         } else {
             orderSplash = new OrderCompleteMessage(orderSplash);
             setSplashScreenView(orderSplash);
@@ -118,16 +119,16 @@ public class OrderController {
             this.mailService.addAttachment(this.pdfService.createOrderPdf(order, this.orderDAO));
             this.mailService.sendMail();
 
-            splashScreenView = new SplashscreenView(title, header, context);
+           
 
             resetFields();
         }
     }
 
     private void makeTable() {
-        allWines = new ArrayList();
+        allWines = new ArrayList<String>();
         data = FXCollections.observableArrayList();
-        winenameCol = new TableColumn("Wijn");
+        winenameCol = new TableColumn<OrderLine, Wine>("Wijn");
         winenameCol.setMinWidth(100);
         winenameCol.setCellValueFactory(new PropertyValueFactory<>("wine"));
         winenameCol.setCellFactory(e -> {
@@ -141,7 +142,7 @@ public class OrderController {
             };
         });
 
-        amountCol = new TableColumn("Aantal");
+        amountCol = new TableColumn<OrderLine, Integer>("Aantal");
         amountCol.setMinWidth(100);
         amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
@@ -172,7 +173,7 @@ public class OrderController {
         if (allWines.contains(helptool)) {
             orderSplash = new OrderDuplicateMessage(orderSplash);
             setSplashScreenView(orderSplash);
-            splashScreenView = new SplashscreenView(title, header, context);
+           
         } else {
             allWines.add(helptool);
             data.add(new OrderLine(amount, wine));

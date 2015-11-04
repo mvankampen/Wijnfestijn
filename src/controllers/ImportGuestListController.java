@@ -13,8 +13,12 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Guest;
+import splashscreens.CsvIncorrectFileMessage;
+import splashscreens.CsvIncorrectRowsWineMessage;
+import splashscreens.SplashDefault;
 import views.ImportGuestListView;
 import views.OrderView;
+import views.SplashscreenView;
 
 //controller for importGuestListView
 public class ImportGuestListController {
@@ -25,6 +29,8 @@ public class ImportGuestListController {
 	CSVReader csvReader;
 	private ObservableList<Guest> data;
 	private ScreensController screensController;
+	private String title, header, context;
+	private SplashscreenView splashScreenView;
 
 	final FileChooser fileChooser = new FileChooser();
 
@@ -57,8 +63,15 @@ public class ImportGuestListController {
 		}
 	}
 
+	 private void setSplashScreenView(SplashDefault guestCsvSplash) {
+	        title = guestCsvSplash.getTitleText();
+	        header = guestCsvSplash.getHeaderText();
+	        context = guestCsvSplash.getContextText();
+	        splashScreenView = new SplashscreenView(title, header, context);
+	    }
 	// used for reading out the data from a selected CSV file
 	public void fireCsv() {
+		SplashDefault guestCsvSplash = new SplashDefault();
 		// prompts the user to choose a CSV file
 		importFile = fileChooser.showOpenDialog(new Stage());
 		// runs the file through the filechecker "isCSV"
@@ -100,10 +113,15 @@ public class ImportGuestListController {
 				importGuestListView.getTable().setItems(data);
 
 			} catch (Exception e1) {
+				guestCsvSplash = new CsvIncorrectRowsWineMessage(guestCsvSplash);
+				setSplashScreenView(guestCsvSplash);
 				e1.printStackTrace();
 			}
 		} else {
 			System.out.println("Dit is geen .CSV bestand");
+			guestCsvSplash = new CsvIncorrectFileMessage(guestCsvSplash);
+			setSplashScreenView(guestCsvSplash);
+			
 		}
 	};
 
