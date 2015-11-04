@@ -14,6 +14,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Guest;
 import models.Order;
+import views.AttendanceView;
 import views.DebtorsView;
 
 /**
@@ -26,9 +27,11 @@ public class DebtorsController {
     private ObservableList<Order> data;
     private TableColumn<Order, Guest> emailCol;
     private TableColumn<Order, Boolean> activeCol;
+    private ScreensController screensController;
     public DebtorsController(DebtorsView debtorsView, OrderDAO orderDAO, GuestDAO guestDAO, ScreensController screensController) {
         this.debtorsView = debtorsView;
         this.orderDAO = orderDAO;
+        this.screensController = screensController;
         generateHandlers();   
         
     }
@@ -106,9 +109,10 @@ public class DebtorsController {
     }
     //clearing all content in the controller
 	public void resetFields() {
-
-		debtorsView.getTableView().getItems().clear();
-		debtorsView.getTableView().getColumns().clear();
+		screensController.screenRemove(ControllersController.getATTENDANCEID());
+		this.debtorsView = new DebtorsView();
+		screensController.screenLoadSet(ControllersController.getATTENDANCEID(), debtorsView);
+		generateHandlers();
 	}
     
 }

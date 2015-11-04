@@ -10,22 +10,23 @@ import javafx.scene.layout.HBox;
 
 public class NavigationView extends AnchorPane{
 	
-	public Button homeButton, mailButton, settingsButton;
-    public ComboBox<String> orderMenu;
-    public ComboBox<String> customerMenu;
-    public ObservableList<String> orderOptions;
-    public ObservableList<String> customerOptions;
+	private Button homeButton, mailButton, settingsButton;
+    private ComboBox<String> orderMenu;
+    private ComboBox<String> customerMenu;
+    private ObservableList<String> orderOptions;
+    private ObservableList<String> customerOptions;
     
     // Create names for links
     public final String ORDERTITLE = "Bestellijsten";
     public final String ORDER1 = "Print lijsten";
     public final String ORDER2 = "Order opstellen";
     public final String ORDER3 = "Importeer wijnen";
-    public final String CUSTOMERTITLE = "Klanten";
-    public final String CUSTOMER1 = "Aanpassen";
-    public final String CUSTOMER2 = "Registratie";
-    public final String CUSTOMER3 = "Betalingen";
-    public final String CUSTOMER4 = "Presentie";
+    public final String ORDER4 = "Importeer gasten";
+    public final String CUSTOMERTITLE = "Gasten";
+    public final String GUEST1 = "Aanpassen";
+    public final String GUEST2 = "Registratie";
+    public final String GUEST3 = "Betalingen";
+    public final String GUEST4 = "Presentie";
 
 	
 	public NavigationView(){
@@ -38,8 +39,8 @@ public class NavigationView extends AnchorPane{
 
 	
 	public void generateContentGrid(){
-    	orderOptions = FXCollections.observableArrayList(ORDER1, ORDER2, ORDER3);
-        customerOptions = FXCollections.observableArrayList(CUSTOMER1, CUSTOMER2, CUSTOMER3, CUSTOMER4);
+    	orderOptions = FXCollections.observableArrayList(ORDER1, ORDER2, ORDER3, ORDER4);
+        customerOptions = FXCollections.observableArrayList(GUEST1, GUEST2, GUEST3, GUEST4);
     	
         //Make the gridpane for the Navigation buttons
         GridPane navGrid = new GridPane();
@@ -56,22 +57,47 @@ public class NavigationView extends AnchorPane{
         mailButton.getStyleClass().add("nav_item");
         
         //Order ComboBox
-        orderMenu = new ComboBox<>(orderOptions);
-        orderMenu.getStyleClass().add("nav_item");
-        orderMenu.setValue(ORDERTITLE);
+        setOrderMenu(new ComboBox<>(orderOptions));
+        getOrderMenu().getStyleClass().add("nav_item");
+        getOrderMenu().setValue(ORDERTITLE);
         
         //Customer ComboBox
-        customerMenu = new ComboBox<String>(customerOptions);
-        customerMenu.setValue(CUSTOMERTITLE);
-        customerMenu.getStyleClass().add("nav_item");
+        setCustomerMenu(new ComboBox<String>(customerOptions));
+        getCustomerMenu().setValue(CUSTOMERTITLE);
+        getCustomerMenu().getStyleClass().add("nav_item");
         
         //Settings Button
         settingsButton = new Button("Instellingen");
         settingsButton.getStyleClass().add("nav_item");
         
         //make the NavBar
-        hbButtons.getChildren().addAll(homeButton, mailButton, orderMenu, customerMenu, settingsButton);
+        hbButtons.getChildren().addAll(homeButton, mailButton, getOrderMenu(), getCustomerMenu(), settingsButton);
         navGrid.add(hbButtons, 2, 2);
         getChildren().addAll(navGrid);
+	}
+
+	public ComboBox<String> getCustomerMenu() {
+		return customerMenu;
+	}
+
+	public void setCustomerMenu(ComboBox<String> customerMenu) {
+		this.customerMenu = customerMenu;
+	}
+
+	public ComboBox<String> getOrderMenu() {
+		return orderMenu;
+	}
+
+	public void setOrderMenu(ComboBox<String> orderMenu) {
+		this.orderMenu = orderMenu;
+	}
+	public Button getHomeButton() {
+		return homeButton;
+	}
+	public Button getMailButton() {
+		return mailButton;
+	}
+	public Button getSettingsButton() {
+		return settingsButton;
 	}
 }

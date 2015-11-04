@@ -14,6 +14,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Guest;
 import views.ImportGuestListView;
+import views.OrderView;
 
 //controller for importGuestListView
 public class ImportGuestListController {
@@ -23,19 +24,21 @@ public class ImportGuestListController {
 	boolean csvSelected = false, firstRow = true;
 	CSVReader csvReader;
 	private ObservableList<Guest> data;
+	private ScreensController screensController;
 
 	final FileChooser fileChooser = new FileChooser();
 
 	public ImportGuestListController(ImportGuestListView importGuestListView, ScreensController screensController,
 			GuestDAO guestDAO) {
 		this.guestDAO = guestDAO;
+		this.screensController = screensController;
 		this.importGuestListView = importGuestListView;
 		generateHandlers();
-		createTable();
 	}
 
-	// sets the lambda's for the buttons
+	// sets the lambda's for the buttons and triggers createTable
 	public void generateHandlers() {
+		createTable();
 		importGuestListView.getImportButton().setOnAction(e -> {
 			fireCsv();
 		});
@@ -63,8 +66,11 @@ public class ImportGuestListController {
 			try {
 				// reads the file, chops the files up in parts
 				String[] parts = null;
+				String[] nextLine = null;
+				//to make sure the firstrow doesnt get read
+				firstRow = true;
 				csvReader = new CSVReader(new FileReader(importFile));
-				String[] nextLine;
+
 				while ((nextLine = csvReader.readNext()) != null) {
 					// if function makes sure that the definition row isn't used
 					if (!firstRow) {
@@ -231,5 +237,13 @@ public class ImportGuestListController {
 		TableColumn<S, T> col = new TableColumn<>(title);
 		col.setCellValueFactory(new PropertyValueFactory<>(propertyName));
 		return col;
+	}
+	
+	public void resetFields() {
+		
+		screensController.screenRemove(ControllersController.getATTENDANCEID());
+		this.importGuestListView = new ImportGuestListView();
+		screensController.screenLoadSet(ControllersController.getATTENDANCEID(), importGuestListView);
+	    generateHandlers();
 	}
 }

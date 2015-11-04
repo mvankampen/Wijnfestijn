@@ -17,6 +17,7 @@ import org.controlsfx.control.textfield.TextFields;
 import services.MailService;
 import services.PDFService;
 import splashscreens.*;
+import views.AttendanceView;
 import views.OrderView;
 import views.SplashscreenView;
 
@@ -119,18 +120,8 @@ public class OrderController {
 
             splashScreenView = new SplashscreenView(title, header, context);
 
-            resetController();
+            resetFields();
         }
-    }
-
-    public void resetController() {
-
-        screensController.screenRemove(ControllersController.getORDERID());
-        this.orderView = new OrderView();
-        screensController.screenLoadSet(ControllersController.getORDERID(), orderView);
-        createAutoComplete();
-        generateHandlers();
-        allWines.clear();
     }
 
     private void makeTable() {
@@ -189,6 +180,15 @@ public class OrderController {
             this.orderView.getTableView().setItems(data);
             this.orderView.getTableView().getColumns().addAll(winenameCol, amountCol);
         }
+    }
+    
+    void resetFields() {
+    	screensController.screenRemove(ControllersController.getATTENDANCEID());
+		this.orderView = new OrderView();
+		screensController.screenLoadSet(ControllersController.getATTENDANCEID(), orderView);
+		createAutoComplete();
+	    generateHandlers();
+	    allWines.clear();
     }
 
 

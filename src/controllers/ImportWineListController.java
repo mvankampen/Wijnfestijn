@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Wine;
+import views.ImportGuestListView;
 import views.ImportWineListView;
 
 public class ImportWineListController {
@@ -21,19 +22,21 @@ public class ImportWineListController {
 	boolean csvSelected = false, firstRow = true;
 	CSVReader csvReader;
 	private ObservableList<Wine> data;
+	private ScreensController screensController;
 
 	final FileChooser fileChooser = new FileChooser();
 
 	public ImportWineListController(ImportWineListView importWineListView, ScreensController screensController,
 			WineDAO wineDAO) {
 		this.wineDAO = wineDAO;
+		this.screensController = screensController;
 		this.importWineListView = importWineListView;
 		generateHandlers();
-		createTable();
 	}
 
 	// sets the lambda's for the buttons
 	public void generateHandlers() {
+		createTable();
 		importWineListView.getImportButton().setOnAction(e -> {
 			fireCsv();
 		});
@@ -58,6 +61,8 @@ public class ImportWineListController {
 			// reads the file, chops the files up in parts
 			try {
 				String[] parts = null;
+				//to make sure the firstrow doesnt get read
+				firstRow = true;
 				csvReader = new CSVReader(new FileReader(importFile));
 				String[] nextLine;
 				while ((nextLine = csvReader.readNext()) != null) {
@@ -137,5 +142,12 @@ public class ImportWineListController {
 		// add all columns to the table
 		importWineListView.getTable().getColumns().addAll(nameCol, publisherCol, yearCol, priceCol, rankCol,
 				categoryCol, typeCol, costpriceCol);
+	}
+	public void resetFields() {
+		
+		screensController.screenRemove(ControllersController.getATTENDANCEID());
+		this.importWineListView = new ImportWineListView();
+		screensController.screenLoadSet(ControllersController.getATTENDANCEID(), importWineListView);
+	    generateHandlers();
 	}
 }

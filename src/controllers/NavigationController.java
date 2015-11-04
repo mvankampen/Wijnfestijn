@@ -19,60 +19,58 @@ public class NavigationController extends AnchorPane {
     }
 
     public void generateHandlers() {
-        navigationView.orderMenu.getSelectionModel().selectedItemProperty()
+        navigationView.getOrderMenu().getSelectionModel().selectedItemProperty()
             .addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue,
                     String newValue) {
-                    navigationView.customerMenu.setValue(navigationView.CUSTOMERTITLE);
+                    navigationView.getCustomerMenu().setValue(navigationView.CUSTOMERTITLE);
                     if (newValue != null) {
                         if (newValue.equals(navigationView.ORDER1)) {
-                            screensController
-                                .screenSet(ControllersController.getORDERLISTPRINTID());
+                            screensController.screenSet(ControllersController.getORDERLISTPRINTID());
                         } else if (newValue.equals(navigationView.ORDER2)) {
-                            screensController.screenSet(ControllersController.getORDERID());
+                        	CC.getOrderController().resetFields();
                         } else if (newValue.equals(navigationView.ORDER3)) {
-                            screensController
-                                .screenSet(ControllersController.getIMPORTWINELISTID());
+                            CC.getImportWineListController().resetFields();
+                        } else if (newValue.equals(navigationView.ORDER4)) {
+                        	CC.getImportGuestListController().resetFields();
                         }
                     }
                 }
             });
 
-        navigationView.customerMenu.getSelectionModel().selectedItemProperty()
+        navigationView.getCustomerMenu().getSelectionModel().selectedItemProperty()
             .addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue,
                     String newValue) {
-                    navigationView.orderMenu.setValue(navigationView.ORDERTITLE);
+                    navigationView.getOrderMenu().setValue(navigationView.ORDERTITLE);
                     if (newValue != null) {
-                        if (newValue.equals(navigationView.CUSTOMER1)) {
+                        if (newValue.equals(navigationView.GUEST1)) {
                         	//resetFields creates a new view and reloads the values of the DB
                         	CC.getAdjustGuestControler().resetFields();
-                        } else if (newValue.equals(navigationView.CUSTOMER2)) {
+                        } else if (newValue.equals(navigationView.GUEST2)) {
                         	CC.getRegistrationController().resetFields();
-                        } else if (newValue.equals(navigationView.CUSTOMER3)) {
-                        	//needs to be fixed
+                        } else if (newValue.equals(navigationView.GUEST3)) {
                         	CC.getDebtorsController().resetFields();
-                            screensController.screenSet(ControllersController.getDEBTORID());
-                        } else if (newValue.equals(navigationView.CUSTOMER4)) {
+                        } else if (newValue.equals(navigationView.GUEST4)) {
                             CC.getAttendanceController().resetFields();
                         }
                     }
                 }
             });
         //For the home button, set HomeScreen
-        navigationView.homeButton.setOnAction(e -> {
+        navigationView.getHomeButton().setOnAction(e -> {
             screensController.screenSet(ControllersController.getHOMEID());
             setComboBoxDefault();
         });
         //For the mail button, set MailScreen
-        navigationView.mailButton.setOnAction(e -> {
+        navigationView.getMailButton().setOnAction(e -> {
             screensController.screenSet(ControllersController.getMAILID());
             setComboBoxDefault();
         });
         //For the Customer button, set CustomerScreen
-        navigationView.settingsButton.setOnAction(e -> {
+        navigationView.getSettingsButton().setOnAction(e -> {
             screensController.screenSet(ControllersController.getSETTINGSID());
             setComboBoxDefault();
         });
@@ -80,7 +78,7 @@ public class NavigationController extends AnchorPane {
 
     // Set the ComboBox back to default value
     public void setComboBoxDefault() {
-        navigationView.orderMenu.setValue(navigationView.ORDERTITLE);
-        navigationView.customerMenu.setValue(navigationView.CUSTOMERTITLE);
+        navigationView.getOrderMenu().setValue(navigationView.ORDERTITLE);
+        navigationView.getCustomerMenu().setValue(navigationView.CUSTOMERTITLE);
     }
 }

@@ -45,6 +45,7 @@ public class ImportGuestListView extends AnchorPane implements ControlledScreen 
 		uploadButton.getStyleClass().add("form_buttons");
 		// creates the tableview that displays the uploaded data
 		table = new TableView<Guest>();
+		table.setEditable(true);
 		// vbox with all the content
 		VBox contentBox = new VBox(20);
 		contentBox.getChildren().addAll(importButton, table, uploadButton);

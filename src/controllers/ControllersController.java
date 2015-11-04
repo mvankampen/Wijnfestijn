@@ -35,7 +35,9 @@ public class ControllersController {
 	private DebtorsController debtorsController;
 	private RegistrationController registrationController;
 	private AttendanceController attendanceController;
-
+	private OrderController orderController;
+	private ImportGuestListController importGuestListController;
+	private ImportWineListController importWineListController;
 	/*
 	 * strings used for screensController so we can identify which view is which
 	 * easily
@@ -110,11 +112,11 @@ public class ControllersController {
 		setDebtorsController(new DebtorsController(debtorsView, new OrderDAO(connection), new GuestDAO(connection), screensController));
 		new MailController(mailView, new MailDAO(connection), this.mailService);
 		new SettingsController(settingsView);
-		new OrderController(orderView, new GuestDAO(connection), new WineDAO(connection), new OrderLineDAO(connection),
+		orderController = new OrderController(orderView, new GuestDAO(connection), new WineDAO(connection), new OrderLineDAO(connection),
 				new OrderDAO(connection), screensController, mailService);
 		setRegistrationController(new RegistrationController(registrationView, new GuestDAO(connection), screensController));
-		new ImportGuestListController(importGuestListView, this.screensController, new GuestDAO(connection));
-		new ImportWineListController(importWineListView, this.screensController, new WineDAO(connection));
+		setImportGuestListController(new ImportGuestListController(importGuestListView, this.screensController, new GuestDAO(connection)));
+		setImportWineListController(new ImportWineListController(importWineListView, this.screensController, new WineDAO(connection)));
 		setAttendanceController(new AttendanceController(attendanceView, new GuestDAO(connection), screensController));
 	}
 
@@ -221,6 +223,30 @@ public class ControllersController {
 
 	public void setAttendanceController(AttendanceController attendanceController) {
 		this.attendanceController = attendanceController;
+	}
+
+	public OrderController getOrderController() {
+		return orderController;
+	}
+
+	public void setOrderController(OrderController orderController) {
+		this.orderController = orderController;
+	}
+
+	public ImportGuestListController getImportGuestListController() {
+		return importGuestListController;
+	}
+
+	public void setImportGuestListController(ImportGuestListController importGuestListController) {
+		this.importGuestListController = importGuestListController;
+	}
+
+	public ImportWineListController getImportWineListController() {
+		return importWineListController;
+	}
+
+	public void setImportWineListController(ImportWineListController importWineListController) {
+		this.importWineListController = importWineListController;
 	}
 
 }
