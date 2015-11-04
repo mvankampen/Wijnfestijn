@@ -137,11 +137,17 @@ public class ImportWineListController {
 		TableColumn typeCol = new TableColumn("Type");
 		typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-		TableColumn costpriceCol = new TableColumn("Kost price");
+		TableColumn costpriceCol = new TableColumn("Kost prijs");
 		costpriceCol.setCellValueFactory(new PropertyValueFactory<>("costprice"));
 		// add all columns to the table
+		
+		TableColumn marginCol = new TableColumn("Margin");
+		marginCol.setCellValueFactory(new PropertyValueFactory<>("margin"));
+		
 		importWineListView.getTable().getColumns().addAll(nameCol, publisherCol, yearCol, priceCol, rankCol,
-				categoryCol, typeCol, costpriceCol);
+				categoryCol, typeCol, costpriceCol,marginCol);
+		
+		
 	}
 	public void resetFields() {
 		

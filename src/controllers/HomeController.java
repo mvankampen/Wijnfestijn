@@ -5,36 +5,38 @@ import views.HomeView;
 public class HomeController {
 	HomeView homeView;
 	private ScreensController screensController;
+	private ControllersController CC;
 	
-	public HomeController(HomeView homeView, ScreensController screensController){
+	public HomeController(HomeView homeView, ScreensController screensController, ControllersController controllersController){
 		this.screensController = screensController;
+		this.CC = controllersController;
 		this.homeView = homeView;
 		addHyperlinkEventHandling();
 	}
 	//sets all the correct links to the corresponding hyperlinks
 	public void addHyperlinkEventHandling(){
 		homeView.getOrderLink1().setOnAction(event -> {
-			screensController.screenSet(ControllersController.getORDERLISTPRINTID());
+			
 		});
 		homeView.getOrderLink2().setOnAction(event -> {
-			screensController.screenSet(ControllersController.getORDERID());
+			CC.getOrderController().resetFields();
 		});
 		homeView.getOrderLink3().setOnAction(event -> {
-			screensController.screenSet(ControllersController.getIMPORTWINELISTID());
+			CC.getImportWineListController().resetFields();
 		});
 		homeView.getOrderLink4().setOnAction(event -> {
 		});
 		homeView.getMailLink1().setOnAction(event -> {
-			screensController.screenSet(ControllersController.getMAILID());
+			CC.getMailController().resetFields();
 		});
 		homeView.getCustomerLink1().setOnAction(event -> {
-			screensController.screenSet(ControllersController.getGUESTID());
+			CC.getAdjustGuestControler().resetFields();
 		});
 		homeView.getCustomerLink2().setOnAction(event -> {
-			screensController.screenSet(ControllersController.getREGISTRATIONID());
+			CC.getRegistrationController().resetFields();
 		});
 		homeView.getCustomerLink3().setOnAction(event -> {
-			screensController.screenSet(ControllersController.getDEBTORID());
+			CC.getDebtorsController().resetFields();
 		});
 		homeView.getSettingsLink1().setOnAction(event -> {
 			screensController.screenSet(ControllersController.getSETTINGSID());

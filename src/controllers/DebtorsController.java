@@ -27,6 +27,7 @@ public class DebtorsController {
     private ObservableList<Order> data;
     private TableColumn<Order, Guest> emailCol;
     private TableColumn<Order, Boolean> activeCol;
+    private TableColumn<Order, Integer> idCol;
     private ScreensController screensController;
     public DebtorsController(DebtorsView debtorsView, OrderDAO orderDAO, GuestDAO guestDAO, ScreensController screensController) {
         this.debtorsView = debtorsView;
@@ -75,14 +76,21 @@ public class DebtorsController {
 	            });
 	            return cell ;
 	        });
+         idCol = new TableColumn<Order, Integer>("Order nummer");
+         idCol.setMinWidth(150);
+         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         //clearing the columns to prevent double columns
         debtorsView.getTableView().getColumns().clear();
  		debtorsView.getTableView().setItems(data);
- 		debtorsView.getTableView().getColumns().addAll(emailCol,activeCol);
+ 		columnAdder();
         
     }
     //reads out all the debtors and adds them to the tableview array
+    private void columnAdder() {
+    	debtorsView.getTableView().getColumns().addAll(idCol,emailCol, activeCol);
+    }
     @SuppressWarnings("unchecked")
+   
 	private void generateDebtors() {
     	debtorsArrayList = orderDAO.getAllNativeOrders();
     	data.clear();
@@ -95,7 +103,7 @@ public class DebtorsController {
     	//updates the tableview so that the new data is shown
     	debtorsView.getTableView().getColumns().clear();
 		debtorsView.getTableView().setItems(data);
-		debtorsView.getTableView().getColumns().addAll(emailCol, activeCol);
+		columnAdder();
     }
     //updates the changed data in the database
     private void submitChanges() {

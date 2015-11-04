@@ -80,7 +80,7 @@ public class OrderView extends AnchorPane implements ControlledScreen {
         this.amountTextField = new TextField();
         vboxOrder.getChildren().addAll(wineLabel,winenumberTextField,amountLabel,amountTextField);
         HBox buttonBox = new HBox(10);
-        this.orderBtn = new Button("Order plaatsen");
+        this.orderBtn = new Button("Orderregel aanmaken");
         this.removeBtn = new Button("Verwijder selectie");
         buttonBox.getChildren().addAll(this.orderBtn);
         buttonBox.getChildren().addAll(this.removeBtn);

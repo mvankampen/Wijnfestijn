@@ -107,7 +107,7 @@ public class ControllersController {
 	private void createControllers() {
 		this.screensController = new ScreensController();
 		this.mailService = new MailService();
-		new HomeController(homeView, this.screensController);
+		new HomeController(homeView, this.screensController, this);
 		this.navigationController = new NavigationController(this.screensController, navigationView, this);
 		adjustGuestController = new AdjustGuestController(adjustGuestView, new GuestDAO(connection), screensController);
 		setDebtorsController(new DebtorsController(debtorsView, new OrderDAO(connection), new GuestDAO(connection), screensController));
@@ -139,8 +139,7 @@ public class ControllersController {
 		screensController.screenLoad(getIMPORTGUESTLISTID(), importGuestListView);
 		screensController.screenLoad(getATTENDANCEID(), attendanceView);
 		// sets the screen that we want to show on start of the application
-		// screensController.screenSet(getHOMEID());
-		screensController.screenSet(getIMPORTGUESTLISTID());
+		screensController.screenSet(getHOMEID());
 	}
 
 	// getters
