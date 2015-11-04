@@ -1,6 +1,8 @@
 package states;
 
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SettingsStateReminder implements SettingsState{
 	private String returnBody, returnTitle, defaultBody = "", defaultTitle = "", pathToFile;
@@ -12,34 +14,45 @@ public class SettingsStateReminder implements SettingsState{
 	public void fileToVariable() {
 		String line;
 		//defaultPath from SettingsState class
-		pathToFile = defaultPath + "REMINDER.txt";
+		pathToFile = DEFAULTPATH + "REMINDER.html";
 		try {
-			boolean gotSubject = false;
-			boolean emptyFirst = false;
 			BufferedReader br = new BufferedReader(new FileReader(pathToFile));
 			returnBody = "";
 			returnTitle = "";
+			
+			Pattern pattern = Pattern.compile("<title>(.+?)</title>");
+            Matcher matcher = pattern.matcher(readFile(pathToFile));
+            matcher.find();
+            
 			while ((line = br.readLine()) != null){
-		        if(!gotSubject){
-		        	returnTitle = line;
-		        	defaultTitle = line;
-		        	gotSubject = true;
-		        }
-		        else{
-		        	if(!emptyFirst){
-		        		emptyFirst = true;
-		        	}
-		        	else{
-		        		returnBody += line + "\n";
-						defaultBody += line + "\n";
-		        	}
-				}
+		        	returnTitle = matcher.group(1);
+		        	defaultTitle = matcher.group(1);
+
+	        		returnBody += line + "\n";
+					defaultBody += line + "\n";
 		    }
 			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public String readFile(String fileName) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append("\n");
+                line = br.readLine();
+            }
+            return sb.toString();
+        } finally {
+            br.close();
+        }
+    }
 	
 	public void writeToFile(){
 		try {
@@ -48,7 +61,7 @@ public class SettingsStateReminder implements SettingsState{
 			pw.close();
 			// Re-initialize pw
 			pw = new PrintWriter(new BufferedWriter(new FileWriter(pathToFile, true)));
-			pw.write(returnTitle + "\n\n" + returnBody);
+			pw.write(returnBody);
 			// Closing the PrintWriter
 			pw.close();
 			defaultBody = returnBody;
