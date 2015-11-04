@@ -13,8 +13,14 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Guest;
+import splashscreens.CsvImportSucceedMessage;
+import splashscreens.CsvIncorrectFileMessage;
+import splashscreens.CsvIncorrectRowsGuestMessage;
+import splashscreens.CsvIncorrectRowsWineMessage;
+import splashscreens.SplashDefault;
 import views.ImportGuestListView;
 import views.OrderView;
+import views.SplashscreenView;
 
 //controller for importGuestListView
 public class ImportGuestListController {
@@ -23,6 +29,8 @@ public class ImportGuestListController {
 	File importFile = null;
 	boolean csvSelected = false, firstRow = true;
 	CSVReader csvReader;
+	private String title,context,header;
+	private SplashscreenView splashScreenView;
 	private ObservableList<Guest> data;
 	private ScreensController screensController;
 
@@ -46,19 +54,33 @@ public class ImportGuestListController {
 			submitGuests();
 		});
 	}
-
+	
+	 private void setSplashScreenView(SplashDefault wineCsvSplash) {
+		 	context = "";
+		 	title = "";
+		 	header = "";
+	        title = wineCsvSplash.getTitleText();
+	        header = wineCsvSplash.getHeaderText();
+	        context = wineCsvSplash.getContextText();
+	        splashScreenView = new SplashscreenView(title, header, context);
+	    }
 	// puts all data in the tableview ( so altered data goes through) in the
 	// database
-	public void submitGuests() {
+	public void submitGuests() {	
 		int n = 0;
 		while (data.size() > n) {
 			this.guestDAO.addGuest(data.get(n));
 			n++;
 		}
+		SplashDefault guestCsvSplash = new SplashDefault();
+		guestCsvSplash = new CsvImportSucceedMessage(guestCsvSplash);
+		setSplashScreenView(guestCsvSplash);
+		resetFields();
 	}
 
 	// used for reading out the data from a selected CSV file
 	public void fireCsv() {
+		SplashDefault guestCsvSplash = new SplashDefault();
 		// prompts the user to choose a CSV file
 		importFile = fileChooser.showOpenDialog(new Stage());
 		// runs the file through the filechecker "isCSV"
@@ -80,19 +102,25 @@ public class ImportGuestListController {
 					} else {
 						firstRow = false;
 					}
-
 					if (parts != null) {
-						/*
-						 * creates a new guest object based on the values pulled
-						 * from the csv file the user selected
-						 */
-						Guest selectedGuest = new Guest(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5],
+						//Checks if the rows are equal to the size of the object we want to make
+						if(parts.length == 12){
+							/*
+							 * creates a new wine object based on the values pulled
+							 * from the csv file the user selected
+							 */
+							Guest selectedGuest = new Guest(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5],
 								parts[6], parts[7], parts[8], parts[9], parts[10], parts[11]);
 						// puts the guest object in the arraylist
 						data.add(selectedGuest);
-						// reset parts and nextline to prevent errors
-						parts = null;
-						nextLine = null;
+							// reset parts and nextline to prevent errors
+							parts = null;
+							nextLine = null;
+						}
+						else{
+							guestCsvSplash = new CsvIncorrectRowsGuestMessage(guestCsvSplash);
+							setSplashScreenView(guestCsvSplash);
+						}
 					}
 				}
 				// sets the arraylist used by the tableview as data, which we
@@ -103,6 +131,8 @@ public class ImportGuestListController {
 				e1.printStackTrace();
 			}
 		} else {
+			guestCsvSplash = new CsvIncorrectFileMessage(guestCsvSplash);
+			setSplashScreenView(guestCsvSplash);
 			System.out.println("Dit is geen .CSV bestand");
 		}
 	};

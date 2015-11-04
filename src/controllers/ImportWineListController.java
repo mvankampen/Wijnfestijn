@@ -11,8 +11,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Wine;
+import splashscreens.CsvImportSucceedMessage;
+import splashscreens.CsvIncorrectFileMessage;
+import splashscreens.CsvIncorrectRowsWineMessage;
+import splashscreens.SplashDefault;
 import views.ImportGuestListView;
 import views.ImportWineListView;
+import views.SplashscreenView;
 
 public class ImportWineListController {
 	ImportWineListView importWineListView;
@@ -23,6 +28,8 @@ public class ImportWineListController {
 	CSVReader csvReader;
 	private ObservableList<Wine> data;
 	private ScreensController screensController;
+	private String title, header, context;
+	private SplashscreenView splashScreenView;
 
 	final FileChooser fileChooser = new FileChooser();
 
@@ -49,10 +56,26 @@ public class ImportWineListController {
 	// database
 	public void submitWines() {
 		wineDAO.insertAllWines(data);
+		SplashDefault wineCsvSplash = new SplashDefault();
+		wineCsvSplash = new CsvImportSucceedMessage(wineCsvSplash);
+		setSplashScreenView(wineCsvSplash);
+		resetFields();
 	}
+	
+	 private void setSplashScreenView(SplashDefault wineCsvSplash) {
+		 	context = "";
+		 	title = "";
+		 	header = "";
+	        title = wineCsvSplash.getTitleText();
+	        header = wineCsvSplash.getHeaderText();
+	        context = wineCsvSplash.getContextText();
+	        splashScreenView = new SplashscreenView(title, header, context);
+	    }
 
 	// used for reading out the data from a selected CSV file
 	public void fireCsv() {
+		SplashDefault wineCsvSplash = new SplashDefault();
+		
 		// prompts the user to choose a CSV file
 		importFile = fileChooser.showOpenDialog(new Stage());
 		// runs the file through the filechecker "isCSV", continues if the file
@@ -74,34 +97,44 @@ public class ImportWineListController {
 					} else {
 						firstRow = false;
 					}
-
 					if (parts != null) {
-						/*
-						 * creates a new wine object based on the values pulled
-						 * from the csv file the user selected
-						 */
-						Wine testWine = new Wine(parts[0], parts[1], parts[2], Double.parseDouble(parts[3]), parts[4],
-								parts[5], parts[6], Double.parseDouble(parts[7]), Double.parseDouble(parts[8]));
-						// adds the wine object to the arraylist
-						data.add(testWine);
-						// reset parts and nextline to prevent errors
-						parts = null;
-						nextLine = null;
+						//Checks if the rows are equal to the size of the object we want to make
+						if(parts.length == 9){
+							/*
+							 * creates a new wine object based on the values pulled
+							 * from the csv file the user selected
+							 */
+							Wine testWine = new Wine(parts[0], parts[1], parts[2], Double.parseDouble(parts[3]), parts[4],
+									parts[5], parts[6], Double.parseDouble(parts[7]), Double.parseDouble(parts[8]));
+							// adds the wine object to the arraylist
+							data.add(testWine);
+							// reset parts and nextline to prevent errors
+							parts = null;
+							nextLine = null;
+						}
+						else{
+							wineCsvSplash = new CsvIncorrectRowsWineMessage(wineCsvSplash);
+							setSplashScreenView(wineCsvSplash);
+						}
 					}
 				}
 				// sets the arraylist used by the tableview as data, which we
 				// just filled
 				importWineListView.getTable().setItems(data);
+				
 
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}
-		// error handling incase the file is not a CSV file
-		else {
-			System.out.println("Dit is geen .CSV bestand");
+		else if(csvSelected == false) {
+			wineCsvSplash = new CsvIncorrectFileMessage(wineCsvSplash);
+			setSplashScreenView(wineCsvSplash);
+			
 		}
 	};
+		// error handling incase the file is not a CSV file
+		
 
 	// checks if the file that is selected by the user is actually a .csv file
 	public boolean isCSV(File importFile) {
@@ -137,11 +170,17 @@ public class ImportWineListController {
 		TableColumn typeCol = new TableColumn("Type");
 		typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-		TableColumn costpriceCol = new TableColumn("Kost price");
+		TableColumn costpriceCol = new TableColumn("Kost prijs");
 		costpriceCol.setCellValueFactory(new PropertyValueFactory<>("costprice"));
 		// add all columns to the table
+		
+		TableColumn marginCol = new TableColumn("Margin");
+		marginCol.setCellValueFactory(new PropertyValueFactory<>("margin"));
+		
 		importWineListView.getTable().getColumns().addAll(nameCol, publisherCol, yearCol, priceCol, rankCol,
-				categoryCol, typeCol, costpriceCol);
+				categoryCol, typeCol, costpriceCol,marginCol);
+		
+		
 	}
 	public void resetFields() {
 		
