@@ -56,6 +56,11 @@ public class SettingsStateReminder implements SettingsState{
 	
 	public void writeToFile(){
 		try {
+			Pattern pattern = Pattern.compile("<title>(.+?)</title>");
+            Matcher matcher = pattern.matcher(readFile(pathToFile));
+            matcher.find();
+            returnBody = returnBody.replace(matcher.group(1), returnTitle);
+			
 			// Create a new PrintWriter
 			PrintWriter pw = new PrintWriter(pathToFile);
 			pw.close();

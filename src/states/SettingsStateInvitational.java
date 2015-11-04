@@ -23,10 +23,11 @@ public class SettingsStateInvitational implements SettingsState{
 			Pattern pattern = Pattern.compile("<title>(.+?)</title>");
             Matcher matcher = pattern.matcher(readFile(pathToFile));
             matcher.find();
+
+        	returnTitle = matcher.group(1);
+        	defaultTitle = matcher.group(1);
             
 			while ((line = br.readLine()) != null){
-		        	returnTitle = matcher.group(1);
-		        	defaultTitle = matcher.group(1);
 
 	        		returnBody += line + "\n";
 					defaultBody += line + "\n";
@@ -56,13 +57,10 @@ public class SettingsStateInvitational implements SettingsState{
 	
 	public void writeToFile(){
 		try {
-			
 			Pattern pattern = Pattern.compile("<title>(.+?)</title>");
             Matcher matcher = pattern.matcher(readFile(pathToFile));
             matcher.find();
-            
-            String replaceLine = matcher.group(1);
-            returnBody.replaceAll(replaceLine, "<title>" + returnTitle + "</title>");
+            returnBody = returnBody.replace(matcher.group(1), returnTitle);
 			
 			// Create a new PrintWriter
 			PrintWriter pw = new PrintWriter(pathToFile);
