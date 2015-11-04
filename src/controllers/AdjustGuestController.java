@@ -8,23 +8,17 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
 import models.Guest;
 import splashscreens.AdjustCompleteMessage;
 import splashscreens.GeneralSplash;
-import splashscreens.RegistrationSetHead;
 import splashscreens.SplashCityMessage;
 import splashscreens.SplashDefault;
 import splashscreens.SplashEmailMessage;
@@ -39,6 +33,7 @@ import validators.EmailValidator;
 import validators.TextValidator;
 import validators.ZipcodeValidator;
 import views.AdjustGuestView;
+import views.RegistrationView;
 import views.SplashscreenView;
 
 /**
@@ -52,20 +47,20 @@ public class AdjustGuestController {
 	TextValidator textValidator = new TextValidator();
 	ZipcodeValidator zipcodeValidator = new ZipcodeValidator();
 	SplashDefault adjustSplash = new GeneralSplash();
-	private SplashscreenView splashscreenView;
 	private String title, header, context;
 	private int errorCounter;
+	private ScreensController screensController;
 
-	public AdjustGuestController(AdjustGuestView adjustGuestView, GuestDAO guestDAO) {
+	public AdjustGuestController(AdjustGuestView adjustGuestView, GuestDAO guestDAO, ScreensController screensController) {
 		this.adjustGuestView = adjustGuestView;
 		this.guestDAO = guestDAO;
-		
+		this.screensController = screensController;
 		createAutocomplete();
 	}
 	public void createAutocomplete() {
 		AutoCompletionBinding<Guest> autoCompletionBinding = TextFields.bindAutoCompletion(
 
-		adjustGuestView.getSurnameTextField(), t -> guestDAO.findGuestByLastname(t.getUserText()),
+		adjustGuestView.getSurnameTextField(), t -> guestDAO.findGuestBySurname(t.getUserText()),
 				new StringConverter<Guest>() {
 					@Override
 					public String toString(Guest object) {
@@ -259,7 +254,7 @@ public class AdjustGuestController {
 		adjustSplash = new AdjustCompleteMessage(adjustSplash);
 		setSplashScreenView(adjustSplash);
 		if(errorCounter > 0) {
-			splashscreenView = new SplashscreenView(title, header, context);
+			new SplashscreenView(title, header, context);
 		}
 		else {
 			submitChange();
@@ -269,10 +264,16 @@ public class AdjustGuestController {
 		SplashDefault adjustSplash = new GeneralSplash();
 		adjustSplash = new AdjustCompleteMessage(adjustSplash);
 		setSplashScreenView(adjustSplash);
-		splashscreenView = new SplashscreenView(title, header, context);
+		new SplashscreenView(title, header, context);
 		this.guestDAO.updateGuest(currentGuest);
-		adjustGuestView.getEditableGuest().getColumns().clear();
-		adjustGuestView.getSurnameTextField().clear();
+		resetFields();
+	}
+	
+	public void resetFields() {
+		screensController.screenRemove(ControllersController.getGUESTID());
+		this.adjustGuestView = new AdjustGuestView();
+		screensController.screenLoadSet(ControllersController.getGUESTID(), adjustGuestView);
+		createAutocomplete();
 	}
 	public void setSplashScreenView(SplashDefault adjustSplash) {
 		title = adjustSplash.getTitleText();

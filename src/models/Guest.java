@@ -1,167 +1,167 @@
 package models;
 
-import javafx.collections.ObservableList;
-
 /**
  * Created by Sander de Jong on 21-9-2015.
  */
-public class Guest{
-    private int id;
-    private String surname;
-    private String infix;
-    private String firstname;
-    private String salutation;
-    private String street;
-    private String streetnr;
-    private String zipcode;
-    private String city;
-    private String email;
-    private String phone;
-    private String comment;
-    private String referal;
-    private Boolean no_show = false;
+public class Guest {
+	private int id;
+	private String surname;
+	private String infix;
+	private String firstname;
+	private String salutation;
+	private String street;
+	private String streetnr;
+	private String zipcode;
+	private String city;
+	private String email;
+	private String phone;
+	private String comment;
+	private String referal;
+	private Boolean no_show = false;
 
-    public Guest(String lastname, String infix, String firstname, String salutation, String street,
-        String streetnr, String zipcode, String city, String email, String phone, String referal,
-        String comment) {
-        this.surname = lastname;
-        this.infix = infix;
-        this.firstname = firstname;
-        this.salutation = salutation;
-        this.street = street;
-        this.streetnr = streetnr;
-        this.zipcode = zipcode;
-        this.city = city;
-        this.email = email;
-        this.phone = phone;
-        this.comment = comment;
-        this.referal = referal;
-    }
+	// Assembles a guest object, so it can be used easily
+	public Guest(String lastname, String infix, String firstname, String salutation, String street, String streetnr,
+			String zipcode, String city, String email, String phone, String referal, String comment) {
+		this.surname = lastname;
+		this.infix = infix;
+		this.firstname = firstname;
+		this.salutation = salutation;
+		this.street = street;
+		this.streetnr = streetnr;
+		this.zipcode = zipcode;
+		this.city = city;
+		this.email = email;
+		this.phone = phone;
+		this.comment = comment;
+		this.referal = referal;
+	}
+	//used for making a order, where the ID is needed
+	public Guest(int id, String lastname, String infix, String firstname, String salutation, String street,
+			String streetnr, String zipcode, String city, String email, String phone, String referal, String comment,
+			boolean no_show) {
+		this.id = id;
+		this.surname = lastname;
+		this.infix = infix;
+		this.firstname = firstname;
+		this.salutation = salutation;
+		this.street = street;
+		this.streetnr = streetnr;
+		this.zipcode = zipcode;
+		this.city = city;
+		this.email = email;
+		this.phone = phone;
+		this.comment = comment;
+		this.referal = referal;
+		this.no_show = no_show;
+	}
 
-    public Guest(int id, String lastname, String infix, String firstname, String salutation,
-        String street, String streetnr, String zipcode, String city, String email, String phone,
-        String referal, String comment, boolean no_show) {
-        this.id = id;
-        this.surname = lastname;
-        this.infix = infix;
-        this.firstname = firstname;
-        this.salutation = salutation;
-        this.street = street;
-        this.streetnr = streetnr;
-        this.zipcode = zipcode;
-        this.city = city;
-        this.email = email;
-        this.phone = phone;
-        this.comment = comment;
-        this.referal = referal;
-        this.no_show = no_show;
-    }
+	// getters
+	public int getId() {
+		return id;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public String getSurname() {
+		return surname;
+	}
 
-    public String getSurname() {
-        return surname;
-    }
+	public String getInfix() {
+		return infix;
+	}
 
-    public void setSurname(String lastname) {
-        this.surname = lastname;
-    }
+	public String getFirstname() {
+		return firstname;
+	}
 
-    public String getInfix() {
-        return infix;
-    }
+	public String getSalutation() {
+		return salutation;
+	}
 
-    public void setInfix(String infix) {
-        this.infix = infix;
-    }
+	public String getStreet() {
+		return street;
+	}
 
-    public String getFirstname() {
-        return firstname;
-    }
+	public String getStreetnr() {
+		return streetnr;
+	}
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+	public String getZipcode() {
+		return zipcode;
+	}
 
-    public String getSalutation() {
-        return salutation;
-    }
+	public String getCity() {
+		return city;
+	}
 
-    public void setSalutation(String salutation) {
-        this.salutation = salutation;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getStreet() {
-        return street;
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
+	public String getComment() {
+		return comment;
+	}
 
-    public String getStreetnr() {
-        return streetnr;
-    }
+	public String getReferal() {
+		return referal;
+	}
 
-    public void setStreetnr(String streetnr) {
-        this.streetnr = streetnr;
-    }
+	public Boolean getNo_show() {
+		return no_show;
+	}
+	//setters
+	public void setInfix(String infix) {
+		this.infix = infix;
+	}
 
-    public String getZipcode() {
-        return zipcode;
-    }
+	public void setSurname(String lastname) {
+		this.surname = lastname;
+	}
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
 
-    public String getCity() {
-        return city;
-    }
+	public void setSalutation(String salutation) {
+		this.salutation = salutation;
+	}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+	public void setStreet(String street) {
+		this.street = street;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setStreetnr(String streetnr) {
+		this.streetnr = streetnr;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getComment() {
-        return comment;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 
-    public String getReferal() {
-        return referal;
-    }
+	public void setReferal(String referal) {
+		this.referal = referal;
+	}
 
-    public void setReferal(String referal) {
-        this.referal = referal;
-    }
+	public void setNo_show(Boolean no_show) {
+		this.no_show = no_show;
+	}
 
-    public Boolean getNo_show() {
-        return no_show;
-    }
-
-    public void setNo_show(Boolean no_show) {
-        this.no_show = no_show;
-    }
 }

@@ -1,8 +1,11 @@
 package states;
 
+import java.io.IOException;
+
 public interface SettingsState {
 	// Methods
 	public void fileToVariable();
+	public String readFile(String fileName) throws IOException;
 	public String getBody();
 	public String getTitle();
 	public void writeToFile();
@@ -10,5 +13,5 @@ public interface SettingsState {
 	public void updateTitle(String add);
 	public String getDefaultBody();
 	public String getDefaultTitle();
-	public String defaultPath = "src/templates/";
+	public final String DEFAULTPATH = "src/templates/";
 }

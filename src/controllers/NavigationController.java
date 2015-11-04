@@ -8,66 +8,69 @@ import views.NavigationView;
 public class NavigationController extends AnchorPane {
     private NavigationView navigationView;
     private ScreensController screensController;
+    private ControllersController CC;
 
     public NavigationController(ScreensController screensController,
-        NavigationView navigationView) {
+        NavigationView navigationView, ControllersController controllersController) {
         this.screensController = screensController;
         this.navigationView = navigationView;
+        this.CC = controllersController;
         generateHandlers();
     }
 
     public void generateHandlers() {
-        navigationView.orderMenu.getSelectionModel().selectedItemProperty()
+        navigationView.getOrderMenu().getSelectionModel().selectedItemProperty()
             .addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue,
                     String newValue) {
-                    navigationView.customerMenu.setValue(navigationView.CUSTOMERTITLE);
+                    navigationView.getCustomerMenu().setValue(navigationView.CUSTOMERTITLE);
                     if (newValue != null) {
                         if (newValue.equals(navigationView.ORDER1)) {
-                            screensController
-                                .screenSet(ControllersController.getORDERLISTPRINTID());
+                            screensController.screenSet(ControllersController.getORDERLISTPRINTID());
                         } else if (newValue.equals(navigationView.ORDER2)) {
-                            screensController.screenSet(ControllersController.getORDERID());
+                        	CC.getOrderController().resetFields();
                         } else if (newValue.equals(navigationView.ORDER3)) {
-                            screensController
-                                .screenSet(ControllersController.getIMPORTWINELISTID());
+                            CC.getImportWineListController().resetFields();
+                        } else if (newValue.equals(navigationView.ORDER4)) {
+                        	CC.getImportGuestListController().resetFields();
                         }
                     }
                 }
             });
 
-        navigationView.customerMenu.getSelectionModel().selectedItemProperty()
+        navigationView.getCustomerMenu().getSelectionModel().selectedItemProperty()
             .addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue,
                     String newValue) {
-                    navigationView.orderMenu.setValue(navigationView.ORDERTITLE);
+                    navigationView.getOrderMenu().setValue(navigationView.ORDERTITLE);
                     if (newValue != null) {
-                        if (newValue.equals(navigationView.CUSTOMER1)) {
-                            screensController.screenSet(ControllersController.getGUESTID());
-                        } else if (newValue.equals(navigationView.CUSTOMER2)) {
-                            screensController.screenSet(ControllersController.getREGISTRATIONID());
-                        } else if (newValue.equals(navigationView.CUSTOMER3)) {
-                            screensController.screenSet(ControllersController.getDEBTORID());
-                        } else if (newValue.equals(navigationView.CUSTOMER4)) {
-                            screensController.screenSet(ControllersController.getATTENDANCEID());
+                        if (newValue.equals(navigationView.GUEST1)) {
+                        	//resetFields creates a new view and reloads the values of the DB
+                        	CC.getAdjustGuestControler().resetFields();
+                        } else if (newValue.equals(navigationView.GUEST2)) {
+                        	CC.getRegistrationController().resetFields();
+                        } else if (newValue.equals(navigationView.GUEST3)) {
+                        	CC.getDebtorsController().resetFields();
+                        } else if (newValue.equals(navigationView.GUEST4)) {
+                            CC.getAttendanceController().resetFields();
                         }
                     }
                 }
             });
         //For the home button, set HomeScreen
-        navigationView.homeButton.setOnAction(e -> {
+        navigationView.getHomeButton().setOnAction(e -> {
             screensController.screenSet(ControllersController.getHOMEID());
             setComboBoxDefault();
         });
         //For the mail button, set MailScreen
-        navigationView.mailButton.setOnAction(e -> {
-            screensController.screenSet(ControllersController.getMAILID());
+        navigationView.getMailButton().setOnAction(e -> {
+           	CC.getMailController().resetFields();
             setComboBoxDefault();
         });
         //For the Customer button, set CustomerScreen
-        navigationView.settingsButton.setOnAction(e -> {
+        navigationView.getSettingsButton().setOnAction(e -> {
             screensController.screenSet(ControllersController.getSETTINGSID());
             setComboBoxDefault();
         });
@@ -75,7 +78,7 @@ public class NavigationController extends AnchorPane {
 
     // Set the ComboBox back to default value
     public void setComboBoxDefault() {
-        navigationView.orderMenu.setValue(navigationView.ORDERTITLE);
-        navigationView.customerMenu.setValue(navigationView.CUSTOMERTITLE);
+        navigationView.getOrderMenu().setValue(navigationView.ORDERTITLE);
+        navigationView.getCustomerMenu().setValue(navigationView.CUSTOMERTITLE);
     }
 }

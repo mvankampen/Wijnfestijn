@@ -7,16 +7,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Toggle;
 import models.Mail;
 import services.MailService;
+import views.ImportWineListView;
 import views.MailView;
 
-import javax.swing.text.html.parser.Parser;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,12 +24,10 @@ public class MailController {
     private Mail mail;
     private MailService mailService;
     private MailDAO mailDAO;
-    private BufferedReader bufferedReader;
-    private FileReader fileReader;
-    private Parser parser;
-
-    public MailController(MailView mailView, MailDAO mailDAO, MailService mailService) {
-        this.mail = new Mail("", "");
+    private ScreensController screensController;
+    public MailController(MailView mailView, MailDAO mailDAO, MailService mailService, ScreensController screensController) {
+        this.screensController = screensController;
+    	this.mail = new Mail("", "");
         this.mailDAO = mailDAO;
         this.mailView = mailView;
         this.mailView.setMail(this.mail);
@@ -41,7 +35,14 @@ public class MailController {
         this.mailView.getMailButton().setOnAction(e -> sendMail());
         mailViewListener();
     }
-
+    void resetFields() {
+    	screensController.screenRemove(ControllersController.getATTENDANCEID());
+		this.mail = new Mail("", "");
+    	this.mailView = new MailView(mail);
+    	this.mailView.setMail(this.mail);
+		screensController.screenLoadSet(ControllersController.getATTENDANCEID(), mailView);
+	    mailViewListener();
+    }
     private void mailViewListener() {
         this.mailView.getInviteGroup().selectedToggleProperty()
             .addListener(new ChangeListener<Toggle>() {

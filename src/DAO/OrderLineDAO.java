@@ -1,16 +1,12 @@
 package DAO;
 
-import javafx.collections.ObservableList;
-import models.Guest;
-import models.Order;
-import models.OrderLine;
-import models.Wine;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+
+import javafx.collections.ObservableList;
+import models.Order;
+import models.OrderLine;
 
 /**
  * Created by michael on 06-10-15.
@@ -23,7 +19,7 @@ public class OrderLineDAO {
     public OrderLineDAO(Connection connection) {
         this.connection = connection;
     }
-
+    //adds all given orderlines to the database
     public void addOrderLines(ObservableList<OrderLine> orderLines, Order order) {
         try {
             this.preparedStatement = null;
@@ -49,7 +45,7 @@ public class OrderLineDAO {
             }
         }
     }
-
+    //updates a already existing orderline in the db with the given values
     public void updateOrderLine(OrderLine orderLine, Order order) {
         try {
             this.preparedStatement = null;
