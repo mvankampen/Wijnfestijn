@@ -134,49 +134,51 @@ public class WineDAO {
 
         return wine;
     }
-    public ArrayList<Wine> getAllActiveWine() {
-		try {
-			ArrayList<Wine> wineList = new ArrayList<>();
-			Wine wine;
-			this.preparedStatement = null;
-			String sqlQuery = "SELECT * FROM wine WHERE wine_active = ?";
-			this.preparedStatement = this.connection.prepareStatement(sqlQuery);
-			this.preparedStatement.setBoolean(1, true);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				wine = new Wine(resultSet.getInt("wine_id"), resultSet.getString("wine_name"),
-						resultSet.getString("wine_category"), resultSet.getString("wine_type"),
-						resultSet.getString("wine_publisher"), resultSet.getString("wine_year"),
-						resultSet.getDouble("wine_price"), resultSet.getString("wine_rank"),
-						resultSet.getDouble("wine_costprice"), resultSet.getDouble("wine_margin"));
-				wineList.add(wine);
-			}
-			return wineList;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-    public void setAllWinesFalse() {
-		try {
-			this.preparedStatement = null;
-			String setAllToFalse = "UPDATE wine SET wine_active = ?";
-			this.preparedStatement = this.connection.prepareStatement(setAllToFalse);
-			preparedStatement.setBoolean(1, false);
-			preparedStatement.executeUpdate();
-			this.connection.commit();
-		} catch (SQLException e) {
-			System.out.print(e.getMessage());
-			try {
-				connection.rollback();
-				if (connection != null) {
-					System.err.print("Transaction is being rolled back");
-				}
-			} catch (SQLException ex) {
-				e.printStackTrace();
-			}
-		}
 
-	}
+    public ArrayList<Wine> getAllActiveWine() {
+        try {
+            ArrayList<Wine> wineList = new ArrayList<>();
+            Wine wine;
+            this.preparedStatement = null;
+            String sqlQuery = "SELECT * FROM wine WHERE wine_active = ?";
+            this.preparedStatement = this.connection.prepareStatement(sqlQuery);
+            this.preparedStatement.setBoolean(1, true);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                wine = new Wine(resultSet.getInt("wine_id"), resultSet.getString("wine_name"),
+                    resultSet.getString("wine_category"), resultSet.getString("wine_type"),
+                    resultSet.getString("wine_publisher"), resultSet.getString("wine_year"),
+                    resultSet.getDouble("wine_price"), resultSet.getString("wine_rank"),
+                    resultSet.getDouble("wine_costprice"), resultSet.getDouble("wine_margin"));
+                wineList.add(wine);
+            }
+            return wineList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void setAllWinesFalse() {
+        try {
+            this.preparedStatement = null;
+                String setAllToFalse = "UPDATE wine SET wine_active = ?";
+            this.preparedStatement = this.connection.prepareStatement(setAllToFalse);
+            preparedStatement.setBoolean(1, false);
+            preparedStatement.executeUpdate();
+            this.connection.commit();
+        } catch (SQLException e) {
+            System.out.print(e.getMessage());
+            try {
+                connection.rollback();
+                if (connection != null) {
+                    System.err.print("Transaction is being rolled back");
+                }
+            } catch (SQLException ex) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 
 }
