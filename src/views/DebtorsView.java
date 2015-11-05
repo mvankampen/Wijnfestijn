@@ -12,26 +12,30 @@ import javafx.scene.layout.VBox;
 import models.Order;
 
 /**
- * Created by Sander de Jong on 27-9-2015.
+ * <p> This view shows the data to the user and uses {@link DebtorsController} as his controller </p>
+ * 
+ * @author Alex
  */
-// This screen is a AnchorPane and uses ControlledScreen as navigation manager
 public class DebtorsView extends AnchorPane implements ControlledScreen {
 	private Button generateButton;
 	private TableView<Order> tableView;
 	private Button saveButton;
-
+	
+	/**
+	 * constructor
+	 */
 	public DebtorsView() {
-		// calling the methods that initialize different aspects of the view
 		createView();
 		setUpContentPane();
 	}
 
 	@Override
+	/**
+	 * <p> Used for registering itself in the hashMap of the ScreensController
+	 * to enable navigation</p>
+	 * @param screensController used to set screensController as its controller
+	 */
 	public void setScreenController(ScreensController screensController) {
-		/*
-		 * Used for registering itself in the hashMap of the ScreensController
-		 * to enable navigation
-		 */
 	}
 
 	// adds the style class and sets the fixed height to the screen
@@ -40,9 +44,10 @@ public class DebtorsView extends AnchorPane implements ControlledScreen {
 		setMinSize(1200, 800);
 
 	}
-
+	/**
+	 * creating the gridpane, this is where all the displayed content goes
+	 */
 	private void setUpContentPane() {
-		// creating the gridpane, this is where all the displayed content goes
 		GridPane contentPane = new GridPane();
 		contentPane.setLayoutY(175);
 		contentPane.setLayoutX(100);
@@ -88,15 +93,25 @@ public class DebtorsView extends AnchorPane implements ControlledScreen {
 		// Add the contentPane to the view
 		getChildren().add(contentPane);
 	}
-	//getters
+	/**
+	 * 
+	 * @return the saveButton
+	 */
 	public Button getSaveButton() {
 		return saveButton;
 	}
-
+	
+	/**
+	 * 
+	 * @return the tableView
+	 */
 	public TableView<Order> getTableView() {
 		return tableView;
 	}
-
+	/**
+	 * 
+	 * @return the generateButton
+	 */
 	public Button getGenerateButton() {
 		return generateButton;
 	}
