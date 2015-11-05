@@ -8,14 +8,13 @@ public class CsvIncorrectFileMessage extends SplashDefaultMessage {
 	}
 	@Override
 	public String getContextText() {
-		return "De file die je probeert te uploaden is geen CSV bestand";
-		
+		return "Het geselecteerde bestand is geen .CSV bestand.";
 	}
 	public String getTitleText() {
-		return "Er is iets fout gegaan";
+		return "Bestandsfout!";
 	}
 	public String getHeaderText() {
-		return "Fout filetype";
+		return "Verkeerd bestandstype geselecteerd!";
 	}
 
 

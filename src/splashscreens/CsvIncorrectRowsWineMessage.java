@@ -14,10 +14,10 @@ public class CsvIncorrectRowsWineMessage extends SplashDefaultMessage {
 		
 	}
 	public String getTitleText() {
-		return "Er is iets fout gegaan";
+		return "Bestandsfout!";
 	}
 	public String getHeaderText() {
-		return "Foute rijen indeling CSV";
+		return "Het bestand voldoet niet aan de eisen.";
 	}
 
 
