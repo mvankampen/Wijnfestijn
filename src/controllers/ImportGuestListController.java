@@ -22,7 +22,14 @@ import views.ImportGuestListView;
 import views.OrderView;
 import views.SplashscreenView;
 
-//controller for importGuestListView
+/**
+ * 
+ * @author Dennis Sloove
+ * @version 0.1, November 2015
+ * 		Description:
+ * 		Class to import a .CSV file for guests and add the content to the database
+ *
+ */
 public class ImportGuestListController {
 	ImportGuestListView importGuestListView;
 	private GuestDAO guestDAO;
@@ -36,6 +43,13 @@ public class ImportGuestListController {
 
 	final FileChooser fileChooser = new FileChooser();
 
+	/**
+	 * Constructor
+	 * 
+	 * @param importGuestListView Sets the importGuestListView
+	 * @param screensController Sets the screenController
+	 * @param guestDAO Sets the guestDAO
+	 */
 	public ImportGuestListController(ImportGuestListView importGuestListView, ScreensController screensController,
 			GuestDAO guestDAO) {
 		this.guestDAO = guestDAO;
@@ -45,6 +59,9 @@ public class ImportGuestListController {
 	}
 
 	// sets the lambda's for the buttons and triggers createTable
+	/**
+	 *  <p>Sets the Events for the buttons from importGuestListView</p>
+	 */
 	public void generateHandlers() {
 		createTable();
 		importGuestListView.getImportButton().setOnAction(e -> {
@@ -54,8 +71,14 @@ public class ImportGuestListController {
 			submitGuests();
 		});
 	}
-	/*Gets the title/header/context properties from guestCsvSplash and creates a 
-	 * splashscreenview with it, showing the message to the user
+	/**
+	 * 
+	 * @param guestCsvSplash Sets SplashDefault
+	 * 
+	 * <p>
+	 * 		Gets the title/header/context properties from guestCsvSplash and creates a
+	 * 		splashscreenview with it, showing the message to the user
+	 * </p>
 	 */
 	 private void setSplashScreenView(SplashDefault guestCsvSplash) {
 		 	context = "";
@@ -66,8 +89,13 @@ public class ImportGuestListController {
 	        context = guestCsvSplash.getContextText();
 	        splashScreenView = new SplashscreenView(title, header, context);
 	    }
-	// puts all data in the tableview ( so altered data goes through) in the
-	// database
+	 
+	 /**
+	  * <p>
+	  * 	puts all data in the tableview ( so altered data goes through)
+	  * 	in the database
+	  * </p>
+	  */
 	public void submitGuests() {	
 		int n = 0;
 		while (data.size() > n) {
@@ -80,8 +108,13 @@ public class ImportGuestListController {
 		setSplashScreenView(guestCsvSplash);
 		resetFields();
 	}
-
-	// used for reading out the data from a selected CSV file
+	
+	/**
+	 * <p>
+	 * 		Reads the data from a .CSV file, checks the columns,
+	 * 		and adds it to the table.
+	 * </p>
+	 */
 	public void fireCsv() {
 		//a new splashScreen to be able to show messages to the user
 		SplashDefault guestCsvSplash = new SplashDefault();
@@ -146,7 +179,15 @@ public class ImportGuestListController {
 		}
 	};
 
-	// checks if the file that is selected by the user is actually a .csv file
+	/**
+	 * 
+	 * @param importFile File to check if it's a .CSV file
+	 * @return Returns true if the file is a .CSV, else returns false
+	 * 
+	 * <p>
+	 * 		checks if the file that is selected by the user is actually a .csv file
+	 * </p>
+	 */
 	private boolean isCSV(File importFile) {
 		csvSelected = false;
 		if(importFile != null){
@@ -161,7 +202,11 @@ public class ImportGuestListController {
 	}
 
 	@SuppressWarnings({ "unchecked" })
-	// creates the tableview columns
+	/**
+	 * <p>
+	 * 		creates the tableview columns.
+	 * </p>
+	 */
 	public void createTable() {
 		data = FXCollections.observableArrayList();
 		TableColumn<Guest, String> surnameCol = createColumn("Achternaam", "surname");
@@ -275,16 +320,28 @@ public class ImportGuestListController {
 				streetnrCol, zipcodeCol, cityCol, emailCol, phoneCol, referralCol);
 
 	}
-
-	// functions to make creating tablecolumns easier
+	
+	/**
+	 * 
+	 * @param title Column title
+	 * @param propertyName Column property name
+	 * @return Returns a table column
+	 * 
+	 * <p>
+	 * 		Used to create tablecolumns.
+	 * </p>
+	 */
 	private <S, T> TableColumn<S, T> createColumn(String title, String propertyName) {
 		TableColumn<S, T> col = new TableColumn<>(title);
 		col.setCellValueFactory(new PropertyValueFactory<>(propertyName));
 		return col;
 	}
-	
+	/**
+	 * <p>
+	 * 		Removes a view and creates a new one to empty the content.
+	 * </p>
+	 */
 	public void resetFields() {
-		
 		screensController.screenRemove(ControllersController.getATTENDANCEID());
 		this.importGuestListView = new ImportGuestListView();
 		screensController.screenLoadSet(ControllersController.getATTENDANCEID(), importGuestListView);

@@ -19,6 +19,14 @@ import views.ImportGuestListView;
 import views.ImportWineListView;
 import views.SplashscreenView;
 
+/**
+ * 
+ * @author Dennis Sloove
+ * @version 0.1, November 2015
+ * 		Description:
+ * 		Class to import a .CSV file for wines and add the content to the database
+ *
+ */
 public class ImportWineListController {
 	ImportWineListView importWineListView;
 	private WineDAO wineDAO;
@@ -33,6 +41,12 @@ public class ImportWineListController {
 
 	final FileChooser fileChooser = new FileChooser();
 
+	/**
+	 * 
+	 * @param importWineListView Sets the importWineListView
+	 * @param screensController Sets the screensController
+	 * @param wineDAO Sets the wineDAO
+	 */
 	public ImportWineListController(ImportWineListView importWineListView, ScreensController screensController,
 			WineDAO wineDAO) {
 		this.wineDAO = wineDAO;
@@ -42,6 +56,9 @@ public class ImportWineListController {
 	}
 
 	// sets the lambda's for the buttons
+	/**
+	 *  <p>Sets the Events for the buttons from importGuestListView</p>
+	 */
 	public void generateHandlers() {
 		createTable();
 		importWineListView.getImportButton().setOnAction(e -> {
@@ -51,9 +68,13 @@ public class ImportWineListController {
 			submitWines();
 		});
 	}
-
-	// puts all data in the tableview ( so altered data goes through) in the
-	// database
+	
+	/**
+	  * <p>
+	  * 	puts all data in the tableview ( so altered data goes through)
+	  * 	in the database
+	  * </p>
+	  */
 	public void submitWines() {
 		wineDAO.insertAllWines(data);
 		SplashDefault wineCsvSplash = new SplashDefault();
@@ -61,8 +82,15 @@ public class ImportWineListController {
 		setSplashScreenView(wineCsvSplash);
 		resetFields();
 	}
-	/*Gets the title/header/context properties from wineCsvSplash and creates a 
-	 * splashscreenview with it, showing the message to the user
+	
+	/**
+	 * 
+	 * @param guestCsvSplash Sets SplashDefault
+	 * 
+	 * <p>
+	 * 		Gets the title/header/context properties from guestCsvSplash and creates a
+	 * 		splashscreenview with it, showing the message to the user
+	 * </p>
 	 */
 	 private void setSplashScreenView(SplashDefault wineCsvSplash) {
 		 	context = "";
@@ -74,7 +102,12 @@ public class ImportWineListController {
 	        splashScreenView = new SplashscreenView(title, header, context);
 	    }
 
-	// used for reading out the data from a selected CSV file
+	 /**
+		 * <p>
+		 * 		Reads the data from a .CSV file, checks the columns,
+		 * 		and adds it to the table.
+		 * </p>
+		 */
 	public void fireCsv() {
 		//a new splashScreen to be able to show messages to the user
 		SplashDefault wineCsvSplash = new SplashDefault();
@@ -142,7 +175,15 @@ public class ImportWineListController {
 		}
 	};
 
-	// checks if the file that is selected by the user is actually a .csv file
+	/**
+	 * 
+	 * @param importFile File to check if it's a .CSV file
+	 * @return Returns true if the file is a .CSV, else returns false
+	 * 
+	 * <p>
+	 * 		checks if the file that is selected by the user is actually a .csv file
+	 * </p>
+	 */
 	private boolean isCSV(File importFile) {
 		csvSelected = false;
 		if(importFile != null){
@@ -157,7 +198,11 @@ public class ImportWineListController {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	// creates the tableview columns
+	/**
+	 * <p>
+	 * 		creates the tableview columns.
+	 * </p>
+	 */
 	public void createTable() {
 		data = FXCollections.observableArrayList();
 		TableColumn<Wine, String> nameCol = new TableColumn("Naam");
@@ -193,8 +238,13 @@ public class ImportWineListController {
 		
 		
 	}
+	
+	/**
+	 * <p>
+	 * 		Removes a view and creates a new one to empty the content.
+	 * </p>
+	 */
 	public void resetFields() {
-		
 		screensController.screenRemove(ControllersController.getATTENDANCEID());
 		this.importWineListView = new ImportWineListView();
 		screensController.screenLoadSet(ControllersController.getATTENDANCEID(), importWineListView);
