@@ -6,14 +6,13 @@ import interfaces.ControlledScreen;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+
 //This screen is a AnchorPane and uses ControlledScreen as navigation manager
 public class OrderListPrintView extends AnchorPane implements ControlledScreen {
 
@@ -21,6 +20,7 @@ public class OrderListPrintView extends AnchorPane implements ControlledScreen {
     @FXML Button printButton;
     @FXML ComboBox listItems;
     @FXML TextArea listArea;
+    @FXML TextField txtFileName;
 
     public void setScreenController(ScreensController screensController) {
     	/*
@@ -61,31 +61,39 @@ public class OrderListPrintView extends AnchorPane implements ControlledScreen {
 		 */
         introLabel =
             new Label("Hier kunt u de gepersonaliseerde bestellijsten uitprinten voor de klanten.");
-        exampleLabel = new Label("Print voorbeeld:");
-        amountLabel = new Label("Aantal bestellijsten die geprint\nzullen worden: 10");
-        listLabel = new Label("Selecteer welke bestellijst u wilt uitprinten:");
+        //exampleLabel = new Label("Print voorbeeld:");
+        //amountLabel = new Label("Aantal bestellijsten die geprint\nzullen worden: 10");
+        //listLabel = new Label("Selecteer welke bestellijst u wilt uitprinten:");
         
         // creating the buttons and setting their properties
         printButton = new Button("Printen");
         printButton.getStyleClass().add("form_buttons");
+        Label lblFileName = new Label("Bestandsnaam");
+        txtFileName = new TextField();
         
-        listItems = new ComboBox();
-        listArea = new TextArea();
+        //listItems = new ComboBox();
+        //listArea = new TextArea();
 
         //Add all items to their corresponding containers
-        vertBox1.getChildren().addAll(amountLabel, listLabel, listItems);
-        vertBox2.getChildren().addAll(exampleLabel, listArea);
-        buttonBox.getChildren().add(printButton);
-        buttonBox.setAlignment(Pos.BASELINE_RIGHT);
+        buttonBox.getChildren().addAll(lblFileName, txtFileName, printButton);
+        buttonBox.setAlignment(Pos.BASELINE_LEFT);
         vertBox2.setAlignment(Pos.CENTER);
         introBox.getChildren().add(introLabel);
 
         contentPane.add(introBox, 0, 0);
-        contentPane.add(vertBox1, 0, 1);
+        contentPane.add(buttonBox, 0, 1);
         contentPane.add(vertBox2, 1, 1);
-        contentPane.add(buttonBox, 1, 2);
+        //contentPane.add(buttonBox, 1, 2);
 
         getChildren().addAll(contentPane);
 
+    }
+
+    public Button getPrintButton() {
+        return this.printButton;
+    }
+
+    public TextField getTxtFileName() {
+        return this.txtFileName;
     }
 }
