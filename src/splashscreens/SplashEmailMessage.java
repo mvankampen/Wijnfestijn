@@ -1,7 +1,7 @@
 package splashscreens;
 
 /**
- * <p> A wrapper for the decorator, adds a error message for registration - empty city field </p>
+ * <p> A wrapper for the decorator, adds a error message for registration - empty/wrong email </p>
  *
  * @author Alex van der wal
  */

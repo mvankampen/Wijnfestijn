@@ -1,9 +1,9 @@
 package splashscreens;
 
 /**
- * <p> A wrapper for the decorator, adds a error message for registration - empty city field </p>
+ * <p> A wrapper for the decoratorgives a error that the CSV has the incorrect rows to make a wine object </p>
  *
- * @author Alex van der wal on 07-10-15.
+ * @author Alex van der wal
  */
 public class CsvIncorrectRowsWineMessage extends SplashDefaultMessage {
     SplashDefault splashDefault;

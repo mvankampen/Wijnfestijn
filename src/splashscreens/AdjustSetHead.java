@@ -3,7 +3,7 @@ package splashscreens;
 /**
  * <p> A wrapper for the decorator, adds a error message for registration - empty city field </p>
  *
- * @author Alex van der wal on 07-10-15.
+ * @author Alex van der wal
  */
 public class AdjustSetHead extends SplashDefaultMessage {
     SplashDefault splashDefault;
