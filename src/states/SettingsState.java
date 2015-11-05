@@ -3,7 +3,8 @@ package states;
 import java.io.IOException;
 
 /**
- * @author Dennis Sloove, Michael van Kampen
+ * @author Dennis Sloove
+ * @author Michael van Kampen
  * @version 0.1, november 2015
  *          Description:
  *          Interface classes to handle different mail templates

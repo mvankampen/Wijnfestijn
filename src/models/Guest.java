@@ -19,6 +19,7 @@ public class Guest {
 	private String referal;
 	private Boolean no_show = false;
 
+
 	// Assembles a guest object, so it can be used easily
 	public Guest(String lastname, String infix, String firstname, String salutation, String street, String streetnr,
 			String zipcode, String city, String email, String phone, String referal, String comment) {
