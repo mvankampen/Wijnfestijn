@@ -10,14 +10,12 @@ import javafx.scene.web.HTMLEditor;
 import models.Mail;
 
 /**
+ * <P>Mail view generates an output presentation to the user based on changes in the model.</P>
  * @author Sander de Jong
  * @author Michael van Kampen
  * @version 0.1, november 2015
- *          Description:
- *          Mail view generates an output presentation to the user based on changes in the model.
  */
 
-//This screen is a AnchorPane and uses ControlledScreen as navigation manager
 public class MailView extends AnchorPane implements ControlledScreen {
 
     private TextField titleTextArea;

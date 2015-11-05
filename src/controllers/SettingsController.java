@@ -21,7 +21,10 @@ import views.SettingsView;
 import views.SplashscreenView;
 
 /**
- * Created by Dennis Sloove on 28-9-2015.
+ * @author Dennis Sloove.
+ * @version 0.1, November 2015
+ * 		Description:
+ * 		Class to handle all the events from the nodes from SettingsView.
  */
 public class SettingsController {
     private SettingsView settingsView;
@@ -32,6 +35,11 @@ public class SettingsController {
     private int errorCounter = 0;
     private boolean saved = false;
     
+    /**
+     * Constructor
+     * 
+     * @param settingsView Sets the settingsView
+     */
     public SettingsController(SettingsView settingsView) {
         this.settingsView = settingsView;
         setMailInfo();
@@ -39,7 +47,9 @@ public class SettingsController {
         fillStateList();
     }
     /**
-     * Add events to the items that need them.
+     * <p>
+     * 		Add events to the items that need them.
+     * </p>
      */
     public void generateHandler(){
     	// Save button handler
@@ -95,6 +105,11 @@ public class SettingsController {
     	});
     }
     
+    /**
+     * <p>
+     * 		Fills an ArrayList with all the States.
+     * </p>
+     */
     public void fillStateList(){
     	statesList = new ArrayList<SettingsState>();
     	statesList.add(new SettingsStateReminder());
@@ -103,27 +118,52 @@ public class SettingsController {
     	statesList.add(new SettingsStateOpenOrder());
     }
     
+    /**
+     * <p>
+     * 		Sets the state.
+     * </p>
+     */
     public void setState(){    	
     	int typeNumber = settingsView.getTemplatesComboBox().getSelectionModel().getSelectedIndex();
     	settingsState = statesList.get(typeNumber);
     	enableTemplateArea();
     }
     
+    /**
+     * <p>
+     * 		Enables input fields.
+     * </p>
+     */
     public void enableTemplateArea(){
     	settingsView.getTemplateArea().setDisable(false);
     	settingsView.getChangeEmailTitleField().setEditable(true);
     }
     
+    /**
+     * <p>
+     * 		Disables input fields.
+     * </p>
+     */
     public void disableTemplateArea(){
     	settingsView.getTemplateArea().setDisable(true);
     	settingsView.getChangeEmailField().setEditable(false);
     }
     
+    /**
+     * <p>
+     * 		Refreshes input fields.
+     * </p>
+     */
     public void refreshTemplateArea(){
     	settingsView.getTemplateArea().setHtmlText("");
     	settingsView.getChangeEmailTitleField().setText("");
     }
     
+    /**
+     * <p>
+     * Change e-mail address.
+     * </p>
+     */
     public void changeMailInfo(){
     	// Select file
     	String path = defaultPath + "DEFAULTMAIL.txt";
@@ -142,6 +182,11 @@ public class SettingsController {
 		}
     }
     
+    /**
+     * <p>
+     * 		Validates the e-mail address
+     * </p>
+     */
     public void validateEmail(){
     	EmailValidator emailValidator = new EmailValidator();
     	SplashDefault settingsSplash = new GeneralSplash();
@@ -156,7 +201,10 @@ public class SettingsController {
     }
     
     /**
-     * Retrieve the default email from DEFAULTMAIL.txt
+     * <p>
+     * 		Sets the e-mail address and password.
+     * </p>
+     * 
      */
     public void setMailInfo(){
     	String path = defaultPath + "DEFAULTMAIL.txt";

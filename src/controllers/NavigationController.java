@@ -5,11 +5,26 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.AnchorPane;
 import views.NavigationView;
 
+/**
+ * 
+ * @author Dennis Sloove.
+ * @version 0.1, November 2015
+ * 		Description:
+ * 		Class to create the navigation bar.
+ *
+ */
 public class NavigationController extends AnchorPane {
     private NavigationView navigationView;
     private ScreensController screensController;
     private ControllersController CC;
 
+    /**
+     * Constructor
+     * 
+     * @param screensController Sets the sceensController
+     * @param navigationView Sets the navigationView
+     * @param controllersController Sets the controllersController
+     */
     public NavigationController(ScreensController screensController,
         NavigationView navigationView, ControllersController controllersController) {
         this.screensController = screensController;
@@ -18,6 +33,11 @@ public class NavigationController extends AnchorPane {
         generateHandlers();
     }
 
+    /**
+     * <p>
+     * 		Add events to the items that need them.
+     * </p>
+     */
     public void generateHandlers() {
         navigationView.getOrderMenu().getSelectionModel().selectedItemProperty()
             .addListener(new ChangeListener<String>() {
@@ -76,7 +96,11 @@ public class NavigationController extends AnchorPane {
         });
     }
 
-    // Set the ComboBox back to default value
+    /**
+     * <p>
+     * 		Set the ComboBox back to default value.
+     * </p>
+     */
     public void setComboBoxDefault() {
         navigationView.getOrderMenu().setValue(navigationView.ORDERTITLE);
         navigationView.getCustomerMenu().setValue(navigationView.CUSTOMERTITLE);
