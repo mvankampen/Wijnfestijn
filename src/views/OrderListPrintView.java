@@ -13,7 +13,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
-//This screen is a AnchorPane and uses ControlledScreen as navigation manager
+/**
+ * <p>This screen is a AnchorPane and uses ControlledScreen as navigation manager
+ * Shows the content that is needed for the user to print the orderlists.
+ * uses {@link orderListPrintController} as controller<p>
+ * @author Sander
+ *
+ */
 public class OrderListPrintView extends AnchorPane implements ControlledScreen {
 
     @FXML Label introLabel, exampleLabel, listLabel, amountLabel;
@@ -22,25 +28,33 @@ public class OrderListPrintView extends AnchorPane implements ControlledScreen {
     @FXML TextArea listArea;
     @FXML TextField txtFileName;
 
+    /**
+     * <p> Used for registering itself in the hashMap of the ScreensController
+	 * to enable navigation </p>
+	 * @param screensController screencontroller that it registers itself in
+     */
     public void setScreenController(ScreensController screensController) {
-    	/*
-		 * Used for registering itself in the hashMap of the ScreensController
-		 * to enable navigation
-		 */
     }
 
+    /** 
+     * Constructor
+     */
     public OrderListPrintView() {
         createView();
         setUpContentPane();
     }
     
-    // adds the style class and sets the fixed height to the screen
+    /**
+     * <p> adds the style class and sets the fixed height to the screen </p>
+     */
     private void createView() {
         getStyleClass().add("background");
         setMinSize(1200, 800);
        
     }
-
+    /**
+     * <p> sets up the main screen, this will be seen by the user </p>
+     */
     public void setUpContentPane() {
     	// creating the gridpane, this is where all the displayed content goes
         GridPane contentPane = new GridPane();
@@ -88,11 +102,16 @@ public class OrderListPrintView extends AnchorPane implements ControlledScreen {
         getChildren().addAll(contentPane);
 
     }
-
+    /**
+     * @return the printButton
+     */
     public Button getPrintButton() {
         return this.printButton;
     }
-
+    
+    /**
+     * @return the txtFileName
+     */
     public TextField getTxtFileName() {
         return this.txtFileName;
     }
