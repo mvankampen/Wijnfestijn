@@ -11,7 +11,15 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * Created by Sander de Jong on 28-9-2015.
+ *<p>Description: this Controller is used to have a central class
+ *where all vital elements are created so that the system can start.
+ *In this class you will find the creation of the database connection,
+ *the Views, the Controllers, and the procedure to make the Screenscontroller work correctly </p>
+ *@author Alex van der wal
+ *@author Sander de Jong 
+ *@author Dennis Sloove
+ *@author Michael van Kampen
+ *@version v1.0
  */
 public class ControllersController {
 	private ScreensController screensController;
@@ -40,10 +48,6 @@ public class ControllersController {
 	private ImportWineListController importWineListController;
 	private MailController mailController;
 	private OrderListPrintController orderListPrintController;
-	/*
-	 * strings used for screensController so we can identify which view is which
-	 * easily
-	 */
 	private static final String HOMEID = "home";
 	private static final String ORDERLISTPRINTID = "orderlistprint";
 	private static final String ORDERID = "order";
@@ -55,7 +59,10 @@ public class ControllersController {
 	private static final String IMPORTWINELISTID = "import list";
 	private static final String IMPORTGUESTLISTID = "importguest";
 	private static final String ATTENDANCEID = "attendance";
-
+	
+	/**
+	 * Constructor
+	 */
 	public ControllersController() {
 		createDatabaseConnection();
 		createViews();
@@ -63,9 +70,9 @@ public class ControllersController {
 		fillScreensController();
 	}
 
-	/*
-	 * tries to establish the connection with the database through the class
-	 * Database
+	/**
+	 * <p>tries to establish the connection with the database through the class
+	 * Database</p>
 	 */
 	public void createDatabaseConnection() {
 		try {
@@ -85,8 +92,8 @@ public class ControllersController {
 		}
 	}
 
-	/*
-	 * creating all views beforehand so we can link them to the controller
+	/**
+	 * <p>creating all views beforehand so we can link them to the controller</p>
 	 */
 	private void createViews() {
 		homeView = new HomeView();
@@ -104,7 +111,9 @@ public class ControllersController {
 
 	}
 
-	// Creating the controllers
+	/**
+	 * <p> Used to create all controllers used by the System </p>
+	 */
 	private void createControllers() {
 		this.orderListPrintController = new OrderListPrintController(this.orderListPrintView, new WineDAO(this.connection),new GuestDAO(this.connection));
 		this.screensController = new ScreensController();
@@ -123,10 +132,10 @@ public class ControllersController {
 		setAttendanceController(new AttendanceController(attendanceView, new GuestDAO(connection), screensController));
 	}
 
-	/*
-	 * filling the screenscontroller with all the views that we just made and
-	 * linking them with their strings so we can find them in the hashmap of
-	 * screenscontroller with ease
+	/**
+	 * <p>filling the screenscontroller with all the views that we just made and
+	  linking them with their strings so we can find them in the hashmap of
+	  screenscontroller with ease </p>
 	 */
 	public void fillScreensController() {
 		screensController.screenLoad(getHOMEID(), homeView);
@@ -140,121 +149,193 @@ public class ControllersController {
 		screensController.screenLoad(getIMPORTWINELISTID(), importWineListView);
 		screensController.screenLoad(getIMPORTGUESTLISTID(), importGuestListView);
 		screensController.screenLoad(getATTENDANCEID(), attendanceView);
-		// sets the screen that we want to show on start of the application
 		screensController.screenSet(getHOMEID());
 	}
 
-	// getters
+	/**
+	 * @return the screenController
+	 */
 	public ScreensController getScreensController() {
 		return screensController;
 	}
-
+	/**
+	 * @return the navigationController
+	 */
 	public NavigationController getNavigationController() {
 		return navigationController;
 	}
+	/**
+	 * @return the navigationView
+	 */
 	public NavigationView getNavigationView() {
 		return navigationView;
 	}
-
+	/**
+	 * @return the Home ID
+	 */
 	public static String getHOMEID() {
 		return HOMEID;
 	}
-
+	/**
+	 * @return the Orderlistprint ID
+	 */
 	public static String getORDERLISTPRINTID() {
 		return ORDERLISTPRINTID;
 	}
-
+	/**
+	 * @return the Mail ID
+	 */
 	public static String getMAILID() {
 		return MAILID;
 	}
-
+	/**
+	 * @return the Guest ID
+	 */
 	public static String getGUESTID() {
 		return GUESTID;
 	}
-
+	/**
+	 * @return the Debtor ID
+	 */
 	public static String getDEBTORID() {
 		return DEBTORID;
 	}
-
+	/**
+	 * @return the Registration ID
+	 */
 	public static String getREGISTRATIONID() {
 		return REGISTRATIONID;
 	}
-
+	/**
+	 * @return the Order ID
+	 */
 	public static String getORDERID() {
 		return ORDERID;
 	}
-
+	/**
+	 * @return the Settings ID
+	 */
 	public static String getSETTINGSID() {
 		return SETTINGSID;
 	}
-
+	/**
+	 * @return the Importwinelist ID
+	 */
 	public static String getIMPORTWINELISTID() {
 		return IMPORTWINELISTID;
 	}
-
+	/**
+	 * @return the Attendance ID
+	 */
 	public static String getATTENDANCEID() {
 		return ATTENDANCEID;
 	}
-
+	/**
+	 * @return the Importguestlist ID
+	 */
 	public static String getIMPORTGUESTLISTID() {
 		return IMPORTGUESTLISTID;
 	}
+	/**
+	 * @return the Adjustguestcontroller
+	 */
 	public AdjustGuestController getAdjustGuestControler() {
 		return adjustGuestController;
 	}
-
+	/**
+	 * @return the debtorsController
+	 */
 	public DebtorsController getDebtorsController() {
 		return debtorsController;
 	}
-
+	/**
+	 * @param debtorsController used to set the debtorsController that is used
+	 */
 	public void setDebtorsController(DebtorsController debtorsController) {
 		this.debtorsController = debtorsController;
 	}
-
+	/**
+	 * @return the registrationController
+	 */
 	public RegistrationController getRegistrationController() {
 		return registrationController;
 	}
-
+	/**
+	 * @param registrationController used to set the registrationController that is used
+	 */
 	public void setRegistrationController(RegistrationController registrationController) {
 		this.registrationController = registrationController;
 	}
-
+	
+	/**
+	 * @return the attendanceController
+	 */
 	public AttendanceController getAttendanceController() {
 		return attendanceController;
 	}
-
+	
+	/**
+	 * @param attendanceController used to set the attendanceController that is used
+	 */
 	public void setAttendanceController(AttendanceController attendanceController) {
 		this.attendanceController = attendanceController;
 	}
-
+	/**
+	 * 
+	 * @return the orderController
+	 */
 	public OrderController getOrderController() {
 		return orderController;
 	}
-
+	/**
+	 * 
+	 * @param orderController used to set the orderController that is used
+	 */
 	public void setOrderController(OrderController orderController) {
 		this.orderController = orderController;
 	}
-
+	/**
+	 * 
+	 * @return the importGuestlistController
+	 */
 	public ImportGuestListController getImportGuestListController() {
 		return importGuestListController;
 	}
-
+	
+	/**
+	 * 
+	 * @param importGuestListController used to set the importGuestlistController that is used
+	 */
 	public void setImportGuestListController(ImportGuestListController importGuestListController) {
 		this.importGuestListController = importGuestListController;
 	}
 
+	/**
+	 * 
+	 * @return the importWineListController
+	 */
 	public ImportWineListController getImportWineListController() {
 		return importWineListController;
 	}
-
+	/**
+	 * 
+	 * @param importWineListController used to set the importWineListController that is used
+	 */
 	public void setImportWineListController(ImportWineListController importWineListController) {
 		this.importWineListController = importWineListController;
 	}
-
+	/**
+	 * 
+	 * @return the mailController
+	 */
 	public MailController getMailController() {
 		return mailController;
 	}
-
+	
+	/**
+	 * 
+	 * @param mailController used to set the mailController that is used
+	 */
 	public void setMailController(MailController mailController) {
 		this.mailController = mailController;
 	}
