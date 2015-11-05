@@ -209,7 +209,14 @@ public class AdjustGuestController {
 
     }
 
-
+    /**
+     *
+     * @param title name of the Column
+     * @param propertyName name of the property that displays
+     * @param <S> which object the Column takes as input
+     * @param <T> which type the property is
+     * @return TableColumn
+     */
     private <S, T> TableColumn<S, T> createColumn(String title, String propertyName) {
         TableColumn<S, T> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(propertyName));
