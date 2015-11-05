@@ -75,6 +75,10 @@ public class OrderListPrintController {
 		setSplashScreenView(listprintSplash);
     }
 
+    /**
+     * <p>Sets the splashscreen for this view</p>
+     * @param listPrintSplash
+     */
     private void setSplashScreenView(SplashDefault listPrintSplash) {
 	 	context = "";
 	 	title = "";
