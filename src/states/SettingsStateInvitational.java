@@ -1,5 +1,7 @@
 package states;
 
+import services.Util;
+
 import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,26 +32,21 @@ public class SettingsStateInvitational implements SettingsState {
     @Override public void fileToVariable() {
         String line;
         //defaultPath from SettingsState class
-        pathToFile = DEFAULTPATH + "INVITATIONAL.html";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(pathToFile));
             returnBody = "";
             returnTitle = "";
 
             Pattern pattern = Pattern.compile("<title>(.+?)</title>");
-            Matcher matcher = pattern.matcher(readFile(pathToFile));
+            Matcher matcher = pattern.matcher(new Util().getTxtFileFromResource("INVITATIONAL.html"));
             matcher.find();
 
             returnTitle = matcher.group(1);
             defaultTitle = matcher.group(1);
 
-            while ((line = br.readLine()) != null) {
 
-                returnBody += line + "\n";
-                defaultBody += line + "\n";
-            }
-            br.close();
-        } catch (IOException e) {
+                returnBody = new Util().getTxtFileFromResource("INVITATIONAL.html");
+                defaultBody = new Util().getTxtFileFromResource("INVITATIONAL.html");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

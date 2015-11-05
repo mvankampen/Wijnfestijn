@@ -1,5 +1,7 @@
 package states;
 
+import services.Util;
+
 import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,23 +35,19 @@ public class SettingsStateThankYou implements SettingsState {
         //defaultPath from SettingsState class
         pathToFile = DEFAULTPATH + "THANKYOU.html";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(pathToFile));
             returnBody = "";
             returnTitle = "";
 
             Pattern pattern = Pattern.compile("<title>(.+?)</title>");
-            Matcher matcher = pattern.matcher(readFile(pathToFile));
+            Matcher matcher = pattern.matcher(new Util().getTxtFileFromResource("THANKYOU.html"));
             matcher.find();
 
-            while ((line = br.readLine()) != null) {
                 returnTitle = matcher.group(1);
                 defaultTitle = matcher.group(1);
 
-                returnBody += line + "\n";
-                defaultBody += line + "\n";
-            }
-            br.close();
-        } catch (IOException e) {
+                returnBody = new Util().getTxtFileFromResource("THANKYOU.html");
+                defaultBody = new Util().getTxtFileFromResource("THANKYOU.html");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
+import services.Util;
 import splashscreens.GeneralSplash;
 import splashscreens.SettingsSetHead;
 import splashscreens.SplashDefault;
@@ -30,6 +31,7 @@ public class SettingsController {
     private String defaultPath = "src/templates/";
     private int errorCounter = 0;
     private boolean saved = false;
+    private Util util;
 
     /**
      * Constructor
@@ -38,9 +40,11 @@ public class SettingsController {
      */
     public SettingsController(SettingsView settingsView) {
         this.settingsView = settingsView;
+        this.util = new Util();
         setMailInfo();
         generateHandler();
         fillStateList();
+
     }
 
     /**
@@ -168,7 +172,7 @@ public class SettingsController {
      */
     public void changeMailInfo() {
         // Select file
-        String path = defaultPath + "DEFAULTMAIL.txt";
+        String path = this.util.getTxtFileFromResource("DEFAULTMAIL.txt");
         try {
             // Create a new PrintWriter
             PrintWriter pw = new PrintWriter(path);
@@ -208,24 +212,20 @@ public class SettingsController {
      * </p>
      */
     public void setMailInfo() {
-        String path = defaultPath + "DEFAULTMAIL.txt";
+        String path = this.util.getTxtFileFromResource("DEFAULTMAIL.txt");
         String line = null;
         boolean gotName = false;
         try {
             // Create a new BufferedReader for DEFAULTMAIL.txt
-            BufferedReader br = new BufferedReader(new FileReader(path));
             // Load the email address in the variable "returnMail"
-            while ((line = br.readLine()) != null) {
                 if (!gotName) {
                     settingsView.getChangeEmailField().setText(line);
                     gotName = true;
                 } else {
                     settingsView.getDefaultMailPasswordField().setText(line);
                 }
-            }
             // Closing the BufferedReader
-            br.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

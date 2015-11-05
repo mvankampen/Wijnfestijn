@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Toggle;
 import models.Mail;
 import services.MailService;
+import services.Util;
 import splashscreens.MailEmptyMessage;
 import splashscreens.MailSendMessage;
 import splashscreens.SplashDefault;
@@ -96,7 +97,7 @@ public class MailController {
      */
     private void setTextFields() {
         try {
-            String s = readFile("src/templates/" + this.mail.getMailType().toString() + ".html");
+            String s = readFile(this.mail.getMailType().toString() + ".html");
             Pattern pattern = Pattern.compile("<title>(.+?)</title>");
             Matcher matcher = pattern.matcher(s);
             matcher.find();
@@ -179,19 +180,6 @@ public class MailController {
      *                     interrupted I/O operations.
      */
     String readFile(String fileName) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(fileName));
-        try {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-
-            while (line != null) {
-                sb.append(line);
-                sb.append("\n");
-                line = br.readLine();
-            }
-            return sb.toString();
-        } finally {
-            br.close();
-        }
+        return new Util().getTxtFileFromResource(fileName);
     }
 }
