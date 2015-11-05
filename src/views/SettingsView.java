@@ -16,9 +16,10 @@ import javafx.scene.web.HTMLEditor;
 
 
 /**
+ * <p> Here the user can change the settings</p>
  * @author Dennis Sloove.
  * @version 0.1, November 2015
- *          Description:
+ *        
  */
 public class SettingsView extends AnchorPane implements ControlledScreen {
     private ScreensController screensController;

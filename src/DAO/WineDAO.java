@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <p>  WineDAO is used to separate low level data accessing API or operations from high level business services. </p>
  * @author Michael van Kampen, Sander de Jong
  * @version 0.1, november 2015
- *          Description:
- *          WineDAO is used to separate low level data accessing API or operations from high level business services.
+ *         
  */
 public class WineDAO {
 

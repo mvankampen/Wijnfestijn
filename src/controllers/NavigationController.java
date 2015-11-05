@@ -6,10 +6,10 @@ import javafx.scene.layout.AnchorPane;
 import views.NavigationView;
 
 /**
+ * <p>  Class to create the navigation bar. </p>
  * @author Dennis Sloove.
  * @version 0.1, November 2015
- *          Description:
- *          Class to create the navigation bar.
+ *         
  */
 public class NavigationController extends AnchorPane {
     private NavigationView navigationView;

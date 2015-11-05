@@ -5,10 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
+ * <p> Database class is a singleton pattern that restricts the instantiation of a class to one object.</p>
  * @author Michael van Kampen
  * @version 0.1, november 2015
- *          Description:
- *          Database class is a singleton pattern that restricts the instantiation of a class to one object.
+ *         
  */
 
 public class Database {

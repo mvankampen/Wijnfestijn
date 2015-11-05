@@ -2,11 +2,11 @@ package models;
 
 
 /**
+ * <p> Wine class holds all the information about the Wine. </p>
  * @author Michael van Kampen
  * @author Sander de Jong
  * @version 0.1, november 2015
- *          Description:
- *          Wine class holds all the information about the Wine.
+ *          
  */
 public class Wine {
     private int id;

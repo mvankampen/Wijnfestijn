@@ -20,10 +20,10 @@ import java.io.File;
 import java.io.FileReader;
 
 /**
+ * <p>  Class to import a .CSV file for wines and add the content to the database </p>
  * @author Dennis Sloove
  * @version 0.1, November 2015
- *          Description:
- *          Class to import a .CSV file for wines and add the content to the database
+ *        
  */
 public class ImportWineListController {
     ImportWineListView importWineListView;

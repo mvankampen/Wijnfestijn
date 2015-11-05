@@ -14,11 +14,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
+ * <p>Registration view generates an output presentation to the user based on changes in the model.</p>
  * @author Alex van der Wal
  * @author Michael van Kampen
  * @version 0.1, november 2015
- *          Description:
- *          Registration view generates an output presentation to the user based on changes in the model.
+ *          
  */
 
 public class RegistrationView extends AnchorPane implements ControlledScreen {

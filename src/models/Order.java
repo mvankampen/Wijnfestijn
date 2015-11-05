@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
+ * <p> The Order class holds all the information of an order.</p>
  * @author Sander de Jong.
  * @version 0.1, November 2015.
- *          Description:
- *          The Order class holds all the information of an order.
+ *          
  */
 public class Order {
     private int id;

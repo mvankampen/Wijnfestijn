@@ -17,10 +17,10 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
+ *   <p> Class to handle all the events from the nodes from SettingsView. </p>
  * @author Dennis Sloove.
  * @version 0.1, November 2015
- *          Description:
- *          Class to handle all the events from the nodes from SettingsView.
+ *       
  */
 public class SettingsController {
     private SettingsView settingsView;

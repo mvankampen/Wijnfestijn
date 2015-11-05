@@ -1,10 +1,10 @@
 package models;
 
 /**
+ *  <p>The Guest class holds all the information about the Guests.</p>
  * @author Sander de Jong
  * @version 0.1, november 2015.
- *          Description:
- *          The Guest class holds all the information about the Guests.
+ *         
  */
 public class Guest {
     private int id;

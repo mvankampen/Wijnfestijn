@@ -22,10 +22,10 @@ import java.io.File;
 import java.io.FileReader;
 
 /**
+ *   <p>Class to import a .CSV file for guests and add the content to the database<p>
  * @author Dennis Sloove
  * @version 0.1, November 2015
- *          Description:
- *          <p>Class to import a .CSV file for guests and add the content to the database<p>
+ *        
  */
 public class ImportGuestListController {
     ImportGuestListView importGuestListView;
