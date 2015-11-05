@@ -13,7 +13,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Guest;
-import splashscreens.CsvImportSucceedMessage;
+import splashscreens.ImportSucceedMessage;
 import splashscreens.CsvIncorrectFileMessage;
 import splashscreens.CsvIncorrectRowsGuestMessage;
 import splashscreens.CsvIncorrectRowsWineMessage;
@@ -54,14 +54,16 @@ public class ImportGuestListController {
 			submitGuests();
 		});
 	}
-	
-	 private void setSplashScreenView(SplashDefault wineCsvSplash) {
+	/*Gets the title/header/context properties from guestCsvSplash and creates a 
+	 * splashscreenview with it, showing the message to the user
+	 */
+	 private void setSplashScreenView(SplashDefault guestCsvSplash) {
 		 	context = "";
 		 	title = "";
 		 	header = "";
-	        title = wineCsvSplash.getTitleText();
-	        header = wineCsvSplash.getHeaderText();
-	        context = wineCsvSplash.getContextText();
+	        title = guestCsvSplash.getTitleText();
+	        header = guestCsvSplash.getHeaderText();
+	        context = guestCsvSplash.getContextText();
 	        splashScreenView = new SplashscreenView(title, header, context);
 	    }
 	// puts all data in the tableview ( so altered data goes through) in the
@@ -72,14 +74,16 @@ public class ImportGuestListController {
 			this.guestDAO.addGuest(data.get(n));
 			n++;
 		}
+		//informs the user the input to the database went succesfull
 		SplashDefault guestCsvSplash = new SplashDefault();
-		guestCsvSplash = new CsvImportSucceedMessage(guestCsvSplash);
+		guestCsvSplash = new ImportSucceedMessage(guestCsvSplash);
 		setSplashScreenView(guestCsvSplash);
 		resetFields();
 	}
 
 	// used for reading out the data from a selected CSV file
 	public void fireCsv() {
+		//a new splashScreen to be able to show messages to the user
 		SplashDefault guestCsvSplash = new SplashDefault();
 		// prompts the user to choose a CSV file
 		importFile = fileChooser.showOpenDialog(new Stage());
@@ -118,6 +122,9 @@ public class ImportGuestListController {
 							nextLine = null;
 						}
 						else{
+							/* informs the user that the input CSV does
+							 * not contain the needed rows to generate a Guest Object
+							 */
 							guestCsvSplash = new CsvIncorrectRowsGuestMessage(guestCsvSplash);
 							setSplashScreenView(guestCsvSplash);
 						}
@@ -131,9 +138,9 @@ public class ImportGuestListController {
 				e1.printStackTrace();
 			}
 		} else {
+			//informs the user that the selected file is not a CSV file
 			guestCsvSplash = new CsvIncorrectFileMessage(guestCsvSplash);
 			setSplashScreenView(guestCsvSplash);
-			System.out.println("Dit is geen .CSV bestand");
 		}
 	};
 

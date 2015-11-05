@@ -11,7 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Wine;
-import splashscreens.CsvImportSucceedMessage;
+import splashscreens.ImportSucceedMessage;
 import splashscreens.CsvIncorrectFileMessage;
 import splashscreens.CsvIncorrectRowsWineMessage;
 import splashscreens.SplashDefault;
@@ -57,11 +57,13 @@ public class ImportWineListController {
 	public void submitWines() {
 		wineDAO.insertAllWines(data);
 		SplashDefault wineCsvSplash = new SplashDefault();
-		wineCsvSplash = new CsvImportSucceedMessage(wineCsvSplash);
+		wineCsvSplash = new ImportSucceedMessage(wineCsvSplash);
 		setSplashScreenView(wineCsvSplash);
 		resetFields();
 	}
-	
+	/*Gets the title/header/context properties from wineCsvSplash and creates a 
+	 * splashscreenview with it, showing the message to the user
+	 */
 	 private void setSplashScreenView(SplashDefault wineCsvSplash) {
 		 	context = "";
 		 	title = "";
@@ -74,6 +76,7 @@ public class ImportWineListController {
 
 	// used for reading out the data from a selected CSV file
 	public void fireCsv() {
+		//a new splashScreen to be able to show messages to the user
 		SplashDefault wineCsvSplash = new SplashDefault();
 		
 		// prompts the user to choose a CSV file
@@ -113,6 +116,9 @@ public class ImportWineListController {
 							nextLine = null;
 						}
 						else{
+							/*informs the user that the input CSV 
+							 * does not contain the rows needed to generate a Wine object
+							 */
 							wineCsvSplash = new CsvIncorrectRowsWineMessage(wineCsvSplash);
 							setSplashScreenView(wineCsvSplash);
 						}
@@ -128,13 +134,12 @@ public class ImportWineListController {
 			}
 		}
 		else if(csvSelected == false) {
+			//informs the user that the input is not a CSV file
 			wineCsvSplash = new CsvIncorrectFileMessage(wineCsvSplash);
 			setSplashScreenView(wineCsvSplash);
 			
 		}
 	};
-		// error handling incase the file is not a CSV file
-		
 
 	// checks if the file that is selected by the user is actually a .csv file
 	public boolean isCSV(File importFile) {

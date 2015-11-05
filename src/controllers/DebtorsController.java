@@ -14,8 +14,12 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Guest;
 import models.Order;
+import splashscreens.DebtorsEmptyMessage;
+import splashscreens.ImportSucceedMessage;
+import splashscreens.SplashDefault;
 import views.AttendanceView;
 import views.DebtorsView;
+import views.SplashscreenView;
 
 /**
  * Created by Sander de Jong on 28-9-2015.
@@ -28,6 +32,8 @@ public class DebtorsController {
     private TableColumn<Order, Guest> emailCol;
     private TableColumn<Order, Boolean> activeCol;
     private TableColumn<Order, Integer> idCol;
+    private String context,title,header;
+    private SplashscreenView splashScreenView;
     private ScreensController screensController;
     public DebtorsController(DebtorsView debtorsView, OrderDAO orderDAO, GuestDAO guestDAO, ScreensController screensController) {
         this.debtorsView = debtorsView;
@@ -42,6 +48,18 @@ public class DebtorsController {
     	this.debtorsView.getGenerateButton().setOnAction(e -> generateDebtors());
     	this.debtorsView.getSaveButton().setOnAction(e -> submitChanges());
     }
+    /*Gets the title/header/context properties from debtorCsvSplash and creates a 
+	 * splashscreenview with it, showing the message to the user
+	 */
+	 private void setSplashScreenView(SplashDefault debtorCsvSplash) {
+		 	context = "";
+		 	title = "";
+		 	header = "";
+	        title = debtorCsvSplash.getTitleText();
+	        header = debtorCsvSplash.getHeaderText();
+	        context = debtorCsvSplash.getContextText();
+	        splashScreenView = new SplashscreenView(title, header, context);
+	    }
     //Creating the columns for the tableview
     @SuppressWarnings("unchecked")
 	private void makeTable() {
@@ -93,6 +111,12 @@ public class DebtorsController {
    
 	private void generateDebtors() {
     	debtorsArrayList = orderDAO.getAllNativeOrders();
+    	if(debtorsArrayList.size() == 0) {
+    		SplashDefault guestCsvSplash = new SplashDefault();
+    		guestCsvSplash = new DebtorsEmptyMessage(guestCsvSplash);
+    		setSplashScreenView(guestCsvSplash);
+    		
+    	}
     	data.clear();
     	int j = 0;
     	while (debtorsArrayList.size() > j) {
@@ -107,11 +131,14 @@ public class DebtorsController {
     }
     //updates the changed data in the database
     private void submitChanges() {
-	    int n = 0;
+    	int n = 0;
 	    while(data.size() > n) {
 	    	orderDAO.updateOrder(data.get(n));
 	    	n++;
 	    }
+	    SplashDefault debtorCsvSplash = new SplashDefault();
+		debtorCsvSplash = new ImportSucceedMessage(debtorCsvSplash);
+		setSplashScreenView(debtorCsvSplash);
 	    generateHandlers();
 		debtorsArrayList.clear();
     }
