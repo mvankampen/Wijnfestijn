@@ -13,7 +13,10 @@ import javafx.scene.web.HTMLEditor;
 
 
 /**
- * Created by Dennis Sloove on 21-9-2015.
+ * @author Dennis Sloove.
+ * @version 0.1, November 2015
+ * 		Description:
+ * 		
  */
 public class SettingsView extends AnchorPane implements ControlledScreen {
     private ScreensController screensController;
@@ -23,20 +26,39 @@ public class SettingsView extends AnchorPane implements ControlledScreen {
     public Button saveButton, resetButton;
     public PasswordField defaultMailPasswordField;
 
+    /**
+	 * <p>
+	 * 		Used for registering itself in the hashMap of the ScreensController
+	 * 		to enable navigation
+	 * </p>
+	 */
     public void setScreenController(ScreensController screensController) {
         this.screensController = screensController;
     }
 
+    /**
+     * Constructor
+     */
     public SettingsView() {
         createView();
     }
 
+    /**
+	 * <p>
+	 * 		Adds the style class and sets the fixed height to the screen
+	 * </p>
+	 */
     private void createView() {
         getStyleClass().add("background");
         setMinSize(1200, 800);
         setUpContentPane();
     }
 
+    /**
+	 * <p>
+	 * 		Create controls.
+	 * </p>
+	 */
 	public void setUpContentPane() {
     	ObservableList<String> options = FXCollections.observableArrayList("Herinnering",
     		        "Uitnodiging", "Bedank", "Factuur herinnering");
@@ -113,30 +135,60 @@ public class SettingsView extends AnchorPane implements ControlledScreen {
     	getChildren().addAll(bPane);
     }
 	
+	// ***** GETTERS *****
+	
+	/**
+	 * 
+	 * @return Returns change e-mail field
+	 */
 	public TextField getChangeEmailField(){
 		return changeEmailField;
 	}
 	
+	/**
+	 * 
+	 * @return Returns change e-mail title field
+	 */
 	public TextField getChangeEmailTitleField(){
 		return changeEmailTitleField;
 	}
 	
+	/**
+	 * 
+	 * @return Returns password field
+	 */
 	public PasswordField getDefaultMailPasswordField(){
 		return defaultMailPasswordField;
 	}
 	
+	/**
+	 * 
+	 * @return Returns reset button
+	 */
 	public Button getResetButton(){
 		return resetButton;
 	}
 	
+	/**
+	 * 
+	 * @return Returns save button
+	 */
 	public Button getSaveButton(){
 		return saveButton;
 	}
 	
+	/**
+	 * 
+	 * @return Returns templates box
+	 */
 	public ComboBox<String> getTemplatesComboBox(){
 		return templatesComboBox;
 	}
 	
+	/**
+	 * 
+	 * @return Returns template area
+	 */
 	public HTMLEditor getTemplateArea(){
 		return templateArea;
 	}
