@@ -66,28 +66,28 @@ public class Mail {
     
     /**
      * 
-     * @param recipients Sets the list of recipients
+     * @param recipients Used to set the list of recipients
      */
     public void setRecipients(ArrayList<InternetAddress> recipients) {
         this.recipients = recipients;
     }
     /**
      * 
-     * @param subject Sets the subject
+     * @param subject Used to set the subject
      */
     public void setSubject(String subject) {
         this.subject = subject;
     }
     /**
      * 
-     * @param body Sets the body
+     * @param body Used to set the body
      */
     public void setBody(String body) {
         this.body = body;
     }
     /**
      * 
-     * @param mailType Sets the mail type
+     * @param mailType Used to set the mail type
      */
     public void setMailType(MailType mailType) {
         this.mailType = mailType;

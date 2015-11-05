@@ -4,7 +4,7 @@ package models;
  * @author Sander de Jong on 21-9-2015.
  * @version 0.1, november 2015.
  * 		Description:
- * 		Guest holds all the information about the Guests.
+ * 		The Guest class holds all the information about the Guests.
  */
 public class Guest {
 	private int id;
@@ -57,19 +57,19 @@ public class Guest {
 	/**
 	 * Constructor
 	 * 
-	 * @param lastname Holds the last name of the guest
-	 * @param infix Holds the infix on the guest
-	 * @param firstname Holds the first name of the guest
-	 * @param salutation Holds the salutation of the guest
-	 * @param street Holds the street of the guest
-	 * @param streetnr Holds the street number of the guest
-	 * @param zipcode Holds the zipcode of the guest
-	 * @param city Holds the city of the guest
-	 * @param email Holds the e-mail of the guest
-	 * @param phone Holds the phone number of the guest
-	 * @param referal Holds the referal of the guest
-	 * @param comment Holds the comment of the guest
-	 * @param no_show Shows if the guest attended the event
+	 * @param lastname Sets the last name of the guest
+	 * @param infix Sets the infix on the guest
+	 * @param firstname Sets the first name of the guest
+	 * @param salutation Sets the salutation of the guest
+	 * @param street Sets the street of the guest
+	 * @param streetnr Sets the street number of the guest
+	 * @param zipcode Sets the zipcode of the guest
+	 * @param city Sets the city of the guest
+	 * @param email Sets the e-mail of the guest
+	 * @param phone Sets the phone number of the guest
+	 * @param referal Sets the referral of the guest
+	 * @param comment Sets the comment of the guest
+	 * @param no_show Sets if the guest attended the event
 	 */
 	public Guest(int id, String lastname, String infix, String firstname, String salutation, String street,
 			String streetnr, String zipcode, String city, String email, String phone, String referal, String comment,
@@ -194,91 +194,91 @@ public class Guest {
 	
 	/**
 	 * 
-	 * @param infix Sets the value of infix
+	 * @param infix Used to set the value of infix
 	 */
 	public void setInfix(String infix) {
 		this.infix = infix;
 	}
 	/**
 	 * 
-	 * @param lastname Sets the value of last name
+	 * @param lastname Used to set the value of last name
 	 */
 	public void setSurname(String lastname) {
 		this.surname = lastname;
 	}
 	/**
 	 * 
-	 * @param firstname Sets the value of first name
+	 * @param firstname Used to set the value of first name
 	 */
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
 	/**
 	 * 
-	 * @param salutation Sets the value of salutation
+	 * @param salutation Used to set the value of salutation
 	 */
 	public void setSalutation(String salutation) {
 		this.salutation = salutation;
 	}
 	/**
 	 * 
-	 * @param street  Sets the value of street
+	 * @param street  Used to set the value of street
 	 */
 	public void setStreet(String street) {
 		this.street = street;
 	}
 	/**
 	 * 
-	 * @param streetnr Sets the value of street number
+	 * @param streetnr Used to set the value of street number
 	 */
 	public void setStreetnr(String streetnr) {
 		this.streetnr = streetnr;
 	}
 	/**
 	 * 
-	 * @param zipcode Sets the value of zipcode
+	 * @param zipcode Used to set the value of zipcode
 	 */
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
 	/**
 	 * 
-	 * @param city Sets the value of city
+	 * @param city Used to set the value of city
 	 */
 	public void setCity(String city) {
 		this.city = city;
 	}
 	/**
 	 * 
-	 * @param email  Sets the value of e-mail
+	 * @param email  Used to set the value of e-mail
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	/**
 	 * 
-	 * @param phone Sets the value of phone
+	 * @param phone Used to set the value of phone
 	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	/**
 	 * 
-	 * @param comment Sets the value of comment
+	 * @param comment Used to set the value of comment
 	 */
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
 	/**
 	 * 
-	 * @param referal Sets the value of referal
+	 * @param referal Used to set the value of referal
 	 */
 	public void setReferal(String referal) {
 		this.referal = referal;
 	}
 	/**
 	 * 
-	 * @param no_show Sets if the guest has shown up
+	 * @param no_show Used to set if the guest has shown up
 	 */
 	public void setNo_show(Boolean no_show) {
 		this.no_show = no_show;
