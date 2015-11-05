@@ -106,7 +106,7 @@ public class ControllersController {
 
 	// Creating the controllers
 	private void createControllers() {
-		this.orderListPrintController = new OrderListPrintController(this.orderListPrintView, new WineDAO(this.connection));
+		this.orderListPrintController = new OrderListPrintController(this.orderListPrintView, new WineDAO(this.connection),new GuestDAO(this.connection));
 		this.screensController = new ScreensController();
 		this.mailService = new MailService();
 		new HomeController(homeView, this.screensController, this);

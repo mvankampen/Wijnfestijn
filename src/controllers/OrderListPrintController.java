@@ -1,7 +1,9 @@
 package controllers;
 
 import DAO.Database;
+import DAO.GuestDAO;
 import DAO.WineDAO;
+import models.Guest;
 import models.Wine;
 import services.PDFService;
 import views.OrderListPrintView;
@@ -18,12 +20,18 @@ public class OrderListPrintController {
     private OrderListPrintView orderListPrintView;
     private ArrayList<Wine> wineList;
     private WineDAO wineDAO;
+    private GuestDAO guestDAO;
 
-    public OrderListPrintController(OrderListPrintView orderListPrintView, WineDAO wineDAO) {
+    public OrderListPrintController(OrderListPrintView orderListPrintView, WineDAO wineDAO, GuestDAO guestDAO) {
         this.pdfService = new PDFService();
         this.orderListPrintView = orderListPrintView;
         this.wineDAO = wineDAO;
+        this.guestDAO = guestDAO;
 
+        generateHandlers();
+    }
+
+    private void generateHandlers() {
         orderListPrintView.getPrintButton().setOnAction(event -> createOrderListPDF());
     }
 
@@ -33,7 +41,7 @@ public class OrderListPrintController {
 
     public void createOrderListPDF() {
         fillWineList();
-        pdfService.createOrderList(wineList, orderListPrintView.getTxtFileName().getText());
+        pdfService.createOrderList(wineList, orderListPrintView.getTxtFileName().getText(), guestDAO);
     }
 
     public void printOrderListPDF() {
