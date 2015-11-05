@@ -1,9 +1,11 @@
 package DAO;
 
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import models.Wine;
@@ -23,22 +25,26 @@ public class WineDAO {
 	// inserts all wines in the arraylist into the database
 	public void insertAllWines(List<Wine> wines) {
 		try {
+			setAllWinesFalse();
 			this.preparedStatement = null;
+
 			String sqlQuery = "INSERT INTO wine"
 					+ "(wine_name, wine_category, wine_type, wine_publisher, wine_year, wine_price, wine_rank, wine_costprice, wine_margin) VALUES "
 					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+
 			this.preparedStatement = this.connection.prepareStatement(sqlQuery);
 
-			for (int i = 0; i < wines.size(); i++) {
-				preparedStatement.setString(1, wines.get(i).getName());
-				preparedStatement.setString(2, wines.get(i).getCategory());
-				preparedStatement.setString(3, wines.get(i).getType());
-				preparedStatement.setString(4, wines.get(i).getPublisher());
-				preparedStatement.setString(5, wines.get(i).getYear());
-				preparedStatement.setDouble(6, wines.get(i).getPrice());
-				preparedStatement.setString(7, wines.get(i).getRank());
-				preparedStatement.setDouble(8, wines.get(i).getCostprice());
-				preparedStatement.setDouble(9, wines.get(i).getMargin());
+			for (Wine wine : wines) {
+				preparedStatement.setString(1, wine.getName());
+				preparedStatement.setString(2, wine.getCategory());
+				preparedStatement.setString(3, wine.getType());
+				preparedStatement.setString(4, wine.getPublisher());
+				preparedStatement.setString(5, wine.getYear());
+				preparedStatement.setDouble(6, wine.getPrice());
+				preparedStatement.setString(7, wine.getRank());
+				preparedStatement.setDouble(8, wine.getCostprice());
+				preparedStatement.setDouble(9, wine.getMargin());
 				preparedStatement.executeUpdate();
 			}
 			this.connection.commit();
@@ -53,6 +59,28 @@ public class WineDAO {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void setAllWinesFalse() {
+		try {
+			this.preparedStatement = null;
+			String setAllToFalse = "UPDATE wine SET wine_active = ?";
+			this.preparedStatement = this.connection.prepareStatement(setAllToFalse);
+			preparedStatement.setBoolean(1, false);
+			preparedStatement.executeUpdate();
+			this.connection.commit();
+		} catch (SQLException e) {
+			System.out.print(e.getMessage());
+			try {
+				connection.rollback();
+				if (connection != null) {
+					System.err.print("Transaction is being rolled back");
+				}
+			} catch (SQLException ex) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 	// updates the selected wine with the new values
@@ -106,5 +134,29 @@ public class WineDAO {
 			e.printStackTrace();
 		}
 		return wine;
+	}
+
+	public ArrayList<Wine> getAllActiveWine() {
+		try {
+			ArrayList<Wine> wineList = new ArrayList<>();
+			Wine wine;
+			this.preparedStatement = null;
+			String sqlQuery = "SELECT * FROM wine WHERE wine_active = ?";
+			this.preparedStatement = this.connection.prepareStatement(sqlQuery);
+			this.preparedStatement.setBoolean(1, true);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				wine = new Wine(resultSet.getInt("wine_id"), resultSet.getString("wine_name"),
+						resultSet.getString("wine_category"), resultSet.getString("wine_type"),
+						resultSet.getString("wine_publisher"), resultSet.getString("wine_year"),
+						resultSet.getDouble("wine_price"), resultSet.getString("wine_rank"),
+						resultSet.getDouble("wine_costprice"), resultSet.getDouble("wine_margin"));
+				wineList.add(wine);
+			}
+			return wineList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

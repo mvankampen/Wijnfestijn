@@ -1,7 +1,6 @@
 package services;
 
 import DAO.OrderDAO;
-import DAO.OrderLineDAO;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Rectangle;
@@ -12,20 +11,23 @@ import com.itextpdf.text.pdf.draw.LineSeparator;
 import models.Guest;
 import models.Order;
 import models.OrderLine;
+import models.Wine;
 
-import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Sander de Jong on 24-9-2015.
  */
 public class PDFService {
-    private File out = new File(System.getProperty("user.home") + "/Wijnfestijn/factuur/");
+    private File orderListOut = new File(System.getProperty("user.home") + "/Wijnfestijn/bestellijst/");
+    private File factuurOut = new File(System.getProperty("user.home") + "/Wijnfestijn/factuur/");
     private Font fontHelveticaHeader = new Font(Font.FontFamily.HELVETICA, 17, Font.NORMAL);
     private Font fontHelveticaNormalBold = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
     private Font fontHelveticaNormal = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
@@ -33,8 +35,8 @@ public class PDFService {
     public File createOrderPdf(Order order, OrderDAO orderDAO) {
         Document document = new Document();
         try {
-            checkDirectory(this.out);
-            PdfWriter.getInstance(document, new FileOutputStream(out.toString() + "/" + order.getId() + ".pdf"));
+            checkDirectory(this.factuurOut);
+            PdfWriter.getInstance(document, new FileOutputStream(factuurOut.toString() + "/" + order.getId() + ".pdf"));
             document.open();
 
             // Main paragraph
@@ -167,7 +169,7 @@ public class PDFService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new File(out.toString() + "/" + order.getId() + ".pdf");
+        return new File(factuurOut.toString() + "/" + order.getId() + ".pdf");
     }
 
     public String getFullName(Guest guest) {
@@ -181,8 +183,63 @@ public class PDFService {
         return result;
     }
 
-    public void createCustomOrderList() {
+    public void createOrderList(ArrayList<Wine> wineList, String fileName) {
+        Document document = new Document();
+        try {
+            String newFileName;
+            if(fileName.isEmpty()) {
+                newFileName = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+            } else {
+                newFileName = fileName;
+            }
 
+            checkDirectory(this.orderListOut);
+            PdfWriter.getInstance(document, new FileOutputStream(orderListOut.toString() + "/" + newFileName + ".pdf"));
+            document.open();
+
+            // Main paragraph
+            Paragraph preface = new Paragraph();
+
+            // Main table
+            PdfPTable orderListTable = new PdfPTable(9);
+            orderListTable.setWidthPercentage(100);
+            float[] columnWidthOrdertable = {0.4f,0.5f,0.6f,1.3f,0.6f,0.4f,0.4f,0.4f,0.4f};
+            orderListTable.setWidths(columnWidthOrdertable);
+
+            orderListTable.addCell(new Paragraph("Nr.", this.fontHelveticaNormalBold));
+            orderListTable.addCell(new Paragraph("Aantal dozen", this.fontHelveticaNormalBold));
+            orderListTable.addCell(new Paragraph("", this.fontHelveticaNormalBold));
+            orderListTable.addCell(new Paragraph("", this.fontHelveticaNormalBold));
+            orderListTable.addCell(new Paragraph("", this.fontHelveticaNormalBold));
+            orderListTable.addCell(new Paragraph("Jaar", this.fontHelveticaNormalBold));
+            orderListTable.addCell(new Paragraph("Prijs fles", this.fontHelveticaNormalBold));
+            orderListTable.addCell(new Paragraph("Prijs doos", this.fontHelveticaNormalBold));
+            orderListTable.addCell(new Paragraph("Rang", this.fontHelveticaNormalBold));
+
+            for(Wine w : wineList) {
+                orderListTable.addCell(new Paragraph(String.valueOf(w.getId()), this.fontHelveticaNormal));
+                orderListTable.addCell(new Paragraph("", this.fontHelveticaNormal));
+                orderListTable.addCell(new Paragraph(w.getType(), this.fontHelveticaNormal));
+                orderListTable.addCell(new Paragraph(w.getName(), this.fontHelveticaNormal));
+                orderListTable.addCell(new Paragraph(w.getCategory(), this.fontHelveticaNormal));
+                orderListTable.addCell(new Paragraph(w.getYear(), this.fontHelveticaNormal));
+                orderListTable.addCell(new Paragraph(w.getCostprice().toString(), this.fontHelveticaNormal));
+                orderListTable.addCell(new Paragraph(w.getPrice().toString(), this.fontHelveticaNormal));
+                orderListTable.addCell(new Paragraph(w.getRank(), this.fontHelveticaNormal));
+            }
+
+            preface.add(orderListTable);
+
+
+            // Add pages to document
+            document.add(preface);
+            document.newPage();
+            document.close();
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private boolean checkDirectory(File path) {

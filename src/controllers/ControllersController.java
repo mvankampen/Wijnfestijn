@@ -39,6 +39,7 @@ public class ControllersController {
 	private ImportGuestListController importGuestListController;
 	private ImportWineListController importWineListController;
 	private MailController mailController;
+	private OrderListPrintController orderListPrintController;
 	/*
 	 * strings used for screensController so we can identify which view is which
 	 * easily
@@ -105,6 +106,7 @@ public class ControllersController {
 
 	// Creating the controllers
 	private void createControllers() {
+		this.orderListPrintController = new OrderListPrintController(this.orderListPrintView, new WineDAO(this.connection));
 		this.screensController = new ScreensController();
 		this.mailService = new MailService();
 		new HomeController(homeView, this.screensController, this);
