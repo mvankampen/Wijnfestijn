@@ -11,11 +11,25 @@ import javafx.scene.layout.VBox;
 import models.Guest;
 
 //This screen is a AnchorPane and uses ControlledScreen as navigation manager
+/**
+ * 
+ * @author Dennis Sloove.
+ * @version 0.1, November 2015
+ * 		Description:
+ * 		This is a view to import a guest .CSV file to the database.
+ *
+ */
 public class ImportGuestListView extends AnchorPane implements ControlledScreen {
 	private Button importButton;
 	private Button uploadButton;
 	private TableView<Guest> table;
 
+	/**
+	 * <p>
+	 * 		Used for registering itself in the hashMap of the ScreensController
+	 * 		to enable navigation
+	 * </p>
+	 */
 	public void setScreenController(ScreensController screensController) {
 		/*
 		 * Used for registering itself in the hashMap of the ScreensController
@@ -23,19 +37,31 @@ public class ImportGuestListView extends AnchorPane implements ControlledScreen 
 		 */
 	}
 
+	/**
+	 * Constructor
+	 */
 	public ImportGuestListView() {
 		// calling the methods that initialize different aspects of the view
 		createView();
 		setUpContent();
 	}
-
-	// adds the style class and sets the fixed height to the screen
+	
+	/**
+	 * <p>
+	 * 		Adds the style class and sets the fixed height to the screen
+	 * </p>
+	 */
 	public void createView() {
 		getStyleClass().add("background");
 		setMinSize(1200, 800);
 
 	}
 
+	/**
+	 * <p>
+	 * 		Create controls.
+	 * </p>
+	 */
 	public void setUpContent() {
 		// making all buttons
 		importButton = new Button("Kies .CSV bestand");
@@ -57,13 +83,25 @@ public class ImportGuestListView extends AnchorPane implements ControlledScreen 
 		this.getChildren().add(bPane);
 	}
 	
-	//getters
+	// ***** GETTERS *****
+	/**
+	 * 
+	 * @return Returns a table
+	 */
 	public TableView<Guest> getTable() {
 		return table;
 	}
+	/**
+	 * 
+	 * @return Returns the upload button
+	 */
 	public Button getUploadButton() {
 		return uploadButton;
 	}
+	/**
+	 * 
+	 * @return Returns the import button
+	 */
 	public Button getImportButton() {
 		return importButton;
 	}
