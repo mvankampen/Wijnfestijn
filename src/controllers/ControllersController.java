@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * <p>this Controller is used to have a central class
+ * <p>Description: this Controller is used to have a central class
  * where all vital elements are created so that the system can start.
  * In this class you will find the creation of the database connection,
  * the Views, the Controllers, and the procedure to make the Screenscontroller work correctly </p>
@@ -84,7 +84,7 @@ public class ControllersController {
       * be connected with */
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Database Connection - ERROR");
-            alert.setContentText("Er kan geen verbinding gemaakt worden met de database");
+            alert.setContentText("Er kon geen connectie gemaakt worden.\nJe database naam moet zijn : wijnfestijnDB \ndatabase user name : postgres  \ndatabase password : root \nop poort 5432\ngebruik postgres database ");
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     System.exit(0);

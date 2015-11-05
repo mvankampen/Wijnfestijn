@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * <p></p>
+ * <p>utilty class for a hotfix for different utilities</p>
  */
 public class Util {
     public String getTxtFileFromResource(String fileName) {
