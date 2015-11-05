@@ -27,7 +27,7 @@ import views.SplashscreenView;
  * @author Dennis Sloove
  * @version 0.1, November 2015
  * 		Description:
- * 		Class to import a .CSV file for guests and add the content to the database
+ * 		<p>Class to import a .CSV file for guests and add the content to the database<p>
  *
  */
 public class ImportGuestListController {
