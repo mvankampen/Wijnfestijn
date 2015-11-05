@@ -85,7 +85,7 @@ public class AttendanceView extends AnchorPane implements ControlledScreen {
         // Add the contentPane to the View
         getChildren().add(contentPane);
     }
-    
+
     public TableView<Guest> getTableView() {
         return tableView;
     }
