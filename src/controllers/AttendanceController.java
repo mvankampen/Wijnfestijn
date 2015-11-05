@@ -16,7 +16,7 @@ import views.AttendanceView;
 import java.util.ArrayList;
 
 /**
- * <P></P>
+ * <P>Attendance Controller is responsible for keeping track of the presence per guest</P>
  *
  * @author Alex van der Wal
  * @version 0.1, november 2015

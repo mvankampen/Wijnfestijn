@@ -300,8 +300,6 @@ public class AdjustGuestController {
     }
 
     /**
-     * <P>Sets the splashscreen view to the new splash screen and returns this splashscreen so that it can be used.</P>
-     *
      * @param adjustSplash
      */
     public void setSplashScreenView(SplashDefault adjustSplash) {
