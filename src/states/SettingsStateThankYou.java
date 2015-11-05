@@ -4,6 +4,15 @@ import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author Dennis Sloove
+ * @author Michael van Kampen
+ * @version 0.1, november 2015
+ *          Description:
+ *          SettingsStateThankYou implements the SettingsState, treated the Thank you mail.
+ */
+
+
 public class SettingsStateThankYou implements SettingsState {
 
     private String returnBody, returnTitle, defaultBody = "", defaultTitle = "", pathToFile;

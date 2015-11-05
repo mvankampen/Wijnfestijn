@@ -33,9 +33,9 @@ public class GuestDAO {
 
 
     /**
-     * Add new guest into the Database Management System
+     * Add new {@link Guest} into the Database Management System
      *
-     * @param guest object to add into the  Database Management System
+     * @param guest object to add into the Database Management System
      */
     public void addGuest(Guest guest) {
         try {
@@ -73,7 +73,7 @@ public class GuestDAO {
     }
 
     /**
-     * <P>Update the fields of the guest in the Database Management System with the new data</P>
+     * <P>Update the fields of the {@link Guest} in the Database Management System with the new data</P>
      *
      * @param guest object to update the fields into the Database Management System
      */

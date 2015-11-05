@@ -1,7 +1,7 @@
 package models;
 
 /**
- * @author Sander de Jong on 21-9-2015.
+ * @author Sander de Jong
  * @version 0.1, november 2015.
  * 		Description:
  * 		The Guest class holds all the information about the Guests.
@@ -53,7 +53,7 @@ public class Guest {
 		this.comment = comment;
 		this.referal = referal;
 	}
-	//used for making a order, where the ID is needed
+
 	/**
 	 * Constructor
 	 * 
@@ -90,8 +90,6 @@ public class Guest {
 		this.no_show = no_show;
 	}
 
-	// ***** GETTERS *****
-	
 	/**
 	 * 
 	 * @return Returns the guest id
@@ -190,7 +188,6 @@ public class Guest {
 	public Boolean getNo_show() {
 		return no_show;
 	}
-	// ***** SETTERS *****
 	
 	/**
 	 * 
