@@ -1,9 +1,13 @@
 package splashscreens;
 /**
- * Created by Alex on 07-10-15.
+ * <p> A wrapper for the decorator, adds a error message for registration - empty city field </p>
+ * @author Alex van der wal
  */
-public class SplashStreetnameMessage extends SplashDefault {
+public class SplashStreetnameMessage extends SplashDefaultMessage {
 	SplashDefault splashDefault;
+	/**
+	 * @param splashDefault so that it can wrap itself around the object given
+	 */
 	public SplashStreetnameMessage(SplashDefault splashDefault)
 	{
 		this.splashDefault = splashDefault;
