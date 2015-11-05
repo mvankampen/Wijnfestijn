@@ -27,21 +27,24 @@ public class MailController {
     private ScreensController screensController;
     public MailController(MailView mailView, MailDAO mailDAO, MailService mailService, ScreensController screensController) {
         this.screensController = screensController;
-    	this.mail = new Mail("", "");
+        this.mail = new Mail("", "");
         this.mailDAO = mailDAO;
         this.mailView = mailView;
         this.mailView.setMail(this.mail);
         this.mailService = mailService;
+        generateHandlers();
+    }
+    void generateHandlers(){
         this.mailView.getMailButton().setOnAction(e -> sendMail());
         mailViewListener();
     }
     void resetFields() {
-    	screensController.screenRemove(ControllersController.getATTENDANCEID());
-		this.mail = new Mail("", "");
-    	this.mailView = new MailView(mail);
-    	this.mailView.setMail(this.mail);
-		screensController.screenLoadSet(ControllersController.getATTENDANCEID(), mailView);
-	    mailViewListener();
+        screensController.screenRemove(ControllersController.getATTENDANCEID());
+        this.mail = new Mail("", "");
+        this.mailView = new MailView(mail);
+        this.mailView.setMail(this.mail);
+        screensController.screenLoadSet(ControllersController.getATTENDANCEID(), mailView);
+        generateHandlers();
     }
     private void mailViewListener() {
         this.mailView.getInviteGroup().selectedToggleProperty()
@@ -62,8 +65,8 @@ public class MailController {
     // ???? wat doet dit ?? - Sander
     private void setTextFields() {
         try {
-//            String s = new Scanner(new File("src/templates/" + this.mail.getMailType().toString() + ".html")).
-//                    useDelimiter("\\Z").next();
+            //            String s = new Scanner(new File("src/templates/" + this.mail.getMailType().toString() + ".html")).
+            //                    useDelimiter("\\Z").next();
 
             String s = readFile("src/templates/" + this.mail.getMailType().toString() + ".html");
 
@@ -83,13 +86,13 @@ public class MailController {
         this.mail.setBody(this.mailView.getBody());
         switch (this.mail.getMailType()) {
             case REMINDER:
-                System.out.println("reminder method aanroepen");
+                this.mail.setRecipients(this.mailDAO.reminderMail());
                 break;
             case INVITATIONAL:
                 invitation();
                 break;
             case THANKYOU:
-                System.out.println("Thank you method aanroepen");
+                this.mail.setRecipients(this.mailDAO.thanksMail());
                 break;
             case OPENORDER:
                 this.mail.setRecipients(this.mailDAO.getOpenOrderGuests());

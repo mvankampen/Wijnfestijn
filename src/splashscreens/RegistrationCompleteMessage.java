@@ -8,14 +8,14 @@ public class RegistrationCompleteMessage extends SplashDefaultMessage {
 	}
 	@Override
 	public String getContextText() {
-		return "Uw registratie is compleet";
-		
+		return "De registratie is compleet";
 	}
 	public String getTitleText() {
-		return "Uw registratie is compleet";
+		return "Registratie geslaagd!";
 	}
 	public String getHeaderText() {
-		return "Registratie is compleet";
+		return "De registratie is succesvol voltooid. \n"
+				+ "Er is een nieuwe gast toegevoegd!";
 	}
 
 

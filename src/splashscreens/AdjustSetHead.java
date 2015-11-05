@@ -12,11 +12,9 @@ public class AdjustSetHead extends SplashDefaultMessage {
 		
 	}
 	public String getTitleText() {
-		return "Foute invoer!";
+		return "Onjuiste invoer!";
 	}
 	public String getHeaderText() {
-		return "Uw invoer is foutief, hieronder welke invoeren fout zijn";
+		return "De ingevoerde gegevens zijn onjuist. Kijk hieronder voor meer details";
 	}
-
-
 }

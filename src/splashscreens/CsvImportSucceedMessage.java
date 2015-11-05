@@ -8,14 +8,13 @@ public class CsvImportSucceedMessage extends SplashDefaultMessage {
 	}
 	@Override
 	public String getContextText() {
-		return "data import succesvol";
-		
+		return "De gegevens zijn succesvol ingevoerd.";
 	}
 	public String getTitleText() {
-		return "Succes";
+		return "Import geslaagd!";
 	}
 	public String getHeaderText() {
-		return "Geen fouten gevonden";
+		return "Importeren van bestand gelukt!";
 	}
 
 

@@ -8,16 +8,15 @@ public class CsvIncorrectRowsGuestMessage extends SplashDefaultMessage {
 	}
 	@Override
 	public String getContextText() {
-		return "Uw CSV data kon niet worden ingelezen omdat de rijen niet overeenkwamen met wat het systeem verwacht /n"
-				+ "Deze indeling wordt verwacht : achternaam tussenvoegsel"
-				+ "naam aanhef straat straatnummer zipcode stad email telefoon comment referentie";
+		return 	  "Deze kolommen wordt verwacht : achternaam, tussenvoegsel, "
+				+ "naam, aanhef, straat, straatnummer, zipcode, stad, email, telefoon, comment, referentie.";
 		
 	}
 	public String getTitleText() {
-		return "Er is iets fout gegaan";
+		return "Bestandsfout!";
 	}
 	public String getHeaderText() {
-		return "Foute rijen indeling CSV";
+		return "Het bestand voldoet niet aan de eisen.";
 	}
 
 

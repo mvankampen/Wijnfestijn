@@ -9,32 +9,46 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * Created by Sander de Jong on 22-9-2015.
+ * @author Michael van Kampen
+ * @version 0.1, november 2015
+ *          Description:
+ *          OrderDAO is used to separate low level data accessing API or operations from high level business services.
  */
+
 public class OrderDAO {
 
     private Connection connection;
     private PreparedStatement preparedStatement;
     private PreparedStatement preparedStatementWine;
 
+    /**
+     * Constructor
+     *
+     * @param connection A connection (session) with a specific
+     *                   database. SQL statements are executed and results are returned
+     *                   within the context of a connection.
+     */
     public OrderDAO(Connection connection) {
         this.connection = connection;
     }
 
-    // insertOrder
+    /**
+     * @param order object that add guest id
+     * @return order object with new values
+     */
     public Order addOrder(Order order) {
         Order currentOrder = null;
         try {
             this.preparedStatement = null;
             String sqlQuery = "INSERT INTO orders"
                 + "(orders_guest_id) VALUES (?) RETURNING orders_id, orders_timestamp, orders_completed";
-            this.preparedStatement =
-                this.connection.prepareStatement(sqlQuery);
+            this.preparedStatement = this.connection.prepareStatement(sqlQuery);
             this.preparedStatement.setInt(1, order.getGuest().getId());
             ResultSet resultSet = this.preparedStatement.executeQuery();
             if (resultSet != null && resultSet.next()) {
                 currentOrder = new Order(resultSet.getInt(1), order.getGuest(),
-                    resultSet.getTimestamp("orders_timestamp"), resultSet.getBoolean("orders_completed"));
+                    resultSet.getTimestamp("orders_timestamp"),
+                    resultSet.getBoolean("orders_completed"));
             }
             this.connection.commit();
         } catch (SQLException e) {
@@ -51,6 +65,9 @@ public class OrderDAO {
         return currentOrder;
     }
 
+    /**
+     * @return ArrayList with all Native Orders
+     */
     public ArrayList<Order> getAllNativeOrders() {
         ArrayList<Order> orderArrayList = new ArrayList<Order>();
         try {
@@ -70,7 +87,8 @@ public class OrderDAO {
                         resultSet.getString("guest_referal"), resultSet.getString("guest_comment"),
                         resultSet.getBoolean("guest_noshow"));
                 Order order = new Order(resultSet.getInt("orders_id"), guest,
-                    resultSet.getTimestamp("orders_timestamp"), resultSet.getBoolean("orders_completed"));
+                    resultSet.getTimestamp("orders_timestamp"),
+                    resultSet.getBoolean("orders_completed"));
                 orderArrayList.add(order);
             }
         } catch (SQLException e) {
@@ -80,6 +98,11 @@ public class OrderDAO {
         return orderArrayList;
     }
 
+    /**
+     * <P>Update the fields of the order in the Database Management System with the new data</P>
+     *
+     * @param order object to update the fields into the Database Management System
+     */
     //updateOrder
     public void updateOrder(Order order) {
         try {
@@ -105,9 +128,13 @@ public class OrderDAO {
             } catch (SQLException ex) {
                 e.printStackTrace();
             }
-        } 
+        }
     }
 
+    /**
+     * @param order object
+     * @return ArrayList with all line items belonging to the order
+     */
     public ArrayList<OrderLine> findOrderlinesByOrder(Order order) {
         ArrayList<OrderLine> orderLines = new ArrayList<>();
         try {
@@ -119,14 +146,19 @@ public class OrderDAO {
             while (resultSet.next()) {
                 Wine wine = findWineByOrderLine(resultSet.getInt("orderline_wine_id"));
                 OrderLine orderLine =
-                        new OrderLine(resultSet.getInt("orderline_amount"), order, wine);
+                    new OrderLine(resultSet.getInt("orderline_amount"), order, wine);
                 orderLines.add(orderLine);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } return orderLines;
+        }
+        return orderLines;
     }
 
+    /**
+     * @param orderline_wine_id is the id number of a wine
+     * @return Wine object which belongs to the orderline wine id
+     */
     private Wine findWineByOrderLine(int orderline_wine_id) {
         Wine wine = null;
         try {
@@ -137,13 +169,15 @@ public class OrderDAO {
             ResultSet resultSet = preparedStatementWine.executeQuery();
             while (resultSet.next()) {
                 wine = new Wine(resultSet.getInt("wine_id"), resultSet.getString("wine_name"),
-                        resultSet.getString("wine_category"), resultSet.getString("wine_type"),
-                        resultSet.getString("wine_publisher"), resultSet.getString("wine_year"),
-                        resultSet.getDouble("wine_price"), resultSet.getString("wine_rank"), resultSet.getDouble("wine_costprice"), resultSet.getDouble("wine_margin"));
+                    resultSet.getString("wine_category"), resultSet.getString("wine_type"),
+                    resultSet.getString("wine_publisher"), resultSet.getString("wine_year"),
+                    resultSet.getDouble("wine_price"), resultSet.getString("wine_rank"),
+                    resultSet.getDouble("wine_costprice"), resultSet.getDouble("wine_margin"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return wine;
     }
 }

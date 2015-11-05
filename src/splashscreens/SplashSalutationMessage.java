@@ -10,7 +10,7 @@ public class SplashSalutationMessage extends SplashDefaultMessage {
 	}
 	@Override
 	public String getContextText() {
-		return splashDefault.getContextText() + "Gelieve uw aanhef te selecteren\n";	
+		return splashDefault.getContextText() + "aanhef niet geselecteerd\n";	
 	}
 	public String getTitleText() {
 		return splashDefault.getTitleText();
