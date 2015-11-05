@@ -8,13 +8,13 @@ public class CsvIncorrectFileMessage extends SplashDefaultMessage {
 	}
 	@Override
 	public String getContextText() {
-		return "Het geselecteerde bestand is geen .CSV bestand.";
+		return "Er is geen .CSV bestand geselecteerd.";
 	}
 	public String getTitleText() {
 		return "Bestandsfout!";
 	}
 	public String getHeaderText() {
-		return "Verkeerd bestandstype geselecteerd!";
+		return "Verkeerd bestand!";
 	}
 
 

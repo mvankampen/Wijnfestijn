@@ -10,7 +10,7 @@ public class SplashReferralMessage extends SplashDefaultMessage {
 	}
 	@Override
 	public String getContextText() {
-		return splashDefault.getContextText() + "Selecteer uw referentie\n";
+		return splashDefault.getContextText() + "geen referentie gekozen\n";
 		
 	}
 	public String getTitleText() {

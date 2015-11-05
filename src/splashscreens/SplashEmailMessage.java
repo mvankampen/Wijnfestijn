@@ -10,7 +10,7 @@ public class SplashEmailMessage extends SplashDefaultMessage {
 			}
 			@Override
 			public String getContextText() {
-				return splashDefault.getContextText() + "de email invoer is foutief\n";
+				return splashDefault.getContextText() + "foutieve e-mail\n";
 				
 			}
 			public String getTitleText() {

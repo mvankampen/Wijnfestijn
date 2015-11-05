@@ -10,7 +10,7 @@ public class SplashSurnameMessage extends SplashDefaultMessage {
 	}
 	@Override
 	public String getContextText() {
-		return splashDefault.getContextText() + "de achternaam invoer is foutief\n";
+		return splashDefault.getContextText() + "foutieve achternaam\n";
 		
 	}
 	public String getTitleText() {

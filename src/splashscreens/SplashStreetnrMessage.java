@@ -10,7 +10,7 @@ public class SplashStreetnrMessage extends SplashDefaultMessage {
 	}
 	@Override
 	public String getContextText() {
-		return splashDefault.getContextText() + "Straatnummer kan niet leeg zijn\n";	
+		return splashDefault.getContextText() + "foutief huisnummer\n";	
 	}
 	public String getTitleText() {
 		return splashDefault.getTitleText();

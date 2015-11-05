@@ -8,14 +8,13 @@ public class OrderCompleteMessage extends SplashDefaultMessage {
 	}
 	@Override
 	public String getContextText() {
-		return "Uw order is compleet";
-		
+		return "Uw order is succesvol aangemaakt in het systeem.";
 	}
 	public String getTitleText() {
-		return "Compleet";
+		return "Geslaagde order!";
 	}
 	public String getHeaderText() {
-		return "Uw order is door gevoerd naar het systeem";
+		return "Order succesvol aangemaakt!";
 	}
 
 

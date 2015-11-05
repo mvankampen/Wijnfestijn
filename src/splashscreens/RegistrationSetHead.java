@@ -9,7 +9,6 @@ public class RegistrationSetHead extends SplashDefaultMessage {
 	@Override
 	public String getContextText() {
 		return splashDefault.getContextText() + "";
-		
 	}
 	public String getTitleText() {
 		return "U heeft een fout gemaakt in uw registratie formulier";

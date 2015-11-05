@@ -10,7 +10,7 @@ public class SettingsEmailMessage extends SplashDefaultMessage {
 	}
 	
 	public String getContextText() {
-		return splashDefault.getContextText() + "Email is niet correct\n";
+		return splashDefault.getContextText() + "E-mail is niet correct\n";
 	}
 
 	public String getTitleText() {
