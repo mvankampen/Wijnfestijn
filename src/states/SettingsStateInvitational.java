@@ -5,7 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Dennis Sloove, Michael van Kampen
+ * @author Dennis Sloove
+ * @author Michael van Kampen
  * @version 0.1, november 2015
  *          Description:
  *          SettingsStateInvitational implements the SettingsState, treated the Invitational mail.
