@@ -18,7 +18,8 @@ public class HomeController {
      * @param screensController     Used to direct the different windows within the application.
      * @param controllersController Controller that controls all the controllers.
      */
-    public HomeController(HomeView homeView, ScreensController screensController, ControllersController controllersController) {
+    public HomeController(HomeView homeView, ScreensController screensController,
+        ControllersController controllersController) {
         this.screensController = screensController;
         this.CC = controllersController;
         this.homeView = homeView;

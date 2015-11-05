@@ -6,9 +6,9 @@ package splashscreens;
 
 public class GeneralSplash extends SplashDefault {
 
-	public GeneralSplash() {
-		content = "";
-		title = "";
-		header = "";
-	}
+    public GeneralSplash() {
+        content = "";
+        title = "";
+        header = "";
+    }
 }

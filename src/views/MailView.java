@@ -11,6 +11,7 @@ import models.Mail;
 
 /**
  * <P>Mail view generates an output presentation to the user based on changes in the model.</P>
+ *
  * @author Sander de Jong
  * @author Michael van Kampen
  * @version 0.1, november 2015
@@ -69,12 +70,12 @@ public class MailView extends AnchorPane implements ControlledScreen {
         contentPane.setVgap(10);
         contentPane.setHgap(25);
         /*
-		 * creating all Strings, used to make the labels their content easier to
+     * creating all Strings, used to make the labels their content easier to
 		 * adjust
 		 */
         String introText = "Hier kunt u de mails opstellen. Kies welke mail u wilt"
-                + " opstellen en voer\nde titel en body in. Klik op verzenden en de applicatie"
-                + " doet de rest";
+            + " opstellen en voer\nde titel en body in. Klik op verzenden en de applicatie"
+            + " doet de rest";
 		/*
 		 * creating all Labels, used to instruct the user towards what actions
 		 * he can perform within the view

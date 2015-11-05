@@ -12,6 +12,7 @@ import models.Guest;
 
 //This screen is a AnchorPane and uses ControlledScreen as navigation manager
 
+
 /**
  * <p>This screen is an {@link AnchorPane} and uses {@link ControlledScreen} as navigation manager.</p>
  *
@@ -60,7 +61,8 @@ public class AttendanceView extends AnchorPane implements ControlledScreen {
         String introText = "Hier kunt u de data van een geselecteerde klant aanpassen.";
         Label introLabel = new Label(introText);
         Label placeholder = new Label();
-        placeholder.setText("Je hebt nog geen klant geselecteerd om te wijzigen, Selecteer iemand & druk op enter");
+        placeholder.setText(
+            "Je hebt nog geen klant geselecteerd om te wijzigen, Selecteer iemand & druk op enter");
         // Shows all guests so that the user can edit their presence setting
         tableView = new TableView<>();
         tableView.setPlaceholder(placeholder);

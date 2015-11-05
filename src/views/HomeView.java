@@ -60,7 +60,7 @@ public class HomeView extends AnchorPane implements ControlledScreen {
         optionsPane.setLayoutY(200);
         optionsPane.setHgap(100);
         optionsPane.setVgap(10);
-		/*
+    /*
 		 * creating all Labels, used to instruct the user towards what actions
 		 * he can perform within the view
 		 */

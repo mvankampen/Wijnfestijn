@@ -22,8 +22,9 @@ public class Database {
 
     /**
      * Private Constructor
+     *
      * @throws SQLException an exception that provides information on a database access
-     * error or other errors.
+     *                      error or other errors.
      */
     private Database() throws SQLException {
         try {
@@ -36,10 +37,9 @@ public class Database {
     }
 
     /**
-     *
      * @return Database Instance
      * @throws SQLException an exception that provides information on a database access
-     * error or other errors.
+     *                      error or other errors.
      */
     //allows retrieval of the current database, or making a new database instance
     public static Database getInstance() throws SQLException {
@@ -53,7 +53,6 @@ public class Database {
     }
 
     /**
-     *
      * @return A connection (session) with a specific
      * database. SQL statements are executed and results are returned
      * within the context of a connection.

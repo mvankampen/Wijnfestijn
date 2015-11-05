@@ -1,19 +1,14 @@
 package controllers;
 
-import DAO.Database;
 import DAO.GuestDAO;
 import DAO.WineDAO;
-import models.Guest;
 import models.Wine;
 import services.PDFService;
 import splashscreens.ListprintSuccesMessage;
-import splashscreens.MailEmptyMessage;
 import splashscreens.SplashDefault;
 import views.OrderListPrintView;
 import views.SplashscreenView;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -30,18 +25,20 @@ public class OrderListPrintController {
     private PDFService pdfService;
     private OrderListPrintView orderListPrintView;
     private ArrayList<Wine> wineList;
-    private String context,title,header;
+    private String context, title, header;
     private SplashscreenView splashScreenView;
     private WineDAO wineDAO;
     private GuestDAO guestDAO;
 
     /**
      * <p>Constructor</p>
+     *
      * @param orderListPrintView
      * @param wineDAO
      * @param guestDAO
      */
-    public OrderListPrintController(OrderListPrintView orderListPrintView, WineDAO wineDAO, GuestDAO guestDAO) {
+    public OrderListPrintController(OrderListPrintView orderListPrintView, WineDAO wineDAO,
+        GuestDAO guestDAO) {
         this.pdfService = new PDFService();
         this.orderListPrintView = orderListPrintView;
         this.wineDAO = wineDAO;
@@ -69,20 +66,22 @@ public class OrderListPrintController {
      */
     public void createOrderListPDF() {
         fillWineList();
-        pdfService.createOrderList(wineList, orderListPrintView.getTxtFileName().getText(), guestDAO);
+        pdfService
+            .createOrderList(wineList, orderListPrintView.getTxtFileName().getText(), guestDAO);
         SplashDefault listprintSplash = new SplashDefault();
-		listprintSplash = new ListprintSuccesMessage(listprintSplash);
-		setSplashScreenView(listprintSplash);
+        listprintSplash = new ListprintSuccesMessage(listprintSplash);
+        setSplashScreenView(listprintSplash);
     }
 
     /**
      * <p>Sets the splashscreen for this view</p>
+     *
      * @param listPrintSplash
      */
     private void setSplashScreenView(SplashDefault listPrintSplash) {
-	 	context = "";
-	 	title = "";
-	 	header = "";
+        context = "";
+        title = "";
+        header = "";
         title = listPrintSplash.getTitleText();
         header = listPrintSplash.getHeaderText();
         context = listPrintSplash.getContextText();

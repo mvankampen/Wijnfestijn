@@ -59,7 +59,7 @@ public class AdjustGuestView extends AnchorPane implements ControlledScreen {
         contentPane.setVgap(25);
         contentPane.setHgap(150);
     /*
-		 * creating all Strings, used to make the labels their content easier to
+     * creating all Strings, used to make the labels their content easier to
 		 * adjust
 		 */
         String introText = "Hier kunt u de data van een geselecteerde klant aanpassen.";
@@ -114,7 +114,6 @@ public class AdjustGuestView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return TextField object Surname TextField
      */
     public TextField getSurnameTextField() {
@@ -122,7 +121,6 @@ public class AdjustGuestView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return TableView object EditableGuest
      */
     public TableView<Guest> getEditableGuest() {
@@ -130,7 +128,6 @@ public class AdjustGuestView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return Button object Update Button
      */
     public Button getUpdateButton() {
@@ -138,7 +135,6 @@ public class AdjustGuestView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @param editableGuest is a new TableView Object
      */
     public void setEditableGuest(TableView<Guest> editableGuest) {

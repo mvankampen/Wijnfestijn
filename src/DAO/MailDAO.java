@@ -23,9 +23,10 @@ public class MailDAO {
 
     /**
      * Constructor
+     *
      * @param connection A connection (session) with a specific
-     * database. SQL statements are executed and results are returned
-     * within the context of a connection.
+     *                   database. SQL statements are executed and results are returned
+     *                   within the context of a connection.
      */
     public MailDAO(Connection connection) {
         this.connection = connection;
@@ -33,6 +34,7 @@ public class MailDAO {
 
     /**
      * Reminder Mail
+     *
      * @return ArrayList of InternetAddress
      */
     public ArrayList<InternetAddress> reminderMail() {
@@ -56,6 +58,7 @@ public class MailDAO {
 
     /**
      * Invitation Mail
+     *
      * @return ArrayList of InternetAddress
      */
     public ArrayList<InternetAddress> invitationMail() {
@@ -79,6 +82,7 @@ public class MailDAO {
 
     /**
      * Thanks Mail function
+     *
      * @return ArrayList of InternetAddress
      */
     public ArrayList<InternetAddress> thanksMail() {
@@ -103,6 +107,7 @@ public class MailDAO {
 
     /**
      * <P>Selects all guest data that have outstanding orders.</P>
+     *
      * @return ArrayList of InternetAddress
      */
     public ArrayList<InternetAddress> getOpenOrderGuests() {

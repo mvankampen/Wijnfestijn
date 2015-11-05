@@ -81,7 +81,7 @@ public class ControllersController {
             this.connection = database.getConnection();
         } catch (SQLException ex) {
             /* shows a alert box that shows the user that the database could not
-			* be connected with */
+      * be connected with */
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Database Connection - ERROR");
             alert.setContentText("Er kan geen verbinding gemaakt worden met de database");
@@ -116,21 +116,37 @@ public class ControllersController {
      * <p> Used to create all controllers used by the System </p>
      */
     private void createControllers() {
-        this.orderListPrintController = new OrderListPrintController(this.orderListPrintView, new WineDAO(this.connection), new GuestDAO(this.connection));
+        this.orderListPrintController =
+            new OrderListPrintController(this.orderListPrintView, new WineDAO(this.connection),
+                new GuestDAO(this.connection));
         this.screensController = new ScreensController();
         this.mailService = new MailService();
         new HomeController(homeView, this.screensController, this);
-        this.navigationController = new NavigationController(this.screensController, navigationView, this);
-        adjustGuestController = new AdjustGuestController(adjustGuestView, new GuestDAO(connection), screensController);
-        setDebtorsController(new DebtorsController(debtorsView, new OrderDAO(connection), new GuestDAO(connection), screensController));
-        setMailController(new MailController(mailView, new MailDAO(connection), this.mailService, screensController));
+        this.navigationController =
+            new NavigationController(this.screensController, navigationView, this);
+        adjustGuestController =
+            new AdjustGuestController(adjustGuestView, new GuestDAO(connection), screensController);
+        setDebtorsController(
+            new DebtorsController(debtorsView, new OrderDAO(connection), new GuestDAO(connection),
+                screensController));
+        setMailController(new MailController(mailView, new MailDAO(connection), this.mailService,
+            screensController));
         new SettingsController(settingsView);
-        orderController = new OrderController(orderView, new GuestDAO(connection), new WineDAO(connection), new OrderLineDAO(connection),
-                new OrderDAO(connection), screensController, mailService);
-        setRegistrationController(new RegistrationController(registrationView, new GuestDAO(connection), screensController));
-        setImportGuestListController(new ImportGuestListController(importGuestListView, this.screensController, new GuestDAO(connection)));
-        setImportWineListController(new ImportWineListController(importWineListView, this.screensController, new WineDAO(connection)));
-        setAttendanceController(new AttendanceController(attendanceView, new GuestDAO(connection), screensController));
+        orderController =
+            new OrderController(orderView, new GuestDAO(connection), new WineDAO(connection),
+                new OrderLineDAO(connection), new OrderDAO(connection), screensController,
+                mailService);
+        setRegistrationController(
+            new RegistrationController(registrationView, new GuestDAO(connection),
+                screensController));
+        setImportGuestListController(
+            new ImportGuestListController(importGuestListView, this.screensController,
+                new GuestDAO(connection)));
+        setImportWineListController(
+            new ImportWineListController(importWineListView, this.screensController,
+                new WineDAO(connection)));
+        setAttendanceController(
+            new AttendanceController(attendanceView, new GuestDAO(connection), screensController));
     }
 
     /**

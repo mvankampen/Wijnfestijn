@@ -162,7 +162,7 @@ public class WineDAO {
     public void setAllWinesFalse() {
         try {
             this.preparedStatement = null;
-                String setAllToFalse = "UPDATE wine SET wine_active = ?";
+            String setAllToFalse = "UPDATE wine SET wine_active = ?";
             this.preparedStatement = this.connection.prepareStatement(setAllToFalse);
             preparedStatement.setBoolean(1, false);
             preparedStatement.executeUpdate();

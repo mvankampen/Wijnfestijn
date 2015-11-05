@@ -1,6 +1,5 @@
 package services;
 
-import enums.MailType;
 import models.Mail;
 
 import javax.activation.DataHandler;
@@ -12,7 +11,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -47,8 +45,7 @@ public class MailService {
         });
 
         Runnable task = new Runnable() {
-            @Override
-            public void run() {
+            @Override public void run() {
                 try {
                     Message message = new MimeMessage(session);
                     message.setFrom(new InternetAddress("from-email@gmail.com"));

@@ -108,7 +108,6 @@ public class OrderView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return Button object Remove button
      */
     public Button getRemoveBtn() {
@@ -116,7 +115,6 @@ public class OrderView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return Button object Order button
      */
     public Button getOrderBtn() {
@@ -124,7 +122,6 @@ public class OrderView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return Button object Make order button
      */
     public Button getMakeOrderBtn() {
@@ -132,7 +129,6 @@ public class OrderView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return TextField object SurnameTextField
      */
     public TextField getSurnameTextField() {
@@ -140,7 +136,6 @@ public class OrderView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return TextField object Winenumber TextField
      */
     public TextField getWinenumberTextField() {
@@ -148,7 +143,6 @@ public class OrderView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return TextField object Amount TextField
      */
     public TextField getAmountTextField() {
@@ -156,7 +150,6 @@ public class OrderView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return Integer Wine number
      */
     public int getWinenumberInt() {
@@ -164,7 +157,6 @@ public class OrderView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return TableView object TableView
      */
     public TableView<OrderLine> getTableView() {
@@ -172,7 +164,6 @@ public class OrderView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return Integer amount
      */
     public int getAmountInt() {

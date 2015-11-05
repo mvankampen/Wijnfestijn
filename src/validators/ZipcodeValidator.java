@@ -13,8 +13,7 @@ public class ZipcodeValidator {
     private Pattern pattern;
     private Matcher matcher;
 
-    private static final String ZIPCODE_PATTERN =
-            "^[0-9]{4}[A-Za-z]{2}";
+    private static final String ZIPCODE_PATTERN = "^[0-9]{4}[A-Za-z]{2}";
 
     /**
      * <p>Creates the pattern that is used in the matcher to validate the email.</p>

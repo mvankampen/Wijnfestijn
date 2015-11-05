@@ -17,7 +17,6 @@ import org.controlsfx.control.textfield.TextFields;
 import services.MailService;
 import services.PDFService;
 import splashscreens.*;
-import views.AttendanceView;
 import views.OrderView;
 import views.SplashscreenView;
 
@@ -59,8 +58,8 @@ public class OrderController {
      * @param mailService       The service that is used to send the {@link Mail} to the {@link Guest}.
      */
     public OrderController(OrderView orderView, GuestDAO guestDAO, WineDAO wineDAO,
-                           OrderLineDAO orderLineDAO, OrderDAO orderDAO, ScreensController screensController,
-                           MailService mailService) {
+        OrderLineDAO orderLineDAO, OrderDAO orderDAO, ScreensController screensController,
+        MailService mailService) {
         this.orderView = orderView;
         this.guestDAO = guestDAO;
         this.wineDAO = wineDAO;
@@ -77,21 +76,19 @@ public class OrderController {
      */
     public void createAutoComplete() {
         AutoCompletionBinding<Guest> autoCompletionBinding = TextFields
-                .bindAutoCompletion(orderView.getSurnameTextField(),
-                        t -> guestDAO.findGuestBySurname(t.getUserText()), new StringConverter<Guest>() {
-                            @Override
-                            public String toString(Guest object) {
-                                return object.getSurname() + ", " + object.getInfix() + " " + object
-                                        .getFirstname();
-                            }
+            .bindAutoCompletion(orderView.getSurnameTextField(),
+                t -> guestDAO.findGuestBySurname(t.getUserText()), new StringConverter<Guest>() {
+                    @Override public String toString(Guest object) {
+                        return object.getSurname() + ", " + object.getInfix() + " " + object
+                            .getFirstname();
+                    }
 
-                            @Override
-                            public Guest fromString(String string) {
-                                return null;
-                            }
-                        });
+                    @Override public Guest fromString(String string) {
+                        return null;
+                    }
+                });
         autoCompletionBinding
-                .setOnAutoCompleted(event -> this.currentGuest = event.getCompletion());
+            .setOnAutoCompleted(event -> this.currentGuest = event.getCompletion());
         generateHandlers();
 
     }
@@ -136,8 +133,8 @@ public class OrderController {
             order = this.orderDAO.addOrder(order);
             this.orderLineDAO.addOrderLines(data, order);
             Mail mail = new Mail("Factuur Wijnfestijn",
-                    "<html><head></head><body>Beste " + this.pdfService.getFullName(order.getGuest())
-                            + "<p>Hierbij mailen wij u een factuur van uw gemaakte order op ons Wijnfestijn.</p><p>Met vriendelijke groet,<br />Lions-Club Oegstgeest/Warmond</p></body></html>");
+                "<html><head></head><body>Beste " + this.pdfService.getFullName(order.getGuest())
+                    + "<p>Hierbij mailen wij u een factuur van uw gemaakte order op ons Wijnfestijn.</p><p>Met vriendelijke groet,<br />Lions-Club Oegstgeest/Warmond</p></body></html>");
             try {
                 ArrayList<InternetAddress> arrayList = new ArrayList<>();
                 arrayList.add(new InternetAddress(order.getGuest().getEmail()));
@@ -165,8 +162,7 @@ public class OrderController {
         winenameCol.setCellValueFactory(new PropertyValueFactory<>("wine"));
         winenameCol.setCellFactory(e -> {
             return new TableCell<OrderLine, Wine>() {
-                @Override
-                protected void updateItem(Wine item, boolean empty) {
+                @Override protected void updateItem(Wine item, boolean empty) {
                     super.updateItem(item, empty);
                     if (!empty) {
                         setText(item.getName());
@@ -194,7 +190,7 @@ public class OrderController {
         allOrderlines = this.orderView.getTableView().getItems();
         orderlineSelected = this.orderView.getTableView().getSelectionModel().getSelectedItems();
         String helptool =
-                this.orderView.getTableView().getSelectionModel().getSelectedItem().getWine().getName();
+            this.orderView.getTableView().getSelectionModel().getSelectedItem().getWine().getName();
         allWines.remove(helptool);
         orderlineSelected.forEach(allOrderlines::remove);
     }

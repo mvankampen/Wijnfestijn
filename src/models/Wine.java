@@ -132,7 +132,6 @@ public class Wine {
     }
 
     /**
-     *
      * @return Active boolean of the wine
      */
     public boolean isActive() {
@@ -140,7 +139,6 @@ public class Wine {
     }
 
     /**
-     *
      * @return Cost price of the wine
      */
     public Double getCostprice() {
@@ -148,7 +146,6 @@ public class Wine {
     }
 
     /**
-     *
      * @param costprice of the wine
      */
     public void setCostprice(Double costprice) {
@@ -156,7 +153,6 @@ public class Wine {
     }
 
     /**
-     *
      * @return Margin of the wine
      */
     public Double getMargin() {
@@ -164,7 +160,6 @@ public class Wine {
     }
 
     /**
-     *
      * @param margin of the wine
      */
     public void setMargin(Double margin) {

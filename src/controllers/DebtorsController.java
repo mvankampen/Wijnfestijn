@@ -1,7 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
-
 import DAO.GuestDAO;
 import DAO.OrderDAO;
 import javafx.beans.property.BooleanProperty;
@@ -17,9 +15,10 @@ import models.Order;
 import splashscreens.DebtorsEmptyMessage;
 import splashscreens.ImportSucceedMessage;
 import splashscreens.SplashDefault;
-import views.AttendanceView;
 import views.DebtorsView;
 import views.SplashscreenView;
+
+import java.util.ArrayList;
 
 /**
  * <p>Is used to generate a list of all the debtors.</p>
@@ -45,7 +44,8 @@ public class DebtorsController {
      * @param guestDAO          The Data Access Object that is used to get the {@link Guest} object.
      * @param screensController Used to direct the different windows within the application.
      */
-    public DebtorsController(DebtorsView debtorsView, OrderDAO orderDAO, GuestDAO guestDAO, ScreensController screensController) {
+    public DebtorsController(DebtorsView debtorsView, OrderDAO orderDAO, GuestDAO guestDAO,
+        ScreensController screensController) {
         this.debtorsView = debtorsView;
         this.orderDAO = orderDAO;
         this.screensController = screensController;
@@ -80,8 +80,7 @@ public class DebtorsController {
     /**
      * <p>Creats the columns for the tableview.</p>
      */
-    @SuppressWarnings("unchecked")
-    private void makeTable() {
+    @SuppressWarnings("unchecked") private void makeTable() {
         data = FXCollections.observableArrayList();
         this.debtorsView.getTableView().setMaxHeight(400);
         emailCol = new TableColumn<Order, Guest>("Gast email");
@@ -90,8 +89,7 @@ public class DebtorsController {
         emailCol.setCellFactory(e -> {
             return new TableCell<Order, Guest>() {
                 //allows showing the email of the guest instead of the modelnumber
-                @Override
-                protected void updateItem(Guest item, boolean empty) {
+                @Override protected void updateItem(Guest item, boolean empty) {
                     super.updateItem(item, empty);
                     if (!empty) {
                         setText(item.getEmail());
@@ -105,7 +103,8 @@ public class DebtorsController {
         activeCol.setCellFactory(col -> {
             //checkbox that changes the boolean value according to if it's checked or not
             CheckBoxTableCell<Order, Boolean> cell = new CheckBoxTableCell<>(index -> {
-                BooleanProperty active = new SimpleBooleanProperty(debtorsView.getTableView().getItems().get(index).getCompleted());
+                BooleanProperty active = new SimpleBooleanProperty(
+                    debtorsView.getTableView().getItems().get(index).getCompleted());
                 active.addListener((obs, wasActive, isNowActive) -> {
                     Order item = debtorsView.getTableView().getItems().get(index);
                     item.setCompleted(isNowActive);
@@ -134,8 +133,7 @@ public class DebtorsController {
     /**
      * Adds the debtors to the tableview.
      */
-    @SuppressWarnings("unchecked")
-    private void generateDebtors() {
+    @SuppressWarnings("unchecked") private void generateDebtors() {
         debtorsArrayList = orderDAO.getAllNativeOrders();
         if (debtorsArrayList.size() == 0) {
             SplashDefault guestCsvSplash = new SplashDefault();

@@ -20,7 +20,7 @@ public class SettingsStateThankYou implements SettingsState {
     /**
      * <P>Default Constructor</P>
      */
-    public SettingsStateThankYou(){
+    public SettingsStateThankYou() {
         fileToVariable();
     }
 
@@ -41,7 +41,7 @@ public class SettingsStateThankYou implements SettingsState {
             Matcher matcher = pattern.matcher(readFile(pathToFile));
             matcher.find();
 
-            while ((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 returnTitle = matcher.group(1);
                 defaultTitle = matcher.group(1);
 

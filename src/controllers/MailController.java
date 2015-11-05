@@ -7,11 +7,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Toggle;
 import models.Mail;
 import services.MailService;
-import splashscreens.ImportSucceedMessage;
 import splashscreens.MailEmptyMessage;
 import splashscreens.MailSendMessage;
 import splashscreens.SplashDefault;
-import views.ImportWineListView;
 import views.MailView;
 import views.SplashscreenView;
 
@@ -39,12 +37,13 @@ public class MailController {
     private ScreensController screensController;
 
     /**
-     * @param mailView The view from where the mail gets send.
-     * @param mailDAO The Data Access Object that gets the recipeints for the different types of mails.
-     * @param mailService Used to send a {@link Mail} object.
+     * @param mailView          The view from where the mail gets send.
+     * @param mailDAO           The Data Access Object that gets the recipeints for the different types of mails.
+     * @param mailService       Used to send a {@link Mail} object.
      * @param screensController Used to direct the different windows within the application.
      */
-    public MailController(MailView mailView, MailDAO mailDAO, MailService mailService, ScreensController screensController) {
+    public MailController(MailView mailView, MailDAO mailDAO, MailService mailService,
+        ScreensController screensController) {
         this.screensController = screensController;
         this.mail = new Mail("", "");
         this.mailDAO = mailDAO;
@@ -79,17 +78,17 @@ public class MailController {
      */
     private void mailViewListener() {
         this.mailView.getInviteGroup().selectedToggleProperty()
-                .addListener(new ChangeListener<Toggle>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue,
-                                        Toggle newValue) {
-                        if (mailView.getInviteGroup().getSelectedToggle() != null) {
-                            mail.setMailType(MailType.values()[mailView.getInviteGroup().getToggles()
-                                    .indexOf(newValue)]);
-                            setTextFields();
-                        }
+            .addListener(new ChangeListener<Toggle>() {
+                @Override
+                public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue,
+                    Toggle newValue) {
+                    if (mailView.getInviteGroup().getSelectedToggle() != null) {
+                        mail.setMailType(MailType.values()[mailView.getInviteGroup().getToggles()
+                            .indexOf(newValue)]);
+                        setTextFields();
                     }
-                });
+                }
+            });
     }
 
     /**
@@ -116,6 +115,7 @@ public class MailController {
     /**
      * <p>Gets the title, header and context properties from the guestCsvSplash and creates a {@link SplashscreenView}
      * with it, showing the message to the user.</p>
+     *
      * @param mailSplash The splashscreen used in the {@link MailView}.
      */
     private void setSplashScreenView(SplashDefault mailSplash) {
@@ -171,11 +171,12 @@ public class MailController {
 
     /**
      * <p>Reads a file into a String.</p>
+     *
      * @param fileName Location of the file
      * @return String with file content
      * @throws IOException IOException Signals that an I/O exception of some sort has occurred. This
-     * class is the general class of exceptions produced by failed or
-     * interrupted I/O operations.
+     *                     class is the general class of exceptions produced by failed or
+     *                     interrupted I/O operations.
      */
     String readFile(String fileName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileName));

@@ -171,7 +171,6 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return surname of guest
      */
     public String getSurname() {
@@ -179,7 +178,6 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return streetname of guest
      */
     public String getStreetname() {
@@ -187,7 +185,6 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return email of guest
      */
     public String getEmail() {
@@ -195,7 +192,6 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return phone of guest
      */
     public String getPhone() {
@@ -203,7 +199,6 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return infix of guest
      */
     public String getInfix() {
@@ -211,7 +206,6 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return street number of guest
      */
     public String getStreetnr() {
@@ -219,7 +213,6 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return salutation of guest
      */
     public String getSalutation() {
@@ -227,7 +220,6 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return Lions member
      */
     public String getlionsMember() {
@@ -235,7 +227,6 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return Firstname of guest
      */
     public String getFirstname() {
@@ -243,7 +234,6 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return zipcode of guest
      */
     public String getZipcode() {
@@ -251,7 +241,6 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return City of guest
      */
     public String getCity() {
@@ -259,7 +248,6 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return Referral of of guest
      */
     public String getReferral() {
@@ -267,7 +255,6 @@ public class RegistrationView extends AnchorPane implements ControlledScreen {
     }
 
     /**
-     *
      * @return Button object registration button
      */
     public Button getRegistrationButton() {

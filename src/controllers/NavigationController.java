@@ -6,12 +6,10 @@ import javafx.scene.layout.AnchorPane;
 import views.NavigationView;
 
 /**
- * 
  * @author Dennis Sloove.
  * @version 0.1, November 2015
- * 		Description:
- * 		Class to create the navigation bar.
- *
+ *          Description:
+ *          Class to create the navigation bar.
  */
 public class NavigationController extends AnchorPane {
     private NavigationView navigationView;
@@ -20,13 +18,13 @@ public class NavigationController extends AnchorPane {
 
     /**
      * Constructor
-     * 
-     * @param screensController Sets the sceensController
-     * @param navigationView Sets the navigationView
+     *
+     * @param screensController     Sets the sceensController
+     * @param navigationView        Sets the navigationView
      * @param controllersController Sets the controllersController
      */
-    public NavigationController(ScreensController screensController,
-        NavigationView navigationView, ControllersController controllersController) {
+    public NavigationController(ScreensController screensController, NavigationView navigationView,
+        ControllersController controllersController) {
         this.screensController = screensController;
         this.navigationView = navigationView;
         this.CC = controllersController;
@@ -35,7 +33,7 @@ public class NavigationController extends AnchorPane {
 
     /**
      * <p>
-     * 		Add events to the items that need them.
+     * Add events to the items that need them.
      * </p>
      */
     public void generateHandlers() {
@@ -47,13 +45,14 @@ public class NavigationController extends AnchorPane {
                     navigationView.getCustomerMenu().setValue(navigationView.CUSTOMERTITLE);
                     if (newValue != null) {
                         if (newValue.equals(navigationView.ORDER1)) {
-                            screensController.screenSet(ControllersController.getORDERLISTPRINTID());
+                            screensController
+                                .screenSet(ControllersController.getORDERLISTPRINTID());
                         } else if (newValue.equals(navigationView.ORDER2)) {
-                        	CC.getOrderController().resetFields();
+                            CC.getOrderController().resetFields();
                         } else if (newValue.equals(navigationView.ORDER3)) {
                             CC.getImportWineListController().resetFields();
                         } else if (newValue.equals(navigationView.ORDER4)) {
-                        	CC.getImportGuestListController().resetFields();
+                            CC.getImportGuestListController().resetFields();
                         }
                     }
                 }
@@ -67,12 +66,12 @@ public class NavigationController extends AnchorPane {
                     navigationView.getOrderMenu().setValue(navigationView.ORDERTITLE);
                     if (newValue != null) {
                         if (newValue.equals(navigationView.GUEST1)) {
-                        	//resetFields creates a new view and reloads the values of the DB
-                        	CC.getAdjustGuestControler().resetFields();
+                            //resetFields creates a new view and reloads the values of the DB
+                            CC.getAdjustGuestControler().resetFields();
                         } else if (newValue.equals(navigationView.GUEST2)) {
-                        	CC.getRegistrationController().resetFields();
+                            CC.getRegistrationController().resetFields();
                         } else if (newValue.equals(navigationView.GUEST3)) {
-                        	CC.getDebtorsController().resetFields();
+                            CC.getDebtorsController().resetFields();
                         } else if (newValue.equals(navigationView.GUEST4)) {
                             CC.getAttendanceController().resetFields();
                         }
@@ -86,7 +85,7 @@ public class NavigationController extends AnchorPane {
         });
         //For the mail button, set MailScreen
         navigationView.getMailButton().setOnAction(e -> {
-           	CC.getMailController().resetFields();
+            CC.getMailController().resetFields();
             setComboBoxDefault();
         });
         //For the Customer button, set CustomerScreen
@@ -98,7 +97,7 @@ public class NavigationController extends AnchorPane {
 
     /**
      * <p>
-     * 		Set the ComboBox back to default value.
+     * Set the ComboBox back to default value.
      * </p>
      */
     public void setComboBoxDefault() {

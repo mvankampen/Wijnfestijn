@@ -3,8 +3,6 @@ package services;
 import DAO.GuestDAO;
 import DAO.OrderDAO;
 import com.itextpdf.text.*;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -15,7 +13,6 @@ import models.OrderLine;
 import models.Wine;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -49,14 +46,16 @@ public class PDFService {
         Document document = new Document();
         try {
             checkDirectory(this.factuurOut);
-            PdfWriter.getInstance(document, new FileOutputStream(factuurOut.toString() + "/" + order.getId() + ".pdf"));
+            PdfWriter.getInstance(document,
+                new FileOutputStream(factuurOut.toString() + "/" + order.getId() + ".pdf"));
             document.open();
 
             // Main paragraph
             Paragraph preface = new Paragraph();
 
             // Title
-            Paragraph title = new Paragraph("Lionsclub Oegstgeest/Warmond", this.fontHelveticaHeader);
+            Paragraph title =
+                new Paragraph("Lionsclub Oegstgeest/Warmond", this.fontHelveticaHeader);
             title.setAlignment(Element.ALIGN_CENTER);
             addEmptyLine(title, 2);
             preface.add(title);
@@ -64,8 +63,12 @@ public class PDFService {
             // Guest info
             Paragraph guestInfo = new Paragraph("", this.fontHelveticaNormal);
             guestInfo.add(getFullName(order.getGuest()));
-            guestInfo.add(new Paragraph(order.getGuest().getStreet() + " " + order.getGuest().getStreetnr(), this.fontHelveticaNormal));
-            guestInfo.add(new Paragraph(order.getGuest().getZipcode() + " " + order.getGuest().getCity(), this.fontHelveticaNormal));
+            guestInfo.add(
+                new Paragraph(order.getGuest().getStreet() + " " + order.getGuest().getStreetnr(),
+                    this.fontHelveticaNormal));
+            guestInfo.add(
+                new Paragraph(order.getGuest().getZipcode() + " " + order.getGuest().getCity(),
+                    this.fontHelveticaNormal));
             addEmptyLine(guestInfo, 2);
             preface.add(guestInfo);
 
@@ -78,15 +81,19 @@ public class PDFService {
             orderDetailsTable.setWidths(columnWidthOrdertable);
             orderDetailsTable.addCell(new Paragraph("Factuurdatum", this.fontHelveticaNormal));
             orderDetailsTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
-            orderDetailsTable.addCell(new Paragraph(new SimpleDateFormat("dd-MM-YYYY").format(order.getDate()), this.fontHelveticaNormal));
+            orderDetailsTable.addCell(
+                new Paragraph(new SimpleDateFormat("dd-MM-YYYY").format(order.getDate()),
+                    this.fontHelveticaNormal));
 
             orderDetailsTable.addCell(new Paragraph("Factuurnummer", this.fontHelveticaNormal));
             orderDetailsTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
-            orderDetailsTable.addCell(new Paragraph(Integer.toString(order.getId()), this.fontHelveticaNormal));
+            orderDetailsTable
+                .addCell(new Paragraph(Integer.toString(order.getId()), this.fontHelveticaNormal));
 
             orderDetailsTable.addCell(new Paragraph("Debiteurennummer", this.fontHelveticaNormal));
             orderDetailsTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
-            orderDetailsTable.addCell(new Paragraph(Integer.toString(order.getGuest().getId()), this.fontHelveticaNormal));
+            orderDetailsTable.addCell(new Paragraph(Integer.toString(order.getGuest().getId()),
+                this.fontHelveticaNormal));
 
             orderDetailsTable.addCell(new Paragraph("Betreft", this.fontHelveticaNormal));
             orderDetailsTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
@@ -110,42 +117,56 @@ public class PDFService {
             String euro = "\u20ac";
             ArrayList<OrderLine> tempOrderLines = orderDAO.findOrderlinesByOrder(order);
             for (int i = 0; i < tempOrderLines.size(); i++) {
-                orderTable.addCell(new Paragraph(Integer.toString(tempOrderLines.get(i).getWine().getId()), this.fontHelveticaNormal));
-                orderTable.addCell(new Paragraph(Integer.toString(tempOrderLines.get(i).getAmount()), this.fontHelveticaNormal));
-                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getName(), this.fontHelveticaNormal));
-                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getYear(), this.fontHelveticaNormal));
+                orderTable.addCell(
+                    new Paragraph(Integer.toString(tempOrderLines.get(i).getWine().getId()),
+                        this.fontHelveticaNormal));
+                orderTable.addCell(
+                    new Paragraph(Integer.toString(tempOrderLines.get(i).getAmount()),
+                        this.fontHelveticaNormal));
+                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getName(),
+                    this.fontHelveticaNormal));
+                orderTable.addCell(new Paragraph(tempOrderLines.get(i).getWine().getYear(),
+                    this.fontHelveticaNormal));
                 double price = tempOrderLines.get(i).getWine().getPrice();
                 String formattedPrice = String.format("%.02f", price);
                 orderTable.addCell(new Paragraph(euro + formattedPrice, this.fontHelveticaNormal));
-                double a = (tempOrderLines.get(i).getAmount() * tempOrderLines.get(i).getWine().getPrice());
+                double a = (tempOrderLines.get(i).getAmount() * tempOrderLines.get(i).getWine()
+                    .getPrice());
                 total += a;
-                BigDecimal roundedBigDecimalPrice = BigDecimal.valueOf(a).setScale(2, RoundingMode.HALF_UP);
+                BigDecimal roundedBigDecimalPrice =
+                    BigDecimal.valueOf(a).setScale(2, RoundingMode.HALF_UP);
                 double roundedDoublePrice = roundedBigDecimalPrice.doubleValue();
                 String formattedTotalPrice = String.format("%.02f", roundedDoublePrice);
-                orderTable.addCell(new Paragraph(euro + formattedTotalPrice, this.fontHelveticaNormal));
+                orderTable
+                    .addCell(new Paragraph(euro + formattedTotalPrice, this.fontHelveticaNormal));
             }
             orderTable.addCell(new Paragraph("Totaal", this.fontHelveticaNormalBold));
             orderTable.addCell(new Paragraph(""));
             orderTable.addCell(new Paragraph(""));
             orderTable.addCell(new Paragraph(""));
             orderTable.addCell(new Paragraph(""));
-            BigDecimal roundedBigDecimalTotalPrice = BigDecimal.valueOf(total).setScale(2, RoundingMode.HALF_UP);
+            BigDecimal roundedBigDecimalTotalPrice =
+                BigDecimal.valueOf(total).setScale(2, RoundingMode.HALF_UP);
             double roundedDoubleTotalPrice = roundedBigDecimalTotalPrice.doubleValue();
             String formattedTotalPrice = String.format("%.02f", roundedDoubleTotalPrice);
-            PdfPCell c = new PdfPCell(new Paragraph(euro + formattedTotalPrice, this.fontHelveticaNormalBold));
+            PdfPCell c = new PdfPCell(
+                new Paragraph(euro + formattedTotalPrice, this.fontHelveticaNormalBold));
             c.setBorder(Rectangle.TOP);
             orderTable.addCell(c);
             preface.add(orderTable);
 
             addEmptyLine(preface, 4);
-            Paragraph requestMessage = new Paragraph("Wij verzoeken u vriendelijk het totaalbedrag binnen 7 dagen na " +
-                    "factuurdatum over te maken op bankrekening 123456 t.n.v. Lionsclub Oegstgeest/Warmond onder " +
+            Paragraph requestMessage =
+                new Paragraph("Wij verzoeken u vriendelijk het totaalbedrag binnen 7 dagen na " +
+                    "factuurdatum over te maken op bankrekening 123456 t.n.v. Lionsclub Oegstgeest/Warmond onder "
+                    +
                     "vermelding van het factuurnummer.", this.fontHelveticaNormal);
             addEmptyLine(requestMessage, 4);
             preface.add(requestMessage);
 
-            Paragraph timeMessage = new Paragraph("U kunt uw bestelde wijnen ophalen op zaterdag 28 september tussen " +
-                    "12:00 en 16:00.", this.fontHelveticaNormal);
+            Paragraph timeMessage = new Paragraph(
+                "U kunt uw bestelde wijnen ophalen op zaterdag 28 september tussen "
+                    + "12:00 en 16:00.", this.fontHelveticaNormal);
             addEmptyLine(timeMessage, 1);
             preface.add(timeMessage);
 
@@ -169,7 +190,8 @@ public class PDFService {
             bankTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
             bankTable.addCell(new Paragraph("123456", this.fontHelveticaNormal));
 
-            bankTable.addCell(new Paragraph("Inschrijfnummer KvK Rijnland", this.fontHelveticaNormal));
+            bankTable
+                .addCell(new Paragraph("Inschrijfnummer KvK Rijnland", this.fontHelveticaNormal));
             bankTable.addCell(new Paragraph(":", this.fontHelveticaNormal));
             bankTable.addCell(new Paragraph("987654321", this.fontHelveticaNormal));
             preface.add(bankTable);
@@ -222,17 +244,21 @@ public class PDFService {
                     newFileName = String.valueOf(guest.getId() + "_" + guest.getSurname());
                     guestName = guest.getFirstname() + " " + guest.getSurname();
                 } else {
-                    newFileName = String.valueOf(guest.getId() + "_" + guest.getInfix() + " " + guest.getSurname());
-                    guestName = guest.getFirstname() + " " + guest.getInfix() + " " + guest.getSurname();
+                    newFileName = String
+                        .valueOf(guest.getId() + "_" + guest.getInfix() + " " + guest.getSurname());
+                    guestName =
+                        guest.getFirstname() + " " + guest.getInfix() + " " + guest.getSurname();
                 }
-                PdfWriter.getInstance(document, new FileOutputStream(file.toString() + "/" + newFileName + ".pdf"));
+                PdfWriter.getInstance(document,
+                    new FileOutputStream(file.toString() + "/" + newFileName + ".pdf"));
                 document.open();
 
                 // Main paragraph
                 Paragraph preface = new Paragraph();
 
                 // Title
-                Paragraph title = new Paragraph("Lionsclub Oegstgeest/Warmond", this.fontHelveticaNormalBold);
+                Paragraph title =
+                    new Paragraph("Lionsclub Oegstgeest/Warmond", this.fontHelveticaNormalBold);
                 addEmptyLine(title, 2);
                 preface.add(title);
 
@@ -247,7 +273,9 @@ public class PDFService {
                 guestInfo.addCell(new Paragraph("Naam: ", this.fontHelveticaNormal));
                 guestInfo.addCell(new Paragraph(guestName, this.fontHelveticaNormal));
                 guestInfo.addCell(new Paragraph("Adres:", this.fontHelveticaNormal));
-                guestInfo.addCell(new Paragraph(guest.getStreet() + " " + guest.getStreetnr() + ", " + guest.getZipcode() + " " + guest.getCity(), this.fontHelveticaNormal));
+                guestInfo.addCell(new Paragraph(
+                    guest.getStreet() + " " + guest.getStreetnr() + ", " + guest.getZipcode() + " "
+                        + guest.getCity(), this.fontHelveticaNormal));
                 guestInfo.addCell(new Paragraph("Email:", this.fontHelveticaNormal));
                 guestInfo.addCell(new Paragraph(guest.getEmail(), this.fontHelveticaNormal));
                 preface.add(guestInfo);
@@ -256,7 +284,8 @@ public class PDFService {
                 // Main table
                 PdfPTable orderListTable = new PdfPTable(9);
                 orderListTable.setWidthPercentage(100);
-                float[] columnWidthOrdertable = {0.4f, 0.5f, 0.6f, 1.3f, 0.6f, 0.4f, 0.4f, 0.4f, 0.4f};
+                float[] columnWidthOrdertable =
+                    {0.4f, 0.5f, 0.6f, 1.3f, 0.6f, 0.4f, 0.4f, 0.4f, 0.4f};
                 orderListTable.setWidths(columnWidthOrdertable);
 
                 orderListTable.addCell(new Paragraph("Nr.", this.fontHelveticaNormalBold));
@@ -270,14 +299,18 @@ public class PDFService {
                 orderListTable.addCell(new Paragraph("Rang", this.fontHelveticaNormalBold));
 
                 for (Wine w : wineList) {
-                    orderListTable.addCell(new Paragraph(String.valueOf(w.getId()), this.fontHelveticaNormal));
+                    orderListTable.addCell(
+                        new Paragraph(String.valueOf(w.getId()), this.fontHelveticaNormal));
                     orderListTable.addCell(new Paragraph("", this.fontHelveticaNormal));
                     orderListTable.addCell(new Paragraph(w.getType(), this.fontHelveticaNormal));
                     orderListTable.addCell(new Paragraph(w.getName(), this.fontHelveticaNormal));
-                    orderListTable.addCell(new Paragraph(w.getCategory(), this.fontHelveticaNormal));
+                    orderListTable
+                        .addCell(new Paragraph(w.getCategory(), this.fontHelveticaNormal));
                     orderListTable.addCell(new Paragraph(w.getYear(), this.fontHelveticaNormal));
-                    orderListTable.addCell(new Paragraph(w.getCostprice().toString(), this.fontHelveticaNormal));
-                    orderListTable.addCell(new Paragraph(w.getPrice().toString(), this.fontHelveticaNormal));
+                    orderListTable.addCell(
+                        new Paragraph(w.getCostprice().toString(), this.fontHelveticaNormal));
+                    orderListTable
+                        .addCell(new Paragraph(w.getPrice().toString(), this.fontHelveticaNormal));
                     orderListTable.addCell(new Paragraph(w.getRank(), this.fontHelveticaNormal));
                 }
 
@@ -309,9 +342,11 @@ public class PDFService {
             } else {
                 newFileName = fileName;
             }
-            File orderListOut = new File(System.getProperty("user.home") + "/Wijnfestijn/bestellijst/" + newFileName);
+            File orderListOut = new File(
+                System.getProperty("user.home") + "/Wijnfestijn/bestellijst/" + newFileName);
             checkDirectory(orderListOut);
-            PdfWriter.getInstance(document, new FileOutputStream(orderListOut.toString() + "/" + "_AlgemeneBestellijst.pdf"));
+            PdfWriter.getInstance(document,
+                new FileOutputStream(orderListOut.toString() + "/" + "_AlgemeneBestellijst.pdf"));
             document.open();
 
             // Main paragraph
@@ -334,14 +369,17 @@ public class PDFService {
             orderListTable.addCell(new Paragraph("Rang", this.fontHelveticaNormalBold));
 
             for (Wine w : wineList) {
-                orderListTable.addCell(new Paragraph(String.valueOf(w.getId()), this.fontHelveticaNormal));
+                orderListTable
+                    .addCell(new Paragraph(String.valueOf(w.getId()), this.fontHelveticaNormal));
                 orderListTable.addCell(new Paragraph("", this.fontHelveticaNormal));
                 orderListTable.addCell(new Paragraph(w.getType(), this.fontHelveticaNormal));
                 orderListTable.addCell(new Paragraph(w.getName(), this.fontHelveticaNormal));
                 orderListTable.addCell(new Paragraph(w.getCategory(), this.fontHelveticaNormal));
                 orderListTable.addCell(new Paragraph(w.getYear(), this.fontHelveticaNormal));
-                orderListTable.addCell(new Paragraph(w.getCostprice().toString(), this.fontHelveticaNormal));
-                orderListTable.addCell(new Paragraph(w.getPrice().toString(), this.fontHelveticaNormal));
+                orderListTable
+                    .addCell(new Paragraph(w.getCostprice().toString(), this.fontHelveticaNormal));
+                orderListTable
+                    .addCell(new Paragraph(w.getPrice().toString(), this.fontHelveticaNormal));
                 orderListTable.addCell(new Paragraph(w.getRank(), this.fontHelveticaNormal));
             }
 

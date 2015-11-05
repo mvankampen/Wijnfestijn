@@ -3,8 +3,6 @@ package controllers;
 import DAO.GuestDAO;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import models.Guest;
 import splashscreens.*;
 import validators.EmailValidator;
@@ -27,8 +25,8 @@ public class RegistrationController {
     private int errorCounter;
     private boolean fieldActive;
     private ScreensController screensController;
-    private String context, header, title, surname, infix, firstname, salutation, streetname, streetnr, zipcode, city, email, phone,
-            referral, comment;
+    private String context, header, title, surname, infix, firstname, salutation, streetname,
+        streetnr, zipcode, city, email, phone, referral, comment;
 
     /**
      * @param registrationView  The view where the registration is done.
@@ -36,7 +34,8 @@ public class RegistrationController {
      *                          database.
      * @param screensController Used to direct the different windows within the application.
      */
-    public RegistrationController(RegistrationView registrationView, GuestDAO guestDAO, ScreensController screensController) {
+    public RegistrationController(RegistrationView registrationView, GuestDAO guestDAO,
+        ScreensController screensController) {
         this.registrationView = registrationView;
         this.screensController = screensController;
         this.guestDAO = guestDAO;
@@ -49,27 +48,29 @@ public class RegistrationController {
     public void generateHandlers() {
         this.registrationView.getRegistrationButton().setOnAction(e -> readData());
         registrationView.referralComboBox.getSelectionModel().selectedItemProperty()
-                .addListener(new ChangeListener<String>() {
-                    public void changed(ObservableValue<? extends String> observable, String o, String newValue) {
-                        if (newValue.equals("Lions lid persoonlijk")) {
-                            registrationView.lionsMemberTextField.setVisible(true);
-                            registrationView.lionsMemberLabel.setVisible(true);
-                            registrationView.lionsMemberLabel.setText("Vul de naam van desbetreffende in");
-                            fieldActive = true;
-                        } else if (newValue.equals("Anders")) {
-                            registrationView.lionsMemberTextField.setVisible(true);
-                            registrationView.lionsMemberLabel.setVisible(true);
-                            registrationView.lionsMemberLabel.setText("Vul in hoe");
-                            fieldActive = true;
-                        } else {
-                            registrationView.lionsMemberTextField.setVisible(false);
-                            registrationView.lionsMemberLabel.setVisible(false);
-                            fieldActive = false;
-                        }
-                        ;
-
+            .addListener(new ChangeListener<String>() {
+                public void changed(ObservableValue<? extends String> observable, String o,
+                    String newValue) {
+                    if (newValue.equals("Lions lid persoonlijk")) {
+                        registrationView.lionsMemberTextField.setVisible(true);
+                        registrationView.lionsMemberLabel.setVisible(true);
+                        registrationView.lionsMemberLabel
+                            .setText("Vul de naam van desbetreffende in");
+                        fieldActive = true;
+                    } else if (newValue.equals("Anders")) {
+                        registrationView.lionsMemberTextField.setVisible(true);
+                        registrationView.lionsMemberLabel.setVisible(true);
+                        registrationView.lionsMemberLabel.setText("Vul in hoe");
+                        fieldActive = true;
+                    } else {
+                        registrationView.lionsMemberTextField.setVisible(false);
+                        registrationView.lionsMemberLabel.setVisible(false);
+                        fieldActive = false;
                     }
-                });
+                    ;
+
+                }
+            });
     }
 
     /**
@@ -160,8 +161,9 @@ public class RegistrationController {
         title = registrationSplash.getTitleText();
         header = registrationSplash.getHeaderText();
         context = registrationSplash.getContextText();
-        this.guest = new Guest(surname, infix, firstname, salutation, streetname, streetnr, zipcode, city, email, phone,
-                referral, comment);
+        this.guest =
+            new Guest(surname, infix, firstname, salutation, streetname, streetnr, zipcode, city,
+                email, phone, referral, comment);
         this.guestDAO.addGuest(guest);
         splashscreenView = new SplashscreenView(title, header, context);
         resetFields();
@@ -173,7 +175,8 @@ public class RegistrationController {
     public void resetFields() {
         screensController.screenRemove(ControllersController.getREGISTRATIONID());
         this.registrationView = new RegistrationView();
-        screensController.screenLoadSet(ControllersController.getREGISTRATIONID(), registrationView);
+        screensController
+            .screenLoadSet(ControllersController.getREGISTRATIONID(), registrationView);
         generateHandlers();
     }
 }
