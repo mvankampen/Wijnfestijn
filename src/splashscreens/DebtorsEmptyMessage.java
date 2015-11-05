@@ -9,13 +9,12 @@ public class DebtorsEmptyMessage extends SplashDefaultMessage {
 	@Override
 	public String getContextText() {
 		return "Er zijn geen debiteuren aanwezig";
-		
 	}
 	public String getTitleText() {
-		return "Geen debiteuren";
+		return "Geen debiteuren gevonden!";
 	}
 	public String getHeaderText() {
-		return "Lege data";
+		return "";
 	}
 
 

@@ -8,14 +8,13 @@ public class OrderDuplicateMessage extends SplashDefaultMessage {
 	}
 	@Override
 	public String getContextText() {
-		return "U kunt niet 2 orders voor 1 wijn maken";
-		
+		return "U kunt niet 2 keer dezelfde wijn invoeren!";
 	}
 	public String getTitleText() {
-		return "Orderline fout";
+		return "Dubbele wijn";
 	}
 	public String getHeaderText() {
-		return "Er is al een orderline voor deze wijn";
+		return "Deze wijn is al gekozen.";
 	}
 
 

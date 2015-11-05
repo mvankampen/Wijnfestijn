@@ -1,7 +1,4 @@
 package splashscreens;
-
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 /**
  * Created by Alex on 07-10-15.
  */

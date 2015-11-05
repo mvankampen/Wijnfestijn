@@ -8,14 +8,13 @@ public class ImportSucceedMessage extends SplashDefaultMessage {
 	}
 	@Override
 	public String getContextText() {
-		return "data import succesvol";
-		
+		return "Er zijn geen fouten gevonden tijdens het importeren van de gegevens.";
 	}
 	public String getTitleText() {
-		return "Succes";
+		return "Import geslaagd!";
 	}
 	public String getHeaderText() {
-		return "Geen fouten gevonden";
+		return "De gegevens zijn correct geïmporteerd.";
 	}
 
 

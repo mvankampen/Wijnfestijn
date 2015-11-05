@@ -10,7 +10,7 @@ public class SplashZipcodeMessage extends SplashDefault {
 	}
 	@Override
 	public String getContextText() {
-		return splashDefault.getContextText() + "de postcode invoer is foutief\n";
+		return splashDefault.getContextText() + "foutieve postcode\n";
 		
 	}
 	public String getTitleText() {

@@ -8,14 +8,13 @@ public class OrderEmptyMessage extends SplashDefaultMessage {
 	}
 	@Override
 	public String getContextText() {
-		return "Je moet minimaal 1 orderline hebben";
-		
+		return "Er moet minimaal 1 wijn worden ingevuld!";
 	}
 	public String getTitleText() {
-		return "Lege order";
+		return "Lege order!";
 	}
 	public String getHeaderText() {
-		return "Lege order";
+		return "Er is geen wijn gekozen!";
 	}
 
 

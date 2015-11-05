@@ -85,6 +85,8 @@ public class ImportGuestListController {
 	public void fireCsv() {
 		//a new splashScreen to be able to show messages to the user
 		SplashDefault guestCsvSplash = new SplashDefault();
+		
+		importFile = null;
 		// prompts the user to choose a CSV file
 		importFile = fileChooser.showOpenDialog(new Stage());
 		// runs the file through the filechecker "isCSV"
@@ -145,11 +147,16 @@ public class ImportGuestListController {
 	};
 
 	// checks if the file that is selected by the user is actually a .csv file
-	public boolean isCSV(File importFile) {
-		if (importFile.toString().substring(importFile.toString().length() - 4, importFile.toString().length())
-				.equals(".csv")) {
-			csvSelected = true;
+	private boolean isCSV(File importFile) {
+		csvSelected = false;
+		if(importFile != null){
+			importGuestListView.getTable().getItems().clear();
+			if (importFile.toString().substring(importFile.toString().length() - 4, importFile.toString().length())
+					.equals(".csv")) {
+				csvSelected = true;
+			}
 		}
+		
 		return csvSelected;
 	}
 

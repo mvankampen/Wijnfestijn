@@ -10,7 +10,7 @@ public class SplashStreetnameMessage extends SplashDefault {
 	}
 	@Override
 	public String getContextText() {
-		return splashDefault.getContextText() + "de straatnaam invoer is foutief\n";
+		return splashDefault.getContextText() + "Foutieve straatnaam\n";
 		
 	}
 	public String getTitleText() {
