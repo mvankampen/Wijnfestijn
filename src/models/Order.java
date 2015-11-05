@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by Sander de Jong on 21-9-2015.
+ * @author Sander de Jong.
+ * @version 0.1, November 2015.
+ * 		Description:
+ * 		The Order class holds all the information of an order.
  */
 public class Order {
     private int id;
@@ -14,6 +17,11 @@ public class Order {
     private Date date;
     private boolean completed = false;
 
+    /**
+     * Constructor
+     * 
+     * @param guest
+     */
     public Order(Guest guest) {
         this.guest = guest;
         this.date = new Date();
