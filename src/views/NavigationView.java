@@ -8,6 +8,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+/**
+ * <p>The view that shows the navigation in the applicatoin</p>
+ *
+ * @author Alex van der Wal
+ * @version 0.1, november 2015
+ */
 public class NavigationView extends AnchorPane{
 	
 	private Button homeButton, mailButton, settingsButton;
@@ -28,16 +34,24 @@ public class NavigationView extends AnchorPane{
     public final String GUEST3 = "Betalingen";
     public final String GUEST4 = "Presentie";
 
-	
+
+    /**
+     * <p>When inizialized create all the grids.</p>
+     */
 	public NavigationView(){
 		createView();
 	}
-	
+
+    /**
+     * <p>Creates the grid</p>
+     */
 	public void createView(){
 		generateContentGrid();
 	}
 
-	
+    /**
+     * Sets the gird and adds it to the view.
+     */
 	public void generateContentGrid(){
     	orderOptions = FXCollections.observableArrayList(ORDER1, ORDER2, ORDER3, ORDER4);
         customerOptions = FXCollections.observableArrayList(GUEST1, GUEST2, GUEST3, GUEST4);

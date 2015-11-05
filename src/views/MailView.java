@@ -29,7 +29,7 @@ public class MailView extends AnchorPane implements ControlledScreen {
 
     public void setScreenController(ScreensController screensController) {
       /*
-		 * Used for registering itself in the hashMap of the ScreensController
+         * Used for registering itself in the hashMap of the ScreensController
 		 * to enable navigation
 		 */
     }
@@ -75,8 +75,8 @@ public class MailView extends AnchorPane implements ControlledScreen {
 		 * adjust
 		 */
         String introText = "Hier kunt u de mails opstellen. Kies welke mail u wilt"
-            + " opstellen en voer\nde titel en body in. Klik op verzenden en de applicatie"
-            + " doet de rest";
+                + " opstellen en voer\nde titel en body in. Klik op verzenden en de applicatie"
+                + " doet de rest";
 		/*
 		 * creating all Labels, used to instruct the user towards what actions
 		 * he can perform within the view
