@@ -39,6 +39,7 @@ public class WineDAO {
      */
     public void insertAllWines(List<Wine> wines) {
         try {
+            setAllWinesFalse();
             this.preparedStatement = null;
             String sqlQuery = "INSERT INTO wine"
                 + "(wine_name, wine_category, wine_type, wine_publisher, wine_year, wine_price, wine_rank, wine_costprice, wine_margin) VALUES "
