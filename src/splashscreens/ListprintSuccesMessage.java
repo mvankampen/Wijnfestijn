@@ -1,9 +1,9 @@
 package splashscreens;
 
 /**
- * <p> A wrapper for the decorator, adds a error message for registration - empty city field </p>
+ * <p> A wrapper for the decorator adds a succes message for generating orderlists</p>
  *
- * @author Alex van der wal on 07-10-15.
+ * @author Alex van der wal
  */
 public class ListprintSuccesMessage extends SplashDefaultMessage {
     SplashDefault splashDefault;
@@ -16,7 +16,7 @@ public class ListprintSuccesMessage extends SplashDefaultMessage {
     }
 
     @Override public String getContextText() {
-        return "De bestellijsten zijn gemaakt, deze kunnen gevonden worden in: \n Gebruikers -> Uw gebruiker -> Wijnfestijn -> Bestellijst -> Huidige datum ( Map) Hier vind u persoonlijke bestellijsten voor alle gasten";
+        return "De bestellijsten zijn gemaakt, deze kunnen gevonden worden in: \n Gebruikers -> Uw gebruiker -> Wijnfestijn -> Bestellijst -> uw opgegeven naam of de datum van vandaag( Map) Hier vind u persoonlijke bestellijsten voor alle gasten";
     }
 
     public String getTitleText() {

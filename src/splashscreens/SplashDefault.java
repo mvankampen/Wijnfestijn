@@ -1,12 +1,13 @@
 package splashscreens;
 
 /**
- * @author Alex on 07-10-15.
- * @version v1.0
- *          Description : This is the super class that is used by all SplashScreens
+ * <p> This is the super class that is used by all SplashScreens
  *          Because all SplashScreens are a "SplashDefault" we can keep wrapping
  *          SplashScreens over each other, so that the errors are as Dynamic as possible
- *          This is a typical example of the decorator pattern
+ *          This is a typical example of the decorator pattern </p>
+ * @author Alex on 07-10-15.
+ * @version v1.0
+ * 
  */
 public class SplashDefault {
 

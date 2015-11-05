@@ -9,10 +9,10 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
+ * 
+ *        <p>  OrderDAO is used to separate low level data accessing API or operations from high level business services.</p>
  * @author Michael van Kampen
  * @version 0.1, november 2015
- *          Description:
- *          OrderDAO is used to separate low level data accessing API or operations from high level business services.
  */
 
 public class OrderDAO {

@@ -1,11 +1,10 @@
 package enums;
 
 /**
+ * <p>  MailType class is a enemuration</p>
  * @author Sander de Jong.
  * @version 0.1. November 2015.
- *          <p>
- *          Discription:
- *          MailType class is a enemuration
+ *          
  */
 public enum MailType {
     REMINDER,

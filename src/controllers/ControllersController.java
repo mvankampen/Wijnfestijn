@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * <p>Description: this Controller is used to have a central class
+ * <p>this Controller is used to have a central class
  * where all vital elements are created so that the system can start.
  * In this class you will find the creation of the database connection,
  * the Views, the Controllers, and the procedure to make the Screenscontroller work correctly </p>

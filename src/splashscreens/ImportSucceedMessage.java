@@ -1,9 +1,9 @@
 package splashscreens;
 
 /**
- * <p> A wrapper for the decorator, adds a error message for registration - empty city field </p>
+ * <p> A wrapper for the decorator gives a succes message for importing</p>
  *
- * @author Alex van der wal on 07-10-15.
+ * @author Alex van der wal
  */
 public class ImportSucceedMessage extends SplashDefaultMessage {
     SplashDefault splashDefault;
@@ -24,7 +24,7 @@ public class ImportSucceedMessage extends SplashDefaultMessage {
     }
 
     public String getHeaderText() {
-        return "De gegevens zijn correct geï¿½mporteerd.";
+        return "De gegevens zijn correct geïmporteerd.";
     }
 
 

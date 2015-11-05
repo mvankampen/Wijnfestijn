@@ -15,10 +15,10 @@ import javafx.scene.layout.VBox;
 import models.OrderLine;
 
 /**
+ * <p>   Order view generates an output presentation to the user based on changes in the model. </p
  * @author Michael van Kampen
  * @version 0.1, november 2015
- *          Description:
- *          Order view generates an output presentation to the user based on changes in the model.
+ *        
  */
 public class OrderView extends AnchorPane implements ControlledScreen {
     private ScreensController screensController;

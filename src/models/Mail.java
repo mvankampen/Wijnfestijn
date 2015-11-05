@@ -6,12 +6,11 @@ import javax.mail.internet.InternetAddress;
 import java.util.ArrayList;
 
 /**
+ * <p> The Mail class holds all the information about the e-mail and
+ *          the recipients to send it to. </p>
  * @author Sander de Jong.
  * @version 0.1. November 2015.
- *          <p>
- *          Discription:
- *          The Mail class holds all the information about the e-mail and
- *          the recipients to send it to.
+ *          
  */
 public class Mail {
     private ArrayList<InternetAddress> recipients;

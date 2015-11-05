@@ -1,10 +1,10 @@
 package models;
 
 /**
+ * <p> The OrderLine class is used for a single line of an Order.</p>
  * @author Michael van Kampen.
  * @version 0.1, November 2015
- *          Description:
- *          The OrderLine class is used for a single line of an Order.
+ *         
  */
 public class OrderLine {
     private Order order;

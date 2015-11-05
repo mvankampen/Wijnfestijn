@@ -13,10 +13,10 @@ import models.Wine;
 
 
 /**
+ * <p>  This is a view to import a wine .CSV file to the database. </p>
  * @author Dennis Sloove.
  * @version 0.1, November 2015
- *          Description:
- *          This is a view to import a wine .CSV file to the database.
+ *        
  */
 public class ImportWineListView extends AnchorPane implements ControlledScreen {
     private Button importButton;
