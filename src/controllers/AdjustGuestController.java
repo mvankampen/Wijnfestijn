@@ -37,7 +37,7 @@ import views.RegistrationView;
 import views.SplashscreenView;
 
 /**
- * Created by Sander de Jong on 22-9-2015.
+ * Created by Alex van der wal on 22-9-2015.
  */
 public class AdjustGuestController {
 	private AdjustGuestView adjustGuestView;
