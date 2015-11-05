@@ -24,7 +24,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by Sander de Jong on 24-9-2015.
+ * <p>This class is used for different PDF tasks. The main goal of this class is to generate PDF files based on
+ * given input. This class used an external jar called itextpdf-5.5.7.</p>
+ *
+ * @author Sander de Jong
+ * @version 0.1, november 2015
  */
 public class PDFService {
     private File factuurOut = new File(System.getProperty("user.home") + "/Wijnfestijn/factuur/");
@@ -32,6 +36,13 @@ public class PDFService {
     private Font fontHelveticaNormalBold = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
     private Font fontHelveticaNormal = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
 
+    /**
+     * <p>Creates a PDF based on a given order. The order is being looked up in the database to get all the orderlines.
+     * For each {@link OrderLine} the PDF API inserts it into the document along with other information about the order.</p>
+     * @param order An order object of which the PDF will be created.
+     * @param orderDAO The order Data Access Object that will be used to look up the orderlines of a specific order.
+     * @return Returns a file object that can be used to write the PDF data to a disk.
+     */
     public File createOrderPdf(Order order, OrderDAO orderDAO) {
         Document document = new Document();
         try {
@@ -172,6 +183,12 @@ public class PDFService {
         return new File(factuurOut.toString() + "/" + order.getId() + ".pdf");
     }
 
+    /**
+     * <p>Gets the full name as a String from a {@link Guest} object. This method is needed because some geusts
+     * have infixes in their name and some don't.</p>
+     * @param guest A guest object that represents a guest.
+     * @return Returns a String that can be used as the full name of a guest.
+     */
     public String getFullName(Guest guest) {
         String firstNameShort = guest.getFirstname().substring(0, 1).toUpperCase() + ". ";
         String result = firstNameShort;
@@ -183,6 +200,13 @@ public class PDFService {
         return result;
     }
 
+    /**
+     * <p></p>Creates an orderlist PDF file based on a {@link Guest}. In this orderlist there will be guest information
+     * displayed</p>
+     * @param file This is the file that the PDF will be written to.
+     * @param guestDAO The Data Acces Object that will be used to retrieve the guest information from the database.
+     * @param wineList The winelist that will be used in the orderlist.
+     */
     private void createCustomOrderList(File file, GuestDAO guestDAO, ArrayList<Wine> wineList) {
         try {
             ArrayList<Guest> guests = guestDAO.getAllGuest();
@@ -265,6 +289,12 @@ public class PDFService {
         }
     }
 
+    /**
+     * <p>Creates an blank orderlist file with no specific information about a guest. </p>
+     * @param wineList The winelist that will be used in the orderlist
+     * @param fileName The filename that will be used as a directory name for all the orderlists.
+     * @param guestDAO The Data Acces Object that will provide the guest information where needed.
+     */
     public void createOrderList(ArrayList<Wine> wineList, String fileName, GuestDAO guestDAO) {
         Document document = new Document();
         try {
@@ -323,6 +353,11 @@ public class PDFService {
         }
     }
 
+    /**
+     * <p>Checks the file path and creates the path if it doesnt already exists.</p>
+     * @param path A specific path to a location on a disk.
+     * @return returns a boolean which will tell if the path has been made or not.
+     */
     private boolean checkDirectory(File path) {
         if (!path.exists()) {
             try {
@@ -334,19 +369,15 @@ public class PDFService {
         return false;
     }
 
+    /**
+     * <p>Adds an empty line to the given paragraph object</p>
+     * @param paragraph The paragraph object that will get new lines.
+     * @param number The amount of new lines that needs to be inserted.
+     */
     private void addEmptyLine(Paragraph paragraph, int number) {
         for (int i = 0; i < number; i++) {
             paragraph.add(new Paragraph(" "));
         }
     }
-
-    private void addTab(Paragraph paragraph, int number) {
-        for (int i = 0; i < number; i++) {
-            paragraph.add(Chunk.TABBING);
-        }
-    }
-
-    private String calcTotal() {
-        return null;
-    }
+    
 }
