@@ -9,20 +9,35 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by michael on 29-09-15.
+ * @author Michael van Kampen
+ * @version 0.1, november 2015
+ *          Description:
+ *          GuestDAO is used to separate low level data accessing API or operations from high level business services.
  */
+
 public class GuestDAO {
 
     private Connection connection;
     private PreparedStatement preparedStatement;
 
+    /**
+     * Constructor
+     *
+     * @param connection A connection (session) with a specific
+     *                   database. SQL statements are executed and results are returned
+     *                   within the context of a connection.
+     */
     public GuestDAO(Connection connection) {
         this.connection = connection;
     }
 
 
-    public Guest addGuest(Guest guest) {
-        Guest currentGuest = null;
+    /**
+     * Add new guest into the Database Management System
+     *
+     * @param guest object to add into the  Database Management System
+     */
+    public void addGuest(Guest guest) {
         try {
             this.preparedStatement = null;
             String sqlQuery = "INSERT INTO guest"
@@ -54,10 +69,14 @@ public class GuestDAO {
             } catch (SQLException ex) {
                 e.printStackTrace();
             }
-        } 
-        return currentGuest;
+        }
     }
-    //update the fields of the guest in the db with the new data
+
+    /**
+     * <P>Update the fields of the guest in the Database Management System with the new data</P>
+     *
+     * @param guest object to update the fields into the Database Management System
+     */
     public void updateGuest(Guest guest) {
         try {
             this.preparedStatement = null;
@@ -90,43 +109,43 @@ public class GuestDAO {
             } catch (SQLException ex) {
                 e.printStackTrace();
             }
-        } 
-        
+        }
+
     }
-    //used when the user wants to search for a specific guest, goes by surname
-	public ArrayList<Guest> findGuestBySurname(String lastname) {
+
+    /**
+     * @param surname wants to search for a specific guest
+     * @return a guest object that corresponds with the last name
+     */
+    public ArrayList<Guest> findGuestBySurname(String surname) {
         ArrayList<Guest> guestList = new ArrayList<>();
         try {
             this.preparedStatement = null;
             String sqlQuery = "SELECT * FROM guest WHERE LOWER(guest_lastname)  LIKE ?";
             this.preparedStatement = this.connection.prepareStatement(sqlQuery);
-            preparedStatement.setString(1, lastname + '%');
+            preparedStatement.setString(1, surname + '%');
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Guest guest =
-                    new Guest(resultSet.getInt("guest_id"), 
-                    	resultSet.getString("guest_lastname"),
-                        resultSet.getString("guest_infix"),
-                        resultSet.getString("guest_firstname"),
+                    new Guest(resultSet.getInt("guest_id"), resultSet.getString("guest_lastname"),
+                        resultSet.getString("guest_infix"), resultSet.getString("guest_firstname"),
                         resultSet.getString("guest_salutation"),
-                        resultSet.getString("guest_street"), 
-                        resultSet.getString("guest_streetnr"),
-                        resultSet.getString("guest_zipcode"), 
-                        resultSet.getString("guest_city"),
-                        resultSet.getString("guest_email"), 
-                        resultSet.getString("guest_phone"),
-                        resultSet.getString("guest_referal"), 
-                        resultSet.getString("guest_comment"),
-                        resultSet.getBoolean("guest_noshow")
-                        );
+                        resultSet.getString("guest_street"), resultSet.getString("guest_streetnr"),
+                        resultSet.getString("guest_zipcode"), resultSet.getString("guest_city"),
+                        resultSet.getString("guest_email"), resultSet.getString("guest_phone"),
+                        resultSet.getString("guest_referal"), resultSet.getString("guest_comment"),
+                        resultSet.getBoolean("guest_noshow"));
                 guestList.add(guest);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } 
+        }
         return guestList;
     }
-	//retrieves all guest rows in the database
+
+    /**
+     * @return all guest rows in the Database Management System
+     */
     public ArrayList<Guest> getAllGuest() {
         ArrayList<Guest> guestList = new ArrayList<>();
         try {
@@ -136,21 +155,14 @@ public class GuestDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Guest guest =
-                    new Guest(resultSet.getInt("guest_id"),
-                        resultSet.getString("guest_lastname"),
-                        resultSet.getString("guest_infix"),
-                        resultSet.getString("guest_firstname"),
+                    new Guest(resultSet.getInt("guest_id"), resultSet.getString("guest_lastname"),
+                        resultSet.getString("guest_infix"), resultSet.getString("guest_firstname"),
                         resultSet.getString("guest_salutation"),
-                        resultSet.getString("guest_street"),
-                        resultSet.getString("guest_streetnr"),
-                        resultSet.getString("guest_zipcode"),
-                        resultSet.getString("guest_city"),
-                        resultSet.getString("guest_email"),
-                        resultSet.getString("guest_phone"),
-                        resultSet.getString("guest_referal"),
-                        resultSet.getString("guest_comment"),
-                        resultSet.getBoolean("guest_noshow")
-                    );
+                        resultSet.getString("guest_street"), resultSet.getString("guest_streetnr"),
+                        resultSet.getString("guest_zipcode"), resultSet.getString("guest_city"),
+                        resultSet.getString("guest_email"), resultSet.getString("guest_phone"),
+                        resultSet.getString("guest_referal"), resultSet.getString("guest_comment"),
+                        resultSet.getBoolean("guest_noshow"));
                 //adds each object in the ArrayList
                 guestList.add(guest);
             }

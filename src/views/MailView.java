@@ -13,7 +13,7 @@ import models.Mail;
 public class MailView extends AnchorPane implements ControlledScreen {
 
     private TextField titleTextArea;
-    private Button mailButton = new Button("Verzenden");
+    private Button mailButton;
     private HTMLEditor htmlEditor;
 
     private ToggleGroup inviteGroup = new ToggleGroup();
@@ -71,7 +71,6 @@ public class MailView extends AnchorPane implements ControlledScreen {
         VBox bodyBox = new VBox();
         VBox typeBox = new VBox();
         // creating the buttons and setting their properties
-        mailButton = new Button("Verzenden");
         this.mailButton = new Button("Verzenden");
         mailButton.getStyleClass().add("form_buttons");
         // creating the textareas
