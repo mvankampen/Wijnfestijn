@@ -82,6 +82,7 @@ public class MailService {
 
     /**
      * <p>Adds an attachmant to the mail.</p>
+     *
      * @param file The file that will be attached.
      */
     public void addAttachment(File file) {
@@ -96,38 +97,9 @@ public class MailService {
         }
     }
 
-//    public void addImage() {
-//        try {
-//            BodyPart messageBodyPart1 = new MimeBodyPart();
-//            DataSource fds = new FileDataSource("src/images/header.png");
-//            messageBodyPart1.setDataHandler(new DataHandler(fds));
-//            messageBodyPart1.setHeader("Content-ID", "<header>");
-//            multipart.addBodyPart(messageBodyPart1);
-//
-//            BodyPart messageBodyPart2 = new MimeBodyPart();
-//            fds = new FileDataSource("src/images/inschrijfKnop.png");
-//            messageBodyPart2.setDataHandler(new DataHandler(fds));
-//            messageBodyPart2.addHeader("Content-ID", "<inschrijf>");
-//            multipart.addBodyPart(messageBodyPart2);
-//
-//            BodyPart messageBodyPart3 = new MimeBodyPart();
-//            fds = new FileDataSource("src/images/facebookKnop.png");
-//            messageBodyPart3.setDataHandler(new DataHandler(fds));
-//            messageBodyPart3.addHeader("Content-ID", "<facebook>");
-//            multipart.addBodyPart(messageBodyPart3);
-//
-//            BodyPart messageBodyPart4 = new MimeBodyPart();
-//            fds = new FileDataSource("src/images/contactKnop.png");
-//            messageBodyPart4.setDataHandler(new DataHandler(fds));
-//            messageBodyPart4.addHeader("Content-ID", "<contact>");
-//            multipart.addBodyPart(messageBodyPart4);
-//        } catch (MessagingException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     /**
      * <p>Sets the current {@link Mail} object.</p>
+     *
      * @param mail
      */
     public void setMail(Mail mail) {
