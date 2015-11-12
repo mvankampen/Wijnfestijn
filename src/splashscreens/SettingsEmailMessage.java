@@ -1,24 +1,30 @@
-
 package splashscreens;
 
+/**
+ * <p> A wrapper for the decorator, adds a error message for settings -  wrong/empty email </p>
+ *
+ * @author Alex van der wal
+ */
 public class SettingsEmailMessage extends SplashDefaultMessage {
-	
-	SplashDefault splashDefault;
-	public SettingsEmailMessage(SplashDefault splashDefault)
-	{
-		this.splashDefault = splashDefault;
-	}
-	
-	public String getContextText() {
-		return splashDefault.getContextText() + "E-mail is niet correct\n";
-	}
+    SplashDefault splashDefault;
 
-	public String getTitleText() {
-		return splashDefault.getTitleText();
-	}
+    /**
+     * @param splashDefault so that it can wrap itself around the object given
+     */
+    public SettingsEmailMessage(SplashDefault splashDefault) {
+        this.splashDefault = splashDefault;
+    }
 
-	public String getHeaderText() {
-		return splashDefault.getHeaderText();
-	}
+    public String getContextText() {
+        return splashDefault.getContextText() + "E-mail is niet correct\n";
+    }
+
+    public String getTitleText() {
+        return splashDefault.getTitleText();
+    }
+
+    public String getHeaderText() {
+        return splashDefault.getHeaderText();
+    }
 
 }

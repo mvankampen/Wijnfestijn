@@ -9,10 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
+ * <p>  MailDAO is used to separate low level data accessing API or operations from high level business services. </p>
  * @author Michael van Kampen
  * @version 0.1, november 2015
- *          Description:
- *          MailDAO is used to separate low level data accessing API or operations from high level business services.
+ *         
  */
 
 public class MailDAO {
@@ -23,9 +23,10 @@ public class MailDAO {
 
     /**
      * Constructor
+     *
      * @param connection A connection (session) with a specific
-     * database. SQL statements are executed and results are returned
-     * within the context of a connection.
+     *                   database. SQL statements are executed and results are returned
+     *                   within the context of a connection.
      */
     public MailDAO(Connection connection) {
         this.connection = connection;
@@ -33,6 +34,7 @@ public class MailDAO {
 
     /**
      * Reminder Mail
+     *
      * @return ArrayList of InternetAddress
      */
     public ArrayList<InternetAddress> reminderMail() {
@@ -56,6 +58,7 @@ public class MailDAO {
 
     /**
      * Invitation Mail
+     *
      * @return ArrayList of InternetAddress
      */
     public ArrayList<InternetAddress> invitationMail() {
@@ -79,6 +82,7 @@ public class MailDAO {
 
     /**
      * Thanks Mail function
+     *
      * @return ArrayList of InternetAddress
      */
     public ArrayList<InternetAddress> thanksMail() {
@@ -103,6 +107,7 @@ public class MailDAO {
 
     /**
      * <P>Selects all guest data that have outstanding orders.</P>
+     *
      * @return ArrayList of InternetAddress
      */
     public ArrayList<InternetAddress> getOpenOrderGuests() {

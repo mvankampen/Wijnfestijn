@@ -9,10 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
+ * <p>  GuestDAO is used to separate low level data accessing API or operations from high level business services. </p>
  * @author Michael van Kampen
  * @version 0.1, november 2015
- *          Description:
- *          GuestDAO is used to separate low level data accessing API or operations from high level business services.
+ *         
  */
 
 public class GuestDAO {
@@ -33,9 +33,9 @@ public class GuestDAO {
 
 
     /**
-     * Add new guest into the Database Management System
+     * Add new {@link Guest} into the Database Management System
      *
-     * @param guest object to add into the  Database Management System
+     * @param guest object to add into the Database Management System
      */
     public void addGuest(Guest guest) {
         try {
@@ -73,7 +73,7 @@ public class GuestDAO {
     }
 
     /**
-     * <P>Update the fields of the guest in the Database Management System with the new data</P>
+     * <P>Update the fields of the {@link Guest} in the Database Management System with the new data</P>
      *
      * @param guest object to update the fields into the Database Management System
      */
