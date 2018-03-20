@@ -24,7 +24,7 @@ public class ImportSucceedMessage extends SplashDefaultMessage {
     }
 
     public String getHeaderText() {
-        return "De gegevens zijn correct geïmporteerd.";
+        return "De gegevens zijn correct geï¿½mporteerd.";
     }
 
 
