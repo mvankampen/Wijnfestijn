@@ -15,6 +15,9 @@ WijnfestijnWeb maakt gebruik van een aantal libraries om goed te kunnen function
 * [OpenCSV]
 * [PostgresSQL JDBC]
 
+### Hoe te builden?
+Installeer Docker en docker-compose en start de Postgres database met ```docker-compose up```. Vervolgens kun je de applicatie draaien vanuit je IDE.
+
 ### Versie
 1.0
 
