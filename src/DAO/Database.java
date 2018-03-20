@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class Database {
     private static Database _instance;
     private Connection connection = null;
-    private String DB_NAME = "wijnfestijnDB";
+    private String DB_NAME = "postgres";
     private String USER = "postgres";
     private static final String PASSWORD = "root";
     private static final String DRIVER = "org.postgresql.Driver";
