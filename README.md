@@ -7,7 +7,7 @@ Wijnfestijn is een Java applicatie die het wijnfestijn van de [Lions Club Oegstg
 
 ### Tech
 
-WijnfestijnWeb maakt gebruik van een aantal libraries om goed te kunnen functioneren:
+Wijnfestijn maakt gebruik van een aantal libraries om goed te kunnen functioneren:
 
 * [ControlsFX]
 * [iTextPDF]
